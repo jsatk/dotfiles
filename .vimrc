@@ -26,6 +26,9 @@ set tabstop=4
 set shiftwidth=4
 " Highlight current line
 set cursorline
+" Changes Vim's line number column to display how far away each line is
+" from the current one, instead of showing the absolute line number.
+set relativenumber
 " Enable syntax highlighting
 syntax on
 " Show “invisible” characters
