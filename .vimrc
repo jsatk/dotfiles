@@ -8,7 +8,6 @@
 "             http://www.reddit.com/r/vim/
 "             http://net.tutsplus.com/articles/general/top-10-pitfalls-when-switching-to-vim/
 "             http://vimregex.com/
-"             http://www.villustrator.com/
 
 " The filetype and call lines are for loading Pathogen.
 " See: http://www.vim.org/scripts/script.php?script_id=2332
@@ -28,6 +27,9 @@ set modelines=0
 " Enhance command-line completion
 set wildmenu
 
+" Auto-completion menu
+set wildmode=list:longest
+
 " Allow cursor keys in insert mode
 set esckeys
 
@@ -42,9 +44,6 @@ set t_Co=256
 
 " Enable line numbers
 set number
-
-" Sets my background to dark
-set background=dark
 
 " Don’t add empty newlines at the end of files
 set binary
@@ -75,7 +74,19 @@ set list
 
 " Highlight searches
 set hlsearch
+
+" Set incremental searching
 set incsearch
+
+" Fix the case-searching stuff to be how we want it. Ignore the case, unless there's caps in it, and then it's case sensitive.
+set ignorecase
+set smartcase
+
+" Enable code folding
+set foldenable
+
+" Hide mouse when typing
+set mousehide
 
 " Always show status line
 set laststatus=2
@@ -92,7 +103,7 @@ set ruler
 " Show the current mode
 set showmode
 
-" Show the current command
+" Show command in bottom right portion of the screen
 set showcmd
 
 " Show the filename in the window titlebar
@@ -107,18 +118,11 @@ set autoindent
 " Turns line wrapping on
 set wrap
 
-" Turns syntax highlighting on
-syntax on
-
 " Distiguishes between filetypes
 filetype on
 
 " Highlight matching braces as you type.
 set showmatch
-
-" Fix the case-searching stuff to be how we want it. Ignore the case, unless there's caps in it, and then it's case sensitive.
-set ignorecase
-set smartcase
 
 " Fix Vim's horribly broken default regex 'handling' by automatically inserting a \v before any string you search for.
 nnoremap / /\v
@@ -130,11 +134,21 @@ set gdefault
 " Saves file on losing focus of VIM
 au FocusLost * :wa
 
-" Set the color scheme. Change this to your preference.
+" Color scheme stuff!
 " Color schemes are located in ~/.vim/colors/
-" Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
+" Here's the top 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
 " List of favorites: inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
+" You can make your own colorschemes here: http://www.villustrator.com/
+" Solarized can be found here: http://ethanschoonover.com/solarized
+" Sets my background to either light or dark in solarized colorscheme
+" set background=dark
+" Needed for use of Solarized in Terminal.app.
+" let g:solarized_termcolors=256
 colorscheme molokai
+
+" Set font type and size. Depends on the resolution. Larger screens, prefer h20
+" Inconsolata can be found here: http://levien.com/type/myfonts/inconsolata.html
+set guifont=Inconsolata:h24
 
 " Sets .tt2 files to be syntax highlighted as html and .flo to be highlighted as perl
 augroup filesyntax
@@ -149,6 +163,12 @@ augroup filesyntax
 augroup prewrites
     autocmd!
     autocmd BufWritePre,FileWritePre * :%s/\s\+$//e | %s/\r$//e
+augroup END
+
+" Source the .vimrc file after saving it. This way, you don't have to reload Vim to see the changes.
+augroup myvimrchooks
+    autocmd!
+    autocmd bufwritepost .vimrc source ~/.vimrc
 augroup END
 
 " Remaps leader key to an easier key
@@ -168,6 +188,9 @@ function! StripWhitespace ()
 endfunction
 noremap <leader>ss :call StripWhitespace ()<CR>
 
+" Set up an HTML5 template for all new .html files
+" autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
+
 " Sorts CSS properties. Most useful command ever.
 " See: http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
 nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort<CR>
@@ -175,6 +198,33 @@ nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort<CR>
 
 " Lets me open my .vimrc on the fly to quickly add useful stuff to it.
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+
+"Shortcut to fold tags with leader (set to ,) + ft
+nnoremap <leader>ft Vatzf
+
+"Map code completion to , + tab
+imap <leader><tab> <C-x><C-o>
+
+" Some might be interested in this article.
+" Make Vim completion popup menu work just like in an IDE
+" http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
+
+" Bubble single lines (kicks butt)
+" http://vimcasts.org/episodes/bubbling-text/
+" nmap <C-Up> ddkP
+" nmap <C-Down> ddp
+nmap <C-k> ddkP
+nmap <C-j> ddp
+
+" Bubble multiple lines
+vmap <C-k> xkP`[V`]
+vmap <C-j> xp`[V`]
+
+" Easier window navigation
+" nmap <C-h> <C-w>h
+" nmap <C-j> <C-w>j
+" nmap <C-k> <C-w>k
+" nmap <C-l> <C-w>l
 
 " New Vim users will want the following lines to teach them to do things right
 " For training only. Remove when need be.
