@@ -220,6 +220,7 @@ vmap <C-k> xkP`[V`]
 vmap <C-j> xp`[V`]
 
 " Easier window navigation
+" Commented out due to Bubbling key bindings above.
 " nmap <C-h> <C-w>h
 " nmap <C-j> <C-w>j
 " nmap <C-k> <C-w>k
