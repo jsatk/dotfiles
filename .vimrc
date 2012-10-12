@@ -1,4 +1,4 @@
-" Title: .vimrc
+" Title: .vimrc File
 " Author: Jesse Atkinson
 " Email: jesse.s.atkinson@gmail.com
 " Twitter: @jsatk
@@ -86,7 +86,7 @@ set mouse=a
 " Don’t reset cursor to start of line when moving around.
 set nostartofline
 
-" Show the cursor position
+" Display current cursor position in lower right corner.
 set ruler
 
 " Show the current mode
@@ -130,8 +130,10 @@ set gdefault
 " Saves file on losing focus of VIM
 au FocusLost * :wa
 
-" Sets the terminals colors to 256 and the colorscheme to molokai
+" Set the color scheme. Change this to your preference.
 " Color schemes are located in ~/.vim/colors/
+" Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
+" List of favorites: inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
 colorscheme molokai
 
 " Sets .tt2 files to be syntax highlighted as html and .flo to be highlighted as perl
@@ -151,6 +153,10 @@ augroup END
 
 " Remaps leader key to an easier key
 let mapleader = ","
+
+" Ever notice a slight lag after typing the leader key + command?
+" This lowers the timeout.
+set timeoutlen=500
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace ()
