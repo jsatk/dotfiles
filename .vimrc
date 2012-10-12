@@ -211,8 +211,7 @@ imap <leader><tab> <C-x><C-o>
 
 " Bubble single lines (kicks butt)
 " http://vimcasts.org/episodes/bubbling-text/
-" nmap <C-Up> ddkP
-" nmap <C-Down> ddp
+" Due to OS X keybinding of the C-Up key, I chose to remap to C-k and so forth.
 nmap <C-k> ddkP
 nmap <C-j> ddp
 
