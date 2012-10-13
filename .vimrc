@@ -125,8 +125,9 @@ filetype on
 set showmatch
 
 " Fix Vim's horribly broken default regex 'handling' by automatically inserting a \v before any string you search for.
-nnoremap / /\v
-vnoremap / /\v
+" I don't really dig this but some might. Leaving here and commented out.
+" nnoremap / /\v
+" vnoremap / /\v
 
 " Add the g flag to search/replace by default
 set gdefault
