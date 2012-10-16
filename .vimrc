@@ -194,8 +194,8 @@ noremap <leader>ss :call StripWhitespace ()<CR>
 
 " Sorts CSS properties. Most useful command ever.
 " See: http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
-nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\)/: \1/g<CR>
-:command! SortCSSBraceContents :g#\({\n\)\@<=#.,/}/sort <bar> %s/:\(\S\)/: \1/g
+nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
+:command! BeautifyCSS :g#\({\n\)\@<=#.,/}/sort <bar> %s/:\(\S\+;\)/: \1/g
 
 " Lets me open my .vimrc on the fly to quickly add useful stuff to it.
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
