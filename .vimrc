@@ -190,7 +190,7 @@ endfunction
 noremap <leader>ss :call StripWhitespace ()<CR>
 
 " Set up an HTML5 template for all new .html files
-" autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
+autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
 
 " Sorts CSS properties. Most useful command ever.
 " See: http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
