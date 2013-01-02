@@ -26,9 +26,7 @@ PATH=$PATH:~/code/git-friendly
 export PATH
 ```
 
-## Syntax highlighting
-
-â¦is really important. even for these files.
+## Syntax highlighting is really important. even for these files.
 
 Install [Dotfiles Syntax Highlighting](https://github.com/mattbanks/dotfiles-syntax-highlighting-st2) via [Sublime Text 2 Package Control](http://wbond.net/sublime_packages/package_control)
 
