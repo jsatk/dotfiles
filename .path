@@ -1,4 +1,5 @@
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting¬
+# Add RVM to PATH for scripting¬
+PATH=$PATH:$HOME/.rvm/bin
 
 export JAVA_HOME=/Library/Java/Home
 export JRE_HOME=/Library/Java/Home
@@ -13,3 +14,7 @@ export PATH
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Sets PATH for executable scripts
+PATH="$PATH:$HOME/Library/Scripts/"
+export PATH

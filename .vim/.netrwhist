@@ -1,7 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/usr'
 let g:netrw_dirhist_2='/Users/Jesse/dev/dotfiles'
 let g:netrw_dirhist_3='/Users/Jesse/dev'
 let g:netrw_dirhist_4='/Users/jesseatkinson/.vim'
 let g:netrw_dirhist_5='/Users/jesseatkinson/Dropbox/dev/*resources/h5bp-html5-boilerplate-2279296'
+let g:netrw_dirhist_6='/Users/Jesse/dev/tunein/platform/Web/CE/UI/rework_new_design_tunein-01-31-2013-SDK'
+let g:netrw_dirhist_7='/Users/Jesse/Desktop/new_design_tunein-01-31-2013-SDK/.settings'
+let g:netrw_dirhist_8='/Users/Jesse'

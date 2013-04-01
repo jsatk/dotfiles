@@ -84,6 +84,9 @@ alias c="tr -d '\n' | pbcopy"
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 
+# Clean up Desktop
+alias cleandesk='tell application "Finder" to clean up window of desktop by name'
+
 # Shortcuts
 alias g="git"
 alias v="vim"
@@ -108,6 +111,39 @@ alias plistbuddy="/usr/libexec/PlistBuddy"
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
     alias "$method"="lwp-request -m '$method'"
 done
+
+# Quick way to rebuild the Launch Services database and get rid
+# of duplicates in the Open With submenu.
+alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
+# If you use Gist and the command line, you probably have “jist” installed. If not, run gem install jist and make
+# your life easier. This extremely short alias is great for popping a clipboard straight to a public gist and opening
+# the link in your browser.
+# http://brettterpstra.com/2013/03/14/more-command-line-handiness/
+alias pbgist="jist -Ppo"
+
+# Open Chrome
+alias chrome="open -a \"Google Chrome\""
+
+# http://brettterpstra.com/2013/03/31/a-few-more-of-my-favorite-shell-aliases/
+# make executable
+alias ax="chmod a+x"
+# edit .bash_profile
+alias bp="$EDITOR ~/.bash_profile"
+# edit keybindings.dict
+alias kb="$EDITOR ~/Library/KeyBindings/DefaultKeyBinding.dict"
+# reload your bash config
+alias src="source ~/.bash_profile"
+
+# http://brettterpstra.com/2013/03/31/a-few-more-of-my-favorite-shell-aliases/
+# Get your current public IP
+alias ip="curl icanhazip.com"
+
+# list TODO/FIX lines from the current project
+alias todos="ack -n --nogroup '(TODO|FIX(ME)?):'"
+
+# Open path in Finder
+# http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
+alias f='open -a Finder ./'
 
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"

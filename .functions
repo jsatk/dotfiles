@@ -3,12 +3,10 @@ function md() {
     mkdir -p "$@" && cd "$@"
 }
 
-
 # find shorthand
 function f() {
     find . -name "$1"
 }
-
 
 # lets toss an image onto my server and pbcopy that bitch.
 function scpp() {
@@ -39,12 +37,10 @@ AWK
   )" | less -F
 }
 
-
 # Copy w/ progress
 cp_p () {
   rsync -WavP --human-readable --progress $1 $2
 }
-
 
 # Test if HTTP compression (RFC 2616 + SDCH) is enabled for a given URL.
 # Send a fake UA string for sites that sniff it instead of using the Accept-Encoding header. (Looking at you, ajax.googleapis.com!)
@@ -70,8 +66,6 @@ function gitexport(){
     git archive master | tar -x -C "$1"
 }
 
-
-
 # get gzipped size
 function gz() {
     echo "orig size    (bytes): "
@@ -95,6 +89,40 @@ function escape() {
 function unidecode() {
     perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
     echo # newline
+}
+
+# batch change extension
+function chgext() {
+    for file in *.$1 ; do mv $file `echo $file | sed "s/\(.*\.\)$1/\1$2/"` ; done
+}
+
+# Open find or dir in Alfred
+# Select the current directory in launchbar, optionally a file
+alf () {
+    if [[ $# = 1 ]]; then
+        [[ -e "$(pwd)/$1" ]] && open "x-alfred:select?file=$(pwd)/$1" || open "x-alfred:select?file=$1"
+    else
+        open "x-alfred:select?file=$(pwd)"
+    fi
+}
+
+# JS Lint
+# Reference: http://blog.simplytestable.com/installing-jslint-for-command-line-use-on-ubuntu/
+function jslint {
+    filename=${1##*/} # Name of file.
+    dir="/Users/Jesse/Desktop/" # Directory where you want your lint files output. Must be full path. No ~.
+    path="$dir$filename-lint.js"
+    /usr/local/bin/node /usr/share/node-jslint/node_modules/jslint/bin/jslint.js "$1" > "$path"
+}
+
+# cd to the path of the front Finder window
+cdf() {
+    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+    if [ "$target" != "" ]; then
+        cd "$target"; pwd
+    else
+        echo 'No Finder window found' >&2
+    fi
 }
 
 # For when you get angry

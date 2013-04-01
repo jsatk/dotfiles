@@ -1,5 +1,3 @@
-# Make vim the default editor
-export EDITOR="vim"
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 
@@ -7,5 +5,9 @@ export MANPAGER="less -X"
 export HISTSIZE=32768
 export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
+
 # Make some commands not show up in history
 export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
+
+# http://brettterpstra.com/2013/03/30/a-multi-purpose-editor-variable/
+export EDITOR="$HOME/Library/Scripts/editor.sh"
