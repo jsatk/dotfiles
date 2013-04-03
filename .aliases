@@ -145,6 +145,9 @@ alias todos="ack -n --nogroup '(TODO|FIX(ME)?):'"
 # http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
 alias f='open -a Finder ./'
 
+# Mute system volume
+alias stfu="osascript -e 'set volume output muted true'"
+
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"

@@ -125,6 +125,15 @@ cdf() {
     fi
 }
 
+function console () {
+    if [[ $# > 0 ]]; then
+        query=$(echo "$*"|tr -s ' ' '|')
+        tail -f /var/log/system.log|grep -i --color=auto -E "$query"
+    else
+        tail -f /var/log/system.log
+    fi
+}
+
 # For when you get angry
 function fuck () { echo "Calm down"; }
 function FUCK () { echo "Calm down"; }
