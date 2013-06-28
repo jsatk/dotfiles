@@ -49,12 +49,12 @@ set number
 set binary
 set noeol
 
-" Make tabs as wide as four spaces
-set softtabstop=4
-set tabstop=4
+" Make tabs as wide as two spaces
+set softtabstop=2
+set tabstop=2
 
 " Controls how many spaces to indent when using >>
-set shiftwidth=4
+set shiftwidth=2
 set expandtab
 
 " Highlight current line
@@ -160,7 +160,6 @@ augroup filesyntax
 
 " On save strip trailing whitespace and convert line endings to Unix format
 " http://stackoverflow.com/questions/356126/how-can-you-automatically-remove-trailing-whitespace-in-vim
-" & converts line endings to Unix format
 augroup prewrites
     autocmd!
     autocmd BufWritePre,FileWritePre * :%s/\s\+$//e | %s/\r$//e
@@ -181,11 +180,11 @@ set timeoutlen=500
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace ()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    :%s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace ()<CR>
 
@@ -196,6 +195,9 @@ autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
 " See: http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
 nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
 :command! BeautifyCSS :g#\({\n\)\@<=#.,/}/sort <bar> %s/:\(\S\+;\)/: \1/g
+
+" Super retab: http://vim.wikia.com/wiki/Super_retab
+:command! -nargs=1 -range SuperRetab <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
 
 " Lets me open my .vimrc on the fly to quickly add useful stuff to it.
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
