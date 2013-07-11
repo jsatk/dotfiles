@@ -163,6 +163,10 @@ function vrc
   vim ~/.vimrc
 end
 
+function browserstack
+  java -jar BrowserStackTunnel.jar zkH9c4pryjoxhoAx4V7y localhost,3000,0
+end
+
 # -------------------
 # Stuff For Amplifier
 # -------------------
@@ -186,12 +190,12 @@ function megatest
   echo "Beginning jshint"
   rake jshint;
   echo "Ending jshint"
-  echo "Beginning jasmine tests"
-  rake jasmine:ci;
-  echo "Ending jasmine tests"
   echo "Beginning js_quality"
   rake js_quality;
   echo "Ending js_quality"
+  echo "Beginning jasmine tests"
+  rake jasmine:ci;
+  echo "Ending jasmine tests"
 end
 
 function singletest
