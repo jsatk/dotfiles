@@ -4,18 +4,26 @@
 # Basics, etc…
 # ============
 
+# Default browser
 set BROWSER open safari
 
-# This allows us to use Homebrew versions of things (like git) rather than the pre-installed or XCode installed versions.
-# See http://blog.grayghostvisuals.com/git/how-to-keep-git-updated/ for reference.
-set -g -x PATH /usr/local/bin $PATH
+# NOTE: There is probably a sexier nicer way to do this, but until I figure that out I am manually unsetting here.
+# Unsets PATH
+set -g -x PATH
 
 # Using rbenv for ruby. See: https://github.com/sstephenson/rbenv
 # Enable shims and autocompletion for rbenv.
-set -g -x PATH $HOME/.rbenv/shims $PATH
+set -g -x PATH $PATH $HOME/.rbenv/shims
 
-# Adds Scripts to path.
-set -g -x PATH $HOME/Library/Scripts/* $PATH
+# This allows us to use Homebrew versions of things (like git) rather than the pre-installed or XCode installed versions.
+# See http://blog.grayghostvisuals.com/git/how-to-keep-git-updated/ for reference.
+set -g -x PATH $PATH /usr/local/bin
+
+# Sets necessary PATH defaults
+set -g -x PATH $PATH /usr/bin /bin /usr/sbin /sbin
+
+# Adds custom scripts to path.
+set -g -x PATH $PATH $HOME/Library/Scripts/*
 
 # =========
 # Functions
@@ -109,12 +117,12 @@ function todos
   ack --nogroup '(TODO|FIX(ME)?):'
 end
 
-# list TODO/FIX lines from the current project
+# list console.logs from the current project
 function consolelogs
   ack --nogroup '(console\.log|console\.info)'
 end
 
-# Merge latest master.
+# Print the name of the current git branch.
 function current_branch
   git branch | grep '*' | awk '{ print $2 }'
 end
@@ -163,8 +171,25 @@ function vrc
   vim ~/.vimrc
 end
 
+# For browserstack.com
 function browserstack
   java -jar BrowserStackTunnel.jar zkH9c4pryjoxhoAx4V7y localhost,3000,0
+end
+
+# Stuff I never really use but cannot delete either because of http://xkcd.com/530/
+# Mute
+function stfu
+  osascript -e 'set volume output muted true'
+end
+
+# Set volume to 10.
+function pumpitup
+  osascript -e 'set volume 10'
+end
+
+# Pop-up
+function hax
+  growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'
 end
 
 # -------------------
@@ -178,30 +203,9 @@ end
 
 # MEGA TEST
 function megatest
-  echo "Beginning rake"
-  rake;
-  echo "Ending rake."
-  echo "Beginning cane"
-  cane;
-  echo "Ending cane"
-  echo "Beginning brakeman"
-  brakeman -q;
-  echo "Ending brakeman"
-  echo "Beginning jshint"
-  rake jshint;
-  echo "Ending jshint"
-  echo "Beginning js_quality"
-  rake js_quality;
-  echo "Ending js_quality"
-  echo "Beginning jasmine tests"
-  rake jasmine:ci;
-  echo "Ending jasmine tests"
+  rake spec quality jshint js_quality jasmine:ci; and brakeman -q
 end
 
 function singletest
   rake spec SPEC=$argv
-end
-
-function mm
-  git checkout master; and git pull; and git checkout $argv; and git merge master;
 end

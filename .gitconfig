@@ -30,6 +30,9 @@
   # Destroy all local changes and reset to HEAD.
   fuckit           = reset --hard HEAD
 
+  # For morning stand-up.
+  standup          = log origin/master --since yesterday --oneline --author 'Jesse Atkinson'
+
 [color]
   ui               = always
 [apply]
@@ -81,4 +84,4 @@
 [core]
   autocrlf         = input
 [push]
-	default = simple
+	default          = simple
