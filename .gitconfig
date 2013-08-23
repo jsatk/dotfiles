@@ -10,10 +10,10 @@
   undopush         = push -f origin HEAD^:master
 
   # Pretty log
-  prettylog        = log --name-only --decorate=full --pretty=fuller
+  prettylog        = log --name-only --decorate=full --pretty=full
 
   # Log Me
-  logme            = log --color --name-only --decorate=full --pretty=fuller --author="Jesse"
+  logme            = log --color --name-only --decorate=full --pretty=full --author="Jesse"
 
   # Get Incoming Changes
   incoming         = log ..@{u}
@@ -83,5 +83,6 @@
   helper           = osxkeychain
 [core]
   autocrlf         = input
+	editor           = subl -n -w
 [push]
 	default          = simple
