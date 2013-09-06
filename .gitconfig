@@ -10,10 +10,10 @@
   undopush         = push -f origin HEAD^:master
 
   # Pretty log
-  prettylog        = log --name-only --decorate=full --pretty=full
+  prettylog        = log --name-only --decorate=full
 
   # Log Me
-  logme            = log --color --name-only --decorate=full --pretty=full --author="Jesse"
+  logme            = log --color --name-only --decorate=full --author="Jesse"
 
   # Get Incoming Changes
   incoming         = log ..@{u}
@@ -32,6 +32,9 @@
 
   # For morning stand-up.
   standup          = log origin/master --since yesterday --oneline --author 'Jesse Atkinson'
+
+  # A quick way to get fired.
+  # yolo           = 'git add -A; and git commit -am "#YOLO"; and git push origin master'
 
 [color]
   ui               = always
@@ -83,6 +86,6 @@
   helper           = osxkeychain
 [core]
   autocrlf         = input
-	editor           = subl -n -w
+# editor           = subl -n -w
 [push]
 	default          = simple

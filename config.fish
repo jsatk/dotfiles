@@ -43,6 +43,11 @@ function please
   sudo $argv
 end
 
+# Because I'm an idiot
+function yolo
+  sudo $argv
+end
+
 # List all files colorized in long format, including dot files
 function ll
   ls -al $argv

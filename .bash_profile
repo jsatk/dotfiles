@@ -54,6 +54,9 @@ alias rcb="rake && cane && brakeman -q && rake jshint && rake js_quality && rake
 # Be nice
 alias please=sudo
 
+# Because I'm an idiot
+alias yolo=sudo
+
 # List all files colorized in long format, including dot files
 alias ll="ls -la ${colorflag}"
 
