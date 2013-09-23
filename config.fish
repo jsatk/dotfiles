@@ -148,19 +148,6 @@ function installed
   brew list; and gem query --local
 end
 
-# Stuff I never really use but cannot delete either because of http://xkcd.com/530/
-function stfu
-  osascript -e 'set volume output muted true'
-end
-
-function pumpitup
-  osascript -e 'set volume 10'
-end
-
-function hax
-  growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'
-end
-
 # Open current directory in Sublime
 function e
   subl . &
@@ -200,11 +187,6 @@ end
 # -------------------
 # Stuff For Amplifier
 # -------------------
-
-# Cane for Ruby. To be ran before all merges to master.
-function cane
-  bundle exec cane --abc-glob '{app,lib,spec}/**/*.rb' --style-glob '{app,lib,spec}/**/*.rb' --style-measure 120 --gte 'coverage/covered_percent,90' --no-doc
-end
 
 # MEGA TEST
 function megatest
