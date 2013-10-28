@@ -190,7 +190,7 @@ end
 
 # MEGA TEST
 function megatest
-  rake spec quality jshint js_quality jasmine:ci; and brakeman -q
+  rake spec quality jshint js_quality jasmine:ci_with_metrics -v -t; and brakeman -q
 end
 
 function singletest

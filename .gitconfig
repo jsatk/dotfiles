@@ -22,7 +22,7 @@
   outgoing         = log @{u}..
 
   # Merges the latest from master into your feature branch keeping you up-to-date.
-  remaster         = "!f() { git stash && git fetch origin && git merge origin/master && git stash pop; }; f"
+  # remaster         = "!f() { git stash && git fetch origin && git merge origin/master && git stash pop; }; f"
 
   # Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
   damnit           = reset --soft HEAD^
@@ -41,10 +41,10 @@
 [apply]
   whitespace       = fix
 [core]
+  autocrlf         = input
   excludesfile     = ~/.gitignore
   attributesfile   = ~/.gitattributes
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
-  autocrlf         = input
 [color "branch"]
   current          = yellow reverse
   local            = yellow
@@ -84,8 +84,5 @@
   name             = Jesse Atkinson
 [credential]
   helper           = osxkeychain
-[core]
-  autocrlf         = input
-# editor           = subl -n -w
 [push]
 	default          = simple
