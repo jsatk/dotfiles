@@ -1,6 +1,6 @@
 " Title: .vimrc File
 " Author: Jesse Atkinson
-" Email: jesse.s.atkinson@gmail.com
+" Email: jesse.atkinson@me.com
 " Twitter: @jsatk
 " References: http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 "             https://github.com/paulirish/dotfiles/blob/master/.vimrc
@@ -11,10 +11,9 @@
 
 " The filetype and call lines are for loading Pathogen.
 " See: http://www.vim.org/scripts/script.php?script_id=2332
-" Currently commented out due to ePrize's Promodev environment not supporting Pathogen.
-" filetype off
-" call pathogen#runtime_append_all_bundles()
-" filetype plugin indent on
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
 
 " Make vim more useful
 " Why am I including this? Better safe than sorry.
@@ -144,7 +143,7 @@ au FocusLost * :wa
 " Sets my background to either light or dark in solarized colorscheme
 " set background=dark
 " Needed for use of Solarized in Terminal.app.
-" let g:solarized_termcolors=256
+let g:solarized_termcolors=256
 colorscheme molokai
 
 " Set font type and size. Depends on the resolution. Larger screens, prefer h20
