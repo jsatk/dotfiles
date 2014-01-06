@@ -123,6 +123,9 @@ filetype on
 " Highlight matching braces as you type.
 set showmatch
 
+" http://vim.wikia.com/wiki/Project_browsing_using_find
+" set path=$PWD/**
+
 " Fix Vim's horribly broken default regex 'handling' by automatically inserting a \v before any string you search for.
 " I don't really dig this but some might. Leaving here and commented out.
 " nnoremap / /\v
@@ -198,13 +201,22 @@ nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
 " Super retab: http://vim.wikia.com/wiki/Super_retab
 :command! -nargs=1 -range SuperRetab <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
 
+" Lowercases all HTML tags: http://vim.wikia.com/wiki/Changing_case_with_regular_expressions
+:command! LowerCaseHTML :%s/<\/\=\(\w\+\)\>/\L&/g
+
+" Lowercases an entire file
+:command! LowerCaseFile :%s/.*/\L&/g
+
+" Uppercases an entire file (I can't think of when this would ever be useful)
+:command! UpperCaseFile :%s/.*/\U&/g
+
 " Lets me open my .vimrc on the fly to quickly add useful stuff to it.
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
-"Shortcut to fold tags with leader (set to ,) + ft
+" Shortcut to fold tags with leader (set to ,) + ft
 nnoremap <leader>ft Vatzf
 
-"Map code completion to , + tab
+" Map code completion to , + tab
 imap <leader><tab> <C-x><C-o>
 
 " Some might be interested in this article.
