@@ -1,16 +1,15 @@
 [alias]
-  c                = commit -am
-  up               = pull
-  p                = push
-  s                = status -s
-  df               = diff --color --color-words --abbrev
+  s                = status --short
   lg               = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 
   # Undo a `git push`
-  undopush         = push -f origin HEAD^:master
+  undopush         = push --force origin HEAD^:master
 
   # Pretty log
   prettylog        = log --name-only --decorate=full
+
+  # Clean up history. Useful for feature branches with lots of silly little commits you don't want in master's history.
+  cleanup          = !git rebase --interactive origin/master
 
   # Log Me
   logme            = log --color --name-only --decorate=full --author="Jesse"
@@ -22,7 +21,7 @@
   outgoing         = log @{u}..
 
   # Merges the latest from master into your feature branch keeping you up-to-date.
-  # remaster         = "!f() { git stash && git fetch origin && git merge origin/master && git stash pop; }; f"
+  remaster         = !git stash && git fetch origin && git merge origin/master && git stash pop;
 
   # Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
   damnit           = reset --soft HEAD^
@@ -31,10 +30,10 @@
   fuckit           = reset --hard HEAD
 
   # For morning stand-up.
-  standup          = log origin/master --since yesterday --oneline --author 'Jesse Atkinson'
+  standup          = !"git log --reverse --branches --since=$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi) --author='Jesse Atkinson' --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
 
   # A quick way to get fired.
-  # yolo           = 'git add -A; and git commit -am "#YOLO"; and git push origin master'
+  # yolo             = !git add -A && and git commit -am '#YOLO' && git push origin master
 
 [color]
   ui               = always
