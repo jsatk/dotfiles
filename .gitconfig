@@ -58,6 +58,7 @@
   changed          = green
   untracked        = cyan
 [merge]
+  conflictstyle    = diff3
   log              = true
 [url "git@github.com:"]
   insteadOf        = "gh:"
@@ -73,6 +74,10 @@
   insteadOf        = "gist:"
 [branch]
   autosetuprebase = always
+[push]
+	default = tracking
+[help]
+	autocorrect = 1
 
 # Any GitHub repo with my username should be checked out r/w by default
 # http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
@@ -83,5 +88,3 @@
   name             = Jesse Atkinson
 [credential]
   helper           = osxkeychain
-[push]
-	default          = simple

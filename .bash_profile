@@ -45,12 +45,6 @@ export PATH="$PATH:$HOME/Library/Scripts/"
 # Better grep.
 alias grr="grep -riIn --color"
 
-# Cane for Ruby. To be ran before all merges to master.
-alias cane="bundle exec cane --abc-glob '{app,lib,spec}/**/*.rb' --style-glob '{app,lib,spec}/**/*.rb' --style-measure 120 --gte 'coverage/covered_percent,90' --no-doc"
-
-# MEGA TEST
-alias rcb="rake && cane && brakeman -q && rake jshint && rake js_quality && rake jasmine:ci"
-
 # Be nice
 alias please=sudo
 
@@ -131,63 +125,63 @@ alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
 
 # cd to the path of the front Finder window
 cdf() {
-    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
-    if [ "$target" != "" ]; then
-        cd "$target"; pwd
-    else
-        echo 'No Finder window found' >&2
-    fi
+  target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+  if [ "$target" != "" ]; then
+    cd "$target"; pwd
+  else
+    echo 'No Finder window found' >&2
+  fi
 }
 
 # JS Hint
 function jsh {
-    HINT_FILE=app/assets/javascripts/admin/${1} rake jshint
+  HINT_FILE=app/assets/javascripts/admin/${1} rake jshint
 }
 
 # Create a new directory and enter it
 function md() {
-    mkdir -p "$@" && cd "$@"
+  mkdir -p "$@" && cd "$@"
 }
 
 # find shorthand
 function f() {
-    find . -name "$1"
+  find . -name "$1"
 }
 
 # Syntax-highlight JSON strings or files
 function json() {
-    if [ -p /dev/stdin ]; then
+  if [ -p /dev/stdin ]; then
         # piping, e.g. `echo '{"foo":42}' | json`
         python -mjson.tool | pygmentize -l javascript
-    else
+      else
         # e.g. `json '{"foo":42}'`
         python -mjson.tool <<< "$*" | pygmentize -l javascript
-    fi
-}
+      fi
+    }
 
 # Tail system log
 function console () {
-    if [[ $# > 0 ]]; then
-        query=$(echo "$*"|tr -s ' ' '|')
-        tail -f /var/log/system.log|grep -i --color=auto -E "$query"
-    else
-        tail -f /var/log/system.log
-    fi
+  if [[ $# > 0 ]]; then
+    query=$(echo "$*"|tr -s ' ' '|')
+    tail -f /var/log/system.log|grep -i --color=auto -E "$query"
+  else
+    tail -f /var/log/system.log
+  fi
 }
 
 # batch change extension
 function chgext() {
-    for file in *.$1 ; do mv $file `echo $file | sed "s/\(.*\.\)$1/\1$2/"` ; done
+  for file in *.$1 ; do mv $file `echo $file | sed "s/\(.*\.\)$1/\1$2/"` ; done
 }
 
 # Open find or dir in Alfred
 # Select the current directory in launchbar, optionally a file
 alf () {
-    if [[ $# = 1 ]]; then
-        [[ -e "$(pwd)/$1" ]] && open "x-alfred:select?file=$(pwd)/$1" || open "x-alfred:select?file=$1"
-    else
-        open "x-alfred:select?file=$(pwd)"
-    fi
+  if [[ $# = 1 ]]; then
+    [[ -e "$(pwd)/$1" ]] && open "x-alfred:select?file=$(pwd)/$1" || open "x-alfred:select?file=$1"
+  else
+    open "x-alfred:select?file=$(pwd)"
+  fi
 }
 
 # Rename Tabs
@@ -213,47 +207,53 @@ function FUCKFUCK () { echo "Calm down"; }
 # Shamelessly copied from https://github.com/gf3/dotfiles
 
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-    export TERM=gnome-256color
+  export TERM=gnome-256color
 elif infocmp xterm-256color >/dev/null 2>&1; then
-    export TERM=xterm-256color
+  export TERM=xterm-256color
 fi
 
 if tput setaf 1 &> /dev/null; then
-    tput sgr0
-    if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
-        MAGENTA=$(tput setaf 9)
-        ORANGE=$(tput setaf 172)
-        GREEN=$(tput setaf 190)
-        PURPLE=$(tput setaf 141)
-        WHITE=$(tput setaf 256)
-    else
-        MAGENTA=$(tput setaf 5)
-        ORANGE=$(tput setaf 4)
-        GREEN=$(tput setaf 2)
-        PURPLE=$(tput setaf 1)
-        WHITE=$(tput setaf 7)
-    fi
-    BOLD=$(tput bold)
-    RESET=$(tput sgr0)
+  tput sgr0
+  if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
+    MAGENTA=$(tput setaf 9)
+    ORANGE=$(tput setaf 172)
+    GREEN=$(tput setaf 190)
+    PURPLE=$(tput setaf 141)
+    WHITE=$(tput setaf 256)
+  else
+    MAGENTA=$(tput setaf 5)
+    ORANGE=$(tput setaf 4)
+    GREEN=$(tput setaf 2)
+    PURPLE=$(tput setaf 1)
+    WHITE=$(tput setaf 7)
+  fi
+  BOLD=$(tput bold)
+  RESET=$(tput sgr0)
 else
-    MAGENTA="\033[1;31m"
-    ORANGE="\033[1;33m"
-    GREEN="\033[1;32m"
-    PURPLE="\033[1;35m"
-    WHITE="\033[1;37m"
-    BOLD=""
-    RESET="\033[m"
+  MAGENTA="\033[1;31m"
+  ORANGE="\033[1;33m"
+  GREEN="\033[1;32m"
+  PURPLE="\033[1;35m"
+  WHITE="\033[1;37m"
+  BOLD=""
+  RESET="\033[m"
 fi
 
 
 function parse_git_dirty() {
-    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
 }
 
 function parse_git_branch() {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
 
+# Fix the shitty OS X Open With menu duplicates
+function fixopenwith() {
+  /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user
+  killall Finder
+  echo 'Open With has been rebuilt, Finder will relaunch'
+}
 # iTerm Tab and Title Customization and prompt customization
 # http://sage.ucsc.edu/xtal/iterm_tab_customization.html
 
