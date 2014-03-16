@@ -58,7 +58,6 @@
   changed          = green
   untracked        = cyan
 [merge]
-  conflictstyle    = diff3
   log              = true
 [url "git@github.com:"]
   insteadOf        = "gh:"
