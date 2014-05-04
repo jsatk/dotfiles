@@ -32,58 +32,77 @@
   # For morning stand-up.
   standup          = !"git log --reverse --branches --since=$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi) --author='Jesse Atkinson' --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
 
+  # list branch dates
+  branchdate       = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
+
   # A quick way to get fired.
-  # yolo             = !git add -A && and git commit -am '#YOLO' && git push origin master
+  # yolo           = !git add -A && and git commit -am '#YOLO' && git push origin master
 
 [color]
   ui               = always
+
 [apply]
   whitespace       = fix
+
 [core]
+  attributesfile   = ~/.gitattributes
   autocrlf         = input
   excludesfile     = ~/.gitignore
-  attributesfile   = ~/.gitattributes
+  ignorecase       = false
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
+
 [color "branch"]
   current          = yellow reverse
   local            = yellow
   remote           = green
+
 [color "diff"]
   frag             = magenta bold
   meta             = yellow bold
   new              = green bold
   old              = red bold
+
 [color "status"]
   added            = yellow
   changed          = green
   untracked        = cyan
+
 [merge]
   log              = true
+
 [url "git@github.com:"]
   insteadOf        = "gh:"
   pushInsteadOf    = "github:"
   pushInsteadOf    = "git://github.com/"
+
 [url "git://github.com/"]
   insteadOf        = "github:"
+
 [url "git@gist.github.com:"]
   insteadOf        = "gst:"
   pushInsteadOf    = "gist:"
   pushInsteadOf    = "git://gist.github.com/"
+
 [url "git://gist.github.com/"]
   insteadOf        = "gist:"
+
 [branch]
-  autosetuprebase = always
+  autosetuprebase  = always
+
 [push]
-	default = tracking
+	default          = tracking
+
 [help]
-	autocorrect = 1
+	autocorrect      = 1
 
 # Any GitHub repo with my username should be checked out r/w by default
 # http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
 [url "git@github.com:jsatk/"]
   insteadOf        = "git://github.com/jsatk/"
+
 [user]
   email            = jatkinson@tunein.com
   name             = Jesse Atkinson
+
 [credential]
   helper           = osxkeychain
