@@ -4,6 +4,7 @@ function fish_prompt --description 'Write out the prompt'
   echo
 
   set_color magenta
+  printf '☕  '
   printf '%s' (whoami)
   set_color normal
   printf ' at '

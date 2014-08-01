@@ -1,0 +1,37 @@
+TM_STRIP_WHITESPACE_ON_SAVE = true
+
+excludeInFolderSearch = "{$excludeInFolderSearch,tmp,log,coverage}"
+
+fontSize       = 15
+fontName       = 'Inconsolata'
+softWrap       = true
+softTabs       = true
+tabSize        = 2
+wrapColumn     = 120
+showInvisibles = true
+invisiblesMap  = "~   "
+
+[ attr.untitled ]
+fileType = 'source.ruby.rails'
+
+excludeInFileChooser  = "{$exclude,vendor/**/*,public/assets/**/*,spec/selenium/**/*,Recipes/**/*}"
+excludeInFolderSearch = "{$excludeInFolderSearch,vendor,public/assets,spec/selenium,Recipes}"
+include               = "{$include,.rubocop.yml}"
+
+wrapColumn     = 120
+showWrapColumn = true
+
+[ "app/**/*.rb" ]
+fileType = "source.ruby.rails"
+
+[ "spec/**/*_spec.rb" ]
+fileType = "source.ruby.rspec"
+
+[ "app/views/**/*.html.erb" ]
+wrapColumn = 160
+
+[ text.plain ]
+wrapColumn = 160
+
+[ text.markdown ]
+wrapColumn = 160

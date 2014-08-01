@@ -36,10 +36,7 @@
   branchdate       = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
 
   # A quick way to get fired.
-  # yolo           = !git add -A && and git commit -am '#YOLO' && git push origin master
-
-[color]
-  ui               = always
+  # yolo           = !gitadd -A && and git commit -am '#YOLO' && git push origin master
 
 [apply]
   whitespace       = fix
@@ -48,7 +45,7 @@
   attributesfile   = ~/.gitattributes
   autocrlf         = input
   excludesfile     = ~/.gitignore
-  ignorecase       = false
+  ignorecase       = true
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
 
 [color "branch"]
@@ -90,10 +87,10 @@
   autosetuprebase  = always
 
 [push]
-	default          = tracking
+  default          = tracking
 
 [help]
-	autocorrect      = 1
+  autocorrect      = 1
 
 # Any GitHub repo with my username should be checked out r/w by default
 # http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
