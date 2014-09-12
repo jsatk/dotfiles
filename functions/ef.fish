@@ -1,3 +1,3 @@
 function ef --description 'Edit fish.config.'
-	subl ~/.config/fish/
+	mate ~/.config/fish/
 end

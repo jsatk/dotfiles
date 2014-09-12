@@ -1,3 +1,3 @@
 function eh --description 'Edit .hgrc'
-	subl ~/.hgrc
+	mate ~/.hgrc
 end

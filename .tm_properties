@@ -1,18 +1,18 @@
 TM_STRIP_WHITESPACE_ON_SAVE = true
 
 excludeInFolderSearch = "{$excludeInFolderSearch,tmp,log,coverage}"
-
-fontSize       = 15
-fontName       = 'Inconsolata'
-softWrap       = true
-softTabs       = true
-tabSize        = 2
-wrapColumn     = 120
-showInvisibles = true
-invisiblesMap  = "~   "
+followSymbolicLinks   = true
+fontSize              = 15
+fontName              = 'Inconsolata'
+softWrap              = true
+softTabs              = true
+tabSize               = 2
+wrapColumn            = 120
+showInvisibles        = true
+invisiblesMap         = "~   "
 
 [ attr.untitled ]
-fileType = 'source.ruby.rails'
+fileType = 'source.js'
 
 excludeInFileChooser  = "{$exclude,vendor/**/*,public/assets/**/*,spec/selenium/**/*,Recipes/**/*}"
 excludeInFolderSearch = "{$excludeInFolderSearch,vendor,public/assets,spec/selenium,Recipes}"

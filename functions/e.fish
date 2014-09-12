@@ -1,3 +1,3 @@
 function e --description 'Open current directory in Sublime'
-	subl . &
+	mate . &
 end

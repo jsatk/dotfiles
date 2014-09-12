@@ -1,3 +1,3 @@
 function et --description 'Edit .tmux.conf'
-	subl ~/.tmux.conf
+	mate ~/.tmux.conf
 end

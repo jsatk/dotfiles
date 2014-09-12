@@ -1,3 +1,3 @@
 function eg --description 'Edit .gitconfig'
-	subl ~/.gitconfig
+	mate ~/.gitconfig
 end

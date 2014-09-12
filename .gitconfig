@@ -47,6 +47,7 @@
   excludesfile     = ~/.gitignore
   ignorecase       = true
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
+	editor = mate
 
 [color "branch"]
   current          = yellow reverse
