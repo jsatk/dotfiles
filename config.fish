@@ -26,3 +26,6 @@ set -gx PATH $PATH /usr/bin /bin /usr/sbin /sbin
 
 # Adds custom scripts to path.
 set -gx PATH $PATH $HOME/Library/Scripts/*
+
+# Postgres commandline tools. http://postgresapp.com/documentation/cli-tools.html
+set -gx PATH $PATH /Applications/Postgres.app/Contents/Versions/9.4/bin

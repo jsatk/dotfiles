@@ -47,7 +47,7 @@
   excludesfile     = ~/.gitignore
   ignorecase       = true
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
-	editor = mate
+  editor           = mate -w
 
 [color "branch"]
   current          = yellow reverse
@@ -99,7 +99,7 @@
   insteadOf        = "git://github.com/jsatk/"
 
 [user]
-  email            = jatkinson@tunein.com
+  email            = jesse.atkinson@me.com
   name             = Jesse Atkinson
 
 [credential]

@@ -1,25 +1,35 @@
-TM_STRIP_WHITESPACE_ON_SAVE = true
+# Basic Settings
+
+followSymbolicLinks = true
+fontSize            = 15
+fontName            = 'Inconsolata'
+softWrap            = true
+softTabs            = true
+tabSize             = 2
+wrapColumn          = 120
+showInvisibles      = true
+invisiblesMap       = "~   "
+showWrapColumn      = true
+
+# Configure git and hg paths
+
+TM_HG  = "/opt/local/bin/hg"
+TM_GIT = "/opt/local/bin/git"
+
+# Search Settings
 
 excludeInFolderSearch = "{$excludeInFolderSearch,tmp,log,coverage}"
-followSymbolicLinks   = true
-fontSize              = 15
-fontName              = 'Inconsolata'
-softWrap              = true
-softTabs              = true
-tabSize               = 2
-wrapColumn            = 120
-showInvisibles        = true
-invisiblesMap         = "~   "
-
-[ attr.untitled ]
-fileType = 'source.js'
-
 excludeInFileChooser  = "{$exclude,vendor/**/*,public/assets/**/*,spec/selenium/**/*,Recipes/**/*}"
 excludeInFolderSearch = "{$excludeInFolderSearch,vendor,public/assets,spec/selenium,Recipes}"
+excludeDirectories    = "{$excludeDirectories,dist,node_modules}"
 include               = "{$include,.rubocop.yml}"
 
-wrapColumn     = 120
-showWrapColumn = true
+# Default syntax highlighting is plain text
+
+[ attr.untitled ]
+fileType = 'source.text'
+
+# Assume rails when editing ruby files
 
 [ "app/**/*.rb" ]
 fileType = "source.ruby.rails"
@@ -27,11 +37,10 @@ fileType = "source.ruby.rails"
 [ "spec/**/*_spec.rb" ]
 fileType = "source.ruby.rspec"
 
-[ "app/views/**/*.html.erb" ]
-wrapColumn = 160
+# Plain text syntax if...
 
-[ text.plain ]
-wrapColumn = 160
+[ "{README,INSTALL,LICENSE,TODO}" ]
+fileType         = "text.plain"
 
-[ text.markdown ]
-wrapColumn = 160
+# From Avian Gem: https://github.com/elia/avian-missing.tmbundle
+TM_STRIP_WHITESPACE_ON_SAVE = true

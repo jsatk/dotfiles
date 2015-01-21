@@ -22,21 +22,27 @@ export MANPAGER="less -X"
 # http://brettterpstra.com/2013/03/30/a-multi-purpose-editor-variable/
 export EDITOR="$HOME/Library/Scripts/editor.sh"
 
-# Enable shims and autocompletion for rbenv.
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
 # ----
 # Path
 # ----
 
 # Ensure user-installed binaries take precedence
-export PATH=/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+# Enable shims and autocompletion for rbenv.
+eval "$(rbenv init -)"
 
 # Load .bashrc if it exists
 test -f ~/.bashrc && source ~/.bashrc
 
 # Sets PATH for executable scripts
-export PATH="$PATH:$HOME/Library/Scripts/"
+export PATH=$PATH:$HOME/Library/Scripts
+
+# ---------------
+# Bash Completion
+# ---------------
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
 
 # -------
 # Aliases
@@ -266,3 +272,6 @@ function fixopenwith() {
 # \[\e]1;\]$(basename $(dirname $PWD))/\W\[\a\]
 
 PS1="\n\[$RESET\]┌─▪\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[${BOLD}${MAGENTA}\]\u \[$WHITE\]on \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$RESET\]\n└─▪ "
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

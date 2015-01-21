@@ -1,4 +1,5 @@
 require 'irb/completion'
+require 'date'
 require 'irb/ext/save-history'
 
 IRB.conf[:PROMPT_MODE]  = :SIMPLE
