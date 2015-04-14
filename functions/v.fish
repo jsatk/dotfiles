@@ -1,3 +1,3 @@
 function v --description 'Really lazy vim'
-	vim $argv
+	f -e vim
 end

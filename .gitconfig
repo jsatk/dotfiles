@@ -36,7 +36,7 @@
   branchdate       = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
 
   # A quick way to get fired.
-  # yolo           = !gitadd -A && and git commit -am '#YOLO' && git push origin master
+  # yolo           = !git add -A && and git commit -am '#YOLO' && git push --force origin master
 
 [apply]
   whitespace       = fix
@@ -44,8 +44,8 @@
 [core]
   attributesfile   = ~/.gitattributes
   autocrlf         = input
-  excludesfile     = ~/.gitignore
-  ignorecase       = true
+	excludesfile = /Users/jessea/.gitignore_global
+  ignorecase       = false
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
   editor           = mate -w
 
@@ -104,3 +104,9 @@
 
 [credential]
   helper           = osxkeychain
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
