@@ -1,3 +1,3 @@
 function ef --description 'Edit fish.config.'
-	mate ~/.config/fish/
+	eval $EDITOR ~/.config/fish/
 end

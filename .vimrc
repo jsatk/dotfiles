@@ -49,11 +49,11 @@ set binary
 set noeol
 
 " Make tabs as wide as two spaces
-set softtabstop=2
-set tabstop=2
+set softtabstop=4
+set tabstop=4
 
 " Controls how many spaces to indent when using >>
-set shiftwidth=2
+set shiftwidth=4
 set expandtab
 
 " Highlight current line
@@ -140,14 +140,14 @@ au FocusLost * :wa
 " Color scheme stuff!
 " Color schemes are located in ~/.vim/colors/
 " Here's the top 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
-" List of favorites: inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
+" List of favorites: railscasts, inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
 " You can make your own colorschemes here: http://www.villustrator.com/
 " Solarized can be found here: http://ethanschoonover.com/solarized
 " Sets my background to either light or dark in solarized colorscheme
 " set background=dark
 " Needed for use of Solarized in Terminal.app.
-let g:solarized_termcolors=256
-colorscheme molokai
+" let g:solarized_termcolors=256
+colorscheme railscasts
 
 " Set font type and size. Depends on the resolution. Larger screens, prefer h20
 " Inconsolata can be found here: http://levien.com/type/myfonts/inconsolata.html
@@ -252,3 +252,28 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
+
+" Use TAB to complete when typing words, else inserts TABs as usual.
+" Uses dictionary and source files to find matching words to complete.
+
+" See help completion for source,
+" Note: usual completion is on <C-n> but more trouble to press all the time.
+" Never type the same word twice and maybe learn a new spellings!
+" Use the Linux dictionary when spelling is in doubt.
+" Window users can copy the file to their machine.
+function! Tab_Or_Complete()
+  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    return "\<C-N>"
+  else
+    return "\<Tab>"
+  endif
+endfunction
+:inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+:set dictionary="/usr/dict/words"
+
+
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)

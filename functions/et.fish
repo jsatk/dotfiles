@@ -1,3 +1,3 @@
 function et --description 'Edit .tmux.conf'
-	mate ~/.tmux.conf
+	eval $EDITOR ~/.tmux.conf
 end

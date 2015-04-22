@@ -7,7 +7,7 @@
 set BROWSER open safari
 
 # Default text editor
-set EDITOR mate
+set EDITOR vim
 
 # NOTE: There is probably a sexier nicer way to do this, but until I figure that out I am manually unsetting here.
 # Unsets PATH

@@ -1,3 +1,3 @@
 function eh --description 'Edit .hgrc'
-	mate ~/.hgrc
+	eval $EDITOR ~/.hgrc
 end

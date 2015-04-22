@@ -1,3 +1,3 @@
 function eg --description 'Edit .gitconfig'
-	mate ~/.gitconfig
+	eval $EDITOR ~/.gitconfig
 end

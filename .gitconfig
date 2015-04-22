@@ -44,10 +44,10 @@
 [core]
   attributesfile   = ~/.gitattributes
   autocrlf         = input
-	excludesfile = /Users/jessea/.gitignore_global
+  excludesfile     = /Users/jessea/.gitignore_global
   ignorecase       = false
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
-  editor           = mate -w
+  editor = mate -w
 
 [color "branch"]
   current          = yellow reverse
@@ -106,7 +106,7 @@
   helper           = osxkeychain
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true

@@ -1,3 +1,3 @@
 function ev --description 'Edit .vimrc'
-	mate ~/.vimrc
+	eval $EDITOR ~/.vimrc
 end
