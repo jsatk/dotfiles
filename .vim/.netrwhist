@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/jatkinson/Development/TuneIn/trackr/.git/hooks'
-let g:netrw_dirhist_2='/Users/jatkinson/Development/TuneIn/trackr/app/assets/javascripts/admin'
-let g:netrw_dirhist_3='/usr/local/.git'

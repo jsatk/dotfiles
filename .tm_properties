@@ -1,7 +1,7 @@
 # Basic Settings
 
 followSymbolicLinks = true
-fontSize            = 15
+fontSize            = 12
 fontName            = 'Inconsolata'
 softWrap            = true
 softTabs            = true

@@ -44,10 +44,6 @@ set t_Co=256
 " Enable line numbers
 set number
 
-" Don’t add empty newlines at the end of files
-set binary
-set noeol
-
 " Make tabs as wide as two spaces
 set softtabstop=4
 set tabstop=4
@@ -58,11 +54,6 @@ set expandtab
 
 " Highlight current line
 set cursorline
-
-" Changes Vim's line number column to display how far away each line is
-" from the current one, instead of showing the absolute line number.
-" Note: This is a new feature in VIM 7.3. Not supported in prior versions.
-set relativenumber
 
 " Enable syntax highlighting
 syntax on
@@ -96,6 +87,10 @@ set mouse=a
 " Don’t reset cursor to start of line when moving around.
 set nostartofline
 
+" Goddammit vim. Make fucking backspace/delete on OS X work correctly.
+" http://vim.wikia.com/wiki/Backspace_and_delete_problems
+set backspace=indent,eol,start
+
 " Display current cursor position in lower right corner.
 set ruler
 
@@ -123,14 +118,6 @@ filetype on
 " Highlight matching braces as you type.
 set showmatch
 
-" http://vim.wikia.com/wiki/Project_browsing_using_find
-" set path=$PWD/**
-
-" Fix Vim's horribly broken default regex 'handling' by automatically inserting a \v before any string you search for.
-" I don't really dig this but some might. Leaving here and commented out.
-" nnoremap / /\v
-" vnoremap / /\v
-
 " Add the g flag to search/replace by default
 set gdefault
 
@@ -140,25 +127,17 @@ au FocusLost * :wa
 " Color scheme stuff!
 " Color schemes are located in ~/.vim/colors/
 " Here's the top 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
-" List of favorites: railscasts, inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
+" List of favorites: lessnau_dark, railscasts, inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
 " You can make your own colorschemes here: http://www.villustrator.com/
 " Solarized can be found here: http://ethanschoonover.com/solarized
 " Sets my background to either light or dark in solarized colorscheme
 " set background=dark
 " Needed for use of Solarized in Terminal.app.
-" let g:solarized_termcolors=256
-colorscheme railscasts
+colorscheme lucius
 
 " Set font type and size. Depends on the resolution. Larger screens, prefer h20
 " Inconsolata can be found here: http://levien.com/type/myfonts/inconsolata.html
 set guifont=Inconsolata:h24
-
-" Sets .tt2 files to be syntax highlighted as html and .flo to be highlighted as perl
-augroup filesyntax
-    autocmd!
-    au BufNewFile,BufRead *.tt2 set filetype=html
-    au BufNewFile,BufRead *.flo set filetype=perl
- augroup END
 
 " On save strip trailing whitespace and convert line endings to Unix format
 " http://stackoverflow.com/questions/356126/how-can-you-automatically-remove-trailing-whitespace-in-vim
@@ -189,9 +168,6 @@ function! StripWhitespace ()
     call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace ()<CR>
-
-" Set up an HTML5 template for all new .html files
-autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
 
 " Sorts CSS properties. Most useful command ever.
 " See: http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
@@ -233,13 +209,6 @@ nmap <C-j> ddp
 vmap <C-k> xkP`[V`]
 vmap <C-j> xp`[V`]
 
-" Easier window navigation
-" Commented out due to Bubbling key bindings above.
-" nmap <C-h> <C-w>h
-" nmap <C-j> <C-w>j
-" nmap <C-k> <C-w>k
-" nmap <C-l> <C-w>l
-
 " New Vim users will want the following lines to teach them to do things right
 " For training only. Remove when need be.
 nnoremap <up> <nop>
@@ -271,13 +240,6 @@ endfunction
 :inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 :set dictionary="/usr/dict/words"
 
-
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
 " Rename current file
 function! RenameFile()
     let old_name = expand('%')
@@ -293,3 +255,6 @@ map <leader>rn :call RenameFile()<cr>
 
 " switch to last file
 nnoremap <leader><leader> <c-^>
+
+" Clear the search buffer when hitting return
+nnoremap <CR> :nohlsearch<cr>
