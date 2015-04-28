@@ -412,6 +412,9 @@ augroup ft_ruby
     au BufRead,BufNewFile Capfile setlocal filetype=ruby
 augroup END
 
+" Tells Vim to set the syntax for our .irbrc file to Ruby.
+autocmd BufNewFile,BufRead .irbrc set syntax=html
+
 " CSS and LessCSS
 augroup ft_css
     au!
