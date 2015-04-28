@@ -21,3 +21,11 @@ It's important to note that I use Fish Shell.  If this scares you that's okay.  
 1. `git clone https://github.com/jsatk/dotfiles.git ~/Dropbox/dotfiles`
 2. `cd ~/Dropbox/dotfiles`
 3. `ruby setup_computer.rb` Totoro will guide you through the setup process.
+
+# References
+
+Big thanks to these people who are much smarter than me for publishing their own dotfiles and allowing me to steal from them.
+
+* [https://github.com/nicknisi/dotfiles](https://github.com/nicknisi/dotfiles)
+* [https://bitbucket.org/sjl/dotfiles](https://bitbucket.org/sjl/dotfiles)
+* [https://github.com/paulirish/dotfiles](https://github.com/paulirish/dotfiles)
