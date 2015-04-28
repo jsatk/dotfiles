@@ -10,3 +10,9 @@ bind r source-file ~/.tmux.conf
 # quick pane cycling
 unbind ^A
 bind ^A select-pane -t :.+
+
+##############################
+### Color & Style Settings ###
+##############################
+
+source ~/Dropbox/dotfiles/theme.sh

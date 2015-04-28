@@ -47,7 +47,6 @@
   excludesfile     = /Users/jessea/.gitignore_global
   ignorecase       = false
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
-  editor           = mate -w
 
 [color "branch"]
   current          = yellow reverse
