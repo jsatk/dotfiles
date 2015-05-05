@@ -54,7 +54,7 @@ puts 'Installing homebrew formulas.'
 puts '============================='
 puts ' '
 
-`brew install ack autoconf bash bash-completion fasd fish git jq libevent mercurial mysql node openssl phantomjs pkg-config rbenv readline rmtrash ruby-build the_platinum_searcher tmux vim multimarkdown`
+`brew install ack autoconf bash bash-completion fasd fish git jq libevent mercurial mysql node openssl phantomjs pkg-config rbenv readline rmtrash ruby-build the_platinum_searcher tmux vim multimarkdown ag`
 `brew doctor`
 `brew update`
 
@@ -71,15 +71,15 @@ puts '===================='
 puts ' '
 
 [
-    %w( 'config.fish' '~/.config/fish/' ),
-    %w( 'functions'   '~/.config/fish/' ),
-    %w( 'vimrc'       '~/'              ),
-    %w( 'vim'         '~/'              ),
-    %w( 'tmux.conf'   '~/'              ),
-    %w( 'tm_properties'~/'              ),
-    %w( 'irbrc'       '~/'              ),
-    %w( 'gitconfig'   '~/'              ),
-    %w( 'bash_profile''~/'              )
+    %w( 'config.fish'   '~/.config/fish/' ),
+    %w( 'functions'     '~/.config/fish/' ),
+    %w( 'vimrc'         '~/'              ),
+    %w( 'vim'           '~/'              ),
+    %w( 'tmux.conf'     '~/'              ),
+    %w( 'tm_properties' '~/'              ),
+    %w( 'irbrc'         '~/'              ),
+    %w( 'gitconfig'     '~/'              ),
+    %w( 'bash_profile'  '~/'              )
 ].each do |arr|
     puts 'Symlinking #{arr[0]}'
     `ln -s ~/Dropbox/dotfiles/#{arr[0]}.symlink ~/.#{arr[1]}`
@@ -114,3 +114,10 @@ puts '==========================='
 puts ' '
 
 `curl -o ~/Downloads/Inconsolata.otf 'http://www.levien.com/type/myfonts/Inconsolata.otf'; and open ~/Downloads/Inconsolata.otf`
+
+puts '========='
+puts 'Setup Vim'
+puts '========='
+puts ' '
+
+`updatevim` # This is a custom Fish function I wrote which you can find at ~/.config/fish/functions/updatevim.fish.
