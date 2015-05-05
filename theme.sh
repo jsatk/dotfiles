@@ -47,10 +47,10 @@ set-option -g display-panes-colour $tm_color_inactive
 # clock
 set-window-option -g clock-mode-colour $tm_color_active
 
-tm_spotify="#[fg=$tm_color_music]#(osascript ~/.dotfiles/applescripts/spotify.scpt)"
-tm_itunes="#[fg=$tm_color_music]#(osascript ~/.dotfiles/applescripts/itunes.scpt)"
-tm_rdio="#[fg=$tm_color_music]#(osascript ~/.dotfiles/applescripts/rdio.scpt)"
-tm_battery="#(~/.dotfiles/bin/battery_indicator.sh)"
+tm_spotify="#[fg=$tm_color_music]#(osascript ~/Dropbox/dotfiles/applescripts/spotify.scpt)"
+tm_itunes="#[fg=$tm_color_music]#(osascript ~/Dropbox/dotfiles/applescripts/itunes.scpt)"
+tm_rdio="#[fg=$tm_color_music]#(osascript ~/Dropbox/dotfiles/applescripts/rdio.scpt)"
+tm_battery="#(~/Dropbox/dotfiles/bin/battery_indicator.sh)"
 
 tm_date="#[fg=$tm_color_inactive] %R %d %b"
 tm_host="#[fg=$tm_color_feature,bold]#h"

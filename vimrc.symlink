@@ -28,18 +28,24 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" Our Vim pulugins!
+" Our Vim plugins!
+" NOTE: vimproc is manually installed since it doesn't play nice with Vundle
+" and the author of vimproc wants you to use his own special bundle manager
+" that doesn't play nice with *other* plugins. I fucking hate computers.
+" https://github.com/Shougo/vimproc.vim
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'pangloss/vim-javascript.git'
-Plugin 'kien/ctrlp.vim.git'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-commentary'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'groenewege/vim-less'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'dag/vim-fish'
+Plugin 'takac/vim-spotifysearch'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'Shougo/unite.vim'
 
 " Distiguishes between filetypes.  It is required to be set to 'off' for
 " Vundle.
@@ -608,15 +614,30 @@ function! NyanMe() "
 endfunction "
 command! NyanMe call NyanMe()
 
-" Sets Unite to use pt.
-" https://github.com/monochromegane/the_platinum_searcher#vim--unitevim
-nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-if executable('pt')
-  let g:unite_source_grep_command = 'pt'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-  let g:unite_source_grep_recursive_opt = ''
-  let g:unite_source_grep_encoding = 'utf-8'
-endif
-
 " Maps NERDTree to ^n.
 map <C-n> :NERDTreeToggle<CR>
+
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" *********
+" * Unite *
+" *********
+
+" Sets Unite to use pt.
+" https://github.com/monochromegane/the_platinum_searcher#vim--unitevim
+" nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+" if executable('pt')
+"   let g:unite_source_grep_command = 'pt'
+"   let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+"   let g:unite_source_grep_recursive_opt = ''
+"   let g:unite_source_grep_encoding = 'utf-8'
+" endif
+
+" Fuzzy file finder (think ctrlp plugin).
+nnoremap <C-t> :Unite file_rec/async<cr>
+
+" nnoremap <C-l> :Unite file file_rec<cr>

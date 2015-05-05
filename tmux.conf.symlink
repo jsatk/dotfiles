@@ -11,6 +11,10 @@ bind r source-file ~/.tmux.conf
 unbind ^A
 bind ^A select-pane -t :.+
 
+# Let me use my fucking mouse to scroll, tmux.
+setw -g mode-mouse on
+set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+
 ##############################
 ### Color & Style Settings ###
 ##############################
