@@ -1,6 +1,15 @@
-" Title: .vimrc File
+"             _
+"   __ __    (_)    _ __      _ _    __
+"   \ V /    | |   | '  \    | '_|  / _|
+"   _\_/_   _|_|_  |_|_|_|  _|_|_   \__|_
+" _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
+" `-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'
+
+" Preamble {{{
+
 " Author: Jesse Atkinson
 " Email: jesse.atkinson@me.com
+" Source: https://github.com/jsatk/dotfiles/blob/master/vimrc.symlink
 " Twitter: @jsatk
 " References: http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 "             https://github.com/paulirish/dotfiles/blob/master/.vimrc
@@ -9,8 +18,12 @@
 "             http://net.tutsplus.com/articles/general/top-10-pitfalls-when-switching-to-vim/
 "             http://vimregex.com/
 
+" }}}
+
+" Vundle {{{
+
 " Make vim more useful
-" Why am I including this? Better safe than sorry.
+" Why am I including this?  Better safe than sorry.
 " http://stackoverflow.com/questions/5845557/in-a-vimrc-is-set-nocompatible-completely-useless
 set nocompatible
 
@@ -20,8 +33,7 @@ if &shell =~# 'fish$'
     set shell=sh
 endif
 
-" Distiguishes between filetypes.  It is required to be set to 'off' for
-" Vundle.
+" Distiguishes between filetypes.  It is required to be set to 'off' for Vundle.
 filetype off
 
 " set the runtime path to include Vundle and initialize
@@ -29,10 +41,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Our Vim plugins!
-" NOTE: vimproc is manually installed since it doesn't play nice with Vundle
-" and the author of vimproc wants you to use his own special bundle manager
-" that doesn't play nice with *other* plugins. I fucking hate computers.
-" https://github.com/Shougo/vimproc.vim
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree.git'
@@ -45,7 +53,7 @@ Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'dag/vim-fish'
 Plugin 'takac/vim-spotifysearch'
 Plugin 'junegunn/vim-easy-align'
-Plugin 'Shougo/unite.vim'
+Plugin 'kien/ctrlp.vim'
 
 " Distiguishes between filetypes.  It is required to be set to 'off' for
 " Vundle.
@@ -54,6 +62,10 @@ filetype off
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" }}}
+
+" Basic Options {{{
 
 " Prevents some security exploits having to do with modelines in files.
 set modelines=0
@@ -196,20 +208,36 @@ set gdefault
 " Saves file on losing focus of VIM
 au FocusLost * :wa
 
-" Color scheme stuff!
+" Remaps leader key to an easier key
+let mapleader = ","
+
+" I don't know how to use ex mode and it scares me.
+map Q <Nop>
+
+" Ever notice a slight lag after typing the leader key + command?
+" This lowers the timeout.
+set timeoutlen=500
+
+" Toggle line numbers
+nnoremap <leader>n :setlocal number!<cr>
+
+" }}}
+
+" Look & Feel {{{
+
 " Color schemes are located in ~/.vim/colors/
 " Here's the top 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
 " List of favorites: lessnau_dark, railscasts, inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
 " You can make your own colorschemes here: http://www.villustrator.com/
-" Solarized can be found here: http://ethanschoonover.com/solarized
-" Sets my background to either light or dark in solarized colorscheme
-" set background=dark
-" Needed for use of Solarized in Terminal.app.
 colorscheme lucius
 
 " Set font type and size.  Depends on the resolution.  Larger screens, prefer h20
 " Inconsolata can be found here: http://levien.com/type/myfonts/inconsolata.html
 set guifont=Inconsolata:h24
+
+" }}}
+
+" On Save {{{
 
 " On save strip trailing whitespace and convert line endings to Unix format
 " http://stackoverflow.com/questions/356126/how-can-you-automatically-remove-trailing-whitespace-in-vim
@@ -224,22 +252,16 @@ augroup myvimrchooks
     autocmd bufwritepost .vimrc source ~/.vimrc
 augroup END
 
+" }}}
+
+" Version Control {{{
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-" Remaps leader key to an easier key
-let mapleader = ","
+" }}}
 
-" I don't know how to use ex mode and it scares me.
-map Q <Nop>
-
-" Ever notice a slight lag after typing the leader key + command?
-" This lowers the timeout.
-set timeoutlen=500
-
-" Toggle line numbers
-nnoremap <leader>n :setlocal number!<cr>
+" Whitespace {{{
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace ()
@@ -251,13 +273,12 @@ function! StripWhitespace ()
 endfunction
 noremap <leader>ss :call StripWhitespace ()<CR>
 
-" Sorts CSS properties.  Most useful command ever.
-" See: http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
-nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
-:command! BeautifyCSS :g#\({\n\)\@<=#.,/}/sort <bar> %s/:\(\S\+;\)/: \1/g
-
 " Super retab: http://vim.wikia.com/wiki/Super_retab
 :command! -nargs=1 -range SuperRetab <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
+
+" }}}
+
+" Casing {{{
 
 " Lowercases all HTML tags: http://vim.wikia.com/wiki/Changing_case_with_regular_expressions
 :command! LowerCaseHTML :%s/<\/\=\(\w\+\)\>/\L&/g
@@ -268,18 +289,16 @@ nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
 " Uppercases an entire file (I can't think of when this would ever be useful)
 :command! UpperCaseFile :%s/.*/\U&/g
 
+" }}}
+
+" Quick Editing {{{
+
 " Lets me open my .vimrc on the fly to quickly add useful stuff to it.
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
-" Shortcut to fold tags with leader (set to ,) + ft
-nnoremap <leader>ft Vatzf
+" }}}
 
-" Map code completion to , + tab
-imap <leader><tab> <C-x><C-o>
-
-" Some might be interested in this article.
-" Make Vim completion popup menu work just like in an IDE
-" http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
+" Line Bubbling {{{
 
 " Bubble single lines (kicks butt)
 " http://vimcasts.org/episodes/bubbling-text/
@@ -290,6 +309,10 @@ nmap <C-j> ddp
 " Bubble multiple lines
 vmap <C-k> xkP`[V`]
 vmap <C-j> xp`[V`]
+
+" }}}
+
+" Kill Arrow Keys {{{
 
 " New Vim users will want the following lines to teach them to do things right
 " For training only.  Remove when need be.
@@ -303,6 +326,10 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
+
+" }}}
+
+" Tab Completion {{{
 
 " Use TAB to complete when typing words, else inserts TABs as usual.
 " Uses dictionary and source files to find matching words to complete.
@@ -322,6 +349,10 @@ endfunction
 inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 set dictionary="/usr/dict/words"
 
+" }}}
+
+" Rename File {{{
+
 " Rename current file
 function! RenameFile()
     let old_name = expand('%')
@@ -335,11 +366,23 @@ endfunction
 
 map <leader>rn :call RenameFile()<cr>
 
+" }}}
+
+" File Switching {{{
+
 " switch to last file
 nnoremap <leader><leader> <c-^>
 
+" }}}
+
+" Searchin {{{
+
 " Clear the search buffer when hitting return
 nnoremap <CR> :nohlsearch<cr>
+
+" }}}
+
+" CursorLine {{{
 
 " Only show cursorline in the current window and in normal mode.
 augroup cline
@@ -348,13 +391,20 @@ augroup cline
     au WinEnter,InsertLeave * set cursorline
 augroup END
 
-" Trailing whitespace
+" }}}
+
+" Trailing whitespace {{{
+
 " Only shown when not in insert mode so I don't go insane.
 augroup trailing
     au!
     au InsertEnter * :set listchars-=trail:⌴
     au InsertLeave * :set listchars+=trail:⌴
 augroup END
+
+" }}}
+
+" Line Return {{{
 
 " Make sure Vim returns to the same line when you reopen a file.
 " Thanks, Amit
@@ -366,7 +416,10 @@ augroup line_return
         \ endif
 augroup END
 
-" Backups
+" }}}
+
+" Backups {{{
+
 set backup                        " enable backups
 set noswapfile                    " it's 2013, Vim.
 
@@ -378,16 +431,19 @@ set directory=~/.vim/tmp/swap//   " swap files
 if !isdirectory(expand(&undodir))
     call mkdir(expand(&undodir), "p")
 endif
+
 if !isdirectory(expand(&backupdir))
     call mkdir(expand(&backupdir), "p")
 endif
+
 if !isdirectory(expand(&directory))
     call mkdir(expand(&directory), "p")
 endif
 
-" File Specific
+" }}}
 
-" JavaScript
+" JavaScript {{{
+
 augroup ft_javascript
     au!
 
@@ -404,14 +460,20 @@ augroup ft_javascript
     au FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
 augroup END
 
-" Markdown
+" }}}
+
+" Markdown {{{
+
 augroup ft_markdown
     au!
 
     au BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
 augroup END
 
-" Ruby
+" }}}
+
+" Ruby {{{
+
 augroup ft_ruby
     au!
     au Filetype ruby setlocal foldmethod=syntax
@@ -421,7 +483,15 @@ augroup END
 " Tells Vim to set the syntax for our .irbrc file to Ruby.
 autocmd BufNewFile,BufRead .irbrc set syntax=html
 
-" CSS and LessCSS
+" }}}
+
+" CSS and Less {{{
+
+" Sorts CSS properties.  Most useful command ever.
+" See: http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
+nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
+:command! BeautifyCSS :g#\({\n\)\@<=#.,/}/sort <bar> %s/:\(\S\+;\)/: \1/g
+
 augroup ft_css
     au!
 
@@ -458,14 +528,19 @@ augroup ft_css
     au BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
 augroup END
 
-" Fish
+" }}}
+
+" Fish {{{
+
 augroup ft_fish
     au!
 
     au BufNewFile,BufRead *.fish setlocal filetype=fish
 augroup END
 
-" Vim
+" }}}
+
+" Vim {{{
 
 augroup ft_vim
     au!
@@ -475,7 +550,9 @@ augroup ft_vim
     au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
 augroup END
 
-" YAML
+" }}}
+
+" Yaml {{{
 
 augroup ft_yaml
     au!
@@ -483,7 +560,9 @@ augroup ft_yaml
     au FileType yaml set shiftwidth=2
 augroup END
 
-" XML
+" }}}
+
+" XML {{{
 
 augroup ft_xml
     au!
@@ -497,7 +576,9 @@ augroup ft_xml
     au FileType xml nnoremap <buffer> <localleader>= Vat=
 augroup END
 
-" Nyan!
+" }}}
+
+" Nyan! {{{
 
 function! NyanMe() "
     hi NyanFur             guifg=#BBBBBB
@@ -614,8 +695,16 @@ function! NyanMe() "
 endfunction "
 command! NyanMe call NyanMe()
 
+" }}}
+
+" NERDTree {{{
+
 " Maps NERDTree to ^n.
 map <C-n> :NERDTreeToggle<CR>
+
+" }}}
+
+" EasyAlign {{{
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vmap <Enter> <Plug>(EasyAlign)
@@ -623,21 +712,4 @@ vmap <Enter> <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" *********
-" * Unite *
-" *********
-
-" Sets Unite to use pt.
-" https://github.com/monochromegane/the_platinum_searcher#vim--unitevim
-" nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-" if executable('pt')
-"   let g:unite_source_grep_command = 'pt'
-"   let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-"   let g:unite_source_grep_recursive_opt = ''
-"   let g:unite_source_grep_encoding = 'utf-8'
-" endif
-
-" Fuzzy file finder (think ctrlp plugin).
-nnoremap <C-t> :Unite file_rec/async<cr>
-
-" nnoremap <C-l> :Unite file file_rec<cr>
+" }}}
