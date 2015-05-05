@@ -54,7 +54,7 @@ puts 'Installing homebrew formulas.'
 puts '============================='
 puts ' '
 
-`brew install ack autoconf bash bash-completion fasd fish git jq libevent mercurial mysql node openssl phantomjs pkg-config rbenv readline rmtrash ruby-build the_platinum_searcher tmux vim multimarkdown ag`
+`brew install ack autoconf bash bash-completion fasd fish git jq libevent mercurial mysql node openssl phantomjs pkg-config rbenv readline rmtrash ruby-build the_platinum_searcher tmux vim multimarkdown ag python`
 `brew doctor`
 `brew update`
 

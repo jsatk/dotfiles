@@ -38,6 +38,9 @@
   # A quick way to get fired.
   # yolo           = !git add -A && and git commit -am '#YOLO' && git push --force origin master
 
+  # Delete all branches that have already been merged into the current branch.
+  deletemerged = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+
 [apply]
   whitespace       = fix
 
