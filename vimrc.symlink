@@ -221,6 +221,11 @@ set timeoutlen=500
 " Toggle line numbers
 nnoremap <leader>n :setlocal number!<cr>
 
+" never mis-spell iOS again
+abbr ios iOS
+abbr iOs iOS
+abbr IOS iOS
+
 " }}}
 
 " Look & Feel {{{
@@ -711,5 +716,20 @@ vmap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" }}}
+
+" CtrlP {{{
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](node_modules|env|htmlcov|vendor)$',
+  \ 'file': '\v\.(pyc)$',
+  \ }
+
+" }}}
+
+" The Silver Searcher (Ag) {{{
+
+
 
 " }}}
