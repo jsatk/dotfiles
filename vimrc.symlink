@@ -56,9 +56,6 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
 
-" Distiguishes between filetypes.  It is required to be set to 'off' for Vundle.
-filetype off
-
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
