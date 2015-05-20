@@ -487,6 +487,16 @@ autocmd BufNewFile,BufRead .irbrc set syntax=html
 
 " }}}
 
+" Handlebars {{{
+
+augroup ft_handlebars
+    au!
+    au Filetype html.handlebars setlocal foldmethod=indent
+    au BufNewFile,BufRead *.hbs setlocal filetype=html.handlebars
+augroup END
+
+" }}}
+
 " CSS and Less {{{
 
 " Sorts CSS properties.  Most useful command ever.
@@ -704,6 +714,8 @@ command! NyanMe call NyanMe()
 " Maps NERDTree to ^n.
 map <C-n> :NERDTreeToggle<CR>
 
+let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]']
+
 " }}}
 
 " EasyAlign {{{
@@ -728,5 +740,14 @@ let g:ctrlp_custom_ignore = {
 " The Silver Searcher (Ag) {{{
 
 
+
+" }}}
+
+" Learn Vimscript the Hard Way {{{
+
+" noremap <leader><leader>- -
+" noremap <leader>_ _
+" inoremap <leader><c-u> <esc>bveUi
+" noremap <leader><c-u> bveU<esc>
 
 " }}}
