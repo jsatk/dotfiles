@@ -29,3 +29,6 @@ set -gx PATH $PATH $HOME/Library/Scripts/*
 
 # Postgres commandline tools. http://postgresapp.com/documentation/cli-tools.html
 set -gx PATH $PATH /Applications/Postgres.app/Contents/Versions/9.4/bin
+
+# For Autojump
+[ -f /usr/local/share/autojump/autojump.fish ]; and . /usr/local/share/autojump/autojump.fish
