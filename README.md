@@ -12,7 +12,7 @@ It's important to note that I use Fish Shell.  If this scares you that's okay.  
 * tmux configuration
 * git configuration
 * osx configuration (No longer used, but leaving here in case others can glean some knowledge from it.)
-* Computer setup scrip
+* Computer setup script
 
 # Install
 
