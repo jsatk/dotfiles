@@ -383,7 +383,7 @@ nnoremap <leader><leader> <c-^>
 
 " }}}
 
-" Searchin {{{
+" Searching {{{
 
 " Clear the search buffer when hitting return
 nnoremap <CR> :nohlsearch<cr>
