@@ -55,6 +55,7 @@ Plugin 'takac/vim-spotifysearch'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
+Plugin 'tpope/vim-surround'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -85,9 +86,12 @@ set encoding=utf-8 nobomb
 " Sets number of available colors
 set t_Co=256
 
-" No line numbers
-set nonumber
-set norelativenumber
+" Show line number
+" Show relative line numbers
+" Since we are also showing the line number then the line we are on will
+" show its number but all surrounding lines will show their relative number.
+set number
+set relativenumber
 
 " Make tabs as wide as four spaces
 set softtabstop=4
@@ -203,7 +207,7 @@ set matchtime=3
 set gdefault
 
 " Saves file on losing focus of VIM
-au FocusLost * :wa
+autocmd FocusLost * :wa
 
 " Remaps leader key to an easier key
 let mapleader = ","
@@ -245,12 +249,14 @@ set guifont=Inconsolata:h24
 " http://stackoverflow.com/questions/356126/how-can-you-automatically-remove-trailing-whitespace-in-vim
 augroup prewrites
     autocmd!
+
     autocmd BufWritePre,FileWritePre * :%s/\s\+$//e | %s/\r$//e
 augroup END
 
 " Source the .vimrc file after saving it.  This way, you don't have to reload Vim to see the changes.
 augroup myvimrchooks
     autocmd!
+
     autocmd bufwritepost .vimrc source ~/.vimrc
 augroup END
 
@@ -388,9 +394,10 @@ nnoremap <CR> :nohlsearch<cr>
 
 " Only show cursorline in the current window and in normal mode.
 augroup cline
-    au!
-    au WinLeave,InsertEnter * set nocursorline
-    au WinEnter,InsertLeave * set cursorline
+    autocmd!
+
+    autocmd WinLeave,InsertEnter * set nocursorline
+    autocmd WinEnter,InsertLeave * set cursorline
 augroup END
 
 " }}}
@@ -399,9 +406,10 @@ augroup END
 
 " Only shown when not in insert mode so I don't go insane.
 augroup trailing
-    au!
-    au InsertEnter * :set listchars-=trail:⌴
-    au InsertLeave * :set listchars+=trail:⌴
+    autocmd!
+
+    autocmd InsertEnter * :set listchars-=trail:⌴
+    autocmd InsertLeave * :set listchars+=trail:⌴
 augroup END
 
 " }}}
@@ -411,8 +419,9 @@ augroup END
 " Make sure Vim returns to the same line when you reopen a file.
 " Thanks, Amit
 augroup line_return
-    au!
-    au BufReadPost *
+    autocmd!
+
+    autocmd BufReadPost *
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \     execute 'normal! g`"zvzz' |
         \ endif
@@ -447,19 +456,19 @@ endif
 " JavaScript {{{
 
 augroup ft_javascript
-    au!
+    autocmd!
 
-    au FileType javascript setlocal foldmethod=marker
-    au FileType javascript setlocal foldmarker={,}
+    autocmd FileType javascript setlocal foldmethod=marker
+    autocmd FileType javascript setlocal foldmarker={,}
 
     " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
     " positioned inside of them AND the following code doesn't get unfolded.
-    au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+    autocmd Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
     " }
 
     " Prettify a hunk of JSON with <localleader>p
-    au FileType javascript nnoremap <buffer> <localleader>p ^vg_:!python -m json.tool<cr>
-    au FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
+    autocmd FileType javascript nnoremap <buffer> <localleader>p ^vg_:!python -m json.tool<cr>
+    autocmd FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
 augroup END
 
 " }}}
@@ -467,9 +476,9 @@ augroup END
 " Markdown {{{
 
 augroup ft_markdown
-    au!
+    autocmd!
 
-    au BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
+    autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
 augroup END
 
 " }}}
@@ -477,9 +486,10 @@ augroup END
 " Ruby {{{
 
 augroup ft_ruby
-    au!
-    au Filetype ruby setlocal foldmethod=syntax
-    au BufRead,BufNewFile Capfile setlocal filetype=ruby
+    autocmd!
+
+    autocmd Filetype ruby setlocal foldmethod=syntax
+    autocmd BufRead,BufNewFile Capfile setlocal filetype=ruby
 augroup END
 
 " Tells Vim to set the syntax for our .irbrc file to Ruby.
@@ -490,9 +500,10 @@ autocmd BufNewFile,BufRead .irbrc set syntax=html
 " Handlebars {{{
 
 augroup ft_handlebars
-    au!
-    au Filetype html.handlebars setlocal foldmethod=indent
-    au BufNewFile,BufRead *.hbs setlocal filetype=html.handlebars
+    autocmd!
+
+    autocmd Filetype html.handlebars setlocal foldmethod=indent
+    autocmd BufNewFile,BufRead *.hbs setlocal filetype=html.handlebars
 augroup END
 
 " }}}
@@ -505,14 +516,14 @@ nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
 :command! BeautifyCSS :g#\({\n\)\@<=#.,/}/sort <bar> %s/:\(\S\+;\)/: \1/g
 
 augroup ft_css
-    au!
+    autocmd!
 
-    au BufNewFile,BufRead *.less setlocal filetype=less
+    autocmd BufNewFile,BufRead *.less setlocal filetype=less
 
-    au Filetype less,css setlocal foldmethod=marker
-    au Filetype less,css setlocal foldmarker={,}
-    au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
-    au Filetype less,css setlocal iskeyword+=-
+    autocmd Filetype less,css setlocal foldmethod=marker
+    autocmd Filetype less,css setlocal foldmarker={,}
+    autocmd Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd Filetype less,css setlocal iskeyword+=-
 
     " Use <leader>S to sort properties.  Turns this:
     "
@@ -533,11 +544,11 @@ augroup ft_css
     "
     "         ...
     "     }
-    au BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+    autocmd BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
     " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
     " positioned inside of them AND the following code doesn't get unfolded.
-    au BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+    autocmd BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
 augroup END
 
 " }}}
@@ -545,9 +556,9 @@ augroup END
 " Fish {{{
 
 augroup ft_fish
-    au!
+    autocmd!
 
-    au BufNewFile,BufRead *.fish setlocal filetype=fish
+    autocmd BufNewFile,BufRead *.fish setlocal filetype=fish
 augroup END
 
 " }}}
@@ -555,11 +566,11 @@ augroup END
 " Vim {{{
 
 augroup ft_vim
-    au!
+    autocmd!
 
-    au FileType vim setlocal foldmethod=marker
-    au FileType help setlocal textwidth=78
-    au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
+    autocmd FileType vim setlocal foldmethod=marker
+    autocmd FileType help setlocal textwidth=78
+    autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
 augroup END
 
 " }}}
@@ -567,9 +578,9 @@ augroup END
 " Yaml {{{
 
 augroup ft_yaml
-    au!
+    autocmd!
 
-    au FileType yaml set shiftwidth=2
+    autocmd FileType yaml set shiftwidth=2
 augroup END
 
 " }}}
@@ -577,15 +588,15 @@ augroup END
 " XML {{{
 
 augroup ft_xml
-    au!
+    autocmd!
 
-    au FileType xml setlocal foldmethod=manual
+    autocmd FileType xml setlocal foldmethod=manual
 
     " Use <localleader>f to fold the current tag.
-    au FileType xml nnoremap <buffer> <localleader>f Vatzf
+    autocmd FileType xml nnoremap <buffer> <localleader>f Vatzf
 
     " Indent tag
-    au FileType xml nnoremap <buffer> <localleader>= Vat=
+    autocmd FileType xml nnoremap <buffer> <localleader>= Vat=
 augroup END
 
 " }}}
@@ -750,4 +761,5 @@ let g:ctrlp_custom_ignore = {
 " inoremap <leader><c-u> <esc>bveUi
 " noremap <leader><c-u> bveU<esc>
 
+" :autocmd BufNewFile * :write
 " }}}
