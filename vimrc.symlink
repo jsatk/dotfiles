@@ -16,10 +16,11 @@
 "             http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
 "             http://www.reddit.com/r/vim/
 "             http://net.tutsplus.com/articles/general/top-10-pitfalls-when-switching-to-vim/
-"             http://vimregex.com/
+"             http://vimregex.com
 
+" Special thanks to Steve Losh and Tim Pope who I have stolen *so* much from.
+" Sincerely thank you.
 " }}}
-
 " Vundle {{{
 
 " Make vim more useful
@@ -41,28 +42,29 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Our Vim plugins!
-Plugin 'gmarik/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree.git'
-Plugin 'pangloss/vim-javascript.git'
-Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-commentary'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'groenewege/vim-less'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'dag/vim-fish'
-Plugin 'takac/vim-spotifysearch'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'kien/ctrlp.vim'
-Plugin 'rking/ag.vim'
-Plugin 'tpope/vim-surround'
+Plugin 'gmarik/Vundle.vim'                  " Alternative to Pathogen.  Lovely plugin manager for vim.
+Plugin 'tpope/vim-fugitive'                 " Git support in vim.  Incredible handy for merge conflicts.
+Plugin 'scrooloose/nerdtree.git'            " A vim explorer replacement.  Much nicer and easier to use.
+Plugin 'pangloss/vim-javascript.git'        " Adds some javascript nicities.
+Plugin 'scrooloose/syntastic'               " Adds error checking while writing or on save in vim.
+Plugin 'bling/vim-airline'                  " Adds a gorgeous toolbar with useful info to bottom of vim.
+Plugin 'tpope/vim-commentary'               " Easier comment support in vim.  Comment out blocks with gcc.
+Plugin 'editorconfig/editorconfig-vim'      " Maintain consistent coding styles between different editors and IDEs.
+Plugin 'groenewege/vim-less'                " Less syntax highlighting for vim.
+Plugin 'mustache/vim-mustache-handlebars'   " Mustache & Handlebars syntax highlighting for vim.
+Plugin 'dag/vim-fish'                       " Fish Shell syntax highlighting for vim.
+Plugin 'junegunn/vim-easy-align'            " Aligns multiple lines on any given point.  Useful for assignments.
+Plugin 'kien/ctrlp.vim'                     " True fuzzy find.  The greatest thing ever for us lazy folk.
+Plugin 'rking/ag.vim'                       " Global search using The Silver Searcher.
+Plugin 'tpope/vim-surround'                 " Useful for surrounding selected blocks of text in parens, etc.
+Plugin 'takac/vim-hardtime'                 " Disables many 'bad habit' features of vim.  Useful for training.
+Plugin 'Raimondi/delimitMate'               " Provides auto closing of parens, braces, and brackets in insert mode.
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 " }}}
-
 " Basic Options {{{
 
 " Prevents some security exploits having to do with modelines in files.
@@ -188,14 +190,18 @@ set title
 " it only affects the way the file is displayed, not its contents.
 set linebreak
 
+" Turns line wrapping on
+set wrap
+
+" Turns off physical line wrapping (ie: automatic insertion of newlines)
+set textwidth=0
+set wrapmargin=0
+
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
 " Indents properly
 set autoindent
-
-" Turns line wrapping on
-set wrap
 
 " Highlight matching braces as you type.
 set showmatch
@@ -219,8 +225,8 @@ map Q <Nop>
 " This lowers the timeout.
 set timeoutlen=500
 
-" Toggle line numbers
-nnoremap <leader>n :setlocal number!<cr>
+" Highlight column 120 as a soft reminder
+set colorcolumn=120
 
 " never mis-spell iOS again
 abbr ios iOS
@@ -228,7 +234,6 @@ abbr iOs iOS
 abbr IOS iOS
 
 " }}}
-
 " Look & Feel {{{
 
 " Color schemes are located in ~/.vim/colors/
@@ -237,12 +242,77 @@ abbr IOS iOS
 " You can make your own colorschemes here: http://www.villustrator.com/
 colorscheme lucius
 
+" Sets the ColorColumn to a sensible color.  Default is 'Dark Red'.
+highlight ColorColumn ctermbg=237 guibg=#3a3a3a
+
 " Set font type and size.  Depends on the resolution.  Larger screens, prefer h20
+" My two favorite programming typefaces are Hack and Inconsolata.
+" Hack can be found here: http://sourcefoundry.org/hack/
 " Inconsolata can be found here: http://levien.com/type/myfonts/inconsolata.html
-set guifont=Inconsolata:h24
+set guifont=Hack:h20
 
 " }}}
+" Convenience mappings {{{
 
+" Split line (sister to [J]oin lines)
+" The normal usage of S is reproducable with cc which is the same amount of keystrokes.
+nnoremap S i<cr><esc><right>
+
+" Toggle line numbers
+nnoremap <leader>n :setlocal number!<cr>
+
+" Use Python style regular expressions instead of vim's style.
+nnoremap / /\v
+vnoremap / /\v
+
+" This sends the visually selected text to gist.github.com as a private,
+" filetyped Gist.  Requires the Gist command line tool (brew install gist).
+vnoremap <leader>G :w !gist -p -t %:e \|pbcopy<cr>
+
+" Bubble single lines (kicks butt)
+" http://vimcasts.org/episodes/bubbling-text/
+" Due to OS X keybinding of the C-Up key, I chose to remap to C-k and so forth.
+nmap <C-k> ddkP
+nmap <C-j> ddp
+
+" Bubble multiple lines
+vmap <C-k> xkP`[V`]
+vmap <C-j> xp`[V`]
+
+" switch to last file
+nnoremap <leader><leader> <c-^>
+
+" Clear the search buffer when hitting return
+nnoremap <CR> :nohlsearch<cr>
+
+" Only show cursorline in the current window and in normal mode.
+augroup cline
+    autocmd!
+
+    autocmd WinLeave,InsertEnter * set nocursorline
+    autocmd WinEnter,InsertLeave * set cursorline
+augroup END
+
+" Indent Guides
+let g:indentguides_state = 0
+function! IndentGuides() " {{{
+    if g:indentguides_state
+        let g:indentguides_state = 0
+        2match None
+    else
+        let g:indentguides_state = 1
+        execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
+    endif
+endfunction " }}}
+hi def IndentGuides guibg=#303030 ctermbg=234
+nnoremap <leader>I :call IndentGuides()<cr>
+
+" }}}
+" Folding {{{
+
+nnoremap <leader>z zMzvzz
+
+" }}}
 " On Save {{{
 
 " On save strip trailing whitespace and convert line endings to Unix format
@@ -261,14 +331,12 @@ augroup myvimrchooks
 augroup END
 
 " }}}
-
 " Version Control {{{
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " }}}
-
 " Whitespace {{{
 
 " Strip trailing whitespace (,ss)
@@ -285,7 +353,6 @@ noremap <leader>ss :call StripWhitespace ()<CR>
 :command! -nargs=1 -range SuperRetab <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
 
 " }}}
-
 " Casing {{{
 
 " Lowercases all HTML tags: http://vim.wikia.com/wiki/Changing_case_with_regular_expressions
@@ -298,28 +365,12 @@ noremap <leader>ss :call StripWhitespace ()<CR>
 :command! UpperCaseFile :%s/.*/\U&/g
 
 " }}}
-
 " Quick Editing {{{
 
 " Lets me open my .vimrc on the fly to quickly add useful stuff to it.
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
 " }}}
-
-" Line Bubbling {{{
-
-" Bubble single lines (kicks butt)
-" http://vimcasts.org/episodes/bubbling-text/
-" Due to OS X keybinding of the C-Up key, I chose to remap to C-k and so forth.
-nmap <C-k> ddkP
-nmap <C-j> ddp
-
-" Bubble multiple lines
-vmap <C-k> xkP`[V`]
-vmap <C-j> xp`[V`]
-
-" }}}
-
 " Kill Arrow Keys {{{
 
 " New Vim users will want the following lines to teach them to do things right
@@ -336,7 +387,6 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 
 " }}}
-
 " Tab Completion {{{
 
 " Use TAB to complete when typing words, else inserts TABs as usual.
@@ -348,17 +398,16 @@ inoremap <right> <nop>
 " Use the Linux dictionary when spelling is in doubt.
 " Window users can copy the file to their machine.
 function! Tab_Or_Complete()
-  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-    return "\<C-N>"
-  else
-    return "\<Tab>"
-  endif
+    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+        return "\<C-N>"
+    else
+        return "\<Tab>"
+    endif
 endfunction
 inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 set dictionary="/usr/dict/words"
 
 " }}}
-
 " Rename File {{{
 
 " Rename current file
@@ -375,33 +424,6 @@ endfunction
 map <leader>rn :call RenameFile()<cr>
 
 " }}}
-
-" File Switching {{{
-
-" switch to last file
-nnoremap <leader><leader> <c-^>
-
-" }}}
-
-" Searching {{{
-
-" Clear the search buffer when hitting return
-nnoremap <CR> :nohlsearch<cr>
-
-" }}}
-
-" CursorLine {{{
-
-" Only show cursorline in the current window and in normal mode.
-augroup cline
-    autocmd!
-
-    autocmd WinLeave,InsertEnter * set nocursorline
-    autocmd WinEnter,InsertLeave * set cursorline
-augroup END
-
-" }}}
-
 " Trailing whitespace {{{
 
 " Only shown when not in insert mode so I don't go insane.
@@ -413,7 +435,6 @@ augroup trailing
 augroup END
 
 " }}}
-
 " Line Return {{{
 
 " Make sure Vim returns to the same line when you reopen a file.
@@ -422,18 +443,18 @@ augroup line_return
     autocmd!
 
     autocmd BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \     execute 'normal! g`"zvzz' |
-        \ endif
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \     execute 'normal! g`"zvzz' |
+                \ endif
 augroup END
 
 " }}}
-
 " Backups {{{
 
 set backup                        " enable backups
-set noswapfile                    " it's 2013, Vim.
-
+set noswapfile                    " it's 2015, Vim.
+" The extra slash on the end saves files under the name of their full path
+" with the / character replaced with a %.
 set undodir=~/.vim/tmp/undo//     " undo files
 set backupdir=~/.vim/tmp/backup// " backups
 set directory=~/.vim/tmp/swap//   " swap files
@@ -452,11 +473,13 @@ if !isdirectory(expand(&directory))
 endif
 
 " }}}
-
 " JavaScript {{{
 
 augroup ft_javascript
     autocmd!
+
+    " For Syntastic
+    let g:syntastic_javascript_checkers = ['eslint']
 
     autocmd FileType javascript setlocal foldmethod=marker
     autocmd FileType javascript setlocal foldmarker={,}
@@ -472,7 +495,6 @@ augroup ft_javascript
 augroup END
 
 " }}}
-
 " Markdown {{{
 
 augroup ft_markdown
@@ -482,7 +504,6 @@ augroup ft_markdown
 augroup END
 
 " }}}
-
 " Ruby {{{
 
 augroup ft_ruby
@@ -496,7 +517,6 @@ augroup END
 autocmd BufNewFile,BufRead .irbrc set syntax=html
 
 " }}}
-
 " Handlebars {{{
 
 augroup ft_handlebars
@@ -507,7 +527,6 @@ augroup ft_handlebars
 augroup END
 
 " }}}
-
 " CSS and Less {{{
 
 " Sorts CSS properties.  Most useful command ever.
@@ -552,7 +571,6 @@ augroup ft_css
 augroup END
 
 " }}}
-
 " Fish {{{
 
 augroup ft_fish
@@ -562,7 +580,6 @@ augroup ft_fish
 augroup END
 
 " }}}
-
 " Vim {{{
 
 augroup ft_vim
@@ -574,7 +591,6 @@ augroup ft_vim
 augroup END
 
 " }}}
-
 " Yaml {{{
 
 augroup ft_yaml
@@ -584,7 +600,6 @@ augroup ft_yaml
 augroup END
 
 " }}}
-
 " XML {{{
 
 augroup ft_xml
@@ -600,7 +615,6 @@ augroup ft_xml
 augroup END
 
 " }}}
-
 " Nyan! {{{
 
 function! NyanMe() "
@@ -719,7 +733,6 @@ endfunction "
 command! NyanMe call NyanMe()
 
 " }}}
-
 " NERDTree {{{
 
 " Maps NERDTree to ^n.
@@ -728,7 +741,6 @@ map <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]']
 
 " }}}
-
 " EasyAlign {{{
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
@@ -738,22 +750,24 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
-
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](node_modules|env|htmlcov|vendor)$',
-  \ 'file': '\v\.(pyc)$',
-  \ }
+            \ 'dir':  '\v[\/](node_modules|env|htmlcov|vendor)$',
+            \ 'file': '\v\.(pyc)$',
+            \ }
 
 " }}}
-
 " The Silver Searcher (Ag) {{{
 
 
 
 " }}}
+" Hardtime {{{
 
+nnoremap <leader>h <Esc>:call HardTimeToggle()<CR>
+
+" }}}
 " Learn Vimscript the Hard Way {{{
 
 " noremap <leader><leader>- -
