@@ -1,4 +1,0 @@
-function isPalindrome(str) {
-    var reverseStr = str.split('').reverse().join('');
-    return str === reverseStr;
-}

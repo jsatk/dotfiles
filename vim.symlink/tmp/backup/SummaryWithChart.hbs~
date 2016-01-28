@@ -1,2 +1,0 @@
-{{> _someFile }}
-<div class="panel-body chart"></div>

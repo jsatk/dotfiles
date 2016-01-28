@@ -1,8 +1,0 @@
-// Mocha puts its globals on the global object so we have to tell
-// StandardJS, our linter, that these functions are defined globaly so it
-// doesn't yell at us.
-
-/* global describe, it */
-
-var expect = require('chai').expect
-var parseInput = require('../lib/processCreditCards/parseInput')

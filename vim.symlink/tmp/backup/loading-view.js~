@@ -1,9 +1,0 @@
-AdvisorApp.module('Common.Views', function(Views, AdvisorApp, Backbone, Marionette, $, _) {
-    Views.Loading = Marionette.ItemView.extend({
-        className: 'sc-loading-view text-center',
-        template: Handlebars.templates.LoadingView,
-        behaviors: {
-            FadeIn: {}
-        }
-    });
-});

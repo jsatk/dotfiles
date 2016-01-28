@@ -1,6 +1,0 @@
-AdvisorApp.module('CampaignModule', function(Module, App) {
-    debugger;
-    Module.A = Module.B.extend({
-        // Stuff here
-    });
-});

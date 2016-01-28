@@ -1,3 +1,0 @@
-campaign_name,campaign_id,budget,start_date,end_date,bid_type,billing_group,pin_promotion_id,pin_id,board_name,pin_name,description,source_url,image_url,pin_bid,destination_url,keywords,app_type,gender,locale,location,paused
-Unlock The Swag,,5,10/14/15,10/19/15,CPC,,,p:478085316671351341,,,,,,0.5,,"testing, 123","android_mobile,iphone,web_mobile","female,unknown",,,FALSE
-No Flex Zone,,5,10/14/15,10/19/15,CPC,,,p:478085316671351341,,,,,,0.5,,"marketing, ads","android_mobile,iphone,web_mobile","female,unknown",,,FALSE

@@ -1,9 +1,0 @@
-# Charts
-
-This is from a different project than the other three and also the oldest.
-
-The problem we had is that we were using charts all over the place and implementing them in very different ways.  `makeChart.js` allowed us to pass an array of chart types, series data, and an element in which to render the chart and `makeChart` would create the chart for us.  After this was created we updated something like 20 different chart implementations to all use this.  The result was that we were able to get rid of gigantic chart definitions in our views and abstract that away to a global method and focus on the task at hand.  It also brought about chart style and display consistency which was previously lacking.
-
-This uses [Backone](http://backbonejs.org), [Underscore](http://underscorejs.org), [jQuery](http://jquery.com).  The `Helpers.ensureNamespace` method was our internal solution for namespace insurance.
-
-The test suite is written with [Jasmine](http://jasmine.github.io/2.3/introduction.html) and uses ES6 syntax.  We originally did this to begin to introduce ES6 to our codebase.  We plan to eventually migrate all non-test code to ES6 style syntax as well.

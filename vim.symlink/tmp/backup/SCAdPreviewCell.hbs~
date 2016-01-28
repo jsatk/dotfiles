@@ -1,6 +1,0 @@
-<form class="form-inline">
-    <a href="#creative-modal" class="sc-creative-preview-link" data-toggle="modal" data-object-id="{{id}}" title="View a platform preview&hellip;">
-        <i class='fa fa-platform-{{platform}}'></i>
-        <h2>Hi</h2>
-    </a>
-</form>
