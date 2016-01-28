@@ -1,0 +1,9 @@
+#! /usr/bin/env node
+
+// Module dependencies
+var cli = require('../lib/cli')
+
+console.log(cli.foo)
+
+// Run the command-line client
+cli.parseInput(filename, cli.processInput)

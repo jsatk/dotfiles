@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" class="sc-modern-styles">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <title>AdVisor</title>
+
+    <link rel="icon" type="image/png" href="media/favicon.png">
+
+    <link rel="stylesheet" href="css/application.css" media="all" />
+
+    <!-- build:remove:local -->
+    <!-- Raven -->
+    <script src="//cdn.ravenjs.com/1.1.18/backbone,jquery,native/raven.min.js"></script>
+    <!-- /build -->
+
+    <!-- Application -->
+    <script src="js/vendor.js"></script>
+    <script src="js/application.js"></script>
+</head>
+
+<body>
+    <script>
+        if (window.location.hostname.match(/^(app|beta).socialcode.com$/)) {
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-37983513-7', 'auto');
+        }
+
+        if (window.Raven) {
+            Raven.config('https://85afc92e31e944ba9f151054261eaa6c@sentry-prod.socialcodedev.com/80').install();
+        }
+    </script>
+
+    <div id="wrapper">
+        <div id="header-region"></div>
+        <div id="alert-region"></div>
+        <div id="main-region" class="container"></div>
+        <div id="footer-region"></div>
+        <div id="modal-region"></div>
+        <div id="global-loader-region"></div>
+    </div>
+
+
+    <!-- FB Client SDK, Ad Previews -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk/xfbml.adpreview.js#xfbml=1&version=v2.3&appId=311531252213360";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <!-- Pinterest SDK -->
+    <script async defer src="//assets.pinterest.com/js/pinit.js" data-pin-build="_renderPinterestWidgets"></script>
+</body>
+</html>

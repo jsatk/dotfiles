@@ -1,0 +1,10 @@
+<div class="btn-group dropdown">
+    <button type="button" class="btn btn-cell-editor dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-fw fa-chevron-down"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+        <li class={{#unless canDuplicate}} "disabled" {{/unless}}><a href="#{{duplicateHref}}" data-toggle="modal" title="Duplicate ad cluster">Duplicate</a></li>
+        <li class={{#unless canDownload}} "disabled" {{/unless}}><a href="#" title="Download csv">Download</a></li>
+        <li class={{#unless canDelete}} "disabled" {{/unless}}><a href="#{{deleteHref}}" data-toggle="modal" title="Delete ad cluster">Delete</a></li>
+    </ul>
+</div>

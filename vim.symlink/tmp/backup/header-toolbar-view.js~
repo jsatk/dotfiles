@@ -1,0 +1,40 @@
+AdvisorApp.module('HeaderApp.List', function(HeaderAppList) {
+
+    HeaderAppList.HeaderToolbar = Marionette.LayoutView.extend({
+
+        options: HeaderAppList.options || {},
+
+        /** Handlebar template */
+        template: Handlebars.templates.HeaderToolbarTemplate,
+
+        /** Regions */
+        regions: {
+            datePickerRegion: '#datepicker'
+        },
+
+        events: HeaderAppList.options.events,
+
+        modelEvents: {
+            'change': 'render'
+        },
+
+        initialize: function() {
+            // Fallback in case no model is defined.  We always want a model on this view.
+            this.model = this.model || new Backbone.Model();
+        },
+
+        onShow: function() {
+            if (this.options.dateFilterView) {
+                this.datePickerRegion.show(this.options.dateFilterView);
+            }
+        },
+
+        templateHelpers: function() {
+            debugger;
+            return _.defaults({}, this.options, {
+                showSearch: true
+            });
+        }
+    });
+
+});

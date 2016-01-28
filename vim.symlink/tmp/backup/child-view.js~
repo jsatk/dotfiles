@@ -1,0 +1,54 @@
+/* global dependencies */
+var $ = require('jquery');
+var _ = require('underscore');
+var Marionette = require('backbone.marionette');
+
+require('backbone.stickit');
+
+/* templates */
+var AdCreationAgeTemplate = require('../../templates/age.hbs');
+
+/* module definition */
+var ChildView = Marionette.ItemView.extend({
+     /** Handlebar template */
+     template: AdCreationAgeTemplate,
+     /** Template class */
+     className: 'child-view',
+     /** Template helpers */
+     templateHelpers: {
+        ageRange: _.range(13, 66)
+    },
+     /** Events */
+     events: {
+        'click .btn-remove': 'removeModel',
+        'click .lower a':    'setValue',
+        'click .higher a':   'setValue'
+    },
+     /** Data binding */
+     bindings: {
+        '.lower .value':  'min_age',
+        '.higher .value': 'max_age'
+    },
+     onShow: function() {
+         /** Add stickit */
+         this.stickit();
+     },
+     removeModel: function() {
+         /** Remove current model */
+         this.model.collection.remove(this.model);
+     },
+     setValue: function(event) {
+         /** Element */
+         var el = $(event.target).closest('.btn-group');
+         /** Close popup */
+         el.removeClass('open');
+         /** Add value to model */
+         var name  = el.hasClass('lower') && 'min_age' || 'max_age';
+         var value = $(event.target).data('value');
+         this.model.set(name, value);
+         /** Disable event */
+         return false;
+     }
+ });
+
+module.exports = ChildView;

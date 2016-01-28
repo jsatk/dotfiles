@@ -1,0 +1,135 @@
+AdvisorApp.module('Entities', function(Entities, App, Backbone, Marionette, $, _) {
+
+    var Audience = Backbone.Model.extend({
+        urlRoot: '/api/audiences/v1/audience/',
+        initialize: function() {
+            this.on('add', function() {
+                var BrandEntity = App.request('brand:Entity');
+                var brandEntity = new BrandEntity({ id: this.get('brand_id') });
+
+                brandEntity.fetch().done(function(brand) {
+                    this.set('brand', brand);
+                    this.trigger('brandUpdated');
+                });
+            }, this);
+        }
+    });
+
+    var AudienceCollection = Backbone.TastypiePageableCollection.extend({
+        model: Audience,
+        url: Audience.prototype.urlRoot + 'dashboard/',
+        state: {
+            firstPage: 0,
+            pageSize: 100,
+            sortKey: 'size',
+            order: 1
+        }
+    });
+
+    var AudienceReachEstimate = Backbone.Model.extend({
+        url: Audience.prototype.urlRoot + 'reachestimate/',
+        state: {
+            firstPage: 0,
+            pageSize: 100
+        }
+    });
+
+    var getAudienceEntity = function(id) {
+        var audience = new Audience({ id: id });
+        var defer    = $.Deferred();
+
+        audience.fetch({
+            success: function(model) { //model, response, options
+                defer.resolve(model);
+            },
+            error: function(model, response) { //model, response, options
+                defer.reject(response);
+            }
+        });
+
+        return defer.promise();
+    };
+
+    var getAudienceReachEstimate = function(ids) {
+        var audience = new AudienceReachEstimate();
+        var defer    = $.Deferred();
+
+        audience.fetch({
+            data: $.param({ elements:ids }),
+            success: function(model) { //model, response, options
+                defer.resolve(model);
+            },
+            error: function(model, response) { //model, response, options
+                defer.reject(response);
+            }
+        });
+
+        return defer.promise();
+    };
+
+    var getAudienceEntities = function(options) {
+        var audienceCollection = new AudienceCollection([], options);
+        var defer              = $.Deferred();
+
+        audienceCollection.fetch({
+            data: options.data,
+            success: function(collection) { //collection, response, options
+                defer.resolve(collection);
+            },
+            error: function(collection, response) { //collection, response, options
+                defer.reject(response);
+            }
+        });
+
+        return defer.promise();
+    };
+
+    var createElement = function(name, ids) {
+        var element = new Audience();
+        var defer   = $.Deferred();
+
+        element.save({
+            name: name,
+            elements: ids,
+            success: function(model, response, options) {
+                defer.resolve(model);
+            },
+            error: function(model, response, options) {
+                defer.reject(response);
+            }
+        });
+
+        return defer.promise();
+    };
+
+    App.reqres.setHandler('audience:entity', function(id) {
+        if (id) {
+            return getAudienceEntity(id);
+        }
+    });
+
+    App.reqres.setHandler('audience:reachestimate:entity', function(ids) {
+        if (ids) {
+            return getAudienceReachEstimate(ids);
+        }
+    });
+
+    App.reqres.setHandler('audience:entities', function(options) {
+        return getAudienceEntities(options);
+    });
+
+    App.reqres.setHandler('audience:Entity', function() {
+        return Audience;
+    });
+
+    App.reqres.setHandler('audience:Entities', function() {
+        return AudienceCollection;
+    });
+
+    App.reqres.setHandler('audience:create-element:entity', function(name, ids) {
+        if (name && ids) {
+            return createElement(name, ids);
+        }
+    });
+
+});

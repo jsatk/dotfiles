@@ -1,0 +1,73 @@
+<div class="panel-heading" id="campaign-details">
+    <h3 class="panel-title pull-left">Campaign details</h3>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+                <li><a href="#" id="edit-details">Edit campaign</a></li>
+            <li><a href="#" id="clone-details">Duplicate campaign</a></li>
+        </ul>
+    </div>
+</div>
+
+<ul class="list-group sc-sidebar-list">
+    <li class="list-group-item">
+        <div class="sc-list-item-label">
+            Name
+        </div>
+        <div class="sc-list-item-value">
+            {{titleize name}}
+        </div>
+    </li>
+
+    <li class="list-group-item">
+        <div class="sc-list-item-label">
+            Objective
+        </div>
+        <div class="sc-list-item-value">
+            {{titleize objective}}
+        </div>
+    </li>
+
+    <li class="list-group-item">
+        <div class="sc-list-item-label">
+            Budget
+        </div>
+        <div class="sc-list-item-value">
+            {{formatMoney budget}}
+        </div>
+    </li>
+
+    <li class="list-group-item">
+        <div class="sc-list-item-label">
+            KPI Goal
+        </div>
+        <div class="sc-list-item-value">
+            {{formatMoney kpi_goal}} {{this.kpi}}
+        </div>
+    </li>
+
+    <li class="list-group-item">
+        <div class="sc-list-item-label">
+            Dates
+        </div>
+        <div class="sc-list-item-value">
+            {{formatDate start_date}}&mdash;{{formatDate end_date}}
+        </div>
+    </li>
+
+    <li class="list-group-item">
+        <div class="sc-list-item-label clearfix">
+            Followers
+        </div>
+
+        <div class="sc-list-item-value">
+            {{#each followers}}
+                <img class="follower sc-profile-photo" src="{{image_url}}" title="{{first_name}} {{last_name}}">
+            {{else}}
+                No followers
+            {{/each}}
+        </div>
+    </li>
+</ul>

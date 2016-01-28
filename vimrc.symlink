@@ -28,10 +28,13 @@
 " http://stackoverflow.com/questions/5845557/in-a-vimrc-is-set-nocompatible-completely-useless
 set nocompatible
 
-" Vim and Fish don't play nice because Vim is a dick.  This tells vim to use
-" bash so it won't puke everywhere.  Seriously... god dammit Vim.
+" Vim needs a more POSIX compatible shell than fish for certain functionality
+" to work, such as :%!, compressed help pages and many third-party addons.  If
+" you use fish as your login shell or launch Vim from fish, you need to set
+" shell to something else in your ~/.vimrc.
+" Seriously... god dammit Vim.
 if &shell =~# 'fish$'
-    set shell=sh
+  set shell=sh
 endif
 
 " Distiguishes between filetypes.  It is required to be set to 'off' for Vundle.
@@ -42,23 +45,24 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Our Vim plugins!
-Plugin 'gmarik/Vundle.vim'                  " Alternative to Pathogen.  Lovely plugin manager for vim.
-Plugin 'tpope/vim-fugitive'                 " Git support in vim.  Incredible handy for merge conflicts.
-Plugin 'scrooloose/nerdtree.git'            " A vim explorer replacement.  Much nicer and easier to use.
-Plugin 'pangloss/vim-javascript.git'        " Adds some javascript nicities.
-Plugin 'scrooloose/syntastic'               " Adds error checking while writing or on save in vim.
-Plugin 'bling/vim-airline'                  " Adds a gorgeous toolbar with useful info to bottom of vim.
-Plugin 'tpope/vim-commentary'               " Easier comment support in vim.  Comment out blocks with gcc.
-Plugin 'editorconfig/editorconfig-vim'      " Maintain consistent coding styles between different editors and IDEs.
-Plugin 'groenewege/vim-less'                " Less syntax highlighting for vim.
-Plugin 'mustache/vim-mustache-handlebars'   " Mustache & Handlebars syntax highlighting for vim.
-Plugin 'dag/vim-fish'                       " Fish Shell syntax highlighting for vim.
-Plugin 'junegunn/vim-easy-align'            " Aligns multiple lines on any given point.  Useful for assignments.
-Plugin 'kien/ctrlp.vim'                     " True fuzzy find.  The greatest thing ever for us lazy folk.
-Plugin 'rking/ag.vim'                       " Global search using The Silver Searcher.
-Plugin 'tpope/vim-surround'                 " Useful for surrounding selected blocks of text in parens, etc.
-Plugin 'takac/vim-hardtime'                 " Disables many 'bad habit' features of vim.  Useful for training.
-Plugin 'Raimondi/delimitMate'               " Provides auto closing of parens, braces, and brackets in insert mode.
+Plugin 'gmarik/Vundle.vim'                      " Alternative to Pathogen.  Lovely plugin manager for vim.
+Plugin 'tpope/vim-fugitive'                     " Git support in vim.  Incredible handy for merge conflicts.
+Plugin 'scrooloose/nerdtree.git'                " A vim explorer replacement.  Much nicer and easier to use.
+Plugin 'scrooloose/syntastic'                   " Adds error checking while writing or on save in vim.
+Plugin 'bling/vim-airline'                      " Adds a gorgeous toolbar with useful info to bottom of vim.
+Plugin 'tpope/vim-commentary'                   " Easier comment support in vim.  Comment out blocks with gcc.
+Plugin 'editorconfig/editorconfig-vim'          " Maintain consistent coding styles between different editors and IDEs.
+Plugin 'dag/vim-fish'                           " Fish Shell syntax highlighting for vim.
+Plugin 'junegunn/vim-easy-align'                " Aligns multiple lines on any given point.  Useful for assignments.
+Plugin 'ctrlpvim/ctrlp.vim'                     " True fuzzy find.  The greatest thing ever for us lazy folk.
+Plugin 'Raimondi/delimitMate'                   " Provides auto closing of parens, braces, and brackets in insert mode.
+Plugin 'othree/javascript-libraries-syntax.vim' " Provides syntax for many popular JavaScript libraries.
+Plugin 'burnettk/vim-angular'                   " Provides some nicities for working with AngularJS.
+Plugin 'tpope/vim-unimpaired'                   " Provides some nice key mappings
+Plugin 'vim-scripts/BufOnly.vim'                " Close all buffers except the current
+Plugin 'tpope/vim-dispatch'                     " Terminal in your vim. See: https://vimeo.com/63116209
+Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
+Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -95,12 +99,12 @@ set t_Co=256
 set number
 set relativenumber
 
-" Make tabs as wide as four spaces
-set softtabstop=4
-set tabstop=4
+" Make tabs as wide as two spaces
+set softtabstop=2
+set tabstop=2
 
 " Controls how many spaces to indent when using >>
-set shiftwidth=4
+set shiftwidth=2
 set expandtab
 
 " Highlight current line
@@ -126,6 +130,12 @@ set splitbelow
 
 " When on, splitting a window will put the new window right of the current one.
 set splitright
+
+" Allows jumping between splits with Ctrl + movement keys.
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " When a file has been detected to have been changed outside of Vim and
 " it has not been changed inside of Vim, automatically read it again.
@@ -161,9 +171,6 @@ set mousehide
 
 " Always show status line
 set laststatus=2
-
-" Enable mouse in all modes
-set mouse=a
 
 " Don’t reset cursor to start of line when moving around.
 set nostartofline
@@ -234,11 +241,14 @@ abbr iOs iOS
 abbr IOS iOS
 
 " }}}
+" Repo-Specific Settings {{{
+
+" }}}
 " Look & Feel {{{
 
 " Color schemes are located in ~/.vim/colors/
 " Here's the top 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
-" List of favorites: lessnau_dark, railscasts, inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
+" List of favorites: Tomorrow-Night, lessnau_dark, railscasts, inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
 " You can make your own colorschemes here: http://www.villustrator.com/
 colorscheme lucius
 
@@ -262,8 +272,8 @@ nnoremap S i<cr><esc><right>
 nnoremap <leader>n :setlocal number!<cr>
 
 " Use Python style regular expressions instead of vim's style.
-nnoremap / /\v
-vnoremap / /\v
+" nnoremap / /\v
+" vnoremap / /\v
 
 " This sends the visually selected text to gist.github.com as a private,
 " filetyped Gist.  Requires the Gist command line tool (brew install gist).
@@ -486,12 +496,15 @@ augroup ft_javascript
 
     " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
     " positioned inside of them AND the following code doesn't get unfolded.
-    autocmd Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+    autocmd Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
     " }
 
     " Prettify a hunk of JSON with <localleader>p
     autocmd FileType javascript nnoremap <buffer> <localleader>p ^vg_:!python -m json.tool<cr>
     autocmd FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
+
+    " Set which javascript libraries I use with https://github.com/othree/javascript-libraries-syntax.vim
+    let g:used_javascript_libs = 'lo-dash,angularjs,jquery,chai'
 augroup END
 
 " }}}
@@ -501,6 +514,12 @@ augroup ft_markdown
     autocmd!
 
     autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
+
+    set formatoptions+=t
+    set textwidth=80
+    set softtabstop=4
+    set tabstop=4
+    set shiftwidth=4
 augroup END
 
 " }}}
@@ -524,6 +543,17 @@ augroup ft_handlebars
 
     autocmd Filetype html.handlebars setlocal foldmethod=indent
     autocmd BufNewFile,BufRead *.hbs setlocal filetype=html.handlebars
+augroup END
+
+" }}}
+" Haml {{{
+
+augroup ft_haml
+    autocmd!
+
+    autocmd Filetype haml setlocal foldmethod=syntax
+    autocmd Filetype haml setlocal colorcolumn=0
+    autocmd BufRead,BufNewFile Capfile setlocal filetype=haml
 augroup END
 
 " }}}
@@ -577,11 +607,17 @@ augroup ft_fish
     autocmd!
 
     autocmd BufNewFile,BufRead *.fish setlocal filetype=fish
+    " Enable folding of block structures in fish.
+    autocmd FileType fish setlocal foldmethod=expr
+    " Set this to have long lines wrap inside comments.
+    autocmd FileType fish setlocal textwidth=79
+    " Set up :make to use fish for syntax checking.
+    autocmd FileType fish compiler fish
 augroup END
 
 " }}}
 " Vim {{{
-
+:command! ClearQuickfixList cexpr []
 augroup ft_vim
     autocmd!
 
@@ -738,7 +774,7 @@ command! NyanMe call NyanMe()
 " Maps NERDTree to ^n.
 map <C-n> :NERDTreeToggle<CR>
 
-let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]']
+let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]', 'docs[[dir]]', 'junit-reports[[dir]]']
 
 " }}}
 " EasyAlign {{{
@@ -753,20 +789,20 @@ nmap ga <Plug>(EasyAlign)
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/](node_modules|env|htmlcov|vendor|docs)$',
-            \ 'file': '\v\.(pyc)$',
-            \ }
+ \ 'dir':  '\v[\/](bower_components|node_modules|false|\.build|\.tmp)$'
+ \ }
+
+" Allows indexing of more files
+let g:ctrlp_max_files = 0
+let g:ctrlp_max_depth = 40
+let g:ctrlp_match_window = 'results:20'
+
+" Shows the hidden dot files
+let g:ctrlp_show_hidden = 0
 
 " }}}
-" The Silver Searcher (Ag) {{{
-
-
-
-" }}}
-" Hardtime {{{
-
-nnoremap <leader>h <Esc>:call HardTimeToggle()<CR>
-
+" Airline {{{
+let g:airline_theme = 'onedark'
 " }}}
 " Learn Vimscript the Hard Way {{{
 

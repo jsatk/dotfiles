@@ -1,0 +1,26 @@
+/* global dependencies */
+var Marionette = require('backbone.marionette');
+var _ = require('underscore');
+var $ = require('jquery');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var NewBoardView = require('./views/new-board-view');
+
+/* module definition */
+var PinterestController = Marionette.Object.extend({
+    initialize: function() {
+        this.modalRegion = AppChannel.request('modalRegion');
+        AppChannel.on('pinterest:createBoardModal:show', _.bind(this.showNewBoardView, this));
+        AppChannel.on('pinterest:createPinsModal:show', _.bind(this.showNewPinsView, this));
+    },
+    showNewBoardView: function(initiativeId, campaignId) {
+        var newBoardView = new NewBoardView({ title: 'New Board' });
+        this.modalRegion.show(newBoardView);
+    },
+    showNewPinsView: function(initiativeId, campaignId) {
+        // TODO: needs implementation ~jd
+    }
+});
+
+module.exports = PinterestController;

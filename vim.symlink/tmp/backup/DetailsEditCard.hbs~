@@ -1,0 +1,116 @@
+
+<form class="form edit-details" role="form">
+    <div class="panel-heading">
+        <h3 class="panel-title">Campaign details</h3>
+    </div>
+
+    <ul class="list-group sc-sidebar-list">
+        <li class="list-group-item">
+            <div class="sc-list-item-label">
+                Name
+            </div>
+            <div class="sc-list-item-value">
+                <input class="form-control" id="name" name="name" value="{{name}}">
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="sc-list-item-label">
+                Objective
+            </div>
+            <div class="sc-list-item-value">
+                {{titleize objective}}
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="sc-list-item-label">
+                Budget
+            </div>
+            <div class="input-group">
+
+                <div class="input-group col-md-8">
+                    <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                    <input class="form-control" id="budget" name="budget" value="{{budget}}">
+                </div>
+            </div>
+        </li>
+
+        <li id="budget_adjustment" class="list-group-item" style="display:none">
+            <div class="sc-list-item-label">
+                Reason for the budget change
+            </div>
+            <div class="input-group">
+                <div class="input-group col-md-12">
+                    <select class="form-control" id="budget_adjustment_select" name="budget_adjustment_select"></select>
+                </div>
+            </div>
+        </li>
+
+        <li id="budget_adjustment_other" class="list-group-item" style="display:none">
+            <div class="input-group">
+                <div class="input-group col-md-12">
+                    <textarea class="form-control" id="budget_adjustment_other_text" name="budget_adjustment_other_text" placeholder="Reason for change or notes for Finance..." value=""></textarea>
+                </div>
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="sc-list-item-label">
+                KPI Goal
+            </div>
+            <div class="form-inline">
+                <div class="input-group col-md-6">
+                    <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                    <input class="form-control" id="kpi-goal" name="kpi-goal" value="{{kpi_goal}}">
+                </div>
+                <div class="col-md-6 pull-right inline-label">
+                    <div class="sc-list-item-value">{{this.kpi}}</div>
+                </div>
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="sc-list-item-label">
+                Start Date
+            </div>
+            <div class="input-group date start-picker-sc">
+                <input type="text" class="form-control" id="start_date" name="start_date" value="{{formatDate start_date}}">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="sc-list-item-label">
+                End Date
+            </div>
+            <div class="input-group date end-picker-sc">
+                <input type="text" class="form-control" id="end_date" name="end_date"  value="{{formatDate end_date}}">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+        </li>
+
+        {{#is editingLevel 'advanced' }}
+        <li class="list-group-item">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <a href="#" id="more-details" class="pull-right">more campaign details &raquo;</a>
+                </div>
+            </div>
+        </li>
+        {{/if}}
+
+        <li class="list-group-item">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-danger hidden" role="alert" id="error"></div>
+                    <button type="submit" class="btn btn-primary btn-md" id="save-changes">
+                        Save Changes
+                    </button>
+                    <a href="#" id="cancel-edit-details">cancel</a>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+</form>

@@ -1,0 +1,130 @@
+/* global dependencies */
+var Backbone = require('backbone');
+var _ = require('underscore');
+var Backgrid = require('backgrid');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var InitiativeChannel = require('../initiative-channel');
+var CommonLanguage = require('../../../common/language');
+var SCDataTable = require('../../../config/SCDataTable');
+var AssetSelectorView = require('./assets-view');
+var GridView = require('../common/views/grid-view');
+var FormView = require('../common/views/form-view');
+var EditSummaryController = require('../edit/edit-summary-controller');
+
+/* module definition */
+var Assets = {};
+
+var assetEntities;
+var initiativeEntity;
+var cardView;
+var cardColumns = [
+    {
+        name: '',
+        cell: 'select-row',
+        headerCell: 'select-all'
+    },
+    {
+        name: 'name',
+        label: 'Name',
+        cell: Backgrid.Extension.SCAssetName
+    }
+];
+var save = function() {
+    return initiativeEntity.patch({
+        'assets': _.pluck(assetEntities.toJSON(), 'resource_uri')
+    });
+};
+Assets.loadCardView = function(options) {
+    options = options || {};
+    if (!options.region) throw new Error('Insertion Cards Controller requires a region option.');
+    var filters = {};
+    assetEntities = new (AppChannel.request('advisor:asset:PageableEntities'))();
+    initiativeEntity = options.initiative;
+    filters.initiatives__id = initiativeEntity.id;
+    cardView = new GridView({
+        collectionFilters: filters,
+        columns: cardColumns,
+        collection: assetEntities,
+        showPagination: false,
+        label: 'Assets',
+        saveMethod: save
+    });
+    assetEntities.on('add remove', function() {
+        cardView.triggerMethod('edit');
+    });
+    cardView.on(cardEvents);
+    options.region.show(cardView);
+    EditSummaryController.addSummary({
+        label: 'Assets',
+        collection: assetEntities,
+        uiSummaryLabel: 'assets',
+        card: cardView
+    });
+};
+var showForm = function() {
+    var select2Options = {
+        entityURl: AppChannel.request('advisor:asset:Entities').prototype.url,
+        filter: {
+            brands__brand_id: initiativeEntity.get('brand_id')
+        },
+        collection: assetEntities,
+        formatName: CommonLanguage.en.getAssetNameHTML,
+        placeholder: 'Search for asset by name'
+    };
+    var formView = new FormView({
+        label: 'Asset',
+        title: 'Select Asset',
+        select2Options: select2Options
+    });
+    AppChannel.request('modalRegion').show(formView);
+    formView.on(formEvents);
+    formView.receivingView = this;
+};
+var disableUsedAssets = function(collection, response, options) {
+    if (initiativeEntity.get('campaign_count') > 0) {
+        // disable the ability to remove assets
+        this.grid.header.$('th.select-all-header-cell').hide();
+        this.grid.body.$('td.select-row-cell').hide();
+    }
+};
+var cardEvents = {
+    'show': function() {
+        var tableView = new SCDataTable.View(this.options);
+        this.tableRegion.show(tableView);
+        tableView.collection.on('sync add', _.bind(disableUsedAssets, tableView));
+        tableView.fetchCollection();
+    },
+    'show:form': showForm,
+    'add': function(asset) {
+        this.addToTable(asset);
+    }
+};
+var formEvents = {
+    'add': function(asset) {
+        this.receivingView.trigger('add', asset);
+        this.triggerMethod('modal:close');
+    }
+};
+Assets.loadSelectorView = function(options) {
+    options = options || {};
+    var params = {
+        initiatives: options.initiative.get('id')
+    };
+    if (options.campaign) {
+        params.platform = options.campaign.get('platform');
+    }
+    var assets = AppChannel.request('advisor:asset:entities', {
+        data: params
+    });
+    var selectorView = new AssetSelectorView({ promise: assets, selectedAsset: options.selectedAsset });
+    selectorView.on('selected', function(asset) {
+        InitiativeChannel.trigger('initiative:assets:selected', asset);
+    });
+    options.region.show(selectorView);
+};
+
+InitiativeChannel.on('edit:save', save);
+
+module.exports = Assets;

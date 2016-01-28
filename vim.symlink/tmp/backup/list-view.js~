@@ -1,0 +1,85 @@
+AdvisorApp.module('ReportModule.List', function(List, App) {
+
+    var ReportModule;
+    var moduleChannel;
+
+    var getFormattedStatus = function(status) {
+        var statusMsg = status;
+        switch (status) {
+            case 'completed':
+                statusMsg = '<button type="button" class="btn btn-link download-report"><i class="fa fa-download"></i> completed</button>';
+                break;
+            case 'error':
+                statusMsg = 'failed';
+                break;
+            case 'received':
+                statusMsg = 'running';
+                break;
+        }
+        return statusMsg;
+    };
+
+    var RowView = Backbone.Marionette.ItemView.extend({
+
+        template: Handlebars.templates.reportTableRow,
+
+        tagName: 'tr',
+
+        ui: {
+            status: '.status-sc'
+        },
+
+        templateHelpers: function() {
+            return {
+                getStatus: function() {
+                    return getFormattedStatus(this.status);
+                },
+                getCreated: function() {
+                    return App.Common.Language.en.getLocalDateFromUTC(this.created);
+                }
+            };
+        },
+
+        events: {
+            'click .download-report': 'downloadReport'
+        },
+
+        modelEvents: {
+            'change:status': 'renderStatus'
+        },
+
+        renderStatus: function(model, newVal) {
+            this.ui.status.html(getFormattedStatus(newVal));
+            return this;
+        },
+
+        downloadReport: function() {
+            moduleChannel.vent.trigger('list:item:download', this.model);
+        },
+
+        onBeforeDestroy: function() {
+            moduleChannel.vent.trigger('list:item:before:destroy', this.model);
+        }
+    });
+
+    var TableView = Backbone.Marionette.CompositeView.extend({
+
+        template: Handlebars.templates.reportTable,
+
+        className: 'report-list-sc',
+
+        childViewContainer: 'tbody',
+
+        childView: RowView
+
+    });
+
+    App.addInitializer(function() {
+
+        ReportModule = App.module('ReportModule');
+        moduleChannel = ReportModule.moduleChannel;
+        moduleChannel.reqres.setHandler('list:View', function() {return TableView;});
+
+    });
+
+}, moment);

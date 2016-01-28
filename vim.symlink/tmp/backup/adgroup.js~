@@ -1,0 +1,63 @@
+AdvisorApp.module('Entities', function(Entities, AdvisorApp, Backbone, Marionette, $, _) {
+    var FacebookAdGroup;
+    var FacebookAdGroups;
+    var getFacebookAdGroupEntity;
+    var getFacebookAdGroupEntities;
+    var getFacebookPageableAdGroupEntities;
+
+    /**
+     * Model and Collection definitions.
+     */
+
+    FacebookAdGroup = Entities.Facebook.Base.Model.extend({
+        urlRoot: '/api/facebook/ads/v1/adgroup/',
+        /**
+         * @returns {String} The current model's status.
+         */
+        getStatus: function() {
+            return this.get('adgroup_status').toLowerCase();
+        }
+    });
+
+    FacebookAdGroups = Entities.Facebook.Base.Collection.extend({
+        url: FacebookAdGroup.prototype.urlRoot,
+        model: FacebookAdGroup
+    });
+
+    /**
+     * Get Entit(y/ies) methods
+     */
+
+    getFacebookAdGroupEntity = function(adGroupID) {
+        return Entities.Facebook.Base.getBaseEntity(adGroupID, FacebookAdGroup);
+    };
+
+    getFacebookAdGroupEntities = function(options) {
+        return Entities.Facebook.Base.getBaseEntities(options, FacebookAdGroups);
+    };
+
+    getFacebookPageableAdGroupEntities = function(lineitem, userCanManage) {
+        var statusChoices = [
+            { label: 'Active', value: 'ACTIVE' },
+            { label: 'Paused', value: 'PAUSED' }
+        ];
+
+        return Entities.Facebook.Base.getPageableBaseEntities(FacebookAdGroup, lineitem, statusChoices, userCanManage);
+    };
+
+    /**
+     * Handler Definitions
+     */
+
+    AdvisorApp.reqres.setHandler('facebook:adgroup:entity', function(adGroupID) {
+        return getFacebookAdGroupEntity(adGroupID);
+    });
+
+    AdvisorApp.reqres.setHandler('facebook:adgroup:entities', function(options) {
+        return getFacebookAdGroupEntities(options);
+    });
+
+    AdvisorApp.reqres.setHandler('facebook:adgroup:PageableEntities', function(lineitem, userCanManage) {
+        return getFacebookPageableAdGroupEntities(lineitem, userCanManage);
+    });
+});

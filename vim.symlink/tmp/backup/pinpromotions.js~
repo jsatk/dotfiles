@@ -1,0 +1,11 @@
+var Backbone = require('backbone');
+
+module.exports = Backbone.Collection.extend({
+    url: function() {
+        return 'api/advisor/v1/campaign/' +
+            this.campaignId + '/dashboard/pinpromotion/';
+    },
+    initialize: function() {
+        this.filters = this.options.query;
+    }
+});

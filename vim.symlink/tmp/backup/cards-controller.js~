@@ -1,0 +1,175 @@
+/* global dependencies */
+var moment = require('moment');
+var Backbone = require('backbone');
+var Backgrid = require('backgrid');
+var $ = require('jquery');
+var _ = require('underscore');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var InitiativeChannel = require('../initiative-channel');
+var DateRangePickerControl = require('../../../common/daterange-picker-control');
+var CommonLanguage = require('../../../common/language');
+var SCDataTable = require('../../../config/SCDataTable');
+
+/* views */
+var CardsLayoutView = require('./views/layout-view');
+var CardsCollectionView = require('./views/collection-view');
+var ActivityView = require('./views/activity-view');
+
+/* module definition */
+var Cards = {};
+
+var initiativeEntities;
+var filterLabels = CommonLanguage.en.initiativeFilterLabel;
+var initiativeFilters = [
+    {
+        type:'clear',
+        label: filterLabels.ALL,
+        value: {}
+    },
+    {
+        type:'statusActive',
+        label: filterLabels.ACTIVE,
+        value: {'status': 'active'}
+    },
+    {
+        type:'statusInactive',
+        label: filterLabels.INACTIVE,
+        value: {'status': 'inactive'}
+    },
+    {
+        type:'statusComplete',
+        label: filterLabels.COMPLETE,
+        value: {'status': 'completed'}
+    },
+    {
+        type:'campaignOffPace',
+        label: filterLabels.OFF_PACE,
+        value: {'off_pace_campaign_count__gt': '0'}
+    }
+];
+
+Cards.loadCardsView = function(options) {
+    options = options || {};
+    var region = options.region;
+    if (!region) throw new Error('Initiative Cards Controller requires a region option.');
+    var dateRanges = DateRangePickerControl.prototype.defaults.dateRanges;
+    AppChannel.request('advisor:initiative:entities', {})
+    .done(function(initiatives) {
+        initiativeEntities = initiatives;
+        var headerToolbarViewOptions = {
+            collection: initiativeEntities,
+            dateFilterView: new DateRangePickerControl({
+                dateRanges: _.omit(dateRanges, 'Yesterday', 'Today', 'Last 7 days', 'Month to date'),
+                modelEvents: dateModelEvents
+            }),
+            events: {
+                'click #create-initiative': function() {
+                    InitiativeChannel.trigger('create:show');
+                },
+                'submit form': function() {
+                    return false;
+                },
+                'change #initiative-search': function(e) {
+                    e.preventDefault();
+                    initiativeEntities.setCollectionFilter({
+                        value: {'name__icontains': e.currentTarget.value }
+                    });
+                },
+                'click span.fa.fa-search': function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var input = $('.search-nav input');
+                    if (input.val() === '') {
+                        input.toggleClass('search-open');
+                    }
+                },
+                'click #initiative-filter .dropdown-menu a': function(e) {
+                    e.preventDefault();
+                    var $selectedFilterEl = $(e.currentTarget);
+                    $('#initiative-filter li').removeClass('active');
+                    $selectedFilterEl.parent('li').addClass('active');
+                    $('#initiative-filter .control-value').text($selectedFilterEl.text());
+                    var filterOptions = {
+                        clear: ['status', 'off_pace_campaign_count__gt'],
+                        value: _.findWhere(initiativeFilters, { type: $selectedFilterEl.data('filterType') }).value
+                    };
+                    initiativeEntities.setCollectionFilter(filterOptions);
+                }
+            },
+            filterOptions: initiativeFilters,
+            showNavToolbar: true,
+            subNavs: [{'class': 'active', 'href': '#initiative', 'name': 'INITIATIVES'},
+                       {'class': '', 'href': '#campaigns', 'name': 'CAMPAIGNS'}],
+            viewName: 'initiative'
+        };
+        var cardsLayoutView = new CardsLayoutView({
+            collection: initiativeEntities,
+            paginatorView: new SCDataTable.Paginator({
+                collection: initiativeEntities
+            }),
+            collectionView: new CardsCollectionView({
+                collection: initiativeEntities
+            }),
+            activityView: new ActivityView({})
+        });
+        cardsLayoutView.on(cardsLayoutEvents);
+        AppChannel.trigger('header:toolbar:show', headerToolbarViewOptions);
+        options.region.show(cardsLayoutView);
+    });
+    AppChannel.trigger('usage:pageevent', 'Initiative Dashboard', 'Load');
+};
+var cardsLayoutEvents = {
+    'show': function() {
+        var o = this.options;
+        this.cardsRegion.show(o.collectionView.on(cardsEvents));
+        this.paginationRegion.show(o.paginatorView.on(paginatorEvents));
+        this.activityRegion.show(o.activityView.on(activityViewEvents));
+    }
+};
+var cardsEvents = {
+    'load:initiativeCampaigns': function(cardView) {
+        if (!cardView.campaignsRegion.hasView()) {
+            AppChannel.request('campaigns:list:load', {
+                initiativeCampaigns: true,
+                initiativeCardsList: true,
+                showNavToolbar: false,
+                showPagination: false,
+                region: cardView.campaignsRegion,
+                collectionFilters: {
+                    limit: 0,
+                    initiative: cardView.model.id
+                }
+            });
+        }
+    }
+};
+var dateModelEvents = {
+    'change': function() {
+        this.updateDateRange();
+        var start = moment(this.model.get('start').format('YYYY-MM-DD'));
+        var end = moment(this.model.get('end').format('YYYY-MM-DD'));
+        var filterOptions = {
+            value: {
+                'end_date__gte': start.isValid() ? start.format('YYYY-MM-DD') : null,
+                'end_date__lte': end.isValid() ? end.format('YYYY-MM-DD') : null
+            }
+        };
+        initiativeEntities.setCollectionFilter(filterOptions);
+    }
+};
+var paginatorEvents = {
+    'show': function() {
+        this.listenTo(this.collection, 'sync', function(collection) {
+            if (collection.length > 0) {
+                this.$el.show();
+            } else {
+                this.$el.hide();
+            }
+        });
+    }
+};
+var activityViewEvents = {};
+
+module.exports = Cards;

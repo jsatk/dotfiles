@@ -1,0 +1,18 @@
+var _ = require('underscore');
+
+var devConfig = {
+    options: {
+        specs: 'dist/test/bundle.js',
+        keepRunner: false,
+        outfile: 'dist/test/index.html'
+    }
+};
+
+var ciConfig = devConfig;
+ciConfig.options.junit = { path: 'junit-reports' };
+
+module.exports = {
+    src: ['dist/js/vendor.js'],
+    dev: devConfig,
+    ci: ciConfig
+};

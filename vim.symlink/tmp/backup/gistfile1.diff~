@@ -1,0 +1,477 @@
+diff --git a/package.json b/package.json
+index 1c9e271..e0a0fe3 100644
+--- a/package.json
++++ b/package.json
+@@ -98,6 +98,7 @@
+     "select2-bootstrap-css": "^1.4.6",
+     "timepicker": "^1.6.2",
+     "underscore": "^1.8.3",
+-    "underscore.string": "^3.0.3"
++    "underscore.string": "^3.0.3",
++    "zeroclipboard": "^2.2.0"
+   }
+ }
+diff --git a/src/scripts/app.js b/src/scripts/app.js
+index 76945d0..69a545e 100644
+--- a/src/scripts/app.js
++++ b/src/scripts/app.js
+@@ -31,6 +31,7 @@ require('./entities/facebook/adset');
+ require('./entities/facebook/adgroup');
+ require('./entities/analytics');
+ require('./entities/pinterest/campaign');
++require('./entities/pinterest/conversiontag');
+ require('./entities/pinterest/pinpromotion');
+ // Audience Profiler
+ require('./entities/audience-profiler/page');
+diff --git a/src/scripts/entities/pinterest/conversiontag.js b/src/scripts/entities/pinterest/conversiontag.js
+new file mode 100644
+index 0000000..94ccb34
+--- /dev/null
++++ b/src/scripts/entities/pinterest/conversiontag.js
+@@ -0,0 +1,40 @@
++/* global dependencies */
++var _ = require('underscore');
++var Backbone = require('backbone');
++var AppChannel = require('advisor/app-channel');
++
++/* local dependencies */
++var EntitiesPinterest = require('./base');
++
++var Model = Backbone.Model.extend({
++    modelName: 'PinterestConversionTagModel',
++    idAttribute: 'id',
++    urlRoot: function() {
++        if (this.models && this.models[0] && this.models[0].get('campaign')) {
++            this.campaign = this.models[0].get('campaign');
++        }
++        return '/api/advisor/v1/campaign/' + this.campaign.get('id') + '/pixels/';
++    }
++});
++var Collection = EntitiesPinterest.Collection.extend({
++    'model': Model,
++    'url': Model.prototype.urlRoot
++});
++
++var getConversionTagEntity = function(id) {
++    return EntitiesPinterest.getBaseEntity(id, Model);
++};
++var getConversionTagEntities = function(options) {
++    return EntitiesPinterest.getBaseEntities(options, Collection);
++};
++var getPageableConversionTagEntities = function(options, userCanManage) {
++    return EntitiesPinterest.getPageableBaseEntities(Model, userCanManage);
++};
++var getConversionTagObject = function() {
++    return Model;
++};
++
++AppChannel.reply('pinterest:conversiontag:Entity', getConversionTagObject);
++AppChannel.reply('pinterest:conversiontag:entity', getConversionTagEntity);
++AppChannel.reply('pinterest:conversiontag:entities', getConversionTagEntities);
++AppChannel.reply('pinterest:conversiontag:PageableEntities', getPageableConversionTagEntities);
+diff --git a/src/scripts/modules/campaign/edit/edit-controller.js b/src/scripts/modules/campaign/edit/edit-controller.js
+index bad6232..f64d31a 100644
+--- a/src/scripts/modules/campaign/edit/edit-controller.js
++++ b/src/scripts/modules/campaign/edit/edit-controller.js
+@@ -185,13 +185,26 @@ var loadEditConversionTagView = function(options) {
+     if (!options.region) throw new Error('Conversion Tag view requires a region option.');
+     var initiative = options.initiative;
+     var campaign = options.campaign;
+-    var cardView = new EditConversionTagView({
+-        model: campaign,
+-        initiative: initiative
++    $.when(
++        AppChannel.request('pinterest:conversiontag:entities', { data: { campaign: campaign.get('id') }, campaign: campaign })
++    ).done(function(conversionTags){
++        var cardView = new EditConversionTagView({
++            campaign: campaign,
++            initiative: initiative,
++            collection: conversionTags
++        });
++        // conversionTagLayout.on(conversionTagLayoutEvents);
++        options.region.show(cardView);
+     });
+-    options.region.show(cardView);
+ };
+ 
++// var conversionTagLayoutEvents = {
++//     'show': function() {
++//         var options = this.options;
++//         this.conversionTagRegion.show(options.conversionTagView);
++//     }
++// };
++
+ /**
+ * Handle the rare (?) cases where a user may select a new Start/End Date value, then change it
+ * back to the original value.  Since we only want to send the edited values, we'll remove any
+diff --git a/src/scripts/modules/campaign/edit/edit-conversiontag-view.js b/src/scripts/modules/campaign/edit/edit-conversiontag-view.js
+index c14a068..afc2f50 100644
+--- a/src/scripts/modules/campaign/edit/edit-conversiontag-view.js
++++ b/src/scripts/modules/campaign/edit/edit-conversiontag-view.js
+@@ -1,10 +1,15 @@
+ /* global dependencies */
+-var moment = require('moment');
+ var $ = require('jquery');
+ var _ = require('underscore');
+ var Marionette = require('backbone.marionette');
+ 
+-/* local dependencies */
++var ZeroClipboard = require('zeroclipboard');
++var AppChannel = require('advisor/app-channel');
++
++// ZeroClipboard config
++ZeroClipboard.config({ swfPath: '//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.swf' });
++
++var NewView = require('./new-conversion-tag-view');
+ 
+ /* templates */
+ var CampaignConversionTagEditCard = require('../templates/CampaignConversionTagEditCard.hbs');
+@@ -13,17 +18,56 @@ var CampaignConversionTagEditCard = require('../templates/CampaignConversionTagE
+ var EditConversionTagView = Marionette.ItemView.extend({
+     template: CampaignConversionTagEditCard,
+     ui: {
+-        addTag: '#addTag'
++        'copySnippet':     '.copy-button',
++        'deleteTag':       '#delete-conversion-tag',
++        'addTagButton':    '#add-tag',
++        'cancelAddTag':    '.cancel',
+     },
+     events: {
+-        'click @ui.addTag': 'onAddTagClicked'
++        'click @ui.addTagButton':    'showCreateForm',
++        'click @ui.deleteTag':       'deleteTag'
+     },
+     onRender: function() {
+-
++        var client = new ZeroClipboard(this.ui.copySnippet);
++        client.on('copy', this.copySnippet);
+     },
++    copySnippet: function(e) {
++        var button = $(e.target);
++        var row = button.closest('tr');
++        var snippet = row.find('.snippet');
++        var clipboard = e.clipboardData;
++        clipboard.setData('text/plain', snippet.val());
++        clipboard.setData('text/html', snippet.val());
++        AppChannel.trigger('alert', {
++            message: 'Snippet text copied.',
++            type:    'info'
++        });
++    },
++    deleteTag: function(e) {
++        e.preventDefault()
++        var id = $(e.currentTarget).attr('data-id');
++        var tag = this.collection.find(function(tag) {
++            return tag.get('id') === id;
++        });
+ 
+-    onAddTagClicked: function() {
++        // Add spinner on delete button until table gets rerendered
++        $(e.currentTarget).removeClass('fa-times').addClass('fa fa-fw fa-cog fa-spin');
+ 
++        var self = this;
++        /** Remove current model */
++        tag.destroy().done(function() {
++            self.render();
++        });
++    },
++    showCreateForm: function() {
++        var ConversionTagEntity = AppChannel.request('pinterest:conversiontag:Entity');
++        var conversionTagEntity = new ConversionTagEntity();
++        var modalRegion = AppChannel.request('modalRegion');
++        modalRegion.show(new NewView({
++            'model':       conversionTagEntity,
++            'campaign':    this.collection.campaign,
++            'currentView': this
++        }));
+     }
+ });
+ 
+diff --git a/src/scripts/modules/campaign/edit/edit-layout-view.js b/src/scripts/modules/campaign/edit/edit-layout-view.js
+index 3f8b64b..4e88afd 100644
+--- a/src/scripts/modules/campaign/edit/edit-layout-view.js
++++ b/src/scripts/modules/campaign/edit/edit-layout-view.js
+@@ -18,6 +18,7 @@ var EditLayoutView = Marionette.LayoutView.extend({
+         'conversionTag':    '#conversion-tag',
+         'tracking':         '#tracking',
+         'targeting':        '#targeting',
++        'conversiontags':   '#conversiontags',
+         'sub-1':            '#sub-1'
+     },
+     initialize: function(options) {
+diff --git a/src/scripts/modules/campaign/edit/new-conversion-tag-view.js b/src/scripts/modules/campaign/edit/new-conversion-tag-view.js
+new file mode 100644
+index 0000000..6214bdb
+--- /dev/null
++++ b/src/scripts/modules/campaign/edit/new-conversion-tag-view.js
+@@ -0,0 +1,131 @@
++/* global dependencies */
++var moment = require('moment');
++var accounting = require('accounting');
++var $ = require('jquery');
++var _ = require('underscore');
++var Validatable = require('advisor/extensions/Validatable');
++var Marionette = require('backbone.marionette');
++var AppChannel = require('advisor/app-channel');
++
++/* templates */
++var CampaignConversionTagFormTemplate = require('../templates/NewCampaignConversionTagForm.hbs');
++
++/* module definition */
++var View = Marionette.ItemView.extend(new Validatable({
++    template: CampaignConversionTagFormTemplate,
++    title: 'New Conversion Tag',
++    className: 'campaign-conversiontag-form-sc',
++    validate: {
++        name: Validatable.TEXT(),
++        view_window_days_select: Validatable.VALUE(),
++        engagement_window_days_select: Validatable.VALUE(),
++        click_window_days_select: Validatable.VALUE(),
++        conversion_type_select: Validatable.TEXT()
++    },
++    ui: {
++        submit: '#submit',
++        cancel: '#cancel',
++        error:  '#error'
++    },
++    events: {
++        'submit form': 'save'
++    },
++    preloader: function() {
++        /** Variables */
++        var error  = $(this.ui.error);
++        var cancel = $(this.ui.cancel);
++        var submit = $(this.ui.submit);
++        /** Get default width of submit */
++        var width = submit.outerWidth();
++        /** Set fixed width and empty */
++        submit.outerWidth(width).empty();
++        /** Add spinning icon */
++        $('<i>', { class: 'fa fa-fw fa-cog fa-spin' }).appendTo(submit);
++        /** Disable buttons */
++        cancel.addClass('disabled');
++        submit.addClass('disabled');
++        /** Clear error */
++        error.empty().addClass('hidden');
++    },
++    triggers: {
++        'click @ui.cancel': 'modal:close'
++    },
++    save: function(e) {
++        e.preventDefault();
++        this.preloader();
++        this.model.set('advertiser', { id: this.getOption('campaign').get('platform_account_id') });
++        this.model.campaign = this.getOption('campaign');
++        var self = this;
++        this.model.save(null, {
++            success: function(model, response) {
++                var conversionTagView = self.getOption('currentView');
++                conversionTagView.collection.fetch().done(function() {
++                    conversionTagView.render();
++                });
++                self.triggerMethod('modal:close');
++            },
++            error: function(model, response) {
++                var errors       = response.responseJSON.conversiontag;
++                var errorMessage = _.values(errors).join(' '); // Concatenates all of our error messages into one string.
++                self.ui.error.html(errorMessage || 'An unknown error occurred').removeClass('hidden');
++                self.ui.cancel.removeClass('disabled');
++                self.ui.submit.removeClass('disabled');
++                self.ui.submit.html('Retry');
++            }
++        });
++    },
++    bindings: {
++        '#name': 'name',
++        'select#view_window_days_select': {
++            observe: 'view_window_days',
++            selectOptions: {
++                collection: [1, 7, 14, 30, 60],
++                defaultOption: {
++                    label: 'Select view window days',
++                    value: null
++                }
++            }
++        },
++        'select#engagement_window_days_select': {
++            observe: 'engagement_window_days',
++            selectOptions: {
++                collection: [1, 7, 14, 30, 60],
++                defaultOption: {
++                    label: 'Select engagement window days',
++                    value: null
++                }
++            }
++        },
++        'select#click_window_days_select': {
++            observe: 'click_window_days',
++            selectOptions: {
++                collection: [1, 7, 14, 30, 60],
++                defaultOption: {
++                    label: 'Select click window days',
++                    value: null
++                }
++            }
++        },
++        'select#conversion_type_select': {
++            observe: 'conversion_type',
++            selectOptions: {
++                collection: [
++                    { label: 'Page visit', value: 'PAGE_VISIT' },
++                    { label: 'Signup',     value: 'SIGNUP' },
++                    { label: 'Checkout',   value: 'CHECKOUT' },
++                    { label: 'Custom',     value: 'CUSTOM' }
++                ],
++                defaultOption: {
++                    label: 'Select conversion type',
++                    value: null
++                }
++            }
++        }
++    },
++    onShow: function() {
++        /** Add stickit */
++        this.stickit();
++    }
++}));
++
++module.exports = View;
+diff --git a/src/scripts/modules/campaign/templates/CampaignConversionTagEditCard.hbs b/src/scripts/modules/campaign/templates/CampaignConversionTagEditCard.hbs
+index 0743cbe..33ae3e0 100644
+--- a/src/scripts/modules/campaign/templates/CampaignConversionTagEditCard.hbs
++++ b/src/scripts/modules/campaign/templates/CampaignConversionTagEditCard.hbs
+@@ -1,17 +1,53 @@
+ <form class="form" role="form">
+-
+     <div class="row">
+         <div class="col-xs-9"><h4>Conversion Tags</h4></div>
+-        <div class="col-xs-3"><a href="#" id="addTag" class="btn btn-secondary-sc btn-sm pull-right">+ Add tag</a></div>
++        <div class="col-xs-3"><button type="button" id="add-tag" class="btn btn-secondary-sc btn-sm pull-right">+ Add tag</button></div>
+     </div>
+-
+-
+-    <div class="panel sc-panel sc-campaign-details">
+-        <div class="panel-body">
+-            <div class="col-md-12 form-group campaignName">
+-
++    <div class="panel sc-panel sc-campaign-conversion-tags">
++        <div class="panel-body conversion-tag-view" id="conversiontags">
++            <div class="conversion-tag-list">
++                <table class="table table-striped table-hover">
++                    <thead>
++                        <tr>
++                            <th>Name</th>
++                            <th>Conversion type</th>
++                            <th>View window</th>
++                            <th>Engagement window</th>
++                            <th>Click window</th>
++                            <th>Code snippet</th>
++                            <th></th>
++                            <th></th>
++                        </tr>
++                    </thead>
++                    <tbody>
++                    {{#each items}}
++                        <tr class="tag-row">
++                            <td>{{name}}</td>
++                            <td>{{conversion_type}}</td>
++                            <td>{{view_window_days}}</td>
++                            <td>{{engagement_window_days}}</td>
++                            <td>{{click_window_days}}</td>
++                            <td>
++                                <input type="text" class="snippet" name="snippet" size="20" value='{{code_snippet}}' disabled />
++                            </td>
++                            <td>
++                                <button type="submit" class="copy-button" title="copy">Copy</button>
++                            </td>
++                            <td class="delete-cell">
++                                <div class="btn-group pull-right">
++                                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
++                                        <span class="fa fa-fw fa-chevron-down"></span>
++                                    </button>
++                                    <ul class="dropdown-menu">
++                                        <li><a href="#" id="delete-conversion-tag" data-id="{{id}}">Delete tag</a></li>
++                                    </ul>
++                                </div>
++                            </td>
++                        </tr>
++                    {{/each}}
++                    </tbody>
++                </table>
+             </div>
+         </div>
+     </div>
+-
+ </form>
+diff --git a/src/scripts/modules/campaign/templates/NewCampaignConversionTagForm.hbs b/src/scripts/modules/campaign/templates/NewCampaignConversionTagForm.hbs
+new file mode 100644
+index 0000000..6f0cfac
+--- /dev/null
++++ b/src/scripts/modules/campaign/templates/NewCampaignConversionTagForm.hbs
+@@ -0,0 +1,42 @@
++<form class="form" role="form">
++
++    <div class="alert alert-danger hidden" role="alert" id="error"></div>
++
++    <div class="form-group">
++        <label for="name">Name</label>
++        <input required type="text" class="form-control" id="name" name="name" placeholder="Name, e.g. Jeffrey">
++    </div>
++
++    <div class="form-group">
++        <label for="conversion_type">Conversion Type</label>
++        <select required class="form-control" id="conversion_type_select" name="conversion_type_select"></select>
++    </div>
++
++    <div class="form-group">
++        <label for="view_window_days">View Window Days</label>
++        <select required class="form-control" id="view_window_days_select" name="view_window_days_select"></select>
++    </div>
++
++    <div class="form-group">
++        <label for="engagement_window_days">Engagement Window Days</label>
++        <select required class="form-control" id="engagement_window_days_select" name="engagement_window_days_select"></select>
++    </div>
++
++    <div class="form-group">
++        <label for="click_window_days">Click Window Days</label>
++        <select required class="form-control" id="click_window_days_select" name="click_window_days_select"></select>
++    </div>
++
++    <div class="row">
++        <div class="form-group col-md-12">
++            <div class="alert alert-danger hidden conversiontag-form-message" role="alert"></div>
++            <button type="submit" class="btn btn-primary" id="submit">
++                Create
++            </button>
++            <button type="reset" class="btn btn-default" id="cancel">
++                Cancel
++            </button>
++        </div>
++    </div>
++
++</form>
+diff --git a/src/scripts/modules/campaign/templates/campaignTrackingLayout.hbs b/src/scripts/modules/campaign/templates/campaignTrackingLayout.hbs
+index 7bebd73..0c8daf8 100644
+--- a/src/scripts/modules/campaign/templates/campaignTrackingLayout.hbs
++++ b/src/scripts/modules/campaign/templates/campaignTrackingLayout.hbs
+@@ -3,3 +3,4 @@
+ <section id="tracking-tag"></section>
+ <section id="tracking-pixel"></section>
+ <section id="optimization-pixel"></section>
++<section id="conversion-tag"></section>
+\ No newline at end of file
+diff --git a/src/scripts/modules/campaign/tracking/tracking-layout-view.js b/src/scripts/modules/campaign/tracking/tracking-layout-view.js
+index 859a87c..5000dcf 100644
+--- a/src/scripts/modules/campaign/tracking/tracking-layout-view.js
++++ b/src/scripts/modules/campaign/tracking/tracking-layout-view.js
+@@ -15,7 +15,8 @@ var TrackingLayout = Marionette.LayoutView.extend({
+         'attributionRegion':    '#attribution-window',
+         'tagRegion':            '#tracking-tag',
+         'pixelRegion':          '#tracking-pixel',
+-        'optimizationRegion':   '#optimization-pixel'
++        'optimizationRegion':   '#optimization-pixel',
++        'conversionTagRegion': ' #conversion-tag'
+     },
+     childEvents: {
+         'update:tags:tracking:pixels': function(childView, event, property) {

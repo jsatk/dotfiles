@@ -1,0 +1,54 @@
+AdvisorApp.module('Common.Modal', function(Modal, App) {
+    /**
+     * Usage:
+     * To display yourView using this App Modal:
+     *      App.modalRegion.show(yourView);
+     *
+     * To close the modal, either click on 'x' of the modal,
+     * Or trigger the 'modal:close' method:
+     *      yourView.triggerMethod('modal:close');
+     */
+
+    /**
+     * View to be used in ModalRegion
+     */
+    this.ModalView = Marionette.LayoutView.extend({
+        template: Handlebars.templates.modalTemplate,
+        regions: {
+            'bodyRegion': '#sc-modal-body'
+        },
+        ui: {
+            'title': '#sc-modal-title',
+            'modalWindow': '#sc-modal'
+        },
+        $modalWindow: null,
+        events: {
+            'hidden.bs.modal': 'destroy'
+        },
+        childEvents: {
+            'modal:close': 'close'
+        },
+        close: function() {
+            this.$modalWindow.modal('hide');
+            this.options.view = null;
+            this.bodyRegion.empty();
+        },
+        onRender: function() {
+            var view = this.getOption('view');
+            if (!view) {
+                return this;
+            }
+            this.ui.title.text(view.getOption('title'));
+            var classList = view.getOption('classList');
+            if (classList) {
+                this.ui.modalWindow.find('.modal-dialog').addClass(classList);
+            }
+            this.bodyRegion.show(view);
+            this.$modalWindow = this.ui.modalWindow.modal('show');
+            return this;
+        },
+        templateHelpers: function() {
+            return this.getOption('view').modalConfigurations || {};
+        }
+    });
+});

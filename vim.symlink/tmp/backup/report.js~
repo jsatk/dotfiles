@@ -1,0 +1,291 @@
+/* global dependencies */
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+var AppChannel = require('advisor/app-channel');
+
+var excluded_columns_options = [
+    'Impressions',
+    'Reach',
+    'Frequency',
+    'Clicks',
+    'CTR',
+    'Page Likes',
+    'Offsite Conversions',
+    'Spent',
+    'Client Spent',
+    'Client Revenue',
+    'Page Engagements',
+    'App Installs',
+    'App Engagements',
+    'Checkouts',
+    'Add-to-Carts',
+    'Offsite Page Views',
+    'Other Conversions',
+    'Registrations',
+    'Leads',
+    'Photo Views',
+    'Link Clicks',
+    'Shares',
+    'Post Likes',
+    'Comments',
+    'Votes',
+    'Follows',
+    'Mentions',
+    'Clicks to Play Video',
+    'Receive Offer',
+    'App Stories',
+    'Gift Sales',
+    'Recommendations',
+    'Video Views',
+    'Check Ins',
+    'Click to Engagement Rate',
+    'Engagements Per Like',
+    'Impressions Per Like',
+    'Engagement Rate',
+    'Cost Per App Install',
+    'Cost Per Checkout',
+    'Cost Per Add to Cart',
+    'Cost Per Other Conversion',
+    'Cost Per Lead',
+    'Cost Per Registration',
+    'Cost Per Page View',
+    'Client Cost Per App Install',
+    'Client Cost Per Checkout',
+    'Client Cost Per Add to Cart',
+    'Client Cost Per Other Conversion',
+    'Client Cost Per Lead',
+    'Client Cost Per Registration',
+    'Client Cost Per Page View',
+    'Click to App Install Rate',
+    'Click to Checkout Rate',
+    'Click to Add to Cart Rate',
+    'Click to Other Conversion Rate',
+    'Click to Lead Rate',
+    'Click to Registration Rate',
+    'Click to Page View Rate',
+    'Client ROI',
+    'eCPE',
+    'eCPF'
+];
+var excluded_sections_options = [
+    'Daily Performance',
+    'Creative Image',
+    'Glossary',
+    'Gender',
+    'Age',
+    'Creative Body',
+    'Creative Title',
+    'Gender Age',
+    'Creative Combos',
+    'Creative Category',
+    'Behaviors',
+    'Broad Categories',
+    'Page Targeting',
+    'Ad Type',
+    'Custom Audiences',
+    'Fans Ad Type',
+    'Interests by Ad Type',
+    'Geo'
+];
+var ReportConfig = Backbone.Model.extend({
+     urlRoot: '/api/reports/v2/reportconfiguration/creative-insights/run/',
+     excluded_columns_options: excluded_columns_options,
+     excluded_sections_options: excluded_sections_options,
+     defaults: {
+        'excluded_columns': [],
+        'excluded_sections': [],
+        'download': 'true'
+    },
+     initialize: function(options) {
+        var lineitemId;
+        options = options || {};
+        lineitemId = options.lineitemId;
+        if (lineitemId) {
+            this.setDefaultsFromLineitem(lineitemId);
+        }
+    },
+     setDefaultsFromLineitem: function(lineitemId) {
+        var self = this;
+        AppChannel.request('lineitem:entity', lineitemId, {
+            'fields': ReportConfig.getRequiredLineItemFields()
+        })
+        .done(function(lineitem) {
+            self.set({
+                lineitem_id: lineitem.get('id'),
+                title: lineitem.get('name'),
+                start_date: lineitem.get('start_date'),
+                end_date: lineitem.get('end_date'),
+                payout_action: lineitem.get('payout_action'),
+                post_imp_attribution_multiplier: lineitem.get('post_imp_attribution_multiplier'),
+                post_imp_attribution: lineitem.get('post_imp_attribution'),
+                post_click_attribution_multiplier: lineitem.get('post_click_attribution_multiplier'),
+                post_click_attribution: lineitem.get('post_click_attribution')
+            });
+        })
+        .fail(function() { //response
+            //console.log('handle failed LI fetch: ' + response.statusText);
+        });
+    },
+     validate: function(attrs) { //attrs, options
+        var errors = {};
+        if (new Date(attrs.end_date) < new Date(attrs.start_date)) {
+            errors.end_date = 'End Date cannot be before Start Date';
+        }
+        if (!_.isEmpty(errors)) {
+            return errors;
+        }
+    }
+ }, {
+     getRequiredLineItemFields: function() {
+        return [
+                'id', 'name', 'start_date', 'end_date',
+                'post_click_attribution', 'post_click_attribution_multiplier',
+                'post_imp_attribution', 'post_imp_attribution_multiplier',
+                'payout_action'
+            ].join(',');
+    }
+ });
+var Report = Backbone.Model.extend({
+     urlRoot: '/api/reports/v2/reportrun/',
+     initialize: function() {
+        this.downloading = false;
+    },
+     pollForStatus: function() {
+        var self = this;
+        (function poll() {
+            self.fetch({
+                success: function(report, response) { //model, response, options
+                    switch (report.get('status')) {
+                        case 'completed':
+                            self.trigger('poll:status:complete');
+                            break;
+                        case 'error':
+                            self.trigger('poll:status:error', response);
+                            break;
+                        default://received,
+                            self.pollTimeout = setTimeout(poll, 5000);
+                            break;
+                    }
+                },
+                error: function(model, response) { //model, response, options
+                    self.trigger('poll:status:error', response);
+                }
+            });
+        })();
+        return this;
+    },
+     stopPollingForStatus: function() {
+        var timeout = this.pollTimeout;
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        return this;
+    },
+     download: function() {
+        var self = this;
+        this.trigger('download:start');
+        this.downloading = true;
+        this.pollForStatus();
+        this.once('poll:status:complete', function() {
+            self.off('poll:status:error');
+            self.trigger('download:complete');
+            self.downloading = false;
+            location.href = self.get('resource_uri') + 'export/?export_format=excel';
+        });
+        this.once('poll:status:error', function(response) {
+            self.off('poll:status:complete');
+            self.trigger('download:error', response);
+            self.downloading = false;
+        });
+        return this;
+    },
+     stopDownload: function() {
+        if (this.downloading) {
+            this.stopPollingForStatus();
+            this.off('poll:status:error');
+            this.off('poll:status:complete');
+            this.downloading = false;
+        }
+        return this;
+    }
+ });
+var ReportCollection = Backbone.Collection.extend({
+    model: Report,
+    url: function() {
+        return '/api/reports/v2/reportrun/' +
+            $.fn.generateQueryString(this.filters);
+    },
+    initialize: function(options) {
+        this.filters = $.extend({ 'order_by': '-created'}, options.query);
+    },
+    parse: function(data) {
+        this.meta = data.meta;
+        return data.objects;
+    },
+    comparator: function(model) {
+        return -Date.parse(model.get('created'));
+    },
+    autoRefresh: function(seconds) {
+        var self     = this;
+        var interval = seconds * 1000;
+        var refresh  = function() { self.fetch(); };
+        this._refreshInterval = setInterval(refresh, interval);
+        return this;
+    },
+    stopAutoRefresh: function() {
+        var interval = this._refreshInterval;
+        if (interval) {
+            clearInterval(interval);
+        }
+        return this;
+    }
+});
+var getReportEntity = function(id) {
+    var report = new Report({ id: id });
+    var defer  = $.Deferred();
+    report.fetch({
+        success: function(model) { //model, response, options
+            defer.resolve(model);
+        },
+        error: function(model, response) { //model, response, options
+            defer.reject(response);
+        }
+    });
+    return defer.promise();
+};
+var getReportEntities = function(options) {
+    var reportCollection = new ReportCollection(options);
+    var defer            = $.Deferred();
+    reportCollection.fetch({
+        success: function(collection) { //collection, response, options
+            var intervalInSeconds = options.refreshInterval;
+            if (intervalInSeconds) {
+                collection.autoRefresh(intervalInSeconds);
+            }
+            defer.resolve(collection);
+        },
+        error: function(collection, response) { //collection, response, options
+            defer.reject(response);
+        }
+    });
+    return defer.promise();
+};
+
+AppChannel.reply('report:excluded_columns_options', function() {
+    return excluded_columns_options;
+});
+AppChannel.reply('report:excluded_sections_options', function() {
+    return excluded_sections_options;
+});
+AppChannel.reply('report:entities', function(options) {
+    return getReportEntities(options);
+});
+AppChannel.reply('report:entity', function(id) {
+    if (id) {
+        return getReportEntity(id);
+    }
+});
+AppChannel.reply('reportConfig:Entity', function() {
+    return ReportConfig;
+});

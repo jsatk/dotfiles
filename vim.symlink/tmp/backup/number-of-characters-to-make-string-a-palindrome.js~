@@ -1,0 +1,16 @@
+function isPalindrome(str) {
+    str = str.replace(/\s+/g, ''); // Remove all whitespace. This should be optional.
+    var reverseStr = str.split('').reverse().join('');
+    return str === reverseStr;
+}
+
+function numOfCharsToMakeStringAPalindrom(str) {
+    var stack = '';
+
+    while (isPalindrom(str) !== true) {
+        stack += str.charAt(0);
+        str = str.substring(1);
+    }
+
+    return stack.length;
+}

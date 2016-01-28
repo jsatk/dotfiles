@@ -47,7 +47,7 @@
 [core]
   attributesfile   = ~/.gitattributes
   autocrlf         = input
-  excludesfile     = /Users/jessea/.gitignore_global
+  excludesfile     = /opt/boxen/config/git/gitignore
   ignorecase       = false
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
   editor           = /usr/local/bin/vim # Something about my .vimrc makes specifying the which git to use necessary here.  If I find out what it I'm going to murder it.
@@ -70,6 +70,9 @@
 
 [merge]
   log              = true
+
+[grep]
+  patternType      = "fixed"
 
 [url "git@github.com:"]
   insteadOf        = "gh:"
@@ -103,7 +106,10 @@
 
 [user]
   email            = jesse.atkinson@me.com
-  name             = Jesse Atkinson
+  name             = 'Jesse Atkinson'
 
 [credential]
-  helper           = osxkeychain
+  helper           = /opt/boxen/bin/boxen-git-credential
+
+[hub]
+protocol           = https

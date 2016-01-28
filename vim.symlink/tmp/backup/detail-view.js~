@@ -1,0 +1,86 @@
+/* global dependencies */
+var $ = require('jquery');
+var Backbone = require('backbone');
+var _ = require('underscore');
+var Marionette = require('marionette');
+var AdvisorApp = require('../../../app');
+
+/* templates */
+var CampaignDetailsTemplate = require('../templates/CampaignDetails.hbs');
+
+/* module definition */
+var CampaignDetails = Marionette.LayoutView.extend({
+    template: CampaignDetailsTemplate,
+    /** Initializes the view. */
+    initialize: function() {
+        this.setupFetchInterval();
+    },
+    /**
+    * Returns an object of regions in this layout view.
+    * See: http://marionettejs.com/docs/v2.3.2/marionette.layoutview.html#specifying-regions-as-a-function
+    * @param {Object} options Object of all options passed to this view when it was initialized.
+    * @returns {Object} of regions in this view.
+    */
+    regions: function(options) {
+        return _.chain(options.cards)
+            .reduce(function(memo, array) {
+                return _.union(array, memo);
+            }, [])
+            .reduce(function(memo, region) {
+                var classes = '.' + region + '.card';
+                return _.updateObject(memo, region, classes);
+            }, {})
+            .value();
+    },
+    /** @returns {Object} of variables we want accessible in our Handlebar Template. */
+    templateHelpers:function() {
+
+        var cards = this.getOption('cards');
+
+        // We don't want the `children` card to the panel class
+        var center = _(cards.center).map(function(card) {
+            return card + (card === 'children' ? ' card sc-panel' : ' card panel sc-panel');
+        });
+
+        var right = _(cards.right).map(function(card) {
+            return card + ' card';
+        });
+
+        return {
+            center: center,
+            right:  right
+        };
+    },
+    /** This method early returns with `undefined` unless we have just come back from ad creation. */
+    setupFetchInterval: function() {
+        if (!this.getOption('adGenInfo')) return;
+        var name     = this.getOption('adGenInfo').name;
+        var message  = 'Ad Sets are being uploaded to the platform(s) for ' + name;
+        this.interval = setInterval(_(this.getStatus).bind(this), 10000);
+        Backbone.history.once('all', function() {
+            clearInterval(this.interval);
+        }, this);
+        AdvisorApp.alert({ message: message });
+    },
+    /** This method is only called if were redirected back to Campaign Details page from Ad Creation. */
+    getStatus: function() {
+        function onDone(response) {
+            var name = this.getOption('adGenInfo').name;
+            var done = _(function(message) {
+                AdvisorApp.alert({ message: message });
+                clearInterval(this.interval);
+            }).bind(this);
+            switch (response.upload_status.status) {
+                case 'SUCCESS':
+                    done('Ad Sets upload complete for ' + name + ' success');
+                    break;
+                case 'FAILED':
+                    done('Error uploading ' + name + ' warning');
+                    break;
+            }
+        }
+        $.getJSON(this.getOption('adGenInfo').resource_uri).done(_(onDone).bind(this));
+    }
+});
+
+module.exports = CampaignDetails;

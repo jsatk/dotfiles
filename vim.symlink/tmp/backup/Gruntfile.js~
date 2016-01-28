@@ -1,0 +1,247 @@
+/* global module:false, process, require */
+var browserify = require('./grunt/browserify');
+var path = require('path');
+var fs = require('fs');
+
+module.exports = function(grunt) {
+    // Use 'load-grunt-tasks' to simply load all installed tasks.
+    // This allows us to skip grunt.loadNpmTasks for every task.
+    require('load-grunt-tasks')(grunt);
+
+    var SERVER_PORT     = process.env.ADVISOR_PORT || 8080;
+    var HOSTNAME        = process.env.ADVISOR_HOSTNAME || 'localhost';
+    var LIVERELOAD_PORT = 35729;
+    var lrSnippet       = require('connect-livereload')({ port: LIVERELOAD_PORT });
+    var proxySnippet    = require('grunt-connect-proxy/lib/utils').proxyRequest;
+    var devTasks      = [
+        'jshint',
+        'jscs:src',
+        'clean',
+        'copy',
+        'symlink',
+        'less',
+        'browserify:vendor',
+        'browserify:application',
+        'browserify:test'
+    ];
+    var prodTasks = devTasks.concat(['uglify', 'processhtml:prod', 'hashres:dist']);
+
+    function mountFolder(connect, dir, mountPath) {
+        var localPath = path.resolve(dir);
+        if (!mountPath) return connect.static(localPath);
+        // add a leading slash
+        mountPath = /^\//.test(mountPath) ? mountPath : '/' + mountPath;
+        var pattern = new RegExp('^' + mountPath);
+        // custom middleware for matching and sending static files.
+        return function(req, res, next) {
+            if (!pattern.test(req.url)) return next();
+            var filePath = req.url.split('/').slice(2).join('/');
+            // stream the file directly to the client.
+            fs.createReadStream(path.join(localPath, filePath)).pipe(res);
+        };
+    }
+
+    grunt.initConfig({
+
+        // Use browserify for dependency management
+        browserify: browserify,
+        'bower-install-simple': {
+            options: {
+                color: true
+            },
+            'prod': {
+                options: {
+                    production: true
+                }
+            }
+        },
+        // symlinks for browserify - this helps us avoid '../../../' in our requires.
+        symlink: {
+            options: {
+                overwrite: true
+            },
+            explicit: {
+                // this will create an 'advisor' folder with our app in it, so we can do things like `require('advisor/app-channel')`
+                src: 'src/scripts',
+                dest: 'node_modules/advisor'
+            }
+        },
+        clean: {
+            dist: ['dist/']
+        },
+        connect: {
+            server: {
+                options: {
+                    port: SERVER_PORT,
+                    hostname: HOSTNAME,
+                    base: 'dist',
+                    middleware: function(connect) {
+                        return [
+                            proxySnippet,
+                            lrSnippet,
+                            mountFolder(connect, 'dist'),
+                            mountFolder(connect, '.grunt', '/.grunt')
+                        ];
+                    }
+                }
+            }
+        },
+        copy: {
+            main: {
+                files: [{
+                    // Copy the old index.html into build
+                    expand: true,
+                    src: ['index.html'],
+                    cwd: 'src/',
+                    dest: 'dist/'
+                }, {
+                    // Copy all media into build folder
+                    expand: true,
+                    cwd: 'src/media/',
+                    src: ['*'],
+                    dest: 'dist/media/'
+                }, {
+                    expand: true,
+                    cwd: 'node_modules/font-awesome/fonts/',
+                    src: ['*'],
+                    dest: 'dist/fonts/'
+                }, {
+                    expand: true,
+                    cwd: 'node_modules/bootstrap/fonts/',
+                    src: ['*'],
+                    dest: 'dist/fonts/'
+                }, {
+                    // Select2 media
+                    expand: true,
+                    cwd: 'node_modules/select2/',
+                    src: ['*.gif', '*.png'],
+                    dest: 'dist/media/select2/'
+                }
+              ]
+            }
+        },
+        hashres: {
+            dist: {
+                src: [
+                    'dist/js/application.js',
+                    '<%= less.dist.dest %>'
+                ],
+                dest: 'dist/index.html',
+                options: {
+                    fileNameFormat: '${name}.${ext}?${hash}',
+                    renameFiles: false
+                }
+            }
+        },
+        jsdoc: {
+            src: ['src/scripts/modules/**/*.js'],
+            options: {
+                destination: 'docs'
+            }
+        },
+        jshint: {
+            options: {
+                jshintrc: true
+            },
+            all: {
+                src: ['Gruntfile.js', 'src/scripts/**/*.js']
+            }
+        },
+        less: {
+            dist: {
+                src: ['src/styles/app.less'],
+                dest: 'dist/css/application.css',
+                sourceMap: true
+            }
+        },
+        open: {
+            dev: {
+                path: 'http://' + HOSTNAME + ':' + SERVER_PORT
+            }
+        },
+        pkg: grunt.file.readJSON('package.json'),
+        uglify: {
+            // options: {
+            //     sourceMap: true
+            // },
+            application: {
+                src: 'dist/js/application.js',
+                dest: 'dist/js/application.js',
+                // options: {
+                //     sourceMapIn: 'dist/js/application.js.map'
+                // }
+            }
+        },
+        watch: {
+            options: {
+                livereload: true,
+                spawn: false,
+                reload: false
+            },
+            index: {
+                files: ['src/index.html', 'src/media/**/*'],
+                tasks: ['copy']
+            },
+            application: {
+                files: ['dist/js/application.js'],
+                tasks: [],
+                options: {
+                    livereload: true
+                }
+            },
+            styles: {
+                files: 'src/styles/**/*.less',
+                tasks: ['less'],
+                options: {
+                    spawn: true,
+                    livereload: false
+                }
+            },
+            css: {
+                files: ['dist/css/*'],
+                tasks: []
+            }
+        },
+        processhtml: {
+            local: {
+                files: {
+                    'dist/index.html': ['dist/index.html']
+                },
+            },
+            prod: {
+                options: {
+                    strip: true
+                },
+                files: {
+                    'dist/index.html': ['dist/index.html']
+                },
+            }
+        },
+        jscs: require('./grunt/jscs'),
+        json: {
+            main: {
+                options: {
+                    namespace: 'fixtures',
+                    processName: function(filename) {
+                        return filename.toLowerCase().replace(/\./g, '/');
+                    }
+                },
+                src: ['tests/fixtures/*.json'],
+                dest: 'dist/js/fixtures.js'
+            }
+        },
+        jasmine: {
+            src: ['dist/js/vendor.js'],
+            options: {
+                specs: 'dist/test/bundle.js',
+                keepRunner: true,
+                outfile: 'dist/test/index.html'
+            }
+        }
+    });
+
+    grunt.registerTask('test', devTasks.concat('jasmine'));
+    grunt.registerTask('serve', require('./grunt/serve')(grunt, devTasks));
+    grunt.registerTask('default', devTasks);
+    grunt.registerTask('build', prodTasks);
+};

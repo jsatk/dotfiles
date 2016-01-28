@@ -1,0 +1,344 @@
+/* global dependencies */
+var _ = require('underscore');
+var React = require('react');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var BackboneModelView = require('../../../common/react/modelView.jsx');
+var TargetingPanel = require('./targeting-panel.jsx');
+var BarChart = require('./barchart.jsx');
+var AudienceProfilerModule = require('../audience-profiler-app');
+
+/* module definition */
+var Home = {};
+
+var AccountsCollections;
+var PageCollection;
+var CustomAudienceCollection;
+var AudienceProfileCollection;
+var AudienceProfileTemplateModel;
+
+var HomeView = React.createClass({
+    getInitialState: function() {
+        AudienceProfileCollection = AppChannel.request('AudienceProfiles');
+        AccountsCollection = AppChannel.request('Accounts');
+        PageCollection = AppChannel.request('Pages');
+        CustomAudienceCollection = AppChannel.request('CustomAudiences');
+        AudienceProfileTemplateModel = AppChannel.request('AudienceProfileTemplate');
+        if (this.props.id) {
+            var self = this;
+            new AudienceProfileTemplateModel({id: this.props.id}).fetch()
+            .then(function(audience) {
+                self.setState({
+                    profileName: audience.get('name'),
+                    selected: audience.get('body')
+                })
+            })
+            .fail(function() {
+                AppChannel.trigger('navigate:audience-profiler');
+            });
+        }
+
+        var name = this.props.profileName;
+        var body = this.props.body;
+        return {
+            profileName: name || '',
+            readOnly: name ? true : false,
+            selected: body ? AppChannel.request('jsonToCollections', body) : {},
+            showChart: body ? true : false,
+            platform: 'facebook'
+        };
+    },
+    componentDidMount: function() {
+        AppChannel.on('change-account', this.changeAccount);
+        AppChannel.on('added-item', this.addItem);
+        AppChannel.on('removed-item', this.removeItem);
+        AppChannel.on('show-chart', this.showChart);
+        AppChannel.on('name-changed', this.updateName);
+        AppChannel.on('create-profiles', this.createProfiles);
+        AppChannel.on('clone-template', this.cloneTemplate);
+    },
+    componentWillUnmount: function() {
+        AppChannel.off('change-account', this.changeAccount);
+        AppChannel.off('added-item', this.addItem);
+        AppChannel.off('removed-item', this.removeItem);
+        AppChannel.off('show-chart', this.showChart);
+        AppChannel.off('name-changed', this.updateName);
+        AppChannel.off('create-profiles', this.createProfiles);
+        AppChannel.off('clone-template', this.cloneTemplate);
+    },
+    changeAccount: function(account) {
+        this.setState(AppChannel.request('stateForNewAccount', account));
+    },
+    getNodeAtKeypath: function(root, keys) {
+        return _.reduce(keys, function(node, key) {
+            return node[key];
+        }, root);
+    },
+    cloneTemplate: function() {
+        AppChannel.trigger('navigate:audience-profiler');
+        this.setState({
+            profileName: '',
+            readOnly: false
+        });
+    },
+    addItem: function(obj) {
+        var selected = this.state.selected;
+        var keys = obj.keypath.split('.');
+        this.getNodeAtKeypath(selected, keys).add(obj.item);
+        if (keys[0] === 'base_audience') {
+            this.getNodeAtKeypath(selected.targeting_audience, keys.slice(1)).add(obj.item);
+        }
+        this.setState({
+            selected: selected,
+            showChart: false
+        });
+    },
+    removeItem: function(obj) {
+        var selected = this.state.selected;
+        var keys = obj.keypath.split('.');
+        this.getNodeAtKeypath(selected, keys).remove(obj.item);
+        if (keys[0] === 'targeting_audience') {
+            this.getNodeAtKeypath(selected.base_audience, keys.slice(1)).remove(obj.item);
+        }
+        this.setState({
+            selected: selected,
+            showChart: false
+        });
+    },
+    showChart: function() {
+        var AppChannel = this.AppChannel;
+        var self = this;
+        var params = {
+            format: 'json'
+        };
+        _.extend(params, AppChannel.request('audienceProfileParams', self.state.selected, this.state.platform));
+        new AudienceProfileCollection(null, params)
+        .fetch()
+        .then(function(audienceProfiles) {
+            self.setState({
+                audienceProfiles: audienceProfiles,
+                showChart: true
+            });
+        });
+    },
+    updateName: function(name) {
+        this.setState({profileName: name});
+    },
+    createProfiles: function() {
+        var AppChannel = this.AppChannel;
+        var state = this.state;
+        var self = this;
+        new AudienceProfileTemplateModel().save({
+            name: state.profileName,
+            account_id: state.selected.account.get('account_id'),
+            body: AppChannel.request('collectionsToJson', state.selected)
+        })
+        .then(function(audience) {
+            AppChannel.trigger('navigate:audience-profiler', audience.id);
+            self.setState({
+                readOnly: true
+            });
+        });
+    },
+
+    getOpportunityScore: function(audience) {
+        var base_frac = parseFloat(audience.base_frac);
+        var index = parseFloat(audience.index);
+        var reach_base = parseFloat(audience.reach_base);
+        var reach_audience = parseFloat(audience.reach_audience);
+        return -1 * base_frac * index * (reach_base - reach_audience);
+    },
+
+    getScore: function(audience, type) {
+        switch (type) {
+            case 'interests':
+            case 'behaviors':
+            case 'life_events':
+            case 'politics':
+            case 'industries':
+            case 'income':
+            case 'ethnic_affinity':
+            case 'family_statuses':
+            case 'generation':
+            case 'home_ownership':
+            case 'home_type':
+            case 'household_composition':
+            case 'moms':
+            case 'net_worth':
+            case 'office_type':
+            case 'user_device':
+            case 'user_adclusters':
+                return this.getOpportunityScore(audience);
+        }
+    },
+
+    filterAndScoreData: function(data, type) {
+        var self = this;
+        return _.chain(data)
+            .filter(function(datum) {
+                return datum.type === type;
+            })
+            .map(function(audience) {
+                return _.extend(audience, {
+                    score: self.getScore(audience, type)
+                });
+            })
+            .sortBy('score')
+            .value();
+    },
+
+    getScatterplot: function(type) {
+        if (this.state.showChart) {
+            var data = this.filterAndScoreData(this.state.audienceProfiles.datums, type);
+            var props = {
+                type: type,
+                data: data,
+                xKeypath: 'reach_audience',
+                yKeypath: 'index',
+                tooltipKeypath: 'targeting_dict'
+            };
+            var Chart = ChartWrapper(ChartComponent);
+            return <Chart {...props} />;
+        }
+    },
+
+    getBarChart: function(type, barOrientation) {
+        if (!this.state.showChart) return;
+
+        var labelAxis;
+        var dataAxis;
+        switch (barOrientation) {
+            case 'vertical': labelAxis = 'x'; dataAxis = 'y';
+                break;
+            case 'horizontal': labelAxis = 'y'; dataAxis = 'x';
+                break;
+        }
+
+        var audiences = this.filterAndScoreData(this.state.audienceProfiles.datums, type);
+        var data = _.first(audiences, 10);
+
+        var chartData = _.object([
+            ['text', _.pluck(data, 'index')],
+            [labelAxis, _.pluck(data, 'name')],
+            [dataAxis, _.pluck(data, 'reach_audience')]
+        ]);
+
+        var labels = _.object([
+            [labelAxis, 'Audience'],
+            [dataAxis, 'Reach']
+        ]);
+
+        var props = {
+            type: type,
+            labelAxis: labelAxis,
+            dataAxis: dataAxis,
+            chartData: chartData,
+            labels: labels
+        };
+
+        return <BarChart {...props} />;
+
+    },
+    getChart: function(type, title) {
+        if (this.state.showChart) {
+            return (
+                <div className='panel panel-sc'>
+                    <div className='panel-title'>
+                        Audience by {title}
+                    </div>
+                    <div className='panel-body'>
+                        {this.getBarChart(type, 'vertical')}
+                    </div>
+                </div>
+            );
+        }
+    },
+
+    getCharts: function() {
+        switch (this.state.platform) {
+            case 'facebook':
+                return (
+                    <div>
+                    {this.getChart('interests', 'Interest')}
+                    {this.getChart('behaviors', 'Behavior')}
+                    {this.getChart('life_events', 'Life Event')}
+                    {this.getChart('politics', 'Politics')}
+                    {this.getChart('industries', 'Industry')}
+                    {this.getChart('income', 'Income')}
+                    {this.getChart('ethnic_affinity', 'Ethnic Affinity')}
+                    {this.getChart('family_statuses', 'Family Status')}
+                    {this.getChart('generation', 'Generation')}
+                    {this.getChart('home_ownership', 'Home Ownership')}
+                    {this.getChart('home_type', 'Home Type')}
+                    {this.getChart('household_composition', 'Household Composition')}
+                    {this.getChart('moms', 'Moms')}
+                    {this.getChart('net_worth', 'Net Worth')}
+                    {this.getChart('office_type', 'Office Type')}
+                    {this.getChart('user_device', 'Device')}
+                    {this.getChart('user_adclusters', 'Partner Category')}
+                    </div>
+                );
+            case 'twitter':
+                return (
+                    <div>
+                    {this.getChart('interests', 'Interests')}
+                    {this.getChart('education', 'Education')}
+                    {this.getChart('aftermarket_auto_buyer_types', 'Aftermarket Auto Buyer Types')}
+                    {this.getChart('consumer_buying_styles', 'Consumer Buying Style')}
+                    {this.getChart('consumer_goods_purchases', 'Consumer Goods Purchases')}
+                    {this.getChart('credit_card_holders', 'Credit Card Holders')}
+                    {this.getChart('home_value', 'Home Value')}
+                    {this.getChart('household_income_categories', 'Household Income Categories')}
+                    {this.getChart('marital_status', 'Marital Status')}
+                    {this.getChart('net_worth', 'Net Worth')}
+                    {this.getChart('network_operators', 'Network Operators')}
+                    {this.getChart('occupation', 'Occupation')}
+                    {this.getChart('tv_genres', 'TV Genres')}
+                    </div>
+                );
+        }
+    },
+
+    getPlatformButtons: function() {
+        var facebookButtonClass = '';
+        var twitterButtonClass = '';
+        if (this.state.platform === 'facebook') {
+            facebookButtonClass = ' active';
+        } else if (this.state.platform === 'twitter') {
+            twitterButtonClass = ' active';
+        }
+        return (
+            <div className='col-xs-12 btn-group' role='group'>
+                <button type='button' className={'btn btn-gallery-selection' + facebookButtonClass}  onClick={this.selectPlatform.bind(this, 'facebook')}>Facebook</button>
+                <button type='button' className={'btn btn-gallery-selection' + twitterButtonClass} onClick={this.selectPlatform.bind(this, 'twitter')}>Twitter</button>
+            </div>
+        );
+
+    },
+    selectPlatform: function(platform) {
+        if (platform !== this.state.platform) {
+            this.setState({
+                showChart: false
+            });
+        }
+        this.setState({
+            platform: platform
+        });
+    },
+
+    render: function() {
+        return (
+            <div id="audience-profiler">
+            <div className="container-fluid">
+                <h1>Audience Profiler</h1>
+                {this.getPlatformButtons()}
+                <TargetingPanel {...this.state} />
+                {this.getCharts()}
+            </div>
+            </div>
+        );
+    }
+});
+
+module.exports = HomeView;

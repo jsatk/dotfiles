@@ -1,0 +1,69 @@
+/* global dependencies */
+var $ = require('jquery');
+var _ = require('underscore');
+var moment = require('moment');
+var Backbone = require('backbone');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var CampaignModuleBulk = require('../controller');
+var View = require('./view');
+
+/* module definition */
+module.exports = CampaignModuleBulk.extend({
+    initialize: function() {
+        // TODO: I hate this section.  Lots of conversions going on that
+        // I'd prefer to avoid.  However this is the quickest way forward
+        // for now.
+        var collection = new Backbone.Collection(this.getOption('models'));
+        var endDates = this.isosToMoments(collection, 'end_time');
+        var startDates = this.isosToMoments(collection, 'start_time');
+        var modelAttributes = {
+            campaignID: this.getOption('campaignID'),
+            endDate: this.getISOfromMoment(moment.min(endDates)),
+            startDate: this.getISOfromMoment(moment.max(startDates))
+        };
+
+        var view = new View({
+            collection: new Backbone.Collection(this.getOption('models')),
+            model: new Backbone.Model(modelAttributes),
+            title: this.getOption('title')
+        });
+
+        this.listenTo(view, 'modal:save', this.getReport);
+
+        AppChannel.request('modalRegion').show(view);
+    },
+
+    getISOfromMoment: function(date) {
+        return moment(date, 'YYYY-MM-DDTHH:mm:ss').format('MM/DD/YYYY');
+    },
+
+    // TODO: Move this to some global hepler method
+    isosToMoments: function(collection, dateTimeAttribute) {
+        return _(collection.pluck(dateTimeAttribute)).map(function(date) {
+            return moment(date);
+        });
+    },
+
+    getReport: function() {
+        // Gross :(
+        window.location.href = '/api/advisor/v1/campaign/' + this.getOption('campaignId') +
+            '/excel_report/?format=json&' + getPickedID(this.getOption('models'));
+    },
+
+    /** Get IDs from selected models and return url parameter */
+    getPickedID: function(collection) {
+        /** Get model ids from collection */
+        return $.param(
+            _.chain(collection)
+            .pluck('id')
+            .map(function(value) {
+                return {
+                    name: 'ids',
+                    value: value
+                };
+            }).value()
+        );
+    }
+});

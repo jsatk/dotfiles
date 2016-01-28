@@ -1,0 +1,48 @@
+<form class="form" role="form">
+
+    <h4>Campaign Details</h4>
+
+    <div class="panel sc-panel sc-campaign-details">
+        <div class="panel-heading">
+            <h3 class="panel-title">Name</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12 form-group campaignName">
+                <input type="text" class="form-control" id="name" name="name" value="{{name}}" placeholder="The name of this Campaign" />
+            </div>
+        </div>
+
+        <div class="panel-heading">
+            <div class="row">
+                <h3 class="panel-title col-md-6">Platform</h3>
+                <h3 class="panel-title col-md-6">Account</h3>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-md-6">{{titleize effective_platform}}</div>
+                <div class="form-group col-md-6">{{account_name}}</div>
+            </div>
+        </div>
+
+        <div class="panel-heading">
+            <h3 class="panel-title">Dates</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6 form-group startDate">
+                <div class="input-group date start-picker-sc">
+                    <input type="text" class="form-control" id="start_date" name="start_date" value="{{formatDate start_date 'MM/DD/YYYY'}}">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+            <div class="col-md-6 form-group endDate">
+                <div class="input-group date end-picker-sc">
+                    <input type="text" class="form-control" id="end_date" name="end_date"  value="{{formatDate end_date 'MM/DD/YYYY'}}">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>

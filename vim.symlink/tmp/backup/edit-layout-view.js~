@@ -1,0 +1,26 @@
+/* global dependencies */
+var Marionette = require('backbone.marionette');
+
+/* local dependencies */
+
+/* templates */
+var CampaignEditLayoutTemplate = require('../templates/campaignEditLayout.hbs');
+
+/* module definition */
+var EditLayoutView = Marionette.LayoutView.extend({
+    className: 'initiative-edit-sc',
+    template: CampaignEditLayoutTemplate,
+    regions: {
+        'insertionOrder': '#insertion-order',
+        'tracking':       '#tracking',
+        'targeting':      '#targeting',
+        'sub-1':          '#sub-1'
+    },
+    initialize: function(options) {
+        this.templateHelpers = {
+            platform: this.getOption('campaign').get('platform')
+        };
+    }
+});
+
+module.exports = EditLayoutView;

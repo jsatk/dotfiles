@@ -1,0 +1,88 @@
+<form class="form" role="form">
+
+    <h4>Budget &amp; Objective</h4>
+
+    <div class="panel sc-panel sc-campaign-budget-objective">
+        <div class="panel-heading">
+            <h3 class="panel-title">Dates</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6 form-group startDate">
+                <div class="input-group date start-picker-sc">
+                    <input type="text" class="form-control" id="start_date" name="start_date" value="{{formatDate start_date 'MM/DD/YYYY'}}" {{#unless dateRangeEnabled}}disabled{{/unless}}>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+            <div class="col-md-6 form-group endDate">
+                <div class="input-group date end-picker-sc">
+                    <input type="text" class="form-control" id="end_date" name="end_date" value="{{formatDate end_date 'MM/DD/YYYY'}}" {{#unless dateRangeEnabled}}disabled{{/unless}}>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-heading">
+            <h3 class="panel-title">Total media budget</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-4 form-group mediaSpendBudget">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                    <input class="form-control" id="budget" name="budget" value="{{formatMoney budget symbol=""}}">
+                </div>
+
+                <div class="input-group" id="budget_adjustment" style="display:none">
+                    <div class="budget-adjustment-label">
+                        Reason for the budget change
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group col-md-12">
+                            <select class="form-control" id="budget_adjustment_select" name="budget_adjustment_select"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 form-group avaialableBudget campaign-edit-text-only">
+                <b>with {{formatMoney budget_remaining}} remaining</b> <small>{{formatMoney spend_lifetime}} already spent</small>
+            </div>
+
+            <div class="form-group col-md-6 budget_adjustment_other" id="budget_adjustment_other" style="display:none">
+                <textarea class="form-control col-md-12" id="budget_adjustment_other_text" name="budget_adjustment_other_text" rows="2" placeholder="Reason for change or notes for Finance..." value=""></textarea>
+            </div>
+
+        </div>
+
+        <div class="panel-heading">
+            <div class="row">
+                <h3 class="panel-title col-md-4">Objective</h3>
+                <h3 class="panel-title col-md-4">KPI Goal</h3>
+                <h3 class="panel-title col-md-4">KPI</h3>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-4 form-group objective">
+                {{#if objective}}
+                    {{titleize objective}}
+                {{else}}
+                    <select class="form-control" id="objective_select" name="objective" disabled="true"></select>
+                {{/if}}
+            </div>
+            <div class="col-md-4 form-group kpiGoal">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                    <input type="text" class="form-control" id="kpi_goal" name="kpi_goal" value="{{formatMoney kpi_goal symbol=""}}" />
+                </div>
+            </div>
+            <div class="col-md-4 form-group kpiSelect">
+                {{#unless kpiLabel}}
+                    <select class="form-control" id="kpi" name="kpi" disabled="true"></select>
+                {{else}}
+                    {{kpiLabel}}
+                {{/unless}}
+            </div>
+        </div>
+
+    </div>
+
+</form>

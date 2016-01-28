@@ -1,0 +1,53 @@
+// Mocha puts its globals on the global object so we have to tell
+// StandardJS, our linter, that these functions are defined globaly so it
+// doesn't yell at us.
+
+/* global describe, it, beforeEach */
+
+var expect = require('chai').expect
+var printBalances = require('../../lib/processCreditCards/printBalances')
+
+describe('printBalances', function () {
+  var users
+  var output = ''
+  var printMethod
+
+  beforeEach(function () {
+    users = {
+      'Tom': {
+        card: {
+          balance: 10,
+          isValid: true
+        }
+      },
+      'Sarah': {
+        card: {
+          isValid: false
+        }
+      },
+      'Anna': {
+        card: {
+          balance: -50,
+          isValid: true
+        }
+      }
+    }
+
+    printMethod = function (string) { output += string }
+    printBalances(users, printMethod)
+  })
+
+  it('should pass the output to our printMethod', function () {
+    expect(output).to.have.length.above(2)
+  })
+
+  it('should print the balances of the passed in users', function () {
+    expect(output).to.have.string('Anna: $-50')
+    expect(output).to.have.string('Sarah: error')
+    expect(output).to.have.string('Tom: $10')
+  })
+
+  it('should print the balances of the passed in users in alphabetical order of user\'s names', function () {
+    expect(output).to.equal('Anna: $-50\nSarah: error\nTom: $10\n')
+  })
+})

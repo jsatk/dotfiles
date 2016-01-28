@@ -1,0 +1,181 @@
+(function() {
+    Backbone.SCDataTable = {};
+
+    Backbone.SCDataTable.Paginator = Backgrid.Extension.Paginator.extend({
+        /**
+         * Override Paginator default control lables (default ones are misaligned)
+         * @type {Object}
+         */
+        controls: {
+            rewind: {
+                label: '&laquo;',
+                title: 'First'
+            },
+            back: {
+                label: '&lsaquo;',
+                title: 'Previous'
+            },
+            forward: {
+                label: '&rsaquo;',
+                title: 'Next'
+            },
+            fastForward: {
+                label: '&raquo;',
+                title: 'Last'
+            }
+        }
+    });
+
+    Backbone.SCDataTable.View = Backbone.View.extend({
+        defaults: {
+            tableClass: 'table backgrid',
+            showPagination: true
+        },
+
+        initialize: function(options) {
+            this.options    = _.extend({}, this.defaults, options);
+            this.collection = this.options.collection;
+            this.columns    = this.options.columns;
+            this.grid       = new Backgrid.Grid({
+                className: this.options.tableClass,
+                columns: this.columns,
+                collection: this.collection,
+                emptyText: 'Loading ...'
+            });
+
+            if (this.options.showPagination) {
+                this.paginator = new Backbone.SCDataTable.Paginator({
+                    collection: this.collection,
+                    goBackFirstOnSort: false
+                });
+            } else {
+                this.collection.state.pageSize = 0;
+            }
+
+            this.listenTo(this.collection, 'backgrid:force-reset', this.fetchCollection);
+            this.listenTo(this.collection, 'reset error', this.render);
+            this.listenTo(this.collection, 'sync', this.fetched);
+        },
+
+        fetchCollection: function() {
+debugger;
+            this.collection.fetch({
+                reset: true,
+                data: this.options.collectionFilters
+            });
+        },
+
+        fetched: function() {
+            if (this.collection.length === 0) {
+                this.grid.body.$el.find('.empty td').text('No results');
+            }
+        },
+
+        render: function() {
+            this.$el.html(
+                $('<div/>', { 'class': 'datagrid-wrapper' }).html(this.grid.render().$el)
+            );
+
+            if (this.options.showPagination) {
+                this.$el.append(
+                    $('<div/>', { 'class': 'panel-footer' }).html(this.paginator.render().$el)
+                );
+            }
+
+            return this;
+        },
+
+        remove: function() {
+            if (this.options.showPagination) {
+                this.paginator.remove();
+            }
+            this.grid.remove();
+            Backbone.View.prototype.remove.call(this);
+        }
+    });
+
+    Backbone.TastypiePageableCollection = Backbone.PageableCollection.extend({
+        state: {
+            firstPage: 0,
+            pageSize: 20
+        },
+
+        queryParams: {
+            pageSize: 'limit',
+            currentPage: null,
+            totalPages: null,
+            totalRecords: null,
+            offset: function() {
+                return this.state.currentPage * this.state.pageSize;
+            },
+            order_by: function() {
+                if (_.isNull(this.state.sortKey)) {
+                    return null;
+                }
+
+                if (this.state.order < 0) {
+                    return this.state.sortKey;
+                }
+
+                return '-' + this.state.sortKey;
+            }
+        },
+
+        collectionFilters: {},
+        resetFilters: function(filtersObj) {
+            // remove all past filters and reset with fitersObj's none-empty values.
+            this.queryParams = _(this.queryParams).omit(_.keys(this.collectionFilters));
+            this.collectionFilters = {};
+
+            if (!_.isEmpty(filtersObj)) {
+                this.collectionFilters = _(filtersObj).omit(function(value) { return !value; });
+                _.extend(this.queryParams, this.collectionFilters);
+            }
+
+            this.getFirstPage();
+        },
+
+        parseRecords: function(response) {
+            return response.objects;
+        },
+
+        parseState: function(response, queryParams, state, options) {
+            var newState    = _.clone(state);
+            var serverState = response.meta;
+            var limit       = serverState.limit;
+
+            if (!_.isUndefined(serverState)) {
+                _.chain(queryParams)
+                 .omit('directions')
+                 .each(function(value, key) {
+                    var serverVal = serverState[value];
+
+                    if (!_.isUndefined(serverVal) && !_.isNull(serverVal)) {
+                        newState[key] = serverState[value];
+                    }
+                });
+
+                if (limit) {
+                    newState.currentPage  = serverState.offset / limit;
+                    newState.totalPages   = Math.ceil(serverState.total_count / limit);
+                } else {
+                    newState.pageSize = 1;
+                }
+
+                newState.totalRecords = serverState.total_count;
+            }
+
+            return newState;
+        },
+        /** @param {Object} options */
+        setCollectionFilter: function(options) {
+            var newFilters = _.chain(this.queryParams)
+                                .clone()
+                                .omit(options.clear || [])
+                                .extend(options.value)
+                                .value();
+
+            this.resetFilters(newFilters);
+        }
+    });
+})();

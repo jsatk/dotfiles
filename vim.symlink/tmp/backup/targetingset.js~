@@ -1,0 +1,43 @@
+/* global dependencies */
+var _ = require('underscore');
+var Backbone = require('backbone');
+var AppChannel = require('advisor/app-channel');
+
+// TODO: either refactor out entirely or use Backbone.select, this library is deprecated & unmaintained. ~jd
+require('backbone.picky');
+
+/* local dependencies */
+var BaseEntity = require('../base');
+
+var TargetingSet = Backbone.Model.extend({
+    urlRoot: '/api/advisor/v1/targetingset/',
+    initialize: function() {
+        var selectable = new Backbone.Picky.Selectable(this);
+        _.extend(this, selectable);
+    }
+});
+var TargetingSetCollection = Backbone.Collection.extend({
+    model: TargetingSet,
+    url: TargetingSet.prototype.urlRoot,
+    initialize: function() {
+        var singleSelect = new Backbone.Picky.SingleSelect(this);
+        _.extend(this, singleSelect);
+    }
+});
+var getTargetingSet = _(function(id) {
+    return this.fetchEntity(TargetingSet, id);
+}).bind(BaseEntity);
+var getTargetingSetCollection = _(function(options) {
+    return this.fetchEntities(TargetingSetCollection, options);
+}).bind(BaseEntity);
+
+var handlers = [
+    ['advisor:targetingset:Entity', function() { return TargetingSet; }],
+    ['advisor:targetingset:Entities', function() { return TargetingSetCollection; }],
+    ['advisor:targetingset:entity', function(id) { return getTargetingSet(id); }],
+    ['advisor:targetingset:entities', function(options) { return getTargetingSetCollection(options); }]
+];
+
+_(handlers).each(function(handler) {
+    AppChannel.reply(handler[0], handler[1]);
+});

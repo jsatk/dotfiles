@@ -1,0 +1,4 @@
+<div class="form-group">
+    <label for="insertion_order">Insertion Order</label>
+    <input type="hidden" class="form-control" id="insertion_order" name="insertion_order" placeholder="Insertion order ID or name">
+</div>

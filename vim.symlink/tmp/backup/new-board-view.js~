@@ -1,0 +1,71 @@
+/* global dependencies */
+var Marionette = require('backbone.marionette');
+var _ = require('underscore');
+var $ = require('jquery');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var BoardEntity = require('advisor/entities/pinterest/board');
+var AdvertiserEntity = require('advisor/entities/pinterest/advertiser');
+var Validatable = require('advisor/extensions/Validatable');
+
+/* templates */
+var NewBoardViewTemplate = require('./new-board-view.hbs');
+
+var NewBoardView = Marionette.ItemView.extend(new Validatable({
+    template: NewBoardViewTemplate,
+    ui: {
+        'form': '#new-board-form',
+        'cancel': '.cancel',
+        'name': '[name="name"]',
+        'category': '[name="category"]'
+    },
+    events: {
+        'submit @ui.form': 'submitForm',
+        'click @ui.cancel': 'cancelForm'
+    },
+    initialize: function(options) {
+        this.model = new BoardEntity.Board(options);
+    },
+    validate: {
+        name: Validatable.TEXT(2),
+        category: Validatable.VALUE()
+    },
+    submitForm: function(e) {
+        e.preventDefault();
+        this.model.set({
+            name: this.ui.name.val(),
+            category: this.ui.category.val(),
+            campaignId: this.getOption('campaignId')
+        });
+        var self = this;
+        var alertOptions;
+        $.when(this.model.save())
+        .then(function() {
+            alertOptions = { message: 'Successfully created new board.', type: 'success' };
+        })
+        .fail(function(xhr) {
+            var errors = xhr.responseJSON.mo_errors;
+            alertOptions = { message: 'Board creation failed. ' + errors.join(', '), type: 'danger' };
+        })
+        .always(function() {
+            AppChannel.trigger('alert', alertOptions);
+            self.triggerMethod('modal:close');
+        });
+    },
+    cancelForm: function(e) {
+        e.preventDefault();
+        this.triggerMethod('modal:close');
+    },
+    templateHelpers: function() {
+        var map = BoardEntity.CATEGORIES_MAP;
+        var categoriesList = _(map).keys().map(function(k) {
+            return { name: k, value: map[k] };
+        });
+        return {
+            categories: categoriesList
+        };
+    }
+}));
+
+module.exports = NewBoardView;

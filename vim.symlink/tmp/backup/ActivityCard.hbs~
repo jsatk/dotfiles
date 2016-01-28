@@ -1,0 +1,30 @@
+<div class="panel-heading">
+    <h3 class="panel-title">
+        <a href="#activities" data-toggle="collapse" aria-expanded="true" aria-controls="campaign-activity" id="activity-label">
+            <i class="fa fa-times"></i> Activity
+        </a>
+    </h3>
+</div>
+
+<ul class="list-group sc-sidebar-list collapse in" id="activities">
+
+    {{!-- TEMPORARY STATIC DATA FOR FIRST ITERATION --}}
+    <li class="list-group-item">
+        <div class="media">
+            <div class="media-left">
+                <img src="media/logomark.png" class="sc-profile-photo">
+            </div>
+            <div class="media-body">
+                <h2 class="media-heading">
+                    <span class="media-action">Info</span> <a href="#">Welcome to AdVisor</a>
+                </h2>
+                {{#if stats_last_updated}}
+                <div class="sc-list-item-label">
+                    {{formatDate stats_last_updated 'h:mma M/D/YY'}}
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </li>
+
+</ul>

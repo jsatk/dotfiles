@@ -1,0 +1,29 @@
+/* global dependencies */
+var $ = require('jquery');
+var _ = require('underscore');
+
+/* local dependencies */
+var TargetingView = require('./targeting-view');
+
+module.exports.loadCardView = function(options) {
+    debugger;
+    var initiative = options.initiative;
+    var campaign = options.campaign;
+    var cardView = new TargetingView({
+        model: campaign,
+        initiative: initiative
+    });
+    options.region.show(cardView);
+    if (!campaign.get('targeting_locked')) {
+        var select2Options = cardView.getLocationSelect2Options(cardView.getLocationOptions, cardView.model, initiative.get('demographic_constraint').location_sets[0].locations[campaign.get('platform')], campaign.get('demographic_constraint').location_sets[0].locations);
+        cardView.ui.geoLocation.select2(select2Options);
+        cardView.ui.geoLocation.select2('data', campaign.get('demographic_constraint').location_sets[0].locations);
+    } else {
+        cardView.lockTargeting();
+        cardView.ui.geoLocation.hide();
+        var locationsList = _.map(campaign.get('demographic_constraint').location_sets[0].locations, function(location) {
+            return '<li class="btn btn-xs js-tag btn-tag">' + '<span class="locked">' + location.name + '</span></li>';
+        });
+        $('.js-selectedLocations').html(locationsList.join(''));
+    }
+};

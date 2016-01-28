@@ -1,0 +1,59 @@
+/* global dependencies */
+var _ = require('underscore');
+
+/* module definition */
+var Module = {};
+
+Module.constraints = function(id) {
+     var rules = {
+        // Length has to be between 1 and 25 characters
+        0:  new RegExp(/^.{25,}$/),
+        // Length has to be between 1 and 90 characters
+        1:  new RegExp(/^.{90,}$/),
+        // Words cannot be greater than 30 characters in length
+        2:  new RegExp(/\w{30,}$/),
+        // Cannot start with punctuation \/!.?-*(),;:
+        3:  new RegExp(/^[!?.\-*(),;:\\/]/),
+        // Cannot have duplicate consecutive punctuation characters
+        4:  new RegExp(/[!?\-*\(),;:\\/].+/),
+        // Cannot have duplicate consecutive periods with the exception of 3 periods
+        5:  new RegExp(/^[.]{2}(?![.])|[^.][.]{2}(?![.])|[.]{4,}/),
+        // Only 2 consecutive 1 character words are allowed
+        6:  new RegExp(/\b(\w{1})\s+\1\b/),
+        // Cannot consist entirely of capital letters
+        7:  new RegExp(/^(?!.*[a-z]).+$/),
+        // Double spacing is not allowed
+        8:  new RegExp(/\s\s+/),
+        // IPA Symbols are not allowed (exception: ə, ɚ, ɛ, ɜ, ɝ, ɞ, ɟ)
+        9:  new RegExp(/[\u0250-\u0258\u0260-\u02AF]+/),
+        // Standalone diacritical marks are not allowed
+        10: new RegExp(/[\u0300-\u036F]+/),
+        // Supscript characters with the exception of ™ and ℠ are not allowed
+        11: new RegExp(/[\u2070-\u209F]+/),
+        // Subscript characters are not allowed
+        12: new RegExp(/[\u2080-\u209F]+/),
+        // The following characters ^~_={}[]|<> are not allowed
+        13: new RegExp(/[\u003C-\u003E\u005B\u005D-\u005F\u007B-\u007E]+/)
+    };
+    var types = {
+        'title':       [0, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+        'body':        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+        'message':     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+        'caption':     [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+        'description': [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    };
+    var make = function(selection) {
+        /** Get expressions */
+        var pick   = _.pick(rules, selection);
+        var source = _.pluck(pick, 'source');
+        /** Join expressions */
+        var merged = source.join('|');
+        /** Create expressions */
+        return new RegExp(merged);
+    };
+    /** Create expression from type */
+    var type = types[id];
+    return make.call(this, type);
+};
+
+module.exports = Module;

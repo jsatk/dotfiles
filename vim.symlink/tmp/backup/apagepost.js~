@@ -1,0 +1,72 @@
+/* global dependencies */
+var _ = require('underscore');
+
+/* local dependencies */
+var Entities = require('../../advisor/campaign');
+var AdCreative = require('./adcreative');
+
+/* module definition */
+var Module = {};
+
+var PagePost = AdCreative.extend({
+     /** @returns {string} */
+     urlRoot: function() {
+        var url = Entities.Campaign.prototype.urlRoot;
+        return url + this.get('campaignId') + '/pagepost';
+    },
+     constructor: function() {
+        AdCreative.apply(this, arguments);
+        _.extend(this.mappedViews, this.getDefaultViews());
+    },
+     /**
+     *  @param {object} options
+     */
+     initialize: function(options) {
+        this.campaignId = options.campaignId;
+    },
+     /**
+     * @param {object} model
+     * @returns {Backbone.Model}
+     */
+     build: function(model) {
+        var postdata = _.pick(model,
+                              'picture',
+                              'video',
+                              'name',
+                              'caption',
+                              'description',
+                              'link',
+                              'message',
+                              'call_to_action');
+        var type = { post_type: this.type };
+        var defaultdata = {
+            page: model.asset.id,
+            countries: model.countries,
+            languages: model.languages
+        };
+        return this.set(_.extend(postdata, type, defaultdata));
+    },
+     /**
+     *  @param {object} model
+     *  @returns {object}
+     */
+     preview: function(model) {
+        var post = this.build(model).toJSON();
+        var defaultAdFormat = AdCreative.getDefaultAdFormat(post.post_type);
+        return {
+            creative: { object_id: model.asset.id },
+            post: _.omit(post, 'post_type', 'page'),
+            ad_format: model.ad_format || defaultAdFormat
+        };
+    },
+     /** @returns {object} */
+     getDefaultViews: function() {
+        return {
+            countries: this.getViewForKey('countries'),
+            languages: this.getViewForKey('languages')
+        };
+    }
+ });
+Module.PagePost = PagePost;
+
+module.exports = Module;

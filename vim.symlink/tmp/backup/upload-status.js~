@@ -1,0 +1,101 @@
+/* global dependencies */
+var AppChannel = require('advisor/app-channel');
+var $          = require('jquery');
+var _          = require('underscore');
+
+/* local dependencies */
+var CommonLanguage = require('advisor/common/language');
+var statusText = require('../components/status-text');
+var statusLanguage = CommonLanguage.en.bulkUploadStatus;
+var message = require('../components/message');
+var ErrorsView = require('../views/errors-view');
+
+var UploadStatus = function(response, context) {
+    this.statusURL = response.status_url;
+    this.filename = context.filename || 'this file';
+    this.campaign = context.campaign || 'this campaign';
+};
+
+UploadStatus.prototype.checkStatus = function(url) {
+    var defer = $.Deferred();
+
+    (function poll(self) {
+
+        $.ajax({
+            url: self.statusURL
+        }).done(function(data) {
+            debugger;
+
+            self.uploadResult = data;
+            if (self.isStatusComplete()) {
+                clearTimeout(self.pollTimeout);
+                defer.resolve(data);
+            } else {
+                self.pollTimeout = setTimeout(poll, 7000, self);
+            }
+
+        }).fail(function(data, response) {
+            clearTimeout(self.pollTimeout);
+            defer.reject(response);
+        });
+    }(this));
+
+    return defer.promise();
+};
+
+UploadStatus.prototype.isStatusInvalid = function() {
+    return !_.has(this.uploadResult, 'upload_status');
+};
+UploadStatus.prototype.isStatusSuccesful = function() {
+    return this.uploadResult.upload_status.status.toLowerCase() === 'success';
+};
+UploadStatus.prototype.isStatusError = function() {
+    return _.indexOf(['error','failed'], this.uploadResult.upload_status.status.toLowerCase()) > -1;
+
+};
+UploadStatus.prototype.isStatusComplete = function() {
+    return this.isStatusInvalid() || this.isStatusSuccesful() || this.isStatusError();
+};
+
+function showErrorModal(errors) {
+    AppChannel.request('modalRegion').show(new ErrorsView({
+        errors: errors,
+        showHeader: true
+    }));
+}
+
+UploadStatus.prototype.showStatus = function() {
+    if (this.isStatusSuccesful()) {
+        AppChannel.trigger('alert', {
+            message: statusLanguage.getSuccessMessage(this.campaign, this.filename),
+            type: 'success'
+        });
+    } else {
+        var errors;
+        try {
+            errors = this.uploadResult.upload_status.errors;
+        } catch (e) {
+            throw e;
+        } finally {
+            AppChannel.trigger('alert', {
+                message: statusLanguage.getErrorMessage(this.campaign, this.filename, errors),
+                type: 'danger'
+            }, {
+                click: _.bind(showErrorModal, this, errors)
+            });
+        }
+    }
+};
+
+module.exports = function pollAndDisplayUploadStatus(response, context) {
+    var uploadStatus;
+
+    if (!response.status_url) {
+        throw new Error('UploadStatus requires status_url.');
+    }
+
+    uploadStatus = new UploadStatus(response, context);
+    uploadStatus.checkStatus().done(function() {
+        uploadStatus.showStatus();
+    });
+};

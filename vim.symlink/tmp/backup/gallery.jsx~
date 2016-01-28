@@ -1,0 +1,42 @@
+/* global dependencies */
+var _ = require('underscore');
+var React = require('react');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var GalleryItem = require('./gallery-item.jsx');
+
+var Gallery = React.createClass({
+    getInitialState: function() {
+        if (!this.props.AppChannel) throw new Error('Audience Profiler Gallery requires an AppChannel property.');
+        this.AppChannel = this.props.AppChannel;
+        return {};
+    },
+    componentDidMount: function() {
+        this.updateGallery(this.props);
+    },
+    componentWillReceiveProps: function(props) {
+        this.updateGallery(props);
+    },
+    render: function() {
+        var galleryItems = _.map(this.state.items, function(item) {
+            return <GalleryItem data={item} key={item.id} keypath={this.props.keypath} platform={this.props.platform} />
+        }, this);
+        return (
+            <div className='col-xs-12 gallery-selector'>
+                <div className='row'>
+                    {galleryItems}
+                </div>
+            </div>
+        );
+    },
+    updateGallery: function(props) {
+        var self = this;
+        var entity = AppChannel.request(props.entity);
+            .then(function(collection) {
+                self.setState({items: collection.objects ? collection.objects : collection.data});
+            });
+    }
+});
+
+module.exports = Gallery;

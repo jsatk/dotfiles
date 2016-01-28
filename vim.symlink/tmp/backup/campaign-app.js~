@@ -1,0 +1,76 @@
+AdvisorApp.module('CampaignModule', function(CampaignModule, App) {
+
+    var router;
+    var moduleChannel;
+
+    /**
+     * Method that is ran on initialization of the CampaignModule.
+     */
+    var initializer = function() {
+        debugger;
+        router = new this.Router({
+            controller: this.Controller
+        });
+
+        this.moduleChannel = Backbone.Wreqr.radio.channel('campaignModule');
+
+        this.moduleChannel.vent.on('list:show', function() {
+            router.navigate('campaign');
+            this.Controller.listCampaigns();
+        }, this);
+
+        /**
+         * @param {Number} initiativeId
+         */
+        this.moduleChannel.vent.on('create:show', function(initiativeId) {
+            this.Controller.createCampaign(initiativeId);
+        }, this);
+
+        /**
+         * @param {Number} initiativeId
+         * @param {Number} campaignId
+         */
+        this.moduleChannel.vent.on('edit:show', function(initiativeId, campaignId) {
+            router.navigate('initiative/' + initiativeId + '/campaign/' + campaignId + '/edit');
+            this.Controller.editCampaign(initiativeId, campaignId);
+        }, this);
+
+        /**
+         * @param {Number} initiativeId
+         * @param {Number} campaignId
+         */
+        this.moduleChannel.vent.on('details:show', function(initiativeId, campaignId) {
+            router.navigate('initiative/' + initiativeId + '/campaign/' + campaignId);
+            this.Controller.showCampaignDetails(initiativeId, campaignId);
+        }, this);
+    };
+
+    /**
+     * Method that is ran on start of CampaignModule.
+     */
+    var onStart = function() {
+        // handle current route
+        var currentRoute = App.getCurrentRoute() || '';
+        var handlerKey   = router.appRoutes[currentRoute];
+        var routeHandler = this.Controller[handlerKey];
+
+        if ($.isFunction(routeHandler)) {
+            routeHandler();
+        }
+    };
+
+    AdvisorApp.module('CampaignModule').addInitializer(_(initializer).bind(this));
+    AdvisorApp.module('CampaignModule').on('start', _(onStart).bind(this));
+
+    CampaignModule.startWithParent = false;
+
+    /**
+     * Initializes the CampaignModule on start of the AdvisorApp.
+     */
+    AdvisorApp.addInitializer(function() {
+        AdvisorApp.initializingSession.done(function() {
+            AdvisorApp.module('CampaignModule').start();
+        });
+    });
+
+});

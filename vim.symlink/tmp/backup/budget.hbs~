@@ -1,0 +1,76 @@
+<div class="panel sc-panel sc-budget" style="display: inline-block; padding-right: 4px;">
+    <div class="left-subpanel" style="
+    float: none;
+    width: auto;
+">
+        <input type="checkbox" name="check-all">
+        <label for="check-all"></label>
+        <span class="subheader" style="
+    display: inline;
+">Select all</span>
+    </div>
+</div>
+
+<div class="panel sc-panel sc-budget">
+
+    <div class="left-subpanel">
+        <input type="checkbox" value="{{id}}" id="select_{{id}}">
+        <label for="select_{{id}}"></label>
+    </div>
+    <div class="main-subpanel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Ad Set {{id}}</h3>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="col-sm-12">
+                <div class="row">
+
+                    <div class="col-sm-3">
+                        <span class="subheader">Total Ads</span>
+                        <span class="content creatives-count">0</span>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <span class="subheader">Audience Size</span>
+                        <span class="content total-reach">...</span>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <span class="subheader">Audience</span>
+                        <span class="content audience">...</span>
+                    </div>
+
+                    <hr>
+
+                </div>
+            </div>
+
+            <div id="bid-view" class="col-sm-12">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel-footer clearfix">
+
+        <div class="col-sm-3">
+
+            <button type="button" class="btn toggle-ads">
+                <i class="fa fa-close fa-rotate-45"></i>
+                Toggle ads
+            </button>
+
+        </div>
+
+        <div class="col-sm-3 col-md-offset-6">
+        </div>
+
+        <div class="col-sm-12">
+            <div id="ads-container"></div>
+        </div>
+
+    </div>
+
+</div>

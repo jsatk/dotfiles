@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>css test</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+		<script type="text/javascript">
+			/**\
+
+				The Note Emitter
+
+				Generates a random list of notes every time the enter key is pressed.
+				To connect to it, pass a callback function to it that takes
+				an array of note objects as it's argument.
+
+				eg:
+
+				note_emitter(function(notes){
+					console.log('look what I found', notes);
+				});
+
+			\**/
+
+			window.note_emitter = (function() {
+				var callbacks = [],
+					rand_notes = [
+						'Wolf photo booth Bushwick American Apparel cronut, gentrify pork belly PBR. Migas wolf 3 wolf moon gluten-free Echo Park, single-origin coffee lo-fi cold-pressed keffiyeh butcher beard listicle church-key photo booth Marfa. Pinterest shabby chic lumbersexual Blue Bottle. Seitan distillery VHS jean shorts migas. Tattooed 3 wolf moon organic, drinking vinegar 8-bit polaroid Schlitz. Tumblr selfies vinyl High Life brunch asymmetrical Etsy Carles, flannel Thundercats. IPhone kitsch before they sold out Kickstarter, fixie slow-carb tousled direct trade messenger bag authentic 3 wolf moon salvia ugh pop-up DIY.',
+						'Ennui 90\'s lo-fi before they sold out. Forage swag Blue Bottle hoodie sriracha retro, flexitarian synth chia farm-to-table kitsch Helvetica literally Tumblr. Cardigan Wes Anderson selfies, mlkshk Truffaut Echo Park Banksy Carles Williamsburg 90\'s locavore Neutra street art. Umami distillery pour-over Tumblr, taxidermy chia actually. Sartorial drinking vinegar authentic, butcher Williamsburg Brooklyn lumbersexual trust fund Blue Bottle cornhole vegan Thundercats. Swag farm-to-table 90\'s, Williamsburg asymmetrical Wes Anderson blog keffiyeh. Authentic bicycle rights leggings mlkshk, Bushwick Odd Future Schlitz pug +1 selvage lomo distillery.',
+						'Freegan roof party direct trade church-key organic Godard. Whatever flannel 3 wolf moon, literally Godard Shoreditch kitsch four dollar toast wolf single-origin coffee irony 8-bit. Schlitz Blue Bottle Carles gastropub authentic. Vinyl sriracha quinoa shabby chic Thundercats, seitan tousled. Post-ironic shabby chic kitsch VHS, lumbersexual scenester tilde pop-up cliche direct trade occupy keytar letterpress keffiyeh XOXO. Hashtag Marfa tattooed, church-key freegan Williamsburg listicle Austin skateboard pork belly banh mi chia photo booth single-origin coffee sustainable. Tilde selvage trust fund leggings health goth.',
+						'Hella deep v cray, try-hard PBR PBR&B Williamsburg fap skateboard gluten-free asymmetrical sartorial ugh tofu. Helvetica biodiesel twee, scenester hella cray skateboard Wes Anderson single-origin coffee quinoa. Asymmetrical wolf pickled, flexitarian Truffaut dreamcatcher occupy cold-pressed pour-over Banksy messenger bag. Selfies Shoreditch tousled cliche cray 8-bit. XOXO organic hashtag 90\'s lo-fi. Portland vegan authentic, 8-bit banh mi asymmetrical ennui lumbersexual jean shorts put a bird on it beard. High Life Thundercats distillery pork belly lo-fi, pour-over listicle Kickstarter.',
+						'Migas bicycle rights Austin distillery, try-hard pop-up salvia you probably haven\'t heard of them kitsch swag Intelligentsia bitters beard pour-over chillwave. Flexitarian ennui forage, mixtape bespoke paleo pork belly meggings chillwave polaroid photo booth Schlitz. Selvage kale chips blog, freegan forage chambray flannel Pitchfork flexitarian letterpress McSweeney\'s Pinterest. Cliche master cleanse Etsy, raw denim typewriter put a bird on it Pinterest Helvetica gluten-free meh bicycle rights sriracha hoodie mixtape. Photo booth Marfa cray, before they sold out tote bag Echo Park beard banjo VHS semiotics meditation Schlitz gastropub yr swag. Seitan flannel kitsch, fap 90\'s mixtape pickled cold-pressed banh mi brunch dreamcatcher small batch before they sold out Blue Bottle. Roof party forage viral Echo Park fashion axe, Banksy messenger bag flannel fanny pack whatever trust fund Odd Future.'
+					],
+					tags = [
+						'yolo',
+						'swag',
+						'hashtag',
+						'instagram',
+						'quinoa',
+						'underground',
+						'deck'
+					],
+					names = [
+						'Bon Iver',
+						'Grizzly Bear',
+						'Arcade Fire',
+						'Wilco',
+						'Bastille',
+						'Vampire Weekend',
+						'Two Door Cinema Club',
+						'Beruit'
+					],
+					inter;
+
+				function generate_note() {
+					function random_entry(arr) {
+						return arr[(Math.random() * arr.length) & ~0];
+					}
+
+					return {
+						note: random_entry(rand_notes),
+						user: random_entry(names),
+						created: new Date(Date.now() - (Math.random() * 500000000)),
+						tags: [
+							random_entry(tags),
+							random_entry(tags)
+						]
+					};
+				}
+
+				function fire_notes(){
+					var notes = [],
+						len = (((Math.random()*80)/6&~0)+1)*6,
+						ni;
+
+					for (ni = 0; ni < len; ni++) {
+						notes.push(generate_note());
+					}
+
+					for (ni = 0; ni < callbacks.length; ni++) {
+						callbacks[ni](notes);
+					}
+				}
+
+				document.addEventListener('DOMContentLoaded', function() {
+					fire_notes();
+
+					window.addEventListener('keypress', function(evt) {
+						if (evt.which === 13) {
+							fire_notes();
+						}
+					});
+				});
+
+				return function(cb){
+					if (typeof cb !== 'function') {
+						return;
+					}
+
+					callbacks.push(cb);
+				}
+			})();
+
+			/**\
+
+				dom keeps a cache of functions to call when the DOM has loaded
+				Any function passed to it after the document has loaded just
+				passes through
+
+			\**/
+			window.dom = (function(){
+				var cache = [],
+					loaded = false;
+
+				window.addEventListener('DOMContentLoaded', function(){
+					loaded = true;
+					for(ni = 0; ni < cache.length; ni++){
+						cache[ni]();
+					}
+				});
+
+				return function(cb) {
+					if(typeof cb !== 'function'){
+						return;
+					}
+					if(loaded === false){
+						cache.push(cb);
+					}
+					cb();
+				};
+			})();
+
+			/**\
+
+				name_observe is a helper function for setting up a mechanism
+				for calling a collection of functions at once
+
+			\**/
+			window.toggle_observer = (function(){
+				var subs = [],
+					curr_val;
+
+				return {
+					watch: function(cb) {
+						if(typeof cb !== 'function'){
+							return;
+						}
+						subs.push(cb);
+					},
+					fire: function(){
+						var args = Array.prototype.slice.call(arguments, 0),
+							ni;
+
+						if(curr_val === args[0]) {
+							args[0] = null;
+						}
+
+						curr_val = args[0]
+						for(ni = 0; ni < subs.length; ni++){
+							subs[ni].apply(this, args);
+						}
+					}
+				}
+			})();
+
+			/**\
+
+				The next two functions are just some objects to get you
+				started. Use them or dont, your call.
+
+			\**/
+			function StatObj(data){
+				var self = {
+					element: null,
+					name: data.name || '',
+					count: data.count || ''
+				};
+
+				self.draw = function(){
+					dom(function(){
+						self.element
+							.querySelector('div.name')
+							.innerHTML = self.name;
+						self.element
+							.querySelector('div.count')
+							.innerHTML = self.count;
+					});
+				};
+
+				dom(function(){
+					var tmp = document.getElementById('template-chat-user').innerHTML;
+					self.element = document.createElement('DIV');
+					self.element.innerHTML = tmp;
+					self.element = self.element.querySelector('div');
+				});
+
+				return self;
+			}
+			function NoteObj(data){
+				var self = {
+					element: null,
+					note: data.note || '',
+					user: data.user || '',
+					created: data.created || new Date(),
+					selected: true
+				};
+
+				self.draw = function(){
+					dom(function(){
+						var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+						self.element
+							.querySelector('div.content p')
+							.innerHTML = self.note;
+						self.element
+							.querySelectorAll('div.content span')[1]
+							.innerHTML = self.user;
+						self.element
+							.querySelectorAll('div.content span')[0]
+							.innerHTML = months[self.created.getMonth()] + ', ' + self.created.getDate();
+						self.element.className = self.selected ? 'chat-entry' : 'chat-entry not-selected';
+					});
+				};
+
+				dom(function(){
+					var tmp = document.getElementById('template-chat').innerHTML;
+					self.element = document.createElement('DIV');
+					self.element.innerHTML = tmp;
+					self.element = self.element.querySelector('div');
+				});
+
+				return self;
+			}
+		</script>
+	</head>
+	<body>
+		<template id="template-chat">
+			<div class="chat-entry">
+				<div class="content">
+					<p></p>
+					<div class="creator">
+						<span></span>
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</template>
+		<template id="template-chat-user">
+			<div class="user">
+				<div class="count"></div>
+				<div class="name"></div>
+			</div>
+		</template>
+		<div id="content-wrap">
+			<div id="chat-stats">
+				<div class="users"></div>
+			</div>
+			<div id="chats"></div>
+		</div>
+	</body>
+
+
+    <script type="text/javascript" src="javascript/_main.js"></script>
+</html>

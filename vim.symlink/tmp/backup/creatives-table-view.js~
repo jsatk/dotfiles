@@ -1,0 +1,25 @@
+/* global dependencies */
+var $ = require('jquery');
+var Marionette = require('backbone.marionette');
+
+/* local dependencies */
+var FacebookCreativeTableRowView = require('./facebook-creative-table-row-view');
+var CreativesListView = require('./creatives-list-view');
+
+/* templates */
+var FBCreativeTableTemplate = require('../../templates/FBCreativeTable.hbs');
+
+var CreativesTableView = CreativesListView.extend({
+    template: FBCreativeTableTemplate,
+    childView: FacebookCreativeTableRowView,
+    childViewContainer: '.child-objects table tbody',
+    sortCollection: function(attribute) {
+        var params = this.getOption('params');
+        params.order_by = attribute;
+        this.collection.fetch({
+            data: params
+        });
+    }
+});
+
+module.exports = CreativesTableView;

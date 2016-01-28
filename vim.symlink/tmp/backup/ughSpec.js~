@@ -1,0 +1,51 @@
+describe('Ugh', function() {
+    var Model = Backbone.Model.extend({ url: '/foo' });
+
+    function get(id) {
+        var defer = $.Deferred();
+        var model = new Model({ id: id, dingus: 'so angry' });
+
+        model.fetch({
+            success: function(model) {
+                defer.resolve(model);
+            },
+            error: function(model, response) {
+                debugger;
+                defer.reject(response);
+            }
+        });
+
+        return defer.promise();
+    }
+
+    var server;
+
+    before(function() {
+        server = sinon.fakeServer.create();
+    });
+
+    after(function() {
+        server.restore();
+    });
+
+    it('should resolve the god damn promise', function() {
+        server.respondWith(JSON.stringify({"hello": true}));
+
+        var goddammit = get(10);
+
+        expect(goddammit).to.be.a.promise;
+
+        goddammit.done(function(a, b, c) {
+            expect(a.id).to.equal(10);
+            expect(a.get('id')).to.equal(10);
+            expect(a.get('dingus')).to.equal('so angry');
+            console.log('#done');
+            console.log(a, b, c);
+        }).fail(function(a, b, c) {
+            console.log('#fail');
+            console.log(a, b, c);
+        });
+
+        server.respond();
+    });
+});

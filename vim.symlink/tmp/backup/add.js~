@@ -1,0 +1,43 @@
+// Mocha puts its globals on the global object so we have to tell
+// StandardJS, our linter, that these functions are defined globaly so it
+// doesn't yell at us.
+
+/* global describe, it */
+
+var expect = require('chai').expect
+var add = require('../../../lib/processCreditCards/processes/add')
+
+describe('Add', function () {
+  it('should return users object passed to it', function () {
+    expect(add('Tom 4111111111111111 $1000', {})).to.be.an('object')
+  })
+
+  it('should return an object with the correct user added', function () {
+    expect(add('Tom 4111111111111111 $1000', {})['Tom']).to.exist
+  })
+
+  it('should return an object with a card added to the user', function () {
+    var users = add('Tom 4111111111111111 $1000', {})
+    expect(users['Tom'].card).to.be.an('object')
+  })
+
+  it('should return an object with correct card object added to the user', function () {
+    var users = add('Tom 4111111111111111 $1000', {})
+    expect(users['Tom'].card.number).to.equal('4111111111111111')
+  })
+
+  it('should return an object with the card\'s balance set to 0', function () {
+    var users = add('Tom 4111111111111111 $1000', {})
+    expect(users['Tom'].card.balance).to.equal(0)
+  })
+
+  it('should return an object with the card\'s isValid property set to true', function () {
+    var users = add('Tom 4111111111111111 $1000', {})
+    expect(users['Tom'].card.isValid).to.be.true
+  })
+
+  it('should return an object with the card\'s isValid property set to false', function () {
+    var users = add('Tom 41111111111111114 $1000', {})
+    expect(users['Tom'].card.isValid).to.be.false
+  })
+})

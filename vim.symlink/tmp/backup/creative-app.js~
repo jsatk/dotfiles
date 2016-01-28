@@ -1,0 +1,143 @@
+/* global dependencies */
+var _ = require('underscore');
+var Marionette = require('backbone.marionette');
+var $ = require('jquery');
+var Backbone = require('backbone');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var CreativeChannel = require('./creative-channel');
+var CreationController = require('./creation/controller');
+var ListController = require('./list/list-controller');
+var LoadingView = require('../../common/loading-view');
+var BulkController = require('advisor/common/bulk/controller');
+var PreCreation = require('./pre-creation/view');
+var PagePostStatus = require('./creation/page-post-status');
+var Helpers = require('../../config/helpers');
+var PinterestAdvertiserEntity = require('advisor/entities/pinterest/advertiser');
+
+var Router = Marionette.AppRouter.extend({
+    appRoutes: {
+        'creatives(/)': 'listCreatives'
+    }
+});
+
+/* module definition */
+var Creative = Marionette.Object.extend({
+    initialize: function(options) {
+        AppChannel.on('creative:new', this.newCreative);
+        AppChannel.on('creative:preCreationModal:show', this.showModal);
+        AppChannel.on('creative:bulk_modal:show', _.bind(this.showBulkModal, this));
+
+        var router = new Router({
+            controller: this
+        });
+
+        this.listenTo(CreativeChannel, 'show:list', this.listCreatives);
+        this.listController = new ListController();
+    },
+    /**
+     * @param {Object} options
+     */
+    listCreatives: function(options) {
+        var self = this;
+        // TODO: this pinterest switch is only necessary because we need the owner_id on the advertiser. At some point in the future the pinterest owner id should be exposed via the accounts resource, at which point this can change back to this.listController.show(options); ~jd
+        var promise;
+        if (options.platform === 'pinterest') {
+            // also fetch the pinterest advertiser & account if we're getting pinterest data
+            promise = AppChannel.request('pinterest:advertiser:entity');
+        }
+        $.when(promise).then(function(advertiser) {
+            options.advertiser = advertiser;
+            self.listController.show(options);
+        });
+    },
+    newCreative: function(options) {
+        var creation = new CreationController(options);
+    },
+    showBulkModal: function(options) {
+
+        /** Create custom bulk upload loading view */
+        var BulkUploadLoading = LoadingView.extend({
+
+            modalConfigurations: {
+                title: 'New Page Posts'
+            }
+
+        });
+
+        var cID = options.campaign.get('id');
+        var aID = options.aID;
+        var asset = options.asset;
+
+        var modalRegion = options.region || AppChannel.request('modalRegion');
+
+        /** Create loading view */
+        var bulkUploadLoading = new BulkUploadLoading();
+
+        /** Add loading view to modal region */
+        modalRegion.show(bulkUploadLoading);
+
+        /** Fetch the entities */
+        var campaignEntity = AppChannel.request('advisor:campaign:entity', cID);
+
+        /** Resolve promise */
+        $.when(campaignEntity).done(function(campaign) {
+
+            var bulkController = new BulkController({
+                region:     modalRegion,
+                campaign:   campaign,
+                type:       'posts',
+
+                settings: {
+                    template:   '/api/advisor/v1/asset/' + aID + '/sample_bulk_sheet/',
+                    action:     '/api/advisor/v1/asset/' + aID + '/bulk_creatives/',
+                    data: {
+                        asset: asset,
+                        asset_id: aID
+                    }
+                }
+            });
+
+            bulkController.on('bulk:controller:complete:success', function(response) {
+                var ids = Helpers.getURLParamByKey(response.status_url, 'id__in') || '';
+                PagePostStatus.showStatusMessage({
+                    IDs: ids.split(','),
+                    campaign: campaign,
+                    assetId: aID
+                });
+            });
+        });
+
+    },
+    showModal: function(iID, cID) {
+        /** Update the URL */
+        //router.navigate('/initiative/' + iID + '/campaign/' + cID + '/adgen/');
+        /** Show loading gif */
+        var modalRegion = AppChannel.request('modalRegion');
+        var ModalLoading = LoadingView.extend({
+
+            modalConfigurations: {
+                title: 'New ads',
+                size: 'modal-sm'
+            }
+
+        });
+        modalRegion.show(new ModalLoading());
+        /** Fetch the entities */
+        $.when(
+            AppChannel.request('advisor:initiative:entity', iID),
+            AppChannel.request('advisor:campaign:entity', cID)
+        ).done(function(initiative, campaign) {
+
+            var model = new Backbone.Model({
+                initiative: initiative,
+                campaign: campaign
+            });
+            var view = new PreCreation.View({ model: model });
+            modalRegion.show(view);
+        });
+    }
+});
+
+module.exports = Creative;

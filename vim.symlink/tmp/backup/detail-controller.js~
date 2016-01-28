@@ -1,0 +1,196 @@
+/* global dependencies */
+var _ = require('underscore');
+var $ = require('jquery');
+var Marionette = require('backbone.marionette');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var CampaignDetails = require('./detail-view');
+var CampaignChannel = require('../campaign-channel');
+var ActivityController = require('../card-views/activity/controller');
+var OverviewController = require('../card-views/overview/controller');
+var ChildrenController = require('../card-views/children/controller');
+var SummaryController = require('../card-views/summary/controller');
+
+/* module definition */
+var Controller = Marionette.Object.extend({
+    initialize: function(options) {
+        /** This kicks off everything. */
+        $.when(
+            AppChannel.request('advisor:initiative:entity', this.getOption('iID')),
+            AppChannel.request('advisor:campaign:entity', this.getOption('cID'))
+        ).done(
+            _(this.fetchAccount).bind(this)
+        );
+        /** Tracking */
+        AppChannel.trigger('usage:pageevent', 'Ad Browser', 'Load');
+    },
+    /**
+     * @param {Backbone.Model} initiative
+     * @param {Backbone.Model} campaign
+     */
+    fetchAccount: function(initiative, campaign) {
+        var SCAcctId = campaign.get('account').match('account/(.*)[/]').pop();
+        $.when(
+            initiative,
+            campaign,
+            AppChannel.request('advisor:account:entity', SCAcctId)
+        ).done(
+            _(this.onDoneOfFetchEntities).bind(this)
+        );
+    },
+    /**
+     * @param {Backbone.Model} initiative
+     * @param {Backbone.Model} campaign
+     * @param {Backbone.Model} account
+     */
+    onDoneOfFetchEntities: function(initiative, campaign, account) {
+        /** Get readable Account name */
+        var acctName = account.get('display_name').split('@').shift();
+        campaign.set('account_name', acctName);
+        /** For FACEBOOK campaigns, set info to be used to link Account Name to Power Editor */
+        if (campaign.get('platform') === 'FACEBOOK') {
+            campaign.set('account_id', account.get('account_id').substring(4)); // Remove 'act_' from account_id
+        }
+        /** Currently we only really use this view for it's regions. It sets up the layout of the campaign details page. */
+        var viewOptions = this.getViewOptions(campaign.getPlatform(), campaign, initiative);
+        var view = new CampaignDetails(viewOptions);
+        /** Show the header toolbar */
+        AppChannel.trigger('header:toolbar:show', this.getHeaderToolbarOptions(initiative, campaign));
+        /** Show the Campaign Details View */
+        AppChannel.request('mainRegion').show(view);
+        this.initializeCardControllers(view, viewOptions);
+    },
+    /**
+     * @param {Marionette.View} view
+     * @param {Object} viewOptions
+     */
+    initializeCardControllers: function(view, viewOptions) {
+        /**
+         * @param {String} string
+         * @returns {Object} - Options used to initialize the controller.
+         */
+        function getOptions(string) {
+            return _.extend({}, viewOptions, {
+                region: view.getRegion(string)
+            });
+        }
+        /** Initialize Controllers */
+        var activityController = new ActivityController(getOptions('activity'));
+        var childrenController = new ChildrenController(getOptions('children'));
+        var overviewController = new OverviewController(getOptions('overview'));
+        var summaryController = new SummaryController(getOptions('summary'));
+    },
+    /**
+     * TODO: I kind of hate this method. Lets try to clean it up.
+     * @param {Backbone.Model} initiative
+     * @param {Backbone.Model} campaign
+     * @returns {Object}
+     */
+    getHeaderToolbarOptions: function(initiative, campaign) {
+        var effectivePlatform = campaign.getEffectivePlatform();
+        var events = {
+            'click #create-ad': function(e) {
+                e.preventDefault();
+                switch (effectivePlatform) {
+                    case 'facebook':
+                        AppChannel.trigger('adcreation:modal:show', initiative.id, campaign.id);
+                        break;
+                    case 'pinterest':
+                    case 'instagram':
+                    case 'twitter':
+                        AppChannel.trigger('adcreation:bulk_modal:show', { iID: initiative.id, cID: campaign.id });
+                        break;
+                }
+            },
+            'click #create-post': function(e) {
+                e.preventDefault();
+                switch (effectivePlatform) {
+                case 'facebook':
+                    AppChannel.trigger('creative:preCreationModal:show', initiative.id, campaign.id);
+                    break;
+                }
+            }
+        };
+        var subNavs = [{
+            bLogo: initiative.get('brand').get('logo'),
+            bName: initiative.get('brand').get('name'),
+            cName: campaign.get('name'),
+            iName: initiative.get('name'),
+            iURI: '#initiative/' + initiative.get('id'),
+            platform: effectivePlatform
+        }];
+        var canCreateAd = campaign.canCreateAd(effectivePlatform);
+        return {
+            /** As of this writing Facebook is the only supported platform with Ad Creation. */
+            canCreateAd: canCreateAd,
+            events: events,
+            filterOptions: {},
+            showNavToolbar: true,
+            subNavs: subNavs,
+            viewName: 'campaign-details',
+            showSearch: false,
+            brand_id: initiative.get('brand_id'),
+            initiative_id: initiative.get('id'),
+            effectivePlatform: effectivePlatform
+        };
+    },
+    /**
+     * @param {String} platform
+     * @param {Backbone.Model} campaign
+     * @param {Backbone.Model} initiative
+     * @returns {Object}
+     */
+    getViewOptions: function(platform, campaign, initiative) {
+        return _.extend({}, this.options, {
+            platform: platform,
+            model: campaign,
+            initiative: initiative,
+            level: this.getLevel(platform),
+            cards: this.getAvailableCards()
+        });
+    },
+    /**
+     * The "cards" are what views are show on the campaign details page.
+     * They can be arranged in any way and in any column (including a not-currently-used left column).
+     * To change the order or column a view is rendered in update it here in the array.
+     * @returns {Array.<String>}
+     */
+    getAvailableCards: function() {
+        var centerCards = ['summary'];
+        return {
+            center: ['summary', 'children'],
+            right: ['overview', 'activity']
+        };
+    },
+    /**
+     * This method returns a string telling us what "level" we are at. This level is used for by the child views
+     * AKA "cards" to determine what level of information to show. As of this writing the only view that uses
+     * the `level` is the children table view.
+     */
+    getLevel: function(platform) {
+        var promotedlevel = this.getOption('promotedlevel');
+        var level = this.getOption('level') || '';
+        level = level.toLowerCase();
+
+        if (_.contains(['promotedaccounts', 'promotedtweets'], promotedlevel)) return promotedlevel;
+        if (_.contains(['ads', 'audiences', 'creatives'], level)) return level;
+        /** AdCluster available only for Facebook */
+        if (level === 'adclusters' && platform === 'facebook') {
+            return level;
+        }
+        /** Pin Promotions available only for Pinterest */
+        if (level === 'pinpromotions' && platform === 'pinterest') {
+            return level;
+        }
+        /**
+         * When we are viewing a single adset we are viewing a list of adgroups so we are
+         * at the "adgroups" level
+         */
+        if (level === 'adset' && this.getOption('lID')) return 'adgroups';
+        /** If there is no level or if the level is some typoed and unsupported URL path then show the adset. */
+        return 'adsets';
+    }
+});
+
+module.exports = Controller;

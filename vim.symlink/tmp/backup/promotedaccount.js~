@@ -1,0 +1,41 @@
+/* global dependencies */
+var Backbone = require('backbone');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var Base = require('./base');
+
+var TwitterPromotedAccount = Base.Model.extend({
+    urlRoot: '/api/twitter/ads/v1/twitterpromotedaccount/',
+    /**
+     * Promoted Objects can only have two statuses: Active or Paused.
+     * Set the objects Twitter status (number between 0 and 8) based on it's 'paused' value.
+     */
+    initialize: function() {
+        var status = this.get('paused') === true ? 2 : 0;
+        this.set({status: status});
+    }
+});
+var TwitterPromotedAccounts = Base.Collection.extend({
+    model: TwitterPromotedAccount,
+    url: TwitterPromotedAccount.prototype.urlRoot
+});
+var getTwitterPromotedAccountEntity = function(accountID) {
+    return Base.getBaseEntity(accountID, TwitterPromotedAccount);
+};
+var getTwitterPromotedAccountEntities = function(options) {
+    return Base.getBaseEntities(options, TwitterPromotedAccounts);
+};
+var getTwitterPageablePromotedAccountEntities = function(userCanManage) {
+    return Base.getPageableBaseEntities(TwitterPromotedAccount, userCanManage);
+};
+
+AppChannel.reply('twitter:promotedaccount:entity', function(accountID) {
+    return getTwitterPromotedAccountEntity(accountID);
+});
+AppChannel.reply('twitter:promotedaccount:entities', function(options) {
+    return getTwitterPromotedAccountEntities(options);
+});
+AppChannel.reply('twitter:promotedaccount:PageableEntities', function(userCanManage) {
+    return getTwitterPageablePromotedAccountEntities(userCanManage);
+});

@@ -1,0 +1,108 @@
+/* global dependencies */
+var _ = require('underscore');
+var Backbone = require('backbone');
+var Marionette = require('backbone.marionette');
+var AppChannel = require('advisor/app-channel');
+var InitiativeChannel = require('./initiative-channel');
+
+/* local dependencies */
+var CardsController = require('./cards/cards-controller');
+var NewController = require('./new/new-controller');
+var DetailController = require('./detail/detail-controller');
+var EditController = require('./edit/edit-controller');
+var AssetsController = require('./assets/assets-controller');
+
+var Router = Marionette.AppRouter.extend({
+    appRoutes: {
+        'initiative(/)': 'showInitiativeCards',
+        'initiative/:initiativeID(/)': 'initiativeDetail',
+        'initiative/:initiativeID/edit(/)': 'editInitiative'
+    }
+});
+
+/* module definition */
+var InitiativeModule = Marionette.Object.extend({
+    initialize: function(options) {
+        var controller = this.controller;
+        var router = this.router = new Router({
+            controller: this
+        });
+
+        var self = this;
+        InitiativeChannel.on('cards:show', function() {
+            router.navigate('initiative');
+            self.showInitiativeCards.call(self);
+        });
+        InitiativeChannel.on('create:show', function() {
+            self.createInitiative.call(self);
+        });
+        /**
+        * @param {Number} initiativeID
+        */
+        InitiativeChannel.on('detail:show', function(initiativeID) {
+            router.navigate('initiative/' + initiativeID);
+            self.initiativeDetail.call(self, initiativeID);
+        });
+        /**
+        * @param {Number} initiativeID
+        */
+        InitiativeChannel.on('edit:show', function(initiativeID) {
+            router.navigate('initiative/' + initiativeID + '/edit');
+            self.editInitiative.call(self, initiativeID);
+        });
+        /**
+        * @param {Object} options
+        */
+        InitiativeChannel.on('initiative:assets:select', function(options) {
+            self.selectAssets.call(self, options);
+        });
+
+
+        //handle current route
+        var currentRoute = AppChannel.request('currentRoute');
+        if (/^initiative/.test(currentRoute)) {
+            _.any(Backbone.history.handlers, function(handler) {
+                if (handler.route.test(currentRoute)) {
+                    handler.callback(currentRoute);
+                    return true;
+                }
+            });
+        }
+
+        InitiativeChannel.trigger('start');
+    },
+    createInitiative: function() {
+        NewController.loadCreateView(AppChannel);
+    },
+    showInitiativeCards: function() {
+        CardsController.loadCardsView({
+            region: AppChannel.request('mainRegion')
+        });
+    },
+    /**
+     * @param {Number} initiativeID
+     */
+    initiativeDetail: function(initiativeID) {
+        DetailController.loadDetailView({
+            region: AppChannel.request('mainRegion'),
+            initiativeID: initiativeID
+        });
+    },
+    /**
+     * @param {Number} initiativeID
+     */
+    editInitiative: function(initiativeID) {
+        EditController.init({
+            region: AppChannel.request('mainRegion'),
+            initiativeID: initiativeID
+        });
+    },
+    /**
+     * @param {Object} options
+     */
+    selectAssets: function(options) {
+        AssetsController.loadSelectorView(options);
+    }
+});
+
+module.exports = InitiativeModule;

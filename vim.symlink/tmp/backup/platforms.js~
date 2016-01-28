@@ -1,0 +1,77 @@
+var _ = require('underscore');
+var CommonLanguage  = require('advisor/common/language');
+
+module.exports = function() {
+    var langEn = CommonLanguage.en;
+    var platform_objectives = {
+        facebook: langEn.objective,
+        twitter: langEn.twitter_objective,
+        instagram: langEn.instagram_objective,
+        pinterest: langEn.pinterest_objective
+    };
+    var platform_kpis = {
+        facebook: langEn.facebook_kpi,
+        twitter: langEn.twitter_kpi,
+        instagram: langEn.instagram_kpi,
+        pinterest: langEn.pinterest_kpi
+    };
+    var platforms = {
+        facebook: {
+            'MOBILE_APP_ENGAGEMENT': ['CPC', 'CPE', 'CPM'],
+            'MOBILE_APP_INSTALLS': ['CPC', 'CPM', 'CPI'],
+            'WEBSITE_CLICKS': ['CPC', 'CPM'],
+            'EVENT_RESPONSES': ['CPC', 'CPeventresponse', 'CPM'],
+            'PAGE_LIKES': ['CPC', 'CPM', 'CPlike'],
+            'POST_ENGAGEMENT': ['CPC', 'CPcomment', 'CPE', 'CPM', 'CPlinkclick', 'CPshare', 'CPSE', 'CPvideoplay', 'CPvideoview'],
+            'OFFER_CLAIMS': ['CPC', 'CPM', 'CPofferclaim'],
+            'WEBSITE_CONVERSIONS': ['CPC', 'CPconversion', 'CPM', 'CPLC', 'ROAS'],
+            'VIDEO_VIEWS': ['CPC', 'CPM', 'CPvideoview', 'CPvideoplay']
+        },
+        instagram: {
+            'WEBSITE_CLICKS': ['CPC', 'CPM'],
+            'VIDEO_VIEWS': ['CPC', 'CPM', 'CPvideoview', 'CPvideoplay']
+        },
+        twitter: {
+            'APP_ENGAGEMENTS': ['CPAE', 'CPC', 'CPM'],
+            'APP_INSTALLS': ['CPC', 'CPM', 'CPI'],
+            'CUSTOM': ['CPC', 'CPE', 'CPM'],
+            'FOLLOWERS': ['CPC', 'CPF', 'CPM'],
+            'LEAD_GENERATION': ['CPC', 'CPM', 'CPL'],
+            'TWEET_ENGAGEMENTS': ['CPCE', 'CPC', 'CPE', 'CPFV', 'CPM', 'CPR', 'CPRT'],
+            'WEBSITE_CLICKS': ['CPA', 'CPC', 'CPM', 'CPLC'],
+            'VIDEO_VIEWS': ['CPC', 'CPM', 'CPVV']
+        },
+        pinterest: {
+            'APP_INSTALLS': ['CPC', 'CPA_APP_INSTALL'],
+            'PIN_ENGAGEMENTS': ['CPC', 'CPM', 'CPE'],
+            'WEBSITE_CONVERSIONS': ['CPC', 'CPM', 'CPA_PURCHASE'],
+            'WEBSITE_CLICKS': ['CPC', 'CPM']
+        }
+    };
+    var platform_options = _.map(platforms, function(objectives, platform) {
+        var objectives_dict   = platform_objectives[platform];
+        var kpis_dict         = platform_kpis[platform];
+        var objective_options = _.map(objectives, function(kpis, objective) {
+            var kpi_options = _.map(kpis, function(kpi) {
+                return {
+                    label: kpis_dict[kpi],
+                    value: kpi
+                };
+            });
+            var objective_option = {
+                label: objectives_dict[objective],
+                value: objective,
+                kpis: kpi_options
+            };
+            return objective_option;
+        });
+        var label = platform[0].toUpperCase() + platform.slice(1);
+        var platform_option = {
+            label: label,
+            value: platform,
+            objectives: objective_options
+        };
+        return platform_option;
+    });
+    return platform_options;
+};

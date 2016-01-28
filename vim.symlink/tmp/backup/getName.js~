@@ -1,0 +1,23 @@
+// Mocha puts its globals on the global object so we have to tell
+// StandardJS, our linter, that these functions are defined globaly so it
+// doesn't yell at us.
+
+/* global describe, it */
+
+var expect = require('chai').expect
+var getName = require('../lib/processCreditCards/processes/getName')
+
+describe('getName', function () {
+  it('should return undefined if no params are passed', function () {
+    expect(getName()).to.be.undefined
+  })
+
+  it('should get the name from a passed in array of strings', function () {
+    expect(getName(['Tom', '4111111111111111', '$1000'])).to.equal('Tom')
+    expect(getName(['Lisa', '$7'])).to.equal('Lisa')
+  })
+
+  it('should return undefined if no name is present in params', function () {
+    expect(getName(['4111111111111111', '$1000'])).to.be.undefined
+  })
+})

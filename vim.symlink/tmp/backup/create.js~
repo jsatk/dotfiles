@@ -1,0 +1,44 @@
+/** Dependencies */
+import create from 'advisor/common/button/components/create'
+
+/* Module definition */
+export default () => {
+
+    let element
+
+    beforeEach(() => {
+
+        element = create({
+            type: 'save',
+            text: 'test'
+        })
+
+    })
+
+    it ('should return dom element', () => {
+
+        expect(element.tagName).toBe('DIV');
+
+    })
+
+    it ('element is created', () => {
+
+        expect(element.childNodes.length).toBe(2)
+
+    })
+
+
+    it ('element has a title', () => {
+
+        expect(element.childNodes[1].nodeValue).toBe('test');
+
+    })
+
+    it ('element has a icon', () => {
+
+        expect(element.childNodes[0].tagName).toBe('SPAN');
+        expect(element.childNodes[0].classList).toContain('fa')
+
+    })
+
+}

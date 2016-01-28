@@ -1,0 +1,59 @@
+/* global dependencies */
+var _ = require('underscore');
+var $ = require('jquery');
+var Marionette = require('backbone.marionette');
+var AppChannel = require('advisor/app-channel');
+
+var DateRangeView = require('advisor/common/daterange-picker-control');
+var DateRangeTemplate = require('advisor/common/templates/DateRangePicker.hbs');
+var UrlUtils = require('advisor/common/url-utils');
+
+var ActivityController = require('../card-views/activity/controller');
+var OverviewController = require('../card-views/overview/controller');
+var SummaryController = require('../card-views/summary/controller');
+
+var LayoutTemplate = require('./templates/dashboard-layout.hbs');
+var toolbarOptions = require('./toolbar-options');
+
+var DashboardLayoutView = Marionette.LayoutView.extend({
+    dashboardOptions: ['initiative'],
+    template: LayoutTemplate,
+    regions: {
+        'summaryRegion': '[data-region="summary"]',
+        'objectRegion': '[data-region="objects"]',
+        'infoboxRegion': '[data-region="infobox"]',
+        'activityRegion': '[data-region="activity"]',
+    },
+    initialize: function(options) {
+        this.mergeOptions(options, this.dashboardOptions);
+
+        AppChannel.trigger('header:toolbar:show', toolbarOptions.campaignDetails(this.initiative, this.model));
+    },
+    onShow: function() {
+        AppChannel.trigger('browse:campaign', this.model.id, null, this.objectRegion);
+
+        // Satisfy legacy card views
+        var platform = this.model.getPlatform();
+
+        var viewOptions = {
+            platform: platform,
+            model: this.model,
+            initiative: this.initiative,
+            level: null
+        };
+
+        var regionViews = {
+            'activityRegion': ActivityController,
+            'summaryRegion': SummaryController,
+            'infoboxRegion': OverviewController
+        };
+
+        _.each(_.keys(regionViews), function(key) {
+            var Controller = regionViews[key];
+            var options = _.extend(viewOptions, { region: this.getRegion(key) });
+            new Controller(options);
+        }, this);
+    }
+});
+
+module.exports = DashboardLayoutView;

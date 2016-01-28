@@ -1,0 +1,33 @@
+<td class="no-user-select">
+    <input type="checkbox" value="{{id}}" id="select_{{id}}" class="font-icon">
+    <label for="select_{{id}}"></label>
+</td>
+<td>
+    <a href="#creative-modal" class="sc-creative-preview-link" data-toggle="modal" data-post-id="{{id}}" title="View a platform preview&hellip;">
+        <i class='fa fa-facebook-square fa-creative-type-{{type}} fa-fw'></i>
+        <h2>Hi</h2>
+    </a>
+</td>
+<td>
+    {{breakUnderscores id}}<br />
+    {{#if promotion_status}}
+        <span class="label label-default">{{humanize promotion_status}}</span>
+    {{/if}}
+</td>
+<td>
+    {{formatDate created_time "MM/DD/YYYY"}}
+</td>
+<td><img src="{{thumbnail}}" class="img-responsive"></td>
+<td>
+    {{#if title}}
+        {{title}}<br />
+        {{body}}
+    {{else}}
+        {{message}}
+    {{/if}}
+</td>
+<td class="sc-creative-link">
+    <span title="{{link}}{{object_url}}">
+        {{link}}{{object_url}}
+    </span>
+</td>

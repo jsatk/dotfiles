@@ -1,0 +1,19 @@
+AdvisorApp.module('CampaignModule.Views', function(Views) {
+    Views.SummaryWithChart = Views.SummaryBase.extend({
+        template: Handlebars.templates.SummaryWithChart,
+        regions: function(options) {
+            var regions = { chartRegion: '.chart' };
+
+            // Pinterest doesn't yet support the pacing meter.
+            debugger;
+            return _(
+                options.model.getPlatform() === 'pinterest' ? {} : { pacingRegion: '.pacing' }
+            ).extend(regions);
+        },
+
+        initialize: function() {
+            this.createPacingView();
+            this.createChartView();
+        }
+    });
+});

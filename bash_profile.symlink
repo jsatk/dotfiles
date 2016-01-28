@@ -20,7 +20,7 @@ complete -W "NSGlobalDomain" defaults
 export MANPAGER="less -X"
 
 # http://brettterpstra.com/2013/03/30/a-multi-purpose-editor-variable/
-export EDITOR="$HOME/Library/Scripts/editor.sh"
+export EDITOR="vim"
 
 # ----
 # Path
@@ -28,14 +28,18 @@ export EDITOR="$HOME/Library/Scripts/editor.sh"
 
 # Ensure user-installed binaries take precedence
 export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-# Enable shims and autocompletion for rbenv.
-eval "$(rbenv init -)"
+
+# Add Postgres to path
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 
 # Load .bashrc if it exists
 test -f ~/.bashrc && source ~/.bashrc
 
 # Sets PATH for executable scripts
 export PATH=$PATH:$HOME/Library/Scripts
+
+# Enable shims and autocompletion for rbenv.
+eval "$(rbenv init -)"
 
 # ---------------
 # Bash Completion
@@ -47,9 +51,6 @@ fi
 # -------
 # Aliases
 # -------
-
-# Better grep.
-alias grr="grep -riIn --color"
 
 # Be nice
 alias please=sudo
@@ -100,6 +101,8 @@ alias safari="open -a \"Safari\""
 alias ax="chmod a+x"
 # edit .bash_profile
 alias bp="$EDITOR ~/.bash_profile"
+# edit .vimrc
+alias ev="$EDITOR ~/.vimrc"
 # edit keybindings.dict
 alias kb="$EDITOR ~/Library/KeyBindings/DefaultKeyBinding.dict"
 # reload your bash config
@@ -114,9 +117,6 @@ alias f='open -a Finder ./'
 
 # Eject drive from command line
 alias eject="diskutil unmount"
-
-# Open current directory in Sublime
-alias e='subl . &'
 
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"
@@ -139,11 +139,6 @@ cdf() {
   fi
 }
 
-# JS Hint
-function jsh {
-  HINT_FILE=app/assets/javascripts/admin/${1} rake jshint
-}
-
 # Create a new directory and enter it
 function md() {
   mkdir -p "$@" && cd "$@"
@@ -157,13 +152,13 @@ function f() {
 # Syntax-highlight JSON strings or files
 function json() {
   if [ -p /dev/stdin ]; then
-        # piping, e.g. `echo '{"foo":42}' | json`
-        python -mjson.tool | pygmentize -l javascript
-      else
-        # e.g. `json '{"foo":42}'`
-        python -mjson.tool <<< "$*" | pygmentize -l javascript
-      fi
-    }
+    # piping, e.g. `echo '{"foo":42}' | json`
+    python -mjson.tool | pygmentize -l javascript
+  else
+    # e.g. `json '{"foo":42}'`
+    python -mjson.tool <<< "$*" | pygmentize -l javascript
+  fi
+}
 
 # Tail system log
 function console () {
@@ -204,6 +199,13 @@ function winname {
 function fuck () { echo "Calm down"; }
 function FUCK () { echo "Calm down"; }
 function FUCKFUCK () { echo "Calm down"; }
+
+# Fix the shitty OS X Open With menu duplicates
+function fixopenwith () {
+  /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user
+  killall Finder
+  echo 'Open With has been rebuilt, Finder will relaunch'
+}
 
 # -----------
 # Bash Prompt
@@ -260,18 +262,17 @@ function fixopenwith() {
   killall Finder
   echo 'Open With has been rebuilt, Finder will relaunch'
 }
-# iTerm Tab and Title Customization and prompt customization
-# http://sage.ucsc.edu/xtal/iterm_tab_customization.html
-
-# Put the string " [bash]   hostname::/full/directory/path"
-# in the title bar using the command sequence
-# \[\e]2;[bash]   \h::\]$PWD\[\a\]
-
-# Put the penultimate and current directory
-# in the iterm tab
-# \[\e]1;\]$(basename $(dirname $PWD))/\W\[\a\]
 
 PS1="\n\[$RESET\]┌─▪\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[${BOLD}${MAGENTA}\]\u \[$WHITE\]on \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$RESET\]\n└─▪ "
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# For autojump
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# Specify your defaults in this environment variable
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+# Set my fucking ulimit to a really high number
+ulimit -n 10000

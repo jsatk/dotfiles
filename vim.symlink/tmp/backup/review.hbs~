@@ -1,0 +1,29 @@
+<form class="form" role="form">
+    <section class="row alert alert-danger"></section>
+
+    <section class="row">
+        <div class="form-group col-md-6">
+            <span class="text-muted">Total ad sets</span><br>
+            <strong class="ad-sets">{{totalAdSets}}</strong>
+        </div>
+
+        <div class="form-group col-md-6">
+            <span class="text-muted">Total ads</span><br>
+            <strong class="total-ads">{{totalAds}}</strong>
+        </div>
+    </section>
+
+    <section class="row form-group col-md-6">
+        <span class="text-muted">Ad set status</span><br>
+
+        <select class="dropdown" name="status" required>
+            <option value="PAUSED" selected>Paused</option>
+            <option value="ACTIVE">Active</option>
+        </select>
+    </section>
+
+    <section class="row col-md-12">
+        <button type="button" class="btn btn-primary">Upload to Facebook</button>
+        <a class="csv btn" href="{{uri}}download_bulk_sheet"><i class="fa fa-download"></i>&nbsp;Download csv</a>
+    </section>
+</form>

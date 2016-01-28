@@ -1,0 +1,214 @@
+/* global dependencies */
+var moment = require('moment');
+var _ = require('underscore');
+var $ = require('jquery');
+var AppChannel = require('advisor/app-channel');
+
+require('../../../config/select2-config');
+require('backbone.stickit');
+
+/* local dependencies */
+var button = require('advisor/common/button/');
+var CampaignChannel = require('../campaign-channel');
+var LoadingView = require('../../../common/loading-view');
+var NewView = require('./new-view');
+
+var currentView;
+var campaignEntity;
+var modalRegion;
+
+module.exports.loadView = function(options) {
+    /** Get initiative id */
+    var iID = options && options.initiativeId;
+    /** Get campaign entity */
+    var CampaignEntity = AppChannel.request('advisor:campaign:Entity');
+    campaignEntity = new CampaignEntity();
+    /** Create a loading view */
+    modalRegion = AppChannel.request('modalRegion');
+    modalRegion.show(new LoadingView());
+    /** Request initiative entity */
+    AppChannel.request('advisor:initiative:entity', iID).done(function(initiative) {
+        $.when(getEntities(initiative)).done(setView);
+    });
+};
+
+/**
+ * Defaults the campaign's date range to its initiative's date range.
+ * Yes, I realize this is a little hacky and is implicitly setting the
+ * date range behind the scenes.  However, when creating a new campaign
+ * the user doesn't choose a range until after they fill out the modal, but
+ * the back end requires that campaigns have a start and end date.  So we choose
+ * sensible defaults for them behind the scenes, then once they choose an insertion
+ * order on the edit page they are then prompted to choose a new date range if they
+ * so desire.
+ */
+var setCampaignDateRange = function() {
+    var initiative = campaignEntity.get('initiative');
+
+    if (!campaignEntity.get('start_date')) {
+        campaignEntity.set('start_date', initiative.get('start_date'));
+    }
+
+    if (!campaignEntity.get('end_date')) {
+        campaignEntity.set('end_date', initiative.get('end_date'));
+    }
+};
+
+var getEntities = function(initiative) {
+    /** Set campaign entity */
+    campaignEntity.set('initiative', initiative);
+
+    setCampaignDateRange();
+
+    /** Request entities */
+    var Facebook = AppChannel.request('advisor:account:entities', {
+        'persist': true,
+        'data': {
+            'platform': 'facebook',
+            'initiatives__id': initiative.get('id')
+        }
+    });
+
+    var Twitter = AppChannel.request('advisor:account:entities', {
+        'persist': true,
+        'data': {
+            'platform': 'twitter',
+            'initiatives__id': initiative.get('id')
+        }
+    });
+
+    var Instagram = AppChannel.request('advisor:account:entities', {
+        'persist': true,
+        'data': {
+            'platform': 'facebook',
+            'initiatives__id': initiative.get('id'),
+            'account_subplatforms__subplatform': 'INSTAGRAM'
+        }
+    });
+
+    var Pinterest = AppChannel.request('advisor:account:entities', {
+        'persist': true,
+        'data': {
+            'platform': 'pinterest',
+            'initiatives__id': initiative.get('id')
+        }
+    });
+
+    /** Resolve promise */
+    var resolvePromise = function(facebook, twitter, instagram, pinterest) {
+        campaignEntity.set({
+            accounts: {
+                'facebook':  facebook.toJSON(),
+                'twitter':   twitter.toJSON(),
+                'instagram': instagram.toJSON(),
+                'pinterest': pinterest.toJSON()
+            },
+            fi_dict: {}
+        });
+    };
+
+    /** Wait for promises to resolve */
+    return $.when(Facebook, Twitter, Instagram, Pinterest).done(resolvePromise);
+};
+
+var viewEvents = {
+    'before:destroy': function() {
+        closeView();
+    },
+    'reset:form': function() {
+        /** Clear error */
+        currentView.triggerMethod('ClearError');
+    },
+    'cancel': function() {
+        /** Trigger close */
+        currentView.triggerMethod('modal:close');
+    },
+    'save': function() {
+        /** Save campaign */
+        saveCampaign(currentView.ui.submit.get(0));
+        /** Clear error and close modal */
+        currentView.triggerMethod('ClearError');
+    }
+};
+
+var setView = function() {
+    /** Create view */
+    currentView = new NewView({
+        'model': campaignEntity
+    });
+    /** Attach events */
+    currentView.on(viewEvents);
+    /** Show view in modal region */
+    modalRegion.show(currentView);
+};
+
+var closeView = function() {
+    /** Remove campaign */
+    campaignEntity = null;
+    /** Remove events */
+    currentView.off(viewEvents);
+    /** Remove data bindings */
+    currentView.unstickit();
+
+    return true;
+};
+
+var saveCampaign = function(target) {
+    /** Variables */
+    var resourceUri = campaignEntity.get('initiative').get('resource_uri') || campaignEntity.get('initiative');
+    var FBL3        = campaignEntity.get('platform') === 'FACEBOOK';
+    /**
+     * Need to send back the resource_uri of the initiative object as 'initiative' and
+     * whether or not this is a Facebook L3.
+     */
+    campaignEntity.set({
+        'initiative': resourceUri,
+        'post_L3_on_FB': FBL3
+    });
+
+    /** Remove variables not needed by backend */
+    campaignEntity.unset('account_name', { silent: true });
+    campaignEntity.unset('accounts', { silent: true });
+    campaignEntity.unset('fi_dict', { silent: true });
+
+    /** Save campaign */
+    var promise = campaignEntity.save(null, {
+        success: function(model, response) {
+            CampaignChannel.trigger('create:post:success', model);
+            currentView.triggerMethod('modal:close');
+        },
+        error: function(model, response) {
+            /**
+             * We shouldn't be able to get 201 on error.
+             * But I'll leave this here for now.
+             */
+            if (response.status === 201) {
+                CampaignChannel.trigger('create:post:success', model);
+                currentView.triggerMethod('modal:close');
+            } else {
+                CampaignChannel.trigger('create:post:error', response);
+            }
+        }
+    });
+
+    button.promise(target, promise);
+};
+
+var saveSuccess = function(model) {
+    /** Get IDs */
+    var iID = model.get('initiative_id');
+    var mID = model.get('id');
+    /** Trigger */
+    CampaignChannel.trigger('edit:show', iID, mID);
+};
+
+var saveError = function(response) {
+    var errors       = response.responseJSON.campaign;  // The errors will always be on the campaign object.
+    var errorMessage = _.values(errors).join(' ');      // Concatenates all of our error messages into one string.
+
+    currentView.onError(errorMessage);
+};
+
+/** Events */
+CampaignChannel.on('create:post:success', saveSuccess);
+CampaignChannel.on('create:post:error', saveError);

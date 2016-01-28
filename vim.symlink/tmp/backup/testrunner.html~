@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Mocha Tests</title>
+        <link rel="stylesheet" href="../css/mocha.css" />
+    </head>
+    <body>
+        <div id="mocha"></div>
+        <script src="../js/tests.vendor.js"></script>
+        <script src="http://sinonjs.org/releases/sinon-1.15.4.js"></script>
+
+        <script>
+            mocha.setup('bdd')
+            mocha.reporter('html');
+
+            var expect = chai.expect;
+            chai.use(chaiAsPromised);
+        </script>
+
+        <!-- Application -->
+        <script src="../js/vendor.js"></script>
+        <script src="../js/templates.js"></script>
+        <script src="../js/application.js"></script>
+
+        <!-- Test -->
+        <script src="../js/fixtures.js"></script>
+        <script src="../js/tests.js"></script>
+
+        <script>
+            // Only tests run in real browser, injected script run if options.run == true
+            if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+                mocha.run();
+            }
+        </script>
+    </body>
+</html>

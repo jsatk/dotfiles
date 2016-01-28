@@ -1,0 +1,108 @@
+/* global dependencies */
+var $ = require('jquery');
+var Backbone = require('backbone');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var SessionEntity = require('../session');
+var Advertiser = require('./models/advertiser');
+var Advertisers = require('./collections/advertisers');
+var Campaign = require('./models/campaign');
+var Campaigns = require('./collections/campaigns');
+var CampaignsPageable = require('./collections/campaignsPageable');
+var PinPromotion = require('./models/pinpromotion');
+var PinPromotions = require('./collections/pinpromotions');
+var PinPromotionsPagable = require('./collections/pinpromotionsPageable');
+
+function getEntity(id, Model) {
+    /** Variables */
+    var deferrer = $.Deferred();
+    var model = new Model({
+        id: id
+    });
+    /** Fetch model */
+    model.fetch({
+        success: function(data) {
+            deferrer.resolve(data);
+        },
+        error: function(xhr, status) {
+            deferrer.reject(status);
+        }
+    });
+    /** Return deferrer */
+    return deferrer.promise();
+}
+
+function getEntities(options, Collection) {
+    /** Variables */
+    var deferrer = $.Deferred();
+    var collection = new Collection(options);
+    /** Fetch collection */
+    collection.fetch({
+        data: this.filters,
+        success: function(data) {
+            deferrer.resolve(data);
+        },
+        error: function(xhr, status) {
+            deferrer.reject(status);
+        }
+    });
+    /** Return deferrer */
+    return deferrer.promise();
+}
+
+function getCampaignEntity(id) {
+    return getEntity(id, Campaign);
+}
+
+function getCampaignEntities(options) {
+    return getEntities(options, Campaigns);
+}
+
+function getCurrentAdvertiser() {
+    /** Variables */
+    var deferrer = $.Deferred();
+    var session = SessionEntity.getSession();
+
+    $.when(
+        getEntity(session.get('account_id'), Advertiser)
+    ).then(function(advertiser) {
+        // add an owner_id
+        var ownerId = advertiser.get('owner').replace(/^.+?(\d+)\/$/, '$1');
+        advertiser.set('owner_id', ownerId);
+        deferrer.resolve(advertiser);
+    }, deferrer.reject);
+
+    /** Return deferrer */
+    return deferrer.promise();
+}
+
+function getCampaignPageableEntitiesClass(options, userCanManage) {
+    return CampaignsPageable.extend({
+        model: Campaign.extend({
+            userCanManage: userCanManage
+        }),
+        url: Campaign.prototype.urlRoot
+    });
+}
+
+function getPinPromotionPageableEntitiesClass(parentModel, userCanManage) {
+    debugger;
+    return PinPromotionsPagable.extend({
+        campaignId: parentModel.get('id'),
+        filters: {
+            start_date: parentModel.get('start_date'),
+            end_date: parentModel.get('end_date')
+        },
+        model: PinPromotion.extend({
+            userCanManage: userCanManage
+        }),
+        url: PinPromotions.prototype.url
+    });
+}
+
+AppChannel.reply('pinterest:campaign:entity', getCampaignEntity);
+AppChannel.reply('pinterest:campaign:entities', getCampaignEntities);
+AppChannel.reply('pinterest:campaign:PageableEntities', getCampaignPageableEntitiesClass);
+AppChannel.reply('pinterest:pinpromotion:PageableEntities', getPinPromotionPageableEntitiesClass);
+AppChannel.reply('pinterest:advertiser:entity', getCurrentAdvertiser);

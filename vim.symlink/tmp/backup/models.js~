@@ -1,0 +1,142 @@
+/** @namespace AdvisorApp.AdCreationApp.Models */
+AdvisorApp.module('AdCreationApp.Models', function(Module, App, Backbone, Marionette, $, _) {
+
+    /**
+     * @module AdVisorApp.AdCreationApp.Models.AdCollection
+     * @constructor
+     */
+
+    Module.AdCollection = Backbone.Model.extend({
+
+        urlRoot: '/api/advisor/v1/adcollection',
+
+        /** @returns {Promise} */
+        getReach: function() {
+
+            return $.ajax({
+                type:    'get',
+                url:     this.url() + 'reachestimate',
+                context: this,
+                success: this.onReachDone,
+                error:   this.onReachFail
+            });
+
+        },
+
+        /**
+         * @param {Object} response
+         * @private
+         */
+        onReachDone: function(response) {
+
+            // TODO: This only handles FB reach. Make flexible
+            this.set('reach', response.users);
+
+        },
+
+        /**
+         * @param {Object} response
+         * @private
+         */
+        onReachFail: function(response) {
+
+            this.set('reach', 'unknown');
+            console.error('Error retrieving reach', response);
+
+        }
+
+    });
+
+    /**
+     * @module AdVisorApp.AdCreationApp.Models.AdCollections
+     * @constructor
+     */
+
+    Module.AdCollections = Backbone.Collection.extend({
+
+        model: Module.AdCollection,
+
+        urlRoot: '/api/advisor/v1/adcollection',
+
+        /**
+         * @param {Backbone.Model} model
+         * @param {Object} response
+         */
+        make: function(model, response) {
+
+            /** Save */
+            $.ajax({
+                type:    'post',
+                url:     response.resource_uri + 'make_adcollections/',
+                context: this,
+                success: this.onMakeDone,
+                error:   this.onMakeFail
+            });
+
+            /** Record */
+            var record = App.module('AdCreationApp').record;
+
+            /** Message */
+            record('channel').message('Generating collections');
+
+            /** Record adcluster resource url */
+            record('model:generic').set('adclusterUri', response.resource_uri);
+
+        },
+
+        /**
+         * @param {Object} response
+         * @private
+         */
+        onMakeDone: function(response) {
+
+            /** Add ad collections */
+            this.reset();
+            this.add(response.ad_collections);
+
+            /** Store creatives & demographics */
+            var record  = App.module('AdCreationApp').record;
+            var storage = record('model:generic');
+
+            storage.set('_ad_creatives', response.ad_creatives);
+            storage.set('_demographic_sets', response.demographic_sets);
+
+            /** Trigger success */
+            record('channel:upload').success();
+
+        },
+
+        /**
+         * @param {Object} response
+         * @private
+         */
+        onMakeFail: function(response) {
+
+            /** JSON response */
+            var json = response.responseJSON || {};
+
+            /** Trigger failure */
+            App.module('AdCreationApp').record('channel:upload').failure();
+            App.module('AdCreationApp').record('channel').message(json.error_message);
+
+        },
+
+        /** @returns {Object} */
+        getTotals: function() {
+            /**
+             * collection is a collection of adset models.
+             * Each adset model has a collection of ads.
+             * TotalAds is a count of all of the ads in all of the adset models.
+             */
+            var totalAds = _(this.models).reduce(function(count, model) {
+                return model.collection.length + count;
+            }, 0);
+
+            return {
+                totalAds: totalAds,
+                totalAdSets: this.length
+            };
+        }
+
+    });
+});

@@ -1,0 +1,26 @@
+{
+    "fileExtensions": [".js", ".jsx"],
+    "preset": "airbnb",
+    "validateIndentation": 4,
+    "esprima": "esprima-fb",
+    "disallowMultipleVarDecl": "exceptUndefined",
+    "requireTrailingComma": false,
+
+    // Keep as is
+    "requirePaddingNewLinesBeforeLineComments": null,
+    "disallowPaddingNewLinesBeforeLineComments": null,
+    "disallowEmptyBlocks": null,
+    "requirePaddingNewLinesAfterBlocks": null,
+    "safeContextKeyword": ["self"],
+    "requireCapitalizedConstructors": {
+        "allExcept": [
+            "moment"
+        ]
+    },
+
+    // Should be enabled
+    "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
+    "disallowQuotedKeysInObjects": null,
+    "requireCamelCaseOrUpperCaseIdentifiers": null,
+    "disallowMultipleSpaces": null
+}

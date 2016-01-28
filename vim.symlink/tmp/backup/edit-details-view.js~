@@ -1,0 +1,68 @@
+/* global dependencies */
+var moment = require('moment');
+var $ = require('jquery');
+var _ = require('underscore');
+var Validatable = require('advisor/extensions/Validatable');
+var Marionette = require('backbone.marionette');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+
+/* templates */
+var CampaignDetailsEditCard = require('../templates/CampaignDetailsEditCard.hbs');
+
+/* module definition */
+var EditDetailsView = Marionette.ItemView.extend(new Validatable({
+    template: CampaignDetailsEditCard,
+    ui: {
+        name: '#name'
+    },
+    bindings: {
+        '@ui.name': {
+            observe: 'name'
+        }
+    },
+    onRender: function() {
+        /** Allows us to use Marionette's UI syntax with stickit. */
+        this.bindings = Marionette.normalizeUIKeys(this.bindings, this._uiBindings);
+        this.stickit();
+        this.model.startTracking();
+    },
+    templateHelpers:function() {
+        return {
+            effective_platform: this.model.getEffectivePlatform()
+        };
+    },
+    validate: {
+        start_date: function(el, name) {
+            var value = el.val();
+            if (this.isOriginalStartDate(value)) return null;
+            if (this.isEarlierThanCurrentDate(value)) return 'Start Date cannot be earlier than current date';
+            return null;
+        },
+        end_date: function(el, name) {
+            var value = el.val();
+            if (this.isOriginalEndDate(value)) return null;
+            if (this.isEarlierThanCurrentDate(value)) return 'End Date cannot be earlier than current date';
+            return null;
+        }
+    },
+    /**
+     * Handle the rare (?) cases where a user may select a new Start/End Date value, then change it
+     * back to the original value.  Since we only want to send the edited values, we'll remove any
+     * value changed and then set back to it's original value.  This is automatically handled by
+     * backbone-trackit for the non-date fields, but because the dates are formatted through moment,
+     * trackit cannot tell that a date has been set back to its original value.
+     */
+    isOriginalStartDate: function(value) {
+        return value === moment(this.model._originalAttrs.start_date, 'YYYY-MM-DDTHH:mm:ss').format('MM/DD/YYYY');
+    },
+    isOriginalEndDate: function(value) {
+        return value === moment(this.model._originalAttrs.end_date, 'YYYY-MM-DDTHH:mm:ss').format('MM/DD/YYYY');
+    },
+    isEarlierThanCurrentDate: function(value) {
+        return value < moment().startOf('day').format('MM/DD/YYYY');
+    }
+}));
+
+module.exports = EditDetailsView;

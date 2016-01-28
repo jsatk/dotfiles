@@ -1,0 +1,13 @@
+<div id="tracking-table-region" class="panel-heading">
+    <h3 class="panel-title">foo barTracking pixels</h3>
+</div>
+<div class="panel-body">
+    <div class="form-group">
+        <select class="form-control" id="tracking-pixels" name="tracking-pixels" multiple="true">
+            <option data-uri="none"></option>
+            {{#each items}}
+                <option data-uri="{{resource_uri}}" data-pixel-id="{{pixel_id}}" {{#if selected}} selected {{/if}}>{{name}}</option>
+            {{/each}}
+        </select>
+    </div>
+</div>

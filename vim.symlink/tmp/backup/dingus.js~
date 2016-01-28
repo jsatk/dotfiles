@@ -1,0 +1,16 @@
+(function () {
+    /**
+     * Motherfucking Dingus.js
+     */
+
+    window.Dingus = {
+        collection: function (arr) {
+            return [].concat(arr);
+        },
+
+        model: function (obj) {
+            return obj || {};
+        }
+    };
+
+})();

@@ -1,0 +1,101 @@
+/* global dependencies */
+var $ = require('jquery');
+var Backbone = require('backbone');
+var Handlebars = require('handlebars');
+var Marionette = require('marionette');
+var AdvisorApp = require('../../../../app');
+
+/* templates */
+var CreativesCardTemplate = require('../../templates/cards/CreativesCard.hbs');
+var Language = require('../../../../common/language');
+
+/* module definition */
+var CreativesView = Marionette.LayoutView.extend({
+    template: CreativesCardTemplate,
+    regions: {
+        assetsRegion: '.assets',
+        creativesRegion: '.creatives'
+    },
+    ui: {
+        'searchInput':    '#creatives-search',
+        'filterItems':    '#creatives-filter .dropdown-menu a',
+        'tabs':           '.sc-panel-tabs li'
+    },
+    events: {
+        'keyup @ui.searchInput': 'searchCreatives',
+        'click @ui.filterItems': 'filterCreatives',
+        'click @ui.tabs': 'switchTabs'
+    },
+    switchTabs: function(event) {
+        event.preventDefault();
+        if ($(event.target).hasClass('active')) return;
+        this.ui.tabs.toggleClass('active');
+        this.trigger('switchTabs', $(event.target).text().toLowerCase());
+    },
+    initiativeChannel: null,
+    selectedAsset: null,
+    initialize: function(options) {
+        // Store initiative channel
+        this.initiativeChannel = Backbone.Wreqr.radio.channel('initiativeModule');
+        // Initialize params from options or fresh
+        this.params = options.params || {};
+    },
+    onShow: function() {
+        // Draw the assets selector
+        this.initiativeChannel.vent.trigger('initiative:assets:select', {
+            region: this.assetsRegion,
+            initiative: this.getOption('initiative'),
+            campaign: this.getOption('campaign')
+        });
+        // Listen for asset selection
+        this.listenTo(this.initiativeChannel.vent, 'initiative:assets:selected', function(asset) {
+            this.selectedAsset = asset;
+            this.showCreatives();
+        });
+    },
+    showCreatives: function() {
+        AdvisorApp.request('creative:list:view', {
+            asset: this.selectedAsset,
+            displaymode: 'table',
+            params: this.params,
+            region: this.creativesRegion
+        });
+    },
+    searchCreatives: function(e) {
+        e.preventDefault();
+        var query = $(e.target).val();
+        if (query === '') {
+            delete this.params.query;
+        } else {
+            this.params.query = query;
+        }
+        this.showCreatives();
+    },
+    filterCreatives: function(e) {
+        e.preventDefault();
+        var filter = $(e.target).data('filter-type');
+        if (filter === 'all') {
+            delete this.params.type__in;
+        } else {
+            this.params.type__in = filter;
+        }
+        this.showCreatives();
+    },
+    /** @returns {Object} of variables we want accessible in our Handlebar Template. */
+    templateHelpers: function() {
+        /** Get options */
+        var initiative = this.getOption('initiative');
+        var level = this.getOption('level');
+        /** Get IDs */
+        var iID = initiative.get('id');
+        var cID = this.model.get('id');
+        /** Return options */
+        return {
+            uri: '#initiative/' + iID + '/campaign/' + cID + '/',
+            filters: Language.en.creativeFilters,
+            activeTab: 'assets'
+        };
+    }
+});
+
+module.exports = CreativesView;

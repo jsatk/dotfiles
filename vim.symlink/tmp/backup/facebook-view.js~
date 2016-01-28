@@ -1,0 +1,23 @@
+/**
+ * NOTE! In the CampaignModule this view is nested inside of the Summary view.
+ */
+AdvisorApp.module('CampaignModule.Chart', function(Module, App) {
+    Module.FacebookView = Module.BaseView.extend({
+        initialize: function() {
+            debugger;
+        },
+        /**
+         * @returns {Object} of collectionFilters. These translate to query params in the request URL.
+         */
+        getCollectionFilters: function() {
+            return {
+                adgroup__adcampaign: this.model.get('platform_campaigns')[0].platform_campaign_id,
+                group_by: 'date_start',
+                metric: 'kpi',
+                order_by: 'date_start',
+                date_start__gte: moment(this.model.get('start_date')).startOf('day'),
+                date_start__lte: moment(this.model.get('end_date')).isAfter(moment()) ? moment().endOf('day') : moment(this.model.get('end_date')).endOf('day')
+            };
+        }
+    });
+});

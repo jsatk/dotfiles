@@ -1,0 +1,9 @@
+import _ from 'underscore'
+import Backbone from 'backbone'
+import AppChannel from 'advisor/app-channel'
+import Base from 'advisor/entities/base'
+import TastypiePageableCollection from 'advisor/config/TastypiePageableCollection'
+
+describe('Activity Entities', () => {
+    describe('
+})

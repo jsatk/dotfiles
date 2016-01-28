@@ -1,0 +1,50 @@
+// Mocha puts its globals on the global object so we have to tell
+// StandardJS, our linter, that these functions are defined globaly so it
+// doesn't yell at us.
+
+/* global describe, it, beforeEach */
+
+var expect = require('chai').expect
+var charge = require('../../../lib/processCreditCards/processes/charge')
+
+describe('Charge', function () {
+  var users
+
+  beforeEach(function () {
+    users = {
+      'Tom': {
+        card: {
+          number: '4111111111111111',
+          balance: 500,
+          isValid: true,
+          limit: 1000
+        }
+      }
+    }
+  })
+
+  it('should return users object passed to it', function () {
+    expect(charge('Tom $500', users)).to.be.an('object')
+  })
+
+  it('should return users object early if user does not exist', function () {
+    expect(charge('Diane $500', users)).to.deep.equal(users)
+  })
+
+  it('should return users object early if user\'s card is invalid', function () {
+    users['Tom'].card.isValid = false
+
+    console.log(JSON.stringify(users))
+    expect(charge('Tom $500', users)).to.deep.equal(users)
+  })
+
+  it('should return users object early if charge will take user past their credit limit', function () {
+    console.log(JSON.stringify(users))
+    expect(charge('Tom $5000', users)).to.deep.equal(users)
+  })
+
+  it('should increase the balance of the user if charge will not take user over their credit limit', function () {
+    console.log(JSON.stringify(users))
+    expect(charge('Tom $200', users)['Tom'].card.balance).to.equal(700)
+  })
+})

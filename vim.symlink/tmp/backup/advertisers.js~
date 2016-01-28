@@ -1,0 +1,13 @@
+/* global dependencies */
+var Backbone = require('backbone');
+
+/* local dependencies */
+var Model = requre('../models/advertiser')
+
+module.exports = Backbone.Collection.extend({
+    model: Model,
+    url: Model.prototype.urlRoot,
+    initialize: function(options) {
+        this.filters = (options || {}).query;
+    }
+});

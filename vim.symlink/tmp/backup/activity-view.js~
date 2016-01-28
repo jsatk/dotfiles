@@ -1,0 +1,22 @@
+/* global dependencies */
+var $ = require('jquery');
+var Marionette = require('backbone.marionette');
+
+var ActivityCardTemplate = require('../../../campaign/templates/cards/ActivityCard.hbs');
+
+var ActivityView = Marionette.ItemView.extend({
+    template: ActivityCardTemplate,
+    className: 'activity panel sc-panel',
+    events: {
+        'click #activity-label': 'expandCollapseIcon'
+    },
+    expandCollapseIcon: function(event) {
+        var isCollapsed = $(event.target).hasClass('collapsed');
+        var removeClass = isCollapsed ? 'fa-plus' : 'fa-times';
+        var addClass    = isCollapsed ? 'fa-times' : 'fa-plus';
+
+        this.$('#activity-label').removeClass(removeClass).addClass(addClass);
+    }
+});
+
+module.exports = ActivityView;

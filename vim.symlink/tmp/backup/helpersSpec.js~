@@ -1,0 +1,28 @@
+describe('Helpers', function() {
+    it('can be instantiated', function() {
+        expect(Helpers).to.exist;
+        expect(Helpers).not.to.be.undefined;
+    });
+
+    describe('.valueIsValid', function() {
+        describe('should return false when value', function() {
+            var valuesShouldReturnFalse = ['', null, undefined];
+
+            _(valuesShouldReturnFalse).each(function(valueShouldReturnFalse) {
+                it(valueShouldReturnFalse + ' is passed to it', function() {
+                    expect(Helpers.valueIsValid(valueShouldReturnFalse)).to.be.false;
+                });
+            });
+        });
+
+        describe('should return true when value', function() {
+            var valuesShouldReturnTrue    = [0, -1, ' ', false, true, Number.NaN];
+
+            _(valuesShouldReturnTrue).each(function(valueShouldReturnTrue) {
+                it(valueShouldReturnTrue + ' is passed to it', function() {
+                    expect(Helpers.valueIsValid(valueShouldReturnTrue)).to.be.true;
+                });
+            });
+        });
+    });
+});

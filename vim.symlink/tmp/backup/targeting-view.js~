@@ -1,0 +1,403 @@
+/* global dependencies */
+var $ = require('jquery');
+var _ = require('underscore');
+var Marionette = require('backbone.marionette');
+
+/* local dependencies */
+var CommonLanguage = require('../../../common/language');
+
+/* templates */
+var CampaignTargetingCardTemplate = require('../templates/campaignTargetingCard.hbs');
+
+/* module definition */
+var TargetingCardView = Marionette.ItemView.extend({
+    className: 'initiative-targeting-sc',
+    template: CampaignTargetingCardTemplate,
+    templateHelpers: function() {
+        return this.targetingOptions;
+    },
+    ui: {
+        'female': '.genderTargets button[value=female]',
+        'genderButtons': '.genderTargets button',
+        'geoLocation': '#campaign-geoLocation',
+        'higherAge': '.higher',
+        'higherAgeButton': '.higher button',
+        'locationButtonClose': '.location-btn-close',
+        'lowerAge': '.lower',
+        'lowerAgeButton': '.lower button',
+        'male': '.genderTargets button[value=male]',
+        'noPreference': '.genderTargets button[value=no_preference]',
+        'placementButtons': '.placementOptions button'
+    },
+    events: {
+        'click @ui.genderButtons': 'updateGender',
+        'change @ui.geoLocation': 'updateLocations',
+        'click @ui.higherAge a': 'updateAgeRange',
+        'click @ui.lowerAge a': 'updateAgeRange',
+        'click @ui.placementButtons': 'togglePlacement'
+    },
+    initialize: function() {
+        this.targetingOptions = this.getTargetingOptions();
+    },
+    updateLocations: function(e) {
+        var locations = $(e.currentTarget).select2('data');
+        this.model.get('demographic_constraint').location_sets[0].locations = locations;
+        // Update summary count from here because stickit doesn't seem to play nicely with tracking changes on a related model.
+        this.$('.geo_locations').html(locations.length);
+    },
+    setTargetingProperty: function(name, value) {
+        var targetingObj = this.model.get('demographic_constraint') || {};
+        if ($.isEmptyObject(targetingObj)) {
+            targetingObj = { name: name + ' constraint for campaign #' + this.model.get('id'), placement: ['rightcolumn', 'mobile']};
+        }
+        targetingObj[name] = value;
+        this.model.set('demographic_constraint', targetingObj).trigger('change:gender').save();
+    },
+    updateModel: function(attribute, keypath, value) {
+        var attributeValue = this.model.get(attribute);
+        attributeValue[keypath] = value;
+        this.model.set(attribute, attributeValue);
+    },
+    updateGender: function(event) {
+        var value = event.currentTarget.value;
+        var genderOptions = this.targetingOptions.genderOptions;
+        var genderOption = _.find(genderOptions, function(genderOption) {
+            return genderOption.value === value;
+        });
+        //selectedGender is set to toggled gender only if it was perviously unchecked, set to '' otherwise
+        var selectedGender = (genderOption.class === 'active') ? '' : value;
+        this.updateModel('demographic_constraint', 'gender', selectedGender);
+        _.map(genderOptions, function(genderOption) {
+            genderOption.class = (genderOption.value === selectedGender ? 'active' : 'inactive');
+        });
+        /* TODO: I know I promised not to touch the dom, but stickit is kinda wonky for binding 'custom' elements to models. Will think of a better way later. */
+        this.$('.js-gender').each(function(index) {
+            var $el = $(this);
+            if ($el.attr('value') === selectedGender) {
+                $el.removeClass('inactive').addClass('active');
+            } else {
+                $el.removeClass('active').addClass('inactive');
+            }
+        });
+        // Update summary count from here because stickit doesn't seem to play nicely with tracking changes on a related model.
+        this.$('.genders').html(selectedGender ? 1 : 0);
+    },
+    togglePlacement: function(event) {
+        var target = event.currentTarget;
+        var val = target.value;
+        var $el = $(target);
+        var placementOptions = this.targetingOptions.placementOptions;
+        var placementOption = _.find(placementOptions, function(placementOption) {
+            return placementOption.value === val;
+        });
+        if (placementOption.class === 'active') {
+            placementOption.class = 'inactive';
+            $el.removeClass('active').addClass('inactive');
+        } else {
+            placementOption.class = 'active';
+            $el.removeClass('inactive').addClass('active');
+        }
+        var placements = _.chain(placementOptions)
+            .filter(function(placementOption) {
+                return placementOption.class === 'active';
+            })
+            .map(function(placementOption) {
+                return placementOption.value;
+            })
+            .value();
+        this.updateModel('demographic_constraint', 'placement', placements);
+        // Update summary count from here because stickit doesn't seem to play nicely with tracking changes on a related model.
+        this.$('.placements').html(placements.length);
+    },
+    updateAgeRange: function(event) {
+        event.preventDefault();
+        /** Element */
+        var el = $(event.target).closest('.btn-group');
+        /** Close popup */
+        el.removeClass('open');
+        /** Add value to model */
+        var value = $(event.target).data('value');
+        var name = null;
+        if (el.hasClass('lower')) {
+            name = 'min_age';
+            this.$('.min-age').text(value);
+        } else if (el.hasClass('higher')) {
+            name = 'max_age';
+            this.$('.max-age').text(value);
+        }
+        var age_ranges = this.model.get('demographic_constraint').age_ranges;
+        age_ranges[0] = age_ranges[0] || {};
+        age_ranges[0][name] = value;
+        this.updateModel('demographic_constraint', 'age_ranges', age_ranges);
+        /** Ensure min_age is less lte to max_age */
+        // if (name === 'max_age') {
+        //     this.model.set('max_age', value);
+        //     this.targetingOptions.minAgeRangeOptions = _.range(this.model.get('initial_min_age'), value + 1);
+        // } else {
+        //     this.model.set('min_age', value);
+        //     this.targetingOptions.maxAgeRangeOptions = _.range(value, this.model.get('initial_max_age') + 1);
+        // }
+        // this.render();
+        var newAgeRange;
+        var ageList;
+        if (name === 'max_age') {
+            this.model.set('max_age', value);
+            newAgeRange = _.range(this.model.get('initial_min_age'), value + 1);
+            ageList = _.map(newAgeRange, function(age) {
+                return '<li><a href="#" data-value="' + age + '">' + age + '</a></li>';
+            });
+            this.$('.lower ul').empty();
+            $('<li role="presentation" class="dropdown-header">Select lower range</li>').appendTo('.lower ul');
+            _.each(ageList, function(age) {
+                $(age).appendTo('.lower ul');
+            });
+        } else {
+            this.model.set('min_age', value);
+            newAgeRange = _.range(value, this.model.get('initial_max_age') + 1);
+            ageList = _.map(newAgeRange, function(age) {
+                return '<li><a href="#" data-value="' + age + '">' + age + '</a></li>';
+            });
+            this.$('.higher ul').empty();
+            $('<li role="presentation" class="dropdown-header">Select higher range</li>').appendTo('.higher ul');
+            _.each(ageList, function(age) {
+                $(age).appendTo('.higher ul');
+            });
+        }
+        // Update summary count from here because stickit doesn't seem to play nicely with tracking changes on a related model.
+        this.$('.age_ranges').html(age_ranges[0].min_age || age_ranges[0].max_age ? 1 : 0);
+    },
+    getTargetingOptions: function() {
+        var initiativeConstraints = this.getOption('initiative').get('demographic_constraint');
+        var campaignConstraints = this.model.get('demographic_constraint');
+        var effectivePlatform = this.model.get('subplatform') || this.model.get('platform');
+        var targetingLocked = this.model.get('targeting_locked');
+
+        /** Get Age Ranges */
+        var campaignAgeRanges = _.first(this.model.get('demographic_constraint').age_ranges)
+        var initiativeAgeRanges = _.first(this.getOption('initiative').get('demographic_constraint').age_ranges);
+
+        this.model.set(this.getInitialAgeRanges(campaignAgeRanges, initiativeAgeRanges));
+
+        return {
+            genderOptions: this.getGenderOptions(initiativeConstraints.gender, campaignConstraints.gender, targetingLocked),
+            placementOptions: this.getPlacementOptions(initiativeConstraints.placement, campaignConstraints.placement, effectivePlatform, targetingLocked),
+            minAgeRangeOptions: this.getAgeRangeOptions(initiativeAgeRanges, campaignAgeRanges, targetingLocked),
+            maxAgeRangeOptions: this.getAgeRangeOptions(initiativeAgeRanges, campaignAgeRanges, targetingLocked)
+        };
+    },
+    getGenderOptions: function(initiativeGenderString, campaignGenderString, targetingLocked) {
+        var genderOptions = [
+            {
+                label:'FEMALE',
+                value:'female'
+            },
+            {
+                label:'MALE',
+                value:'male'
+            }
+        ];
+
+        var genderString = campaignGenderString || initiativeGenderString;
+
+        // Mark gender(s) selected in the campaign constraint as 'active'
+        var campaignGenderArray = _.filter(genderString.split(','), function(gender) {
+            return gender !== '' && gender.toLowerCase() !== 'none';
+        });
+
+        var campaignGenderDict = _.arrayToDictionary(campaignGenderArray);
+
+        genderOptions = _.map(genderOptions, function(genderOption) {
+            genderOption.class = (campaignGenderDict[genderOption.value]) ? 'active' : 'inactive';
+            return genderOption;
+        });
+
+        if (targetingLocked) {
+            return _.filter(genderOptions, function(gender) {
+                return campaignGenderDict[gender.value];
+            });
+        }
+
+        // gender selected in the initiative constraint can't be removed
+        var initiativeGenderArray = _.filter(initiativeGenderString.split(','), function(gender) {
+            return gender !== '' && gender.toLowerCase() !== 'none';
+        });
+
+        if (initiativeGenderArray.length > 0) {
+            return _.chain(genderOptions)
+                .filter(function(genderOption) {
+                    return genderOption.value === initiativeGenderArray[0];
+                })
+                .map(function(genderOption) {
+                    genderOption.disabled = 'disabled';
+                    return genderOption;
+                })
+                .value();
+        }
+
+        return genderOptions;
+    },
+    getAgeRangeOptions: function(initiativeAgeRanges, campaignAgeRanges, targetingLocked) {
+        var defaultMinAge = 13;
+        var defaultMaxAge = 65;
+
+        if (!targetingLocked) {
+            if (initiativeAgeRanges.length > 0) {
+                // Take into acount the fact that these range values can be null
+                return _.range(initiativeAgeRanges[0].min_age || defaultMinAge,
+                    initiativeAgeRanges[0].max_age + 1 || defaultMaxAge);
+            }
+        }
+
+        return _.range(defaultMinAge, defaultMaxAge);
+    },
+    getInitialAgeRanges: function(campaignAgeRanges, initiativeAgeRanges) {
+        /** Get Campaign Min & Max */
+        var campaignMinAge = campaignAgeRanges.min_age;
+        var campaignMaxAge = campaignAgeRanges.max_age;
+        /** Get Initiative Min & Max */
+        var initiativeMinAge = initiativeAgeRanges.min_age;
+        var initiativeMaxAge = initiativeAgeRanges.max_age;
+        /** Filter out non-numbers.  We must do this because Math.min will return 0 for values of null. */
+        var filter = function(arr) {
+            return _(arr).filter(function(n) {
+                return _.isNumber(n);
+            });
+        };
+        var maxs = filter([campaignMaxAge, initiativeMaxAge]);
+        var mins = filter([campaignMinAge, initiativeMinAge]);
+        /** Get the Min & Max Age between the initiative and campaign */
+        var minAge = Math.max.apply(this, mins);
+        var maxAge = Math.min.apply(this, maxs);
+
+        /** Math.max returns 0 if it's passed only null values so test against 0 */
+        minAge = minAge === 0 ? 'Min Age' : minAge
+        maxAge = maxAge === 0 ? 'Max Age' : maxAge
+
+        return {
+            initial_min_age: minAge,
+            initial_max_age: maxAge,
+            min_age: minAge,
+            max_age: maxAge
+        };
+    },
+    getLocationOptions: function(locations, initiativeSelectedLocations, campaignSelectedLocations) {
+        var initiativeLocationDict = initiativeSelectedLocations ? _.arrayToDictionary(initiativeSelectedLocations, 'name') : {};
+        var campaignLocations = _.filter(locations, function(location) {
+            return initiativeSelectedLocations ? initiativeLocationDict[location.name] || initiativeLocationDict[location.region] || initiativeLocationDict[location.country_name] : true;
+        });
+        return campaignLocations;
+    },
+    getLocationSelect2Options: function(getLocationOptions, campaignModel, initiativeSelectedLocations, campaignSelectedLocations) {
+        var locations = [];
+        var platform = campaignModel.get('platform').toUpperCase();
+        var countryCodeMap = {};
+        var suggestionURI = '/api/advisor/v1/targetingsubset/suggestions/';
+        return {
+            placeholder: 'Locations',
+            minimumInputLength: 1,
+            quietMillis: 250,
+            multiple: true,
+            separator: ';',
+            ajax: {
+                url: suggestionURI,
+                data: function(term) {
+                    return {
+                        q: term,
+                        platform: platform,
+                        targeting_type: 'locations',
+                        location_types: 'country,city,region,zip',
+                        account_id: campaignModel.get('platform_account_id')
+                    };
+                },
+                results: function(data) {
+                    var locationObjects = data.objects.data || data.objects.objects;
+                    if (platform === 'TWITTER') {
+                        // currently twitter locations don't have any hierarchy (city -> region -> country) you have to
+                        // parse it all out of the name.  Unfortunately, the country part of names is highly inconsitent
+                        // best/easiest course I've found is to actually use fb api to resolve twitter countries
+                        _.each(locationObjects, function(location) {
+                            // example locations: "London, United Kingdom", "28127, NC, USA"
+                            var locationBits = location.name.split(', ');
+                            var countryCode = locationBits[locationBits.length - 1];
+                            var countryName = '';
+                            // The last part of the name is the country.  If it's 3 or fewer characters
+                            // then assume it's a country code like "MY", "US", or "USA"
+                            if (locationBits.length > 1 && countryCode.length <= 3) {
+                                // cache the country codes so we don't fetch "US" -> "United States" a bajillion times
+                                if (_.contains(_.keys(countryCodeMap), countryCode)) {
+                                    countryName = countryCodeMap[countryCode];
+                                } else {
+                                    $.ajax({
+                                        async: false,
+                                        url: suggestionURI,
+                                        data: {
+                                            q: countryCode,
+                                            platform: 'FACEBOOK',
+                                            targeting_type: 'locations',
+                                            location_types: 'country',
+                                            match_country_code: true
+                                        }
+                                    }).done(function(countryCodeData) {
+                                        countryName = (countryCodeData.objects.data || countryCodeData.objects.objects)[0].name;
+                                        countryCodeMap[countryCode] = countryName;
+                                    });
+                                }
+                                // set the location name as the part of the name that doesn't include the country
+                                location.name = locationBits.slice(0, locationBits.length - 1);
+                            } else {
+                                // countryCode variable is not actually a code, it's the full country name
+                                countryName = countryCode;
+                            }
+                            location.country_name = countryName;
+                        });
+                    }
+                    var locations = getLocationOptions(locationObjects, initiativeSelectedLocations, campaignSelectedLocations);
+                    return {
+                        results: locations
+                    };
+                }
+            },
+            id: function(location) {
+                return location.key || location.name;
+            },
+            formatResult: function(location) {
+                return location.name || location.key;
+            },
+            formatSelection: function(location) {
+                return location.name || location.key;
+            }
+        };
+    },
+    getPlacementOptions: function(initiativePlacements, campaignPlacements, platform, targetingLocked) {
+        var initiativePlacementDict = _.arrayToDictionary(initiativePlacements[platform]);
+        var campaignPlacementDict = _.arrayToDictionary(campaignPlacements);
+        var placements = CommonLanguage.en.getPlacementOptions(platform);
+        debugger;
+        if (targetingLocked) {
+            placements = _.filter(placements, function(placement) {
+                return campaignPlacementDict[placement.value];
+            });
+        } else {
+            //filter by initiative constraints only if they've been set
+            if (_.has(initiativePlacements, platform)) {
+                placements = (initiativePlacements[platform].length > 0) ?
+                    _.filter(placements, function(placement) {
+                        return initiativePlacementDict[placement.value] !== undefined;
+                    }) : placements;
+            }
+        }
+        //constraints selected on the campaign should be active
+        return _.map(placements, function(placement) {
+            placement.class = campaignPlacementDict[placement.value] ? 'active' : 'inactive';
+            return placement;
+        });
+    },
+    lockTargeting: function() {
+        this.ui.lowerAgeButton.prop('disabled', true);
+        this.ui.higherAgeButton.prop('disabled', true);
+        this.ui.placementButtons.prop('disabled', true);
+        this.ui.genderButtons.prop('disabled', true);
+    },
+});
+
+module.exports = TargetingCardView;

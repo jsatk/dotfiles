@@ -1,0 +1,37 @@
+describe('Foo', function() {
+     before(function() {
+         server = sinon.fakeServer.create();
+     });
+
+     after(function() {
+         server.restore();
+     });
+
+     var validResponse = function(responseText) {
+         return [
+             200,
+             { "Content-Type": "application/json" },
+             JSON.stringify(responseText)
+         ];
+     };
+
+    it('Bar', function() {
+        var foo = AdvisorApp.request('hello', 'Luke');
+
+        console.log('=============');
+        console.log(foo);
+        console.log('=============');
+
+        setTimeout(function() {
+            expect(foo).to.be.string('Luke is the coolest person ever.');
+        }, 0);
+    });
+
+    it('Baz', function() {
+        server.respondWith(validResponse({ hello: 'jashua' }));
+        var entity = AdvisorApp.request('advisor:account:entity', 57);
+        setTimeout(function() {
+            expect(entity.then).to.exist;
+        }, 0);
+    });
+});

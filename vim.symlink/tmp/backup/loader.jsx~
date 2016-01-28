@@ -1,0 +1,71 @@
+/* global dependencies */
+var React = require('react');
+
+/* module definition */
+var Loader = React.createClass({
+    getInitialState: function() {
+        return {
+            images: [
+                'https://s-media-cache-ak0.pinimg.com/originals/ce/9c/94/ce9c949d6c73dbfb889f6036bac022dd.gif',
+                'http://i.imgur.com/rfFWukr.gif',
+                'http://media.giphy.com/media/5aLrlDiJPMPFS/giphy.gif',
+                'http://www.sharegif.com/wp-content/uploads/2014/04/mind-blownemotionsshockedmind-blowing.gif',
+                'http://blog.chron.com/tubular/files/2015/03/e.t.-phone-home.gif',
+                'http://i.imgur.com/A46JK.gif',
+                'http://media.giphy.com/media/piupi6AXoUgTe/giphy.gif',
+                'https://usatlife.files.wordpress.com/2015/01/mind-blowing_1454.gif?w=378',
+                'https://thinkpurpose.files.wordpress.com/2015/02/wpid-wp-1424611084968.gif',
+                'http://ww2.kqed.org/pop/wp-content/uploads/sites/12/2015/03/S4MYFQO.gif'
+            ],
+            messages: [
+                'Data-sciencing',
+                'Crunching some serious numbers',
+                'Calculating intersections',
+                'Making dreams a reality',
+                'Doing "big data"',
+                'Working hard',
+                'Finding glorious insights',
+                'Doing smart stuff',
+                'Changing the game',
+                'Warming CPUs',
+                'Hyper-visualizing'
+            ],
+            imageURL: null,
+            message: ''
+        };
+    },
+    messageTimer: null,
+    randomFrom: function(m) {
+        var idx = Math.floor(Math.random() * m.length);
+        return m[idx];
+    },
+    componentDidMount: function() {
+        var self = this;
+        self.setState({imageURL: this.randomFrom(this.state.images), message: this.randomFrom(self.state.messages)});
+        this.messageTimer = setInterval(function() {
+            self.setState({
+                message: self.randomFrom(self.state.messages)
+            });
+        }, 1200);
+    },
+    componentWillUnmount: function() {
+        if (this.messageTimer) {
+            clearInterval(this.messageTimer);
+        }
+    },
+    render: function() {
+        var imgStyle = {
+            width: '200px',
+            left: '50%',
+            position:'relative',
+            marginLeft: '-100px'
+        };
+        var img = this.state.imageURL ? <img style={imgStyle} src={this.state.imageURL}/> : ''
+        return <div className="loader">
+            <h2 style={{textAlign: 'center', width: '100%'}}>{this.state.message}</h2>
+            {img}
+        </div>
+    }
+});
+
+module.exports = Loader;

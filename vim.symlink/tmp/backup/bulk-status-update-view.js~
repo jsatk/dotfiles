@@ -1,0 +1,8 @@
+AdvisorApp.module('CampaignModule.Children', function(Module, App) {
+
+    Module.BulkStatusUpdateView = BulkUpdateView.extend({
+        template: Handlebars.templates.BulkStatusUpdateForm,
+        title: 'Update Status'
+    });
+
+});

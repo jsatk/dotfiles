@@ -1,0 +1,25 @@
+/* local dependencies */
+var CampaignChannel = require('../campaign-channel');
+var EditSummaryView = require('./edit-summary-view');
+
+module.exports.loadCardView = function(options) {
+    if (!options || !options.region) throw new Error('invalid options passed to edit summary controller loadCardView');
+    var campaign = options.campaign;
+    var cardView = new EditSummaryView({
+        model: campaign
+    });
+    cardView.on(cardEvents);
+    options.region.show(cardView);
+};
+
+var cardEvents = {
+    'show': function() {
+        this.trigger('load:summary');
+    },
+    'save': function() {
+        CampaignChannel.trigger('edit:save:all');
+    },
+    'before:destroy': function() {
+        this.ui.cardsSummaryContainer.empty();
+    }
+};

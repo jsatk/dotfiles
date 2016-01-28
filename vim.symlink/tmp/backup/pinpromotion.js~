@@ -1,0 +1,78 @@
+/* global dependencies */
+var AppChannel = require('advisor/app-channel');
+var _ = require('underscore');
+var Backbone = require('backbone');
+var TastypiePageableCollection = require('advisor/config/TastypiePageableCollection');
+
+/* local dependencies */
+var EntitiesPinterest = require('./base');
+
+var Model = Backbone.Model.extend({
+    initialize: function() {
+        this.set('targeting_count', this.get('targeting_spec').TERM.length);
+    },
+    /** @returns {String} The current model's status. */
+    getStatus: function() {
+        return this.get('status').toLowerCase();
+    },
+    getStatusActions: function() {
+        var statusActions = {
+            active: [
+                {
+                    value: 'PAUSED',
+                    label: 'Pause'
+                }
+            ],
+            paused: [
+                {
+                    label: 'Resume',
+                    value: 'ACTIVE'
+                }
+            ]
+        };
+
+        return statusActions[this.getStatus()];
+    },
+    getEditableCells: function() {
+        return ['bid_in_micro_dollar', 'status'];
+    }
+});
+
+var Collection = Backbone.Collection.extend({
+    url: function() {
+        return '/api/advisor/v1/campaign/' +
+            this.campaignId + '/dashboard/pinpromotion/';
+    },
+    model: Model,
+    initialize: function(options) {
+        this.filters = (options || {}).query;
+    }
+});
+
+// Using this instead of Base because this Pageable is a little different.
+var getPinPromotionPageableEntitiesClass = function(parentModel, levelID, userCanManage) {
+    return TastypiePageableCollection.extend({
+        campaignId: parentModel.get('id'),
+        model: Model.extend({
+            userCanManage: userCanManage
+        }),
+        url: Collection.prototype.url,
+        initialize: function() {
+            this.setCollectionFilters();
+        },
+        // I kind of hate this, but it seems to be the best solution to
+        // prevent setting falsey values on the collectionFilters.
+        setCollectionFilters: function() {
+            if (levelID) {
+                this.collectionFilters = { campaign: levelID };
+            }
+        }
+    });
+};
+
+var getPinPromotionEntities = function(options) {
+    return EntitiesPinterest.getBaseEntities(options, Collection);
+};
+
+AppChannel.reply('pinterest:pinpromotion:entities', getPinPromotionEntities);
+AppChannel.reply('pinterest:pinpromotion:PageableEntities', getPinPromotionPageableEntitiesClass);

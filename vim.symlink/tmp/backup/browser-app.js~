@@ -1,0 +1,52 @@
+/* global dependencies */
+var _ = require('underscore');
+var $ = require('jquery');
+var Backbone = require('backbone');
+var Marionette = require('backbone.marionette');
+
+var AppChannel = require('advisor/app-channel');
+var UrlUtils = require('advisor/common/url-utils');
+var LoadingView = require('advisor/common/loading-view');
+
+/* platform controllers */
+var controllers = {
+    FACEBOOK: require('./facebook/controller'),
+    TWITTER: require('./twitter/controller'),
+    PINTEREST: require('./pinterest/controller')
+};
+
+// Debug route for testing outside of a modular context
+var Router = Marionette.AppRouter.extend({
+    appRoutes: {
+        'browse/:campaignID(/)': 'browseAdvisorCampaign'
+    }
+});
+
+/* module definition */
+var Browser = Marionette.Object.extend({
+    initialize: function() {
+        AppChannel.on('browse:campaign', this.browseAdvisorCampaign);
+
+        var router = new Router({
+            controller: this
+        });
+    },
+
+    browseAdvisorCampaign: function(campaign, query, region) {
+        // Default to main region for testing
+        region = region || AppChannel.request('mainRegion');
+
+        // Show loading indicator
+        var loadingView = new LoadingView();
+        region.show(loadingView);
+
+        // Grab campaign so we can invoke the correct platform controller
+        var request = AppChannel.request('advisor:campaign:entity', campaign);
+        request.done(function(campaign) {
+            var PlatformController = controllers[campaign.get('platform')];
+            PlatformController.browseCampaign(campaign, region);
+        });
+    }
+});
+
+module.exports = Browser;

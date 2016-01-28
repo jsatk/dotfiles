@@ -1,0 +1,184 @@
+AdvisorApp.module('InitiativeModule.Accounts', function(Accounts, App) {
+
+    var moduleChannel;
+
+    var accountsEntities;
+
+    var initiativeEntity;
+
+    var cardView;
+
+    var cardColumns = [
+        {
+            name: '',
+            cell: 'select-row',
+            headerCell: 'select-all'
+        },
+        {
+            name: 'display_name',
+            label: 'Name',
+            cell: Backgrid.Extension.SCAccountName
+        }
+    ];
+
+    var messages = App.module('Common.Language').en.initiativeEditMessages;
+
+    var isEdited = false;
+
+    /**
+     * Load Accounts card
+     * @param {Object} options
+     * @param {Object} options.region
+     * @param {Object} options.initiative - initiative model
+     */
+    var loadCardView = function(options) {
+        if (!options || !options.region) {return;}
+        var filters = {};
+        accountsEntities = new (App.request('advisor:account:PageableEntities'))();
+        accountsEntities.on('add remove', setEdited);
+        initiativeEntity = options.initiative;
+        filters.initiatives__id = initiativeEntity.id;
+        cardView = new (moduleChannel.reqres.request('common:grid:edit:View'))({
+            collectionFilters: filters,
+            columns: cardColumns,
+            collection: accountsEntities,
+            showPagination: false,
+            label: 'Accounts'
+        });
+        cardView.on(cardEvents);
+        options.region.show(cardView);
+        moduleChannel.vent.trigger('edit:card:loaded', {
+            label: 'Accounts',
+            collection: accountsEntities,
+            uiSummaryLabel: 'accounts'
+        });
+    };
+
+    var showForm = function() {
+        var select2Options = {
+            entityURl: App.request('advisor:account:Entities').prototype.url,
+            filter: {
+                brand_id: initiativeEntity.get('brand_id')
+            },
+<<<<<<< HEAD
+            formatName: AdvisorApp.Common.Language.en.getAccountNameHTML,
+            collection: accountsEntities,
+=======
+            formatName: AdvisorApp.module('Common.Language').en.getAccountNameHTML,
+>>>>>>> 4f7fdb6f59a6744915ae8be39bbd4d07b6f6cbca
+            minimumInputLength: 0,
+            placeholder: 'Select account'
+        };
+        var formView = new (moduleChannel.reqres.request('common:grid:edit:form:View'))({
+            label: 'Account',
+            title: 'Select Account',
+            select2Options: select2Options
+        });
+        App.modalRegion.show(formView);
+        formView.on(formEvents);
+        formView.receivingView = this;
+    };
+
+    /**
+     * Disable Accounts that are in use by Campaigns from being clicked
+     * @param {Object} collection
+     * @param {Object} response
+     * @param {Object} options
+     */
+    var disableUsedAccounts = function(collection, response, options) {
+        // for each account, find out if it is in use by a campaign of the initiative.
+        // if it is, mark the checkbox as disabled
+        var self = this;
+        $.ajax('/api/advisor/v1/campaign/', {
+            data: {
+                account_id__in: _.pluck(collection.models, 'id').join(','),
+                initiative__id: initiativeEntity.get('id')
+            }
+        }).done(function(data) {
+            // this will cause problems if we have two different accounts with the same platform_account_id
+            var accountIds = _.uniq(_.pluck(data.objects, 'platform_account_id'));
+            _.each(self.grid.body.rows, function(row) {
+                if (_.contains(accountIds, row.model.get('account_id'))) {
+                    row.cells[0].$el.find(':checkbox').first().prop('disabled', true);
+                }
+            });
+        });
+    };
+
+    /**
+     * select-all should only select enabled checkboxes
+     * @param {Object} model
+     * @param {Object} selected
+     */
+    var selectAllEnabled = function(model, selected) {
+        var selectAllBox = this.grid.header.row.cells[0];
+        _.each(this.grid.body.rows, function(row, i) {
+            var checkbox = row.cells[0].$(':checkbox');
+            var accountId = row.model.get('id');
+            if (selected && !checkbox.prop('disabled')) {
+                checkbox.prop('checked', true);
+                selectAllBox.selectedModels[accountId] = (i + 1);
+            } else {
+                checkbox.prop('checked', false);
+                delete selectAllBox.selectedModels[accountId];
+            }
+        }, this);
+    };
+
+    var cardEvents = {
+        'show': function() {
+            var tableView = new Backbone.SCDataTable.View(this.options);
+            this.tableRegion.show(tableView);
+            tableView.collection.on('sync', _.bind(disableUsedAccounts, tableView));
+            tableView.collection.on('backgrid:selected', _.bind(selectAllEnabled, tableView));
+            tableView.fetchCollection();
+        },
+        'show:form': showForm,
+        'add': function(account) {
+            this.addToTable(account);
+        }
+    };
+
+    var formEvents = {
+        'add': function(account) {
+            this.receivingView.trigger('add', account);
+            this.triggerMethod('modal:close');
+        }
+    };
+
+    var setEdited = function() {
+        isEdited = true;
+        cardView.triggerMethod('error', messages.UNSAVED);
+        return this;
+    };
+
+    var saveSuccess = function() {
+        isEdited = false;
+        cardView.triggerMethod('clearError');
+    };
+
+    var saveError = function() {
+        cardView.triggerMethod('error', messages.SAVE_ERROR);
+    };
+
+    var save = function() {
+        var patching;
+        if (isEdited) {
+            patching = initiativeEntity.patch({
+                'accounts': _.pluck(accountsEntities.toJSON(), 'resource_uri')
+            });
+            patching.done(saveSuccess);
+            patching.fail(saveError);
+        }
+    };
+
+    App.module('InitiativeModule').on('start', function() {
+        moduleChannel = this.moduleChannel;
+        moduleChannel.commands.setHandlers({
+            'accounts:card:load': loadCardView,
+            'edit:save': save
+        });
+        moduleChannel.vent.on('edit:save:all', save);
+    });
+
+});

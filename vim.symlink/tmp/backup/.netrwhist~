@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/jessea/Desktop/vim/bundle/nerdtree'
+let g:netrw_dirhist_2='/Users/jessea/Dropbox/.symlinks/dotfiles'
+let g:netrw_dirhist_3='/Users/jessea/Dropbox/Developer/SocialCode/interview-exercises'
+let g:netrw_dirhist_4='/Users/jessea/Dropbox/Developer/SocialCode/interview-exercises/interviews'

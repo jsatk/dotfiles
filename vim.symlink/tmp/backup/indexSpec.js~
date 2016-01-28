@@ -1,0 +1,79 @@
+// Mocha puts its globals on the global object so we have to tell
+// StandardJS, our linter, that these functions are defined globaly so it
+// doesn't yell at us.
+
+/* global describe, it */
+
+var assert = require('assert')
+var stdout = require('test-console').stdout; // For testing stdout in Mocha
+
+describe('App', function () {
+  it('should be true', function () {
+    assert.deepEqual(true, true, 'Should be true')
+  })
+})
+
+// var output = stdout.inspectSync(function() {
+//     console.log("foo");
+// });
+
+// assert.deepEqual(output, [ "foo\n "]);
+
+//   xit('should recieve a stdin', function () {
+
+//   })
+
+//   xit('should recieve a multi-line stdin', function () {
+
+//   })
+
+//   xit('should recieve a file', function () {
+
+//   })
+
+//   xit('should correctly differentiate between stdin and a file name', function () {
+
+//   })
+
+//   xit('should throw an error when no input is present', function () {
+
+//   })
+
+//   xit('should throw an error when more than one file is passed as the input', function () {
+
+//   })
+
+//   xit('should parse the input into arguments based on method key words', function () {
+
+//   })
+
+//   xit('should return a summary on the input', function () {
+
+//   })
+
+//   xit('should return a summary that follows format of Name: balance', function () {
+
+//   })
+
+//   xit('should return a summary sorted alphabetically by names', function () {
+
+//   })
+
+//   xit('should display \'error\' instead of balance if the credit card number does not pass Luhn 10', function () {
+
+//   })
+// })
+
+// // describe Add
+// // it should validate credit card numbers using Luhn 10
+// // it should initialize a credit card's balance to $0
+// // it should only allow one card per person???
+
+// // describe Charge
+// // it should increase the balance of the card associated with the person
+// // it should ignore charges if it will increase the balance of the card to over the limit. I.E. They are "declined".
+// // it should ignore charges on cards invalid cards
+
+// // describe Credit
+// // it should decrease the balance of the card associated with the person
+// // it should allow for a negative balance

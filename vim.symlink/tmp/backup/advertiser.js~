@@ -1,0 +1,6 @@
+/* global dependencies */
+var Backbone = require('backbone');
+
+var Model = Backbone.Model.extend({
+    urlRoot: '/api/pinterest/v1/advertiser/'
+});

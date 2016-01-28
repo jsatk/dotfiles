@@ -1,0 +1,27 @@
+/* global dependencies */
+var moment = require('moment');
+var _ = require('underscore');
+require('bootstrap-datepicker');
+
+var DateRangeValidate = require('./daterange-validate');
+
+var NewCampaignDateRangeValidate = DateRangeValidate.extend({
+    onRender: function() {
+        /** Limit the dates availble for a Campaign to be within the dates of the Initiative. */
+        var initiative = this.view.model.get('initiative');
+        var startDate  = moment(initiative.start_date, 'YYYY-MM-DD').toDate();
+        var endDate    = moment(initiative.end_date, 'YYYY-MM-DD').toDate();
+        var defaults   = {
+            endDate:        endDate,
+            startDate:      startDate,
+            todayHighlight: true
+        };
+
+        /** Default the Start/End Dates to the Initiative Start/End Dates */
+        debugger;
+        this.ui.endPicker.datepicker(_(defaults).extend({ setDate: endDate }));
+        this.ui.startPicker.datepicker(_(defaults).extend({ setDate: startDate }));
+    }
+});
+
+module.exports = NewCampaignDateRangeValidate;

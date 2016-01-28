@@ -1,0 +1,119 @@
+Helpers.ensureNamespace('Amplifier.Charts.Profiles');
+
+Amplifier.Charts.Profiles.Pulse2 = {
+  getChartOptions: function (highchartsObject) {
+    return {
+      series: highchartsObject.series,
+      colors: [
+        '#36b4a7',
+        '#d63d26',
+        '#d69428',
+        '#37444e',
+        '#9e4796',
+        '#3083c0',
+        '#16675f',
+        '#f27365',
+        '#83cfca',
+        '#49753e',
+        '#5b375f',
+        '#8d5723'
+      ],
+      chart: {
+        type: 'spline',
+        spacingBottom: 50,
+        spacingLeft: 0,
+        spacingRight: 30
+      },
+
+      title: {
+        text: 'Pulse Scope',
+        useHTML: true,
+        style: {
+          color: '#525252',
+          fontWeight: 'normal',
+          fontSize: '30px',
+          border: 0
+        }
+      },
+      subtitle : {
+        useHTML: true,
+        style: {
+          color: '#777',
+          fontSize: '16px',
+        },
+        y: 40,
+        x: 2,
+        verticalAlign: 'top',
+        align: 'left'
+      },
+      plotOptions: {
+        area: {
+          fillOpacity: 0.5
+        },
+        spline: {
+          lineWidth: 5,
+          marker: {
+            enabled: false
+          },
+        },
+        series: {
+          events: {
+            legendItemClick: function () {
+              var eventTarget = $(this.graph.element).parents('#graph');
+              if (_(eventTarget).isEmpty()) {
+                throw new Error('Expected graph parent element to be called #graph, but cannot find it');
+              }
+              $(eventTarget).trigger('click', this.name);
+              return false;
+            }
+          }
+        }
+      },
+      legend: {
+        enabled: true,
+        borderWidth: 0,
+        align: 'bottomleft',
+        title: {
+          text: 'Click any metric name to make it the denominator for all other metrics.',
+          style: {
+            font: '14pt Trebuchet MS, Verdana, sans-serif',
+            color: '#333',
+            paddingBottom: '10px'
+          }
+        },
+        itemStyle: {
+          font: '12pt Trebuchet MS, Verdana, sans-serif',
+          color: '#333'
+        },
+        useHTML: true,
+
+        labelFormatter: function () {
+          var total, numerator, denominator, ratio, numeratorRatio, denominatorRatio;
+          if (this.options.data && this.options.data[0].numerator) {
+            numerator = _($(this.options.data)).reduce(function (memo, item) {
+              return memo + (item.numerator);
+            }, 0);
+            denominator = _($(this.options.data)).reduce(function (memo, item) {
+              return memo + (item.denominator);
+            }, 0);
+            ratio = numerator / denominator;
+            numeratorRatio = (ratio > 1) ? _.str.numberFormat(ratio, 2) : 1;
+            denominatorRatio = (ratio > 1) ? 1 : _.str.numberFormat(1 / ratio, 2);
+
+            total = [
+              numeratorRatio,
+              ' per ',
+              denominatorRatio,
+              this.options.data[0].denominatorName
+            ].join(' ');
+          } else {
+            total = _($(this.options.data)).reduce(function (memo, item) { return memo + item.y; }, 0);
+            total = 'Total: ' + _.str.numberFormat(total);
+          }
+
+          return Amplifier.Scope.Helpers.humanize(this.name) + '<br /> <small>' + total + '</small>';
+        }
+      }
+    };
+  }
+};

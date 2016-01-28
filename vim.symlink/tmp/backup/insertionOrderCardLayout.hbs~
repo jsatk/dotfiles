@@ -1,0 +1,80 @@
+<div class="panel sc-panel">
+    <div class="sc-card-header">
+        <div class="row-fluid">
+            <div class="col-md-10">
+                {{#if showBrand}}
+                <h2><a href="#insertionorder/{{id}}" class="brand-sc brand-not-set">brand not yet set </a></h2>
+                <h2><a href="#insertionorder/{{id}}">{{reference_id}} | {{name}}</a></h2>
+                {{/if}}
+            </div>
+            <div class="col-md-2">
+                <div class="sc-card-status-label">
+                    <span class="insertionorder-status-{{status}}">{{status}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        {{#unless isIODetailHidden}}
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sc-card-label">
+                    Total Budget:
+                </div>
+                <div class="sc-card-value">
+                    {{formatMoney total_budget}}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="sc-card-label">
+                    Payout:
+                </div>
+                <div class="sc-card-value">
+                    {{  payout_percentage }}% <small>{{formatMoney revenue}}</small>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="sc-card-label">
+                    Media spend:
+                </div>
+                <div class="sc-card-value">
+                    {{formatMoney media_budget}}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="sc-card-label">
+                    {{#if dateIsInFuture}}Starting in{{else}}Started{{/if}}:
+                </div>
+                <div class="sc-card-value">
+                    {{timeToStartDate}} {{#unless dateIsInFuture}}ago{{/unless}} <small> {{ start_date }} - {{ end_date}}</small>
+                </div>
+            </div>
+        </div>
+        {{/unless}}
+
+        {{#if isopportunitiesVisible}}
+        <div class="opportunity-toggle-container-sc">
+            {{{insertionOrderOpportunitiesToggle opportunities.length}}}
+        </div>
+        <div class="opportunities-container-sc opportunity-toggle-sc collapsed">
+            <div class="col-md-12">
+                <table class="table opportunity-table" >
+                    <tr>
+                    <th>Salesforce Opportunity</th>
+                    <th>Budget</th>
+                    </tr>
+                    {{#each opportunities}}
+                        <tr>
+                            <td><p class="opportunity-name">{{this.name }}</p>
+                                <small ><a href="{{ this.salesforceUri }}" target="_blank">[view on SalesForce]</a></small>
+                            </td>
+                            <td>{{formatMoney this.media_budget }}</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>

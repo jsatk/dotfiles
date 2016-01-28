@@ -1,0 +1,55 @@
+<div class="panel sc-panel">
+    <div class="sc-card-header">
+        <div class="sc-card-photo logo-sc">
+            {{brand.logo}}
+        </div>
+        <div class="sc-card-details">
+            <div class="col-md-12">
+                <h2>{{name}} <a href="#initiative/{{id}}">details &raquo;</a></h2>
+                <div class="sc-card-status-label">
+                    <span class="initiative-status-{{toLowerCase status}}">{{toLowerCase status}}</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="sc-card-label">
+                    Pacing
+                </div>
+                <div class="sc-card-value">
+                    {{initiativePacing off_pace_campaign_count}}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="sc-card-label">
+                    Media spend
+                </div>
+                <div class="sc-card-value">
+                    {{formatMoney spend_lifetime precision="0"}} <small>{{percentOf spend_lifetime media_budget}} of {{formatMoney media_budget precision="0"}}</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="sc-card-label">
+                    {{endingIn.label}}
+                </div>
+                <div class="sc-card-value">
+                    {{{endingIn.value}}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{#if isCollapsible}}
+        <div class="panel-body">
+            <div class="campaign-toggle-container-sc">
+                {{{initiativeCampaignToggle campaign_count}}}
+            </div>
+            <div class="campaigns-container-sc campaign-toggle-sc collapsed"></div>
+        </div>
+    {{/if}}
+</div>
+
+{{#unless isCollapsible}}
+    <div class="panel sc-panel">
+        <div class="panel-body">
+            <div class="campaigns-container-sc"></div>
+        </div>
+    </div>
+{{/unless}}

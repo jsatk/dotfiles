@@ -1,0 +1,210 @@
+describe('Charts', function () {
+  describe('Amplifier.Charts', function () {
+    var series = getJSONFixture('chartSeries.json'), $el;
+
+    beforeEach(function () {
+      setFixtures(sandbox({ class: 'chart' }));
+      $el = $('.chart');
+    });
+
+    it('should exist', function () {
+      expect(Amplifier.Charts).toBeDefined();
+    });
+
+    it('should be an object', function () {
+      expect(Amplifier.Charts).toBeInstanceOf(Object);
+    });
+
+    describe('#makeChart', function () {
+      it('should be a function', function () {
+        expect(_.isFunction(Amplifier.Charts.makeChart)).toBe(true);
+      });
+
+      it('should return an object options', function () {
+        expect(Amplifier.Charts.makeChart(undefined, series, $el)).toBeInstanceOf(Object);
+      });
+
+      it('builds the correct chart', function () {
+        expect(Amplifier.Charts.makeChart(['Area'], series, $el).chart.type).toBe('area');
+      });
+
+      it('can build a chart with multiple compoents', function () {
+        expect(Amplifier.Charts.makeChart(['Area', 'DateTime'], series, $el).chart.type).toBe('area');
+        expect(Amplifier.Charts.makeChart(['Area', 'DateTime'], series, $el).xAxis.type).toBe('datetime');
+
+        it('can have two different chart profiles modify series data', function () {
+          expect(_.isArray(Amplifier.Charts.makeChart(['Pie', 'Percent'], series, $el).series[0].data[0])).toBe(true);
+          expect(Amplifier.Charts.makeChart(['Pie', 'Percent'], series, $el).series[0].data[0][1]).toBeCloseTo(0.30, 2);
+        });
+      });
+
+      it('to render to the correct element', function () {
+        expect(Amplifier.Charts.makeChart(undefined, undefined, $el).chart.renderTo).toBe($el[0]);
+      });
+
+      it('should assign the passed in series to the `series` property', function () {
+        expect(Amplifier.Charts.makeChart(undefined, series, $el).title.text).toEqual(series[0].title);
+      });
+
+      it('should assign an empty string to `categories` if series[0].categories is undefined', function () {
+        expect(Amplifier.Charts.makeChart(undefined, series, $el).xAxis.categories).toMatch('');
+      });
+
+      // While this may seem like a trivial check, there was an error that was caused
+      // by a chart profile modifying the original series. So I want to ensure that
+      // series remains equal to itself even after #makeCharts has had it's way with it.
+      it('does not modify the original series', function () {
+        Amplifier.Charts.makeChart(undefined, series, $el);
+        expect(series).toEqual(series);
+      });
+    });
+
+    describe('.Helpers', function () {
+      describe('#convertSeriesToPercent', function () {
+        it('should be a function', function () {
+          expect(_.isFunction(Amplifier.Charts.Helpers.convertSeriesToPercent)).toBe(true);
+        });
+
+        it('returns a decimal', function () {
+          expect(Amplifier.Charts.Helpers.convertSeriesToPercent(series)[0].data[0]).toEqual(0);
+          expect(Amplifier.Charts.Helpers.convertSeriesToPercent(series)[0].data[1])
+            .toBeCloseTo(0.03475, 0.00001);
+        });
+
+        it('correctly converts data to decimal when data is an array', function () {
+          var dataWithCategories = [ { 'data': [ [ 'foo', 10739783], [ 'bar', 8718780 ] ] } ];
+
+          expect(Amplifier.Charts.Helpers.convertSeriesToPercent(dataWithCategories)[0].data[0][1])
+            .toEqual(0.5519309416630611);
+        });
+      });
+
+      describe('#convertSeriesToDateTime', function () {
+        var dateTimeSeries;
+
+        beforeEach(function () {
+          dateTimeSeries = Amplifier.Charts.Helpers.convertSeriesToDateTime(series);
+        });
+
+        it('should be a function', function () {
+          expect(_.isFunction(Amplifier.Charts.Helpers.convertSeriesToDateTime)).toBe(true);
+        });
+
+        it('sets each series\' pointStart as the dateRange\'s startDate', function () {
+          _(dateTimeSeries).each(function (serie, index) {
+            expect(serie.pointStart).toEqual(serie.dateRange.startDate);
+          });
+        });
+
+        it('sets each series\' pointInterval to one day', function () {
+          _(dateTimeSeries).each(function (serie, index) {
+            expect(serie.pointInterval).toEqual(86400000);
+          });
+        });
+      });
+    });
+
+    describe('.Profiles', function () {
+      var highchartsObject;
+
+      // A note: a downside of this method is that you can't directly link to these tests in the browser.
+      _(_.keys(Amplifier.Charts.Profiles)).each(function (Component) {
+        var component = Amplifier.Charts.Profiles[Component];
+
+        describe('.' + Component, function () {
+          it('should exist', function () {
+            expect(component).toBeDefined();
+          });
+
+          it('to be an object', function () {
+            expect(component).toBeInstanceOf(Object);
+          });
+
+          describe('#getChartOptions', function () {
+            beforeEach(function () {
+              highchartsObject = component.getChartOptions(Amplifier.Charts.makeChart(undefined, series, $el));
+            });
+
+            it('should be a function', function () {
+              expect(_.isFunction(Amplifier.Charts.Profiles.Base.getChartOptions)).toBe(true);
+            });
+
+            it('should return an object', function () {
+              expect(highchartsObject).toBeInstanceOf(Object);
+            });
+          });
+        });
+      });
+
+      describe('.Area', function () {
+        beforeEach(function () {
+          highchartsObject = Amplifier.Charts.Profiles.Area.getChartOptions(
+            Amplifier.Charts.makeChart(['Area'], series, $el));
+        });
+
+        it('has a chart.type of `area`', function () {
+          expect(highchartsObject.chart.type).toBe('area');
+        });
+      });
+
+      describe('.Bar', function () {
+        beforeEach(function () {
+          highchartsObject = Amplifier.Charts.Profiles.Bar.getChartOptions(
+            Amplifier.Charts.makeChart(['Bar'], series, $el));
+        });
+
+        it('has a chart.type of `bar`', function () {
+          expect(highchartsObject.chart.type).toBe('bar');
+        });
+      });
+
+      describe('.DateTime', function () {
+        beforeEach(function () {
+          highchartsObject = Amplifier.Charts.Profiles.DateTime.getChartOptions(
+            Amplifier.Charts.makeChart(['DateTime'], series, $el));
+        });
+
+        it('has a xAxis.type of `datetime`', function () {
+          expect(highchartsObject.xAxis.type).toBe('datetime');
+        });
+      });
+
+      describe('.Line', function () {
+        beforeEach(function () {
+          highchartsObject = Amplifier.Charts.Profiles.Line.getChartOptions(
+            Amplifier.Charts.makeChart(['Line'], series, $el));
+        });
+
+        it('has a chart.type of `line`', function () {
+          expect(highchartsObject.chart.type).toBe('line');
+        });
+      });
+
+      describe('.Percent', function () {
+        beforeEach(function () {
+          highchartsObject = Amplifier.Charts.Profiles.Percent.getChartOptions(
+            Amplifier.Charts.makeChart(['Percent'], series, $el));
+        });
+
+        it('has a series with data points in decimal', function () {
+          expect(highchartsObject.series[0].data[1]).toMatch(/0.\d/);
+        });
+      });
+
+      describe('.Pie', function () {
+        beforeEach(function () {
+          highchartsObject = Amplifier.Charts.Profiles.Pie.getChartOptions(
+            Amplifier.Charts.makeChart(['Pie'], series, $el));
+        });
+
+        it('has a chart.type of `pie`', function () {
+          expect(highchartsObject.chart.type).toBe('pie');
+        });
+
+        it('has a legend', function () {
+          expect(highchartsObject.plotOptions.pie.showInLegend).toBe(true);
+        });
+      });
+    });
+  });
+});

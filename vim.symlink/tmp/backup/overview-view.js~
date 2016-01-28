@@ -1,0 +1,198 @@
+/* global dependencies */
+var $          = require('jquery');
+var _          = require('underscore');
+var moment     = require('moment');
+var Marionette = require('backbone.marionette');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var InitiativeChannel                 = require('../../initiative-channel');
+var InitiativeDetailsCardTemplate     = require('../../templates/cards/initiativeDetailsCard.hbs');
+var InitiativeDetailsEditCardTemplate = require('../../templates/initiativeDetailsEditCard.hbs');
+
+var OverviewView = Marionette.ItemView.extend({
+    className: 'detail panel sc-panel',
+    template: InitiativeDetailsCardTemplate,
+    ui: {
+        moreDetailsLink: '#more-details',
+        editLink:        '#edit-details',
+        cancelEditLink:  '#cancel-edit-details',
+        saveChanges:     '#save-changes',
+        name:            '#name',
+        startDate:       '#start-date',
+        endDate:         '#end-date'
+    },
+    events: {
+        'click @ui.editLink': function(event) {
+            event.preventDefault();
+            this.toggleEditBox(true);
+        },
+        'click @ui.cancelEditLink': function(event) {
+            event.preventDefault();
+            this.toggleEditBox(false);
+        },
+        'click @ui.saveChanges': function(event) {
+            event.preventDefault();
+            this.saveChanges();
+        },
+        'click @ui.moreDetailsLink': function(event) {
+            event.preventDefault();
+            this.saveAndContinue();
+        }
+    },
+    onRender: function() {
+        if (this.model.get('editing')) {
+            this.validateEditableFields();
+            this.stickit(this.model, this.bindings);
+            this.model.startTracking();
+        }
+    },
+    getTemplate: function() {
+        return this.model.get('editing') ? InitiativeDetailsEditCardTemplate : InitiativeDetailsCardTemplate;
+    },
+    /**
+     * Disable fields based on whether the Initiatve has started (start_date < now) or has ended (end_date < now).
+     */
+    validateEditableFields: function() {
+        var now = moment(new Date());
+
+        if (moment(this.model.get('end_date'), 'YYYY-MM-DDThh:mm:ss').isBefore(now)) {
+            this.disableInputs(['name', 'start_date', 'end_date']);
+        } else if (moment(this.model.get('start_date'), 'YYYY-MM-DDThh:mm:ss').isBefore(now)) {
+            this.disableInputs(['name', 'start_date']);
+        }
+    },
+    /**
+     * Disable each field listed in the array passed in.
+     * param (Array) list of input id values for fields to be disabled
+     */
+    disableInputs: function(fields) {
+        _.each(fields, function(field) {
+            this.$('#' + field).attr('disabled', true);
+        });
+    },
+    toggleEditBox: function(editing) {
+        if (!editing) {
+            this.unstickit();
+            this.model.resetAttributes();
+        }
+        this.model.set('editing', editing);
+        this.render();
+    },
+    notOriginalDateValue: function(value, originalValue) {
+        return moment(value).format('MM/DD/YYYY') !== moment(originalValue).format('MM/DD/YYYY');
+    },
+    invalidValue: function(input, message) {
+        input.addClass('input-error');
+        input.tooltip({ 'trigger': 'hover', 'title': message });
+    },
+    validValue: function(input) {
+        input.removeClass('input-error');
+        input.tooltip('destroy');
+    },
+    checkDates: function(edits) {
+        if (!this.notOriginalDateValue(edits.start_date, this.model._originalAttrs.start_date)) {
+            edits = _(edits).omit('start_date');
+        }
+        if (edits.end_date && (edits.end_date === moment(this.model._originalAttrs.end_date).format('YYYY-MM-DD'))) {
+            edits = _(edits).omit('end_date');
+        }
+        return edits;
+    },
+    saveChanges: function() {
+        var edits = this.checkDates(this.model.unsavedAttributes());
+        /** If there are no edits then simply revert back to read-only mode */
+        if (_(edits).isEmpty()) {
+            this.toggleEditBox(false);
+        } else {
+            this.model.save(edits, {
+                patch: true,
+                success: function(model, response) {
+                    var overview = AppChannel.request('mainRegion').currentView.overviewRegion.currentView;
+                    overview.model.set('editing', false);
+                    overview.render();
+                    if ('name' in edits || 'end_date' in edits) { // The detailRegion displays these values so it has to be refreshed
+                        AppChannel.request('mainRegion').currentView.detailRegion.currentView.render();
+                    }
+                },
+                error: function(model, response) {
+                    AppChannel.request('mainRegion').currentView.overviewRegion.currentView.triggerMethod('Error', response.responseJSON.error_message);
+                }
+            });
+        }
+    },
+    saveAndContinue: function() {
+        var edits = this.checkDates(this.model.unsavedAttributes());
+        if (!_(edits).isEmpty()) {
+            this.model.save(edits, {
+                patch: true,
+                async: false,
+                success: function(model, response) {
+                    model.set('editing', false);
+                }
+            });
+        }
+        InitiativeChannel.trigger('edit:show', this.model.get('id'));
+    },
+    bindings: {
+        '#name': {
+            observe: 'name',
+            onSet: function(value, options) {
+                if (value.length > 150) {
+                    this.invalidValue(this.ui.name, 'Initiative name cannot be longer than 150 characters');
+                } else {
+                    this.validValue(this.ui.name);
+                }
+                return value;
+            }
+        },
+        '#start_date': {
+            observe: 'start_date',
+            onGet: function(value) {
+                return moment(value, 'YYYY-MM-DD').format('MM/DD/YYYY');
+            },
+            onSet: function(value) {
+                var notOriginal = this.notOriginalDateValue(value, this.model._originalAttrs.start_date);
+                if ((moment(value) < moment().startOf('day')) && notOriginal) {
+                    this.invalidValue(this.ui.startDate, 'Start Date cannot be earlier than current date');
+                } else {
+                    this.validValue(this.ui.startDate);
+                }
+                return moment(value, 'MM/DD/YYYY').format('YYYY-MM-DD');
+            }
+        },
+        '#end_date': {
+            observe: 'end_date',
+            onGet: function(value) {
+                return moment(value, 'YYYY-MM-DD').format('MM/DD/YYYY');
+            },
+            onSet: function(value) {
+                var notOriginal = this.notOriginalDateValue(value, this.model._originalAttrs.end_date);
+                if ((moment(value) < moment().startOf('day')) && notOriginal) {
+                    this.invalidValue(this.ui.endDate, 'End Date cannot be earlier than current date');
+                } else {
+                    this.validValue(this.ui.endDate);
+                }
+                return moment(value, 'MM/DD/YYYY').format('YYYY-MM-DD');
+            }
+        }
+    },
+    triggers:{
+        'click @ui.editInitiative': 'edit:initiative'
+    },
+    templateHelpers:function() {
+        return {
+            followers: this.model.get('followers').toJSON(),
+            userCanManage: this.model.userCanManage()
+        };
+    },
+    onFollowers:function() {
+        this.render();
+    },
+    behaviors: {
+        DateRangeValidate: {},
+        DisplayError: {}
+    }
+});
+
+module.exports = OverviewView;

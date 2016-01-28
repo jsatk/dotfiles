@@ -1,0 +1,111 @@
+/* global dependencies */
+var _ = require('underscore');
+var $ = require('jquery');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var CampaignChannel = require('../campaign-channel');
+var TrackingLayoutView = require('./tracking-layout-view');
+var TagCollectionView = require('./tag-collection-view');
+var TrackingPixelView = require('./tracking-pixel-view');
+var OptimizationPixelView = require('./optimization-pixel-view');
+var AttributionWindowView = require('./attribution-window-view');
+
+/* module definition */
+var Tracking = {};
+
+Tracking.loadCardView = function(options) {
+    options = options || {};
+    if (!options.region) throw new Error('Tracking Controller requires a region option.');
+    var initiative = options.initiative;
+    var campaign = options.campaign;
+    var accountUri = campaign.get('account');
+    var accountId = accountUri.split('/')[5];
+    $.when(
+       AppChannel.request('advisor:tag:entities', { data: { initiative: initiative.get('id') } }),
+       AppChannel.request('advisor:pixel:entities', { data: { initiatives__id: initiative.get('id'), type: 'conversion' } }),
+       AppChannel.request('advisor:account:entity', accountId)
+    ).done(function(tags, pixels, account) {
+        var selectedTags = campaign.get('view_tags');
+        var selectedPixels = campaign.get('pixels');
+        /**
+         * If this is not a NEW Campaign, need to see if any View Tags and/or Pixels
+         * have previously been selected for this Campaign.  If so, need to add a property of
+         * 'selected' to each of those models to be used by the Handlebars template to display
+         * them as selected.
+         */
+        selectModels(tags, selectedTags);
+        selectModels(pixels, selectedPixels);
+        /** Array of pixel_id's used to keep track of selected Pixels when getting Optimization Pixels */
+        var pixelIds = _.compact(_.map(pixels.models, function(pixel) {
+            if (pixel.get('selected') === true) {
+                return pixel.get('pixel_id');
+            }
+        }));
+        $.when(
+           tags,
+           pixels,
+           account,
+           AppChannel.request('advisor:pixel:entities', { data: { brand_id: initiative.get('brand_id'), type: 'optimization', pixel_id__in: pixelIds.toString() } })
+        ).done(function(tags, pixels, account, optimizationPixels) {
+            selectModels(optimizationPixels, selectedPixels);
+            var trackingLayout = new TrackingLayoutView({
+                model: campaign,
+                pixelIds: pixelIds,
+                tagCollectionView: new TagCollectionView({
+                    collection: tags
+                }),
+                pixelView: new TrackingPixelView({
+                    collection: pixels
+                }),
+                optimizationView: new OptimizationPixelView({
+                    collection: optimizationPixels
+                }),
+                attributionWindowView: new AttributionWindowView({
+                    campaign: campaign
+                })
+            });
+            trackingLayout.on(trackingLayoutEvents);
+            options.region.show(trackingLayout);
+        });
+    });
+};
+var selectModels = function(collection, selectedUris) {
+    collection.each(function(model) {
+        var uri = model.get('resource_uri');
+        model.set('selected', _(selectedUris).contains(uri));
+    });
+};
+var updateOptimizationPixels = function(options) {
+    $.when(
+        AppChannel.request('advisor:pixel:entities',
+            { data: {
+                brand_id: options.brandId,
+                type: 'optimization',
+                pixel_id__in: options.pixelIds.toString() }
+            })
+    ).done(function(optimizationPixels) {
+        var optPixView = AppChannel.request('mainRegion').currentView.getRegion('tracking').currentView.getRegion('optimizationRegion').currentView;
+        /**
+         * Check updated Optimization Pixels against all Pixels already selected for Campaign.
+         * If they match (same resource_uri) the set a property of 'selected:true' for that pixel
+         * to have it as selected in the dropdown.
+         */
+        var selectedPixels = AppChannel.request('mainRegion').currentView.getRegion('tracking').currentView.model.get('pixels');
+        selectModels(optimizationPixels, selectedPixels);
+        optPixView.collection.reset(optimizationPixels.models);
+    });
+};
+var trackingLayoutEvents = {
+    'show': function() {
+        var options = this.options;
+        this.tagRegion.show(options.tagCollectionView);
+        this.pixelRegion.show(options.pixelView);
+        this.optimizationRegion.show(options.optimizationView);
+        this.attributionRegion.show(options.attributionWindowView);
+    }
+};
+
+CampaignChannel.reply('update:optimization:pixels', updateOptimizationPixels);
+
+module.exports = Tracking;

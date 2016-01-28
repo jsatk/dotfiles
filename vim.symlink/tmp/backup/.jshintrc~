@@ -1,0 +1,66 @@
+{
+    "globals": {
+        "AdvisorApp": true,
+        "Helpers": true
+    },
+    "predef" : [
+        // Browser
+        "console",
+        "document",
+        "window",
+        "sessionStorage",
+        "localStorage",
+        "location",
+        "clearTimeout",
+        "clearInterval",
+        "setTimeout",
+        "setInterval",
+        "FileReader",
+
+        // Vendor
+        "$",
+        "_",
+        "Handlebars",
+        "Backbone",
+        "Backgrid",
+        "Marionette",
+        "ga",
+        "moment",
+        "accounting",
+        "Highcharts",
+        "numeral",
+        "FB",
+        "jQuery",
+        "Raven",
+        "require",
+        "exports",
+        "define"
+    ],
+
+    // Default overrides
+
+    // See all options here: https://github.com/jshint/jshint/blob/master/examples/.jshintrc
+    // See default set of JS Hint options here: https://github.com/gruntjs/grunt-contrib-jshint/blob/master/.jshintrc
+
+    "-W058"         : true      // Allows invocation of a constructor without '()'. See https://github.com/jshint/jshint/issues/1357.
+    "eqeqeq"        : true,     // true: Require triple equals (===) for comparison
+    "forin"         : true,     // true: Require filtering for..in loops with obj.hasOwnProperty()
+    "freeze"        : true,     // true: prohibits overwriting prototypes of native objects such as Array, Date etc.
+    "immed"         : false,    // true: Require immediate invocations to be wrapped in parens e.g. `(function () { } ());`
+    "indent"        : 4,        // {int} Number of spaces to use for indentation
+    "maxdepth"      : 4,        // {int} Max depth of nested blocks (within functions)
+    "maxlen"        :  345,     // {int} Max number of characters per line
+    "maxstatements" : 69,       // {int} Max number statements per function
+    "newcap"        : true,     // true: Require capitalization of all constructor functions e.g. `new F()`
+    "noarg"         : true,     // true: Prohibit use of `arguments.caller` and `arguments.callee`
+    "node"          : true,     // Node.js
+    "noempty"       : true,     // true: Prohibit use of empty blocks
+    "nonbsp"        : true,     // true: Prohibit "non-breaking whitespace" characters.
+    "nonew"         : true,     // true: Prohibit use of constructors for side-effects (without assignment)
+    "quotmark"      : true,     // Quotation mark consistency:
+                                    //   false    : do nothing (default)
+                                    //   true     : ensure whatever is used is consistent
+                                    //   "single" : require single quotes
+                                    //   "double" : require double quotes
+    "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
+}

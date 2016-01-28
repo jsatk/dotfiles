@@ -1,0 +1,28 @@
+describe('AdvisorApp', function() {
+  it('can be intantiated', function() {
+    expect(AdvisorApp).to.exist;
+    expect(AdvisorApp).not.to.be.undefined;
+  });
+
+  it('is a Marionette app', function() {
+    expect(AdvisorApp).to.be.instanceof(Marionette.Application);
+  });
+
+  describe('regions', function() {
+    var regions = ['mainRegion', 'headerRegion', 'footerRegion'];
+
+    _(regions).each(function(region) {
+      it('has a ' + region, function() {
+        expect(AdvisorApp[region]).to.exist;
+        expect(AdvisorApp[region]).not.to.be.undefined;
+      });
+    });
+
+    it('can be given a new region', function() {
+      AdvisorApp.addRegions({ fooRegion: '#foo-region' });
+
+      expect(AdvisorApp.fooRegion).to.exist;
+      expect(AdvisorApp.fooRegion).not.to.be.undefined;
+    });
+  });
+});

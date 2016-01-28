@@ -1,0 +1,61 @@
+describe('Test Suite', function() {
+  describe('ensures the test suite is set up properly with all of the correct dependencies', function() {
+    it('chai should exist', function() {
+      expect(chai).to.exist;
+      expect(chai).not.to.be.undefined;
+    });
+
+    it('sinon should exist', function() {
+      expect(sinon).to.exist;
+      expect(sinon).not.to.be.undefined;
+    });
+
+    it('expect should exist', function() {
+      expect(expect).to.exist;
+      expect(expect).not.to.be.undefined;
+    });
+  });
+
+  describe('ensures our custom matchers are working properly', function() {
+    describe('Backbone', function() {
+      var backboneClasses = [
+        'Model',
+        'View',
+        'Collection',
+        'Router'
+      ];
+
+      _(backboneClasses).each(function(backboneClass) {
+        it(backboneClass + ' custom matcher should work', function() {
+          var instanceOfClass = new Backbone[backboneClass]();
+
+          expect(instanceOfClass).to.be.a['Backbone' + backboneClass];
+        });
+      });
+    });
+
+    describe('Marionette', function() {
+      var marionetteClasses = [
+        'Application',
+        'AppRouter',
+        'Behavior',
+        'CollectionView',
+        'CompositeView',
+        'Controller',
+        'ItemView',
+        'LayoutView',
+        'Object',
+        'RegionManager',
+        'View'
+      ];
+
+      _(marionetteClasses).each(function(marionetteClass) {
+        it(marionetteClass + ' custom matcher should work', function() {
+          var instanceOfClass = new Marionette[marionetteClass]();
+
+          expect(instanceOfClass).to.be.a['Backbone' + marionetteClass];
+        });
+      });
+    });
+  });
+});

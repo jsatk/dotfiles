@@ -1,0 +1,49 @@
+AdvisorApp.module('CampaignModule.Views', function(Views) {
+    Views.SummaryBase = Marionette.LayoutView.extend({
+        createPacingView: function() {
+            this.pacingView = new (AdvisorApp.module('Common.Views')).Pacing({
+                model: this.model
+            });
+        },
+
+        createChartView: function() {
+            var platform = _.string.titleize(this.getOption('platform')); // I.E. 'Facebook', 'Twitter', etc.
+            this.chartView = new Views[platform + 'Chart']({
+                level:      this.getOption('level'),
+                platform:   this.getOption('platform'),
+                collection: this.collection,
+                model:      this.model
+            });
+        },
+
+        onShow: function() {
+            /**
+             * @param {String} selector CSS selector for region.
+             * @param {String} region String of the region key on this view.
+             */
+            var showRegion = function(selector, region) {
+                var view = region.replace('Region', 'View');
+
+                this[region].show(this[view]);
+            };
+
+            _(this.regions).each(showRegion, this);
+        },
+
+        /**
+         * @returns {Object} of variables we want accessible in our Handlebar Template.
+         */
+        templateHelpers:function() {
+            var endDate = this.model.has('end_time') ? moment(this.model.get('end_time')) : moment(this.model.get('end_date')).endOf('day');
+
+            debugger;
+            return {
+                dateIsInFuture:       moment().diff(endDate) < 0, // Dates in future will be a negative number.
+                timeToEndDate:        endDate.fromNow(true),      // Returns a lovely string of time from now.
+                endDate:              endDate.format('MM/DD/YYYY'),
+                parentInitiativeName: this.getOption('initiative').get('name'),
+                parentInitiativeId:   this.getOption('initiative').get('id')
+            };
+        }
+    });
+});

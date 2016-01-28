@@ -1,0 +1,127 @@
+/* global dependencies */
+var moment = require('moment');
+var accounting = require('accounting');
+var $ = require('jquery');
+var _ = require('underscore');
+var Validatable = require('advisor/extensions/Validatable');
+var Marionette = require('backbone.marionette');
+var AppChannel = require('advisor/app-channel');
+
+/* templates */
+var CampaignConversionTagFormTemplate = require('../templates/NewCampaignConversionTagForm.hbs');
+
+/* module definition */
+var View = Marionette.ItemView.extend(new Validatable({
+    template: CampaignConversionTagFormTemplate,
+    title: 'New Conversion Tag',
+    className: 'campaign-conversiontag-form-sc',
+    validate: {
+        name: Validatable.TEXT(),
+        view_window_days_select: Validatable.VALUE(),
+        engagement_window_days_select: Validatable.VALUE(),
+        click_window_days_select: Validatable.VALUE(),
+        conversion_type_select: Validatable.TEXT()
+    },
+    ui: {
+        submit: '#submit',
+        cancel: '#cancel',
+        error:  '#error'
+    },
+    events: {
+        'submit form': 'save'
+    },
+    preloader: function() {
+        /** Get default width of submit */
+        var width = this.ui.submit.outerWidth();
+        /** Set fixed width and empty */
+        this.ui.submit.outerWidth(width).empty();
+        /** Add spinning icon */
+        $('<i>', { class: 'fa fa-fw fa-cog fa-spin' }).appendTo(this.ui.submit);
+        /** Disable buttons */
+        this.ui.cancel.addClass('disabled');
+        this.ui.submit.addClass('disabled');
+        /** Clear error */
+        this.ui.error.empty().addClass('hidden');
+    },
+    triggers: {
+        'click @ui.cancel': 'modal:close'
+    },
+    save: function(e) {
+        e.preventDefault();
+        this.preloader();
+        this.model.set('advertiser', { id: this.getOption('campaign').get('platform_account_id') });
+        this.model.campaign = this.getOption('campaign');
+        var self = this;
+        this.model.save(null, {
+            success: function(model, response) {
+                var conversionTagView = self.getOption('currentView');
+                conversionTagView.collection.fetch().done(function() {
+                    conversionTagView.render();
+                });
+                self.triggerMethod('modal:close');
+            },
+            error: function(model, response) {
+                var errors       = response.responseJSON.conversiontag;
+                var errorMessage = _.values(errors).join(' '); // Concatenates all of our error messages into one string.
+                self.ui.error.html(errorMessage || 'An unknown error occurred').removeClass('hidden');
+                self.ui.cancel.removeClass('disabled');
+                self.ui.submit.removeClass('disabled');
+                self.ui.submit.html('Retry');
+            }
+        });
+    },
+    bindings: {
+        '#name': 'name',
+        'select#view_window_days_select': {
+            observe: 'view_window_days',
+            selectOptions: {
+                collection: [1, 7, 14, 30, 60],
+                defaultOption: {
+                    label: 'Select view window days',
+                    value: null
+                }
+            }
+        },
+        'select#engagement_window_days_select': {
+            observe: 'engagement_window_days',
+            selectOptions: {
+                collection: [1, 7, 14, 30, 60],
+                defaultOption: {
+                    label: 'Select engagement window days',
+                    value: null
+                }
+            }
+        },
+        'select#click_window_days_select': {
+            observe: 'click_window_days',
+            selectOptions: {
+                collection: [1, 7, 14, 30, 60],
+                defaultOption: {
+                    label: 'Select click window days',
+                    value: null
+                }
+            }
+        },
+        'select#conversion_type_select': {
+            observe: 'conversion_type',
+            selectOptions: {
+                collection: [
+                    { label: 'Page visit', value: 'PAGE_VISIT' },
+                    { label: 'Signup',     value: 'SIGNUP' },
+                    { label: 'Checkout',   value: 'CHECKOUT' },
+                    { label: 'Custom',     value: 'CUSTOM' }
+                ],
+                defaultOption: {
+                    label: 'Select conversion type',
+                    value: null
+                }
+            }
+        }
+    },
+    onShow: function() {
+        /** Add stickit */
+        this.stickit();
+    }
+}));
+
+module.exports = View;

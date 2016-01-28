@@ -1,0 +1,269 @@
+import _ from 'underscore'
+import Backbone from 'backbone'
+import AppChannel from 'advisor/app-channel'
+import Base from 'advisor/entities/base'
+
+describe('Demographic Set Entities', () => {
+    describe('advisor:demographicset:Entity', () => {
+        it('should return a Backbone Model Class', () => {
+            let Model = AppChannel.request('advisor:demographicset:Entity')
+
+            expect(new Model instanceof Backbone.Model).toBe(true)
+        })
+    })
+
+    describe('advisor:demographicset:Entities', () => {
+        it('should return a Backbone Collection Class', () => {
+            let Collection = AppChannel.request('advisor:demographicset:Entities')
+
+            expect(new Collection instanceof Backbone.Collection).toBe(true)
+        })
+    })
+
+    describe('advisor:demographicset:entity', () => {
+        beforeEach(() => {
+            spyOn(Base, 'fetchEntity').and.callFake((Class, id) => {
+                return new Class({ id: id })
+            })
+        })
+
+        describe('on request for an entity', () => {
+            it('fetch should only be called once', () => {
+                AppChannel.request('advisor:demographicset:entity', 15)
+                expect(Base.fetchEntity.calls.count()).toEqual(1)
+            })
+
+            it('should return the requested model', () => {
+                expect(AppChannel.request('advisor:demographicset:entity', 15).get('id')).toEqual(15)
+            })
+
+            describe('#fromDemographicSet', () => {
+                let model
+
+                beforeEach(() => {
+                    model = AppChannel.request('advisor:demographicset:entity', 15)
+                })
+
+                describe('gender', () => {
+                    beforeEach(() => {
+                        model.fromDemographicSet(new Backbone.Model({ gender: 'female' }))
+                    })
+
+                    it('sets the correct gender on the model', () => {
+                        expect(model.get('gender')).toMatch(/female/)
+                    })
+
+                    it('sets the `gender_selection` on the model as an array', () => {
+                        expect(_.isArray(model.get('gender_selection'))).toBe(true)
+                    })
+
+                    it('sets the `gender_selection` on the model as an array', () => {
+                        expect(_.first(model.get('gender_selection'))).toMatch(/female/)
+                    })
+                })
+
+                describe('age ranges', () => {
+                    let demoSet
+
+                    beforeEach(() => {
+                        demoSet = new Backbone.Model({
+                            age_ranges: [
+                                {
+                                    max_age: 45,
+                                    min_age: 21,
+                                    banana: 15
+                                },
+                                {
+                                    max_age: 27,
+                                    min_age: 20,
+                                    orange: 13
+                                },
+                                {
+                                    max_age: 55,
+                                    min_age: 33,
+                                    apple: 19
+                                }
+                            ]
+                        })
+
+                        model.fromDemographicSet(demoSet)
+                    })
+
+                    it('sets a backbone collection of age ranges on the model', () => {
+                        expect(model.get('age_ranges') instanceof Backbone.Collection).toBe(true)
+                    })
+
+                    it('each age range model in the collection of age ranges has the correct `max_age` and `min_age` attribute', () => {
+                        model.get('age_ranges').each((ageRange, index) => {
+                            let ageRangeMaxAge = ageRange.get('max_age')
+                            let demoSetMaxAge  = demoSet.get('age_ranges')[index].max_age
+                            let ageRangeMinAge = ageRange.get('min_age')
+                            let demoSetMinAge  = demoSet.get('age_ranges')[index].min_age
+
+                            expect(ageRangeMaxAge).toEqual(demoSetMaxAge)
+                            expect(ageRangeMinAge).toEqual(demoSetMinAge)
+                        })
+                    })
+
+                    it('each age range model in the collection of age ranges does not have unwanted attributes', () => {
+                        model.get('age_ranges').each((ageRange, index) => {
+                            expect(ageRange.get('banana')).toBeUndefined()
+                            expect(ageRange.get('orange')).toBeUndefined()
+                            expect(ageRange.get('apple')).toBeUndefined()
+                        })
+                    })
+                })
+
+                describe('location sets', () => {
+                    let demoSet
+
+                    beforeEach(() => {
+                        demoSet = new Backbone.Model({
+                            location_sets: [
+                                {
+                                    locations: [
+                                        {
+                                            state: 'Michigan'
+                                        },
+                                        {
+                                            state: 'Florida'
+                                        },
+                                        {
+                                            state: 'Kentucky'
+                                        }
+                                    ]
+                                },
+                                {
+                                    locations: [
+                                        {
+                                            state: 'North Carolina'
+                                        },
+                                        {
+                                            state: 'Maryland'
+                                        },
+                                        {
+                                            state: 'Mississippi'
+                                        }
+                                    ]
+                                },
+                                {
+                                    locations: [
+                                        {
+                                            state: 'Ohio'
+                                        },
+                                        {
+                                            state: 'Washington'
+                                        },
+                                        {
+                                            state: 'Texas'
+                                        }
+                                    ]
+                                }
+                            ]
+                        })
+
+                        model.fromDemographicSet(demoSet)
+                    })
+
+                    it('sets a backbone collection of location sets on the model', () => {
+                        expect(model.get('location_sets') instanceof Backbone.Collection).toBe(true)
+                    })
+
+                    it('each location set should be a Backbone Model', () => {
+                        model.get('location_sets').each((locationSet) => {
+                            expect(locationSet instanceof Backbone.Model).toBe(true)
+                        })
+                    })
+
+                    it('each location on a location set should be a Backbone Collection', () => {
+                        model.get('location_sets').each((locationSet) => {
+                            expect(locationSet.get('locations') instanceof Backbone.Collection).toBe(true)
+                        })
+                    })
+
+                    // This is getting wordy.  😔
+                    it('should set the correct location on each location model in the location set collection', () => {
+                        model.get('location_sets').each((locationSet, i) => {
+                            locationSet.get('locations').each((location, j) => {
+                                let state = demoSet.get('location_sets')[i].locations[j].state
+
+                                expect(location.get('state')).toMatch(state)
+                            })
+                        })
+                    })
+                })
+
+                describe('placement', () => {
+                    beforeEach(() => {
+                        model.fromDemographicSet(new Backbone.Model({ placement: 'banner' }))
+                    })
+
+                    it('should set the correct placement on the model', () => {
+                        expect(model.get('placement')).toMatch(/banner/)
+                    })
+                })
+            })
+
+            describe('#refreshGenderSelection', () => {
+                let model
+
+                beforeEach(() => {
+                    model = AppChannel.request('advisor:demographicset:entity', 15)
+                })
+
+                it('sets the correct `gender_selection` on the model when `gender` is set to \'all\'', () => {
+                    model.set('gender', 'all')
+                    model.refreshGenderSelection()
+
+                    expect(model.get('gender_selection').length).toEqual(2)
+                    expect(model.get('gender_selection')[0]).toMatch(/male/)
+                    expect(model.get('gender_selection')[1]).toMatch(/female/)
+                })
+
+                it('sets the correct `gender_selection` on the model when `gender` is set to \'male\'', () => {
+                    model.set('gender', 'male')
+                    model.refreshGenderSelection()
+
+                    expect(model.get('gender_selection').length).toEqual(1)
+                    expect(model.get('gender_selection')[0]).toMatch(/male/)
+                })
+
+                it('sets the correct `gender_selection` on the model when `gender` is set to \'female\'', () => {
+                    model.set('gender', 'female')
+                    model.refreshGenderSelection()
+
+                    expect(model.get('gender_selection').length).toEqual(1)
+                    expect(model.get('gender_selection')[0]).toMatch(/female/)
+                })
+
+                it('sets the correct `gender_selection` on the model when `gender` is set to \'asdf\'', () => {
+                    model.set('gender', 'asdf')
+                    model.refreshGenderSelection()
+
+                    expect(model.get('gender_selection').length).toEqual(0)
+                })
+            })
+        })
+    })
+
+
+    describe('advisor:demographicset:entities', () => {
+        beforeEach(() => {
+            spyOn(Base, 'fetchEntities').and.callFake((Class) => {
+                return new Class()
+            })
+        })
+
+        it('fetch should only be called once', () => {
+            AppChannel.request('advisor:demographicset:entities')
+            expect(Base.fetchEntities.calls.count()).toEqual(1)
+        })
+
+        it('should return the correct instance of the requested collection', () => {
+            let Collection = AppChannel.request('advisor:demographicset:Entities')
+            let collection = AppChannel.request('advisor:demographicset:entities')
+
+            expect(collection instanceof Collection).toBe(true)
+        })
+    })
+})

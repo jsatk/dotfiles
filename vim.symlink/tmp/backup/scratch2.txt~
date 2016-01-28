@@ -1,0 +1,5 @@
+brew install ack fish mercurial phantomjs ruby-build vim autoconf gdbm multimarkdown pkg-config sqlite xz autojump git mysql python the_platinum_searcher bash git-extras node rbenv the_silver_searcher bash-completion jq openssl readline thefuck fasd libevent pcre rmtrash tmux
+
+
+
+brew install ack mercurial phantomjs vim autoconf pkg-config sqlite autojump git mysql python the_platinum_searcher bash git-extras node the_silver_searcher bash-completion jq openssl readline thefuck fasd libevent pcre rmtrash tmux

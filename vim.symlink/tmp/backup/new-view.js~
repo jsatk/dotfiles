@@ -1,0 +1,135 @@
+/* global dependencies */
+var moment = require('moment');
+var accounting = require('accounting');
+var $ = require('jquery');
+var _ = require('underscore');
+var Validatable = require('advisor/extensions/Validatable');
+var Marionette = require('backbone.marionette');
+var AppChannel = require('advisor/app-channel');
+
+/* local dependencies */
+var platforms      = require('advisor/common/platforms');
+
+/* templates */
+var CampaignFormTemplate = require('../templates/CampaignForm.hbs');
+
+/* module definition */
+var View = Marionette.ItemView.extend(new Validatable({
+    template: CampaignFormTemplate,
+    title: 'New Campaign',
+    className: 'campaign-form-sc',
+    _platforms: platforms(),
+    validate: {
+        name: Validatable.TEXT(),
+        platform: Validatable.VALUE(),
+        account: Validatable.VALUE()
+    },
+    ui: {
+        platform_select: '#platform',
+        account_select:  '#account_name',
+        cancel:          '#cancel',
+        name:            '#name',
+        submit:          '#submit',
+    },
+    events: {
+        'change @ui.platform_select': 'handlePlatformUpdate'
+    },
+    bindings: {
+        '@ui.name': 'name',
+        '@ui.account_select': {
+            observe: ['account_name', 'platform'],
+            selectOptions: {
+                collection: function() {
+                    var accounts = this.model.get('accounts');
+                    var platformId = this.model.getEffectivePlatform();
+                    return (platformId && accounts) ? accounts[platformId] : [];
+                },
+                labelPath: 'display_name',
+                valuePath: 'id',
+                defaultOption: {
+                    label: 'Select Account',
+                    value: null
+                }
+            },
+            onGet: _.first,
+            onSet: function(value, options) {
+                var platformId = this.model.getEffectivePlatform();
+                var accounts = this.model.get('accounts');
+                /**
+                 * Iterate through accounts for the selected platform, find the account whose 'id' equals the
+                 * selected account and set the new campaignEntity's 'account_id' to that accounts 'account_id'.
+                 */
+                var account = _(accounts[platformId]).findWhere({id: value});
+                if (account) {
+                    this.model.set('account', account.resource_uri);
+                    this.model.set('account_id', account.account_id);
+                }
+                return [value, this.model.get('platform')];
+            }
+        },
+        '@ui.platform_select': {
+            observe: 'platform',
+            selectOptions: {
+                collection: function() {
+                    /** Get the list of supported platforms. */
+                    var accountPlatforms = _.chain(this.model.get('accounts'))
+                                            .pick(function(v) { return v.length; })
+                                            .keys()
+                                            .value();
+
+                    /**
+                     * Unfortunately stickit doesn't allow us to pass in a list of options
+                     * and set some of the options to disabled.  So for now we are removing
+                     * the non-supported platforms rather than the slightly more ideal option
+                     * of showing them but showing them disabled.
+                     * See issue: https://github.com/NYTimes/backbone.stickit/issues/183
+                     */
+
+                    /** Filters to only show platforms this initiative can support. */
+                    return _(this._platforms).filter(function(platform) {
+                        return _(accountPlatforms).contains(platform.value);
+                    });
+                },
+                defaultOption: {
+                    label: 'Select Platform',
+                    value: null
+                }
+            },
+            onGet: function(val) {
+                return val;
+            },
+            onSet: function(val) {
+                this.model.set({
+                    'objective': null,
+                    'kpi': null
+                });
+                // Handle Instagram case and convert platform value to uppercase
+                if (val === 'instagram') {
+                    this.model.set('subplatform', 'INSTAGRAM');
+                    return 'FACEBOOK';
+                } else if (val) {
+                    this.model.set('subplatform', null);
+                    return val.toUpperCase();
+                }
+            }
+        }
+    },
+    triggers: {
+        'click @ui.cancel': 'cancel',
+        'submit form': 'save'
+    },
+    handlePlatformUpdate: function(event) {
+        this.ui.account_select.prop('disabled', _.isNull(this.ui.platform_select.val()));
+    },
+    behaviors: {
+        DisplayError: {}
+    },
+    onShow: function() {
+        /** Allows us to use Marionette's UI syntax with stickit. */
+        this.bindings = Marionette.normalizeUIKeys(this.bindings, this._uiBindings);
+        /** Add stickit */
+        this.stickit();
+    }
+}));
+
+module.exports = View;

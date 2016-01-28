@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# A tad gross but necessary for working with SourceTree.
+# References: https://answers.atlassian.com/questions/140339/answers/3347586 &
+#             http://stackoverflow.com/questions/17538460/using-git-pre-commit-hooks-in-context-of-github-client
+export PATH=/usr/local/bin:$PATH
+
+# -e  Exit immediately if a command exits with a non-zero status.
+set -e
+
+# Ensure that code that isn't part of the prospective commit isn't tested within our pre-commit script.
+# NOTE: This doesn't work consistently so commenting out for now.
+# git stash -q --keep-index
+
+# Task that must successfully pass before you can commit.
+npm run linters
+npm run test
+
+# Restore any stashed code that is not part of the prospective commit.
+# NOTE: This doesn't work consistently so commenting out for now.
+# git stash pop -q

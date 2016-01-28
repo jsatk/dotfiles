@@ -1,0 +1,127 @@
+<div data-scene="creative" class="panel sc-panel sc-sidebar-default sc-sidebar-fixed">
+    <div data-type="creative" class="sc-list-group">
+
+        <div class="list-group-item">
+            <h5>Objective</h5>
+            <h3>{{titleize campaign.objective}}</h3>
+            <h5>Budget remaining</h5>
+            <h3>
+                {{formatMoney campaign.budget}}
+            </h3>
+        </div>
+
+        <div data-current="creative" class="list-group-item">
+            <h5 class="list-group-item-heading">Select creative</h5>
+
+            <div class="list-group-item-text">
+                <span class="text-muted">Total creatives:</span>
+                <strong class="creatives">0</strong>
+            </div>
+
+            <button type="button" class="btn btn-continue">Save and continue</button>
+            <button type="button" class="btn btn-edit">Edit creative</button>
+        </div>
+
+        <div data-current="demographic" class="list-group-item">
+            <h5 class="list-group-item-heading">Select demographic</h5>
+
+            <div class="list-group-item-text">
+                <span class="text-muted">Gender:</span>
+                <strong class="gender">0</strong>
+                <br/>
+                <span class="text-muted">Age range:</span>
+                <strong class="age">0</strong>
+                <br/>
+                <span class="text-muted">Geography:</span>
+                <strong class="geography">0</strong>
+                <br/>
+                <span class="text-muted">Placement:</span>
+                <strong class="placement">0</strong>
+            </div>
+
+            <button type="button" class="btn btn-continue">Save and continue</button>
+            <button type="button" class="btn btn-edit">Edit demographic</button>
+        </div>
+
+        <div data-current="targeting" class="list-group-item">
+            <h5 class="list-group-item-heading">Select targeting</h5>
+
+            <div class="list-group-item-text">
+                <span class="text-muted">Targeting set:</span>
+                <strong class="targeting-set">0</strong>
+            </div>
+
+            <button type="button" class="btn btn-continue">Save and continue</button>
+            <button type="button" class="btn btn-edit">Edit targeting</button>
+        </div>
+
+        <div data-current="upload-save" class="list-group-item hide">
+            <div class="list-group-item-text">
+                <i class="fa fa-refresh fa-fw fa-spin"></i>
+                <span class="text-muted message">Upload targeting</span>
+            </div>
+        </div>
+
+        <div data-current="upload-failure" class="list-group-item hide">
+            <div class="list-group-item-text">
+                <i class="fa fa-exclamation-triangle fa-fw"></i>
+                <span class="text-muted message">Upload failed</span>
+            </div>
+        </div>
+
+        <div data-current="budget launch-failure" class="list-group-item">
+            <h5 class="list-group-item-heading">Budget and tag</h5>
+
+            <div class="list-group-item-text">
+                <span class="text-muted">Total ad sets:</span>
+                <strong class="total-ad-sets">0</strong>
+                <br>
+                <span class="text-muted">Total ads:</span>
+                <strong class="total-ads">0</strong>
+            </div>
+
+            <button type="button" class="btn btn-continue">Save and continue</button>
+        </div>
+
+        <div data-current="launch-save" class="list-group-item hide">
+            <div class="list-group-item-text">
+                <i class="fa fa-refresh fa-fw fa-spin"></i>
+                <span class="text-muted message">Uploading to Facebook</span>
+            </div>
+        </div>
+
+        <div data-current="launch-failure" class="list-group-item hide">
+            <div class="list-group-item-text">
+                <i class="fa fa-exclamation-triangle fa-fw"></i>
+                <span class="text-muted message">Denied</span>
+            </div>
+        </div>
+
+        <div data-current="launch-success" class="list-group-item hide">
+            <div class="list-group-item-text">
+                <i class="fa fa-check-circle fa-fw"></i>
+                <span class="text-muted message">Upload successful</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div data-type="creation" class="sc-list-group">
+
+        <div class="list-group-item">
+            Preview
+        </div>
+
+        <div data-current="creation" class="list-group-item">
+            <h5 class="list-group-item-heading">New creative</h5>
+
+            <div class="list-group-item-text">
+                <span class="text-muted">Total creatives:</span> <strong class="new-creatives">0</strong>
+            </div>
+
+            <button type="button" class="btn btn-save">Save creative</button>
+            <button type="button" class="btn btn-cancel">Cancel</button>
+        </div>
+
+    </div>
+</div>

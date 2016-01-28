@@ -1,0 +1,6 @@
+<div class="sc-select-all panel sc-panel">
+    <input type="checkbox" id="select-all">
+    <label for="select-all"></label>
+</div>
+
+<div class="collection"></div>

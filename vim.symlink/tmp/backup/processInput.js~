@@ -1,0 +1,59 @@
+// Mocha puts its globals on the global object so we have to tell
+// StandardJS, our linter, that these functions are defined globaly so it
+// doesn't yell at us.
+
+/* global describe, it, before */
+
+var expect = require('chai').expect
+var processInput = require('../../lib/processCreditCards/processInput')
+
+describe('processInput', function () {
+  var input
+
+  before(function () {
+    input = 'Add Tom 4111-1111-1111-1111 $1000 Add Lisa 5454545454545454 $3000 Add ' +
+            'Quincy 1234567890123456 $2000 Charge Tom $500 Charge Tom $800 ' +
+            'Charge Lisa $7 Credit Lisa $100 Credit Quincy $200'
+  })
+
+  it('should return undefined if no input is passed in', function () {
+    expect(processInput()).to.be.undefined
+  })
+
+  it('should create a users object from the input and pass it to the callback', function () {
+    var output
+    processInput(input, function (users) { output = users })
+    expect(output).to.be.an('object')
+  })
+
+  it('should pass a user object that correctly reflects the the balance, validity of card, limit, etc., after processing all of the requests', function () {
+    var output
+    processInput(input, function (users) { output = users })
+    expect(output).to.deep.equal({
+      'Tom': {
+        card: {
+          number: '4111-1111-1111-1111',
+          balance: 500,
+          limit: 1000,
+          isValid: true
+        }
+      },
+      'Lisa': {
+        card: {
+          number: '5454545454545454',
+          balance: -93,
+          limit: 3000,
+          isValid: true
+        }
+      },
+      'Quincy': {
+        card: {
+          number: '1234567890123456',
+          balance: 0,
+          limit: 2000,
+          isValid: false
+        }
+      }
+    })
+  })
+})

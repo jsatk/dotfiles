@@ -32,3 +32,11 @@ set -gx PATH $PATH /Applications/Postgres.app/Contents/Versions/9.4/bin
 
 # For Autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and . /usr/local/share/autojump/autojump.fish
+
+# Sets brew cask symlink to /Applications instead of ~/Applications
+set -x HOMEBREW_CASK_OPTS '--appdir=/Applications'
+
+# For Docker
+# eval (docker-machine env default)
+
+ulimit -n 10000

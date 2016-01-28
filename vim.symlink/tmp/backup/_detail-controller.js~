@@ -1,0 +1,41 @@
+AdvisorApp.module('CampaignModule', function(Module, App) {
+    var getHeaderToolbarOptions = function(initiative, campaign) {
+        var effectivePlatform = campaign.getEffectivePlatform();
+        var canCreateAd       = effectivePlatform === 'facebook' && campaign.get('status') !== 'COMPLETED';
+        var canCreateBulkAd   = effectivePlatform === 'instagram';
+        var platformIcon      = effectivePlatform === 'instagram' ? effectivePlatform : effectivePlatform + '-square';
+
+        var events = {
+            'click #create-bulkupload-ad': function() {
+                App.trigger('adcreation:bulk_modal:show', initiative.id, campaign.id);
+            },
+            'change #campaign-details-search': function(event) {
+                AdvisorApp.getRegion('mainRegion').currentView.options.collection.setCollectionFilter({
+                    value: { name__icontains: event.currentTarget.value }
+                });
+            },
+            'click #create-ad': function() {
+                App.trigger('adcreation:modal:show', initiative.id, campaign.id);
+            }
+        };
+
+        var subNavs = [
+            {
+                platform:     campaign.get('platform').toLowerCase(),
+                platformIcon: platformIcon,
+                iName:        initiative.get('name'),
+                cName:        campaign.get('name')
+            }
+        ];
+
+        return {
+            canCreateAd:    canCreateAd,
+            canCreateBulkAd: canCreateBulkAd,
+            events:         events,
+            filterOptions:  {},
+            showNavToolbar: true,
+            subNavs:        subNavs,
+            viewName:       'campaign-details'
+        };
+    };
+});

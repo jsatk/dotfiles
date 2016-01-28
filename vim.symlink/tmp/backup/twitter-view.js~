@@ -1,0 +1,32 @@
+/**
+ * NOTE! In the CampaignModule this view is nested inside of the Summary view.
+ */
+AdvisorApp.module('CampaignModule.Chart', function(Module, App) {
+    Module.TwitterView = Marionette.LayoutView.extend({
+        /**
+         * The new endpoint to get Twitter Analytics takes a comma separated list of ids when getting data for
+         * Twitter Campaign level.
+         * For Twitter Line Item (a.k.a. AdGroup) level charts, we can just send the 'id' of the Twitter Campaign.
+         * @returns {Object} of collectionFilters. These translate to query params in the request URL.
+         */
+        getCollectionFilters: function(options) {
+            return {
+                campaign__in: this.getCampaignIn(),
+                group_by: 'start',
+                start__gte: moment(this.model.get('start_date')).startOf('day'),
+                start__lte: moment(this.model.get('end_date')).isAfter(moment()) ? moment().endOf('day') : moment(this.model.get('end_date')).endOf('day')
+            };
+        },
+
+        /** @returns {Array|Number} */
+        getCampaignIn: function() {
+            if (this.options.level === 'adset') {
+                return _(this.model.get('platform_campaigns')).map(function(pc) {
+                    return pc.platform_campaign_id;
+                }).join();
+            }
+
+            return this.model.get('id');
+        }
+    });
+});

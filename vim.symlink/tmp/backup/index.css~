@@ -1,0 +1,81 @@
+body {
+  background-color: #51B6B8;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Normally this would be included in a CSS reset */
+p {
+  margin: 0;
+}
+
+#content-wrap {
+  margin: 0 auto;
+  max-width: 80%;
+}
+
+#chats,
+#chat-stats {
+  float: right;
+}
+
+#chats {
+  max-width: 75%;
+}
+
+.chat-entry,
+.users {
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.3);
+  margin: 0.5em;
+  padding: 1em 1.5em;
+}
+
+.chat-entry {
+  float: left;
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+  width: 21%;
+}
+
+.chat-entry:nth-child(6n-2),
+.chat-entry:nth-child(6n-1),
+.chat-entry:nth-child(6n) {
+  float: right;
+}
+
+/* This gives us our nice fade out */
+.chat-entry:before {
+  background: linear-gradient(transparent 20px, white);
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+/* Every third child starting at the first. 1, 4, 7, 10... */
+.chat-entry:nth-child(3n+1) {
+  height: 88px;
+  width: 63%;
+}
+
+.user {
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+
+.user:hover {
+  border-bottom: 1px solid gray;
+  cursor: pointer;
+}
+
+.user .count {
+  float: right;
+}
+
+.user .name {
+  float: left;
+}

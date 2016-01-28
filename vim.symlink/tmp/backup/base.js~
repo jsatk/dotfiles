@@ -1,0 +1,62 @@
+/* global dependencies */
+var $ = require('jquery');
+var Backbone = require('backbone');
+
+/* local dependencies */
+var TastypiePageableCollection = require('advisor/config/TastypiePageableCollection');
+
+/* module definition */
+var Module = {};
+
+Module.Collection = Backbone.Collection.extend({
+    initialize: function(options) {
+        this.filters = options.query;
+    }
+});
+Module.getBaseEntity = function(id, Model, campaignId) {
+    /** Variables */
+    var deferrer = $.Deferred();
+    var model = new Model({
+        campaignId: campaignId,
+        id: id
+    });
+    /** Fetch model */
+    model.fetch({
+        data: this.model.fetchData(),
+        success: function(data) {
+            deferrer.resolve(data);
+        },
+        error: function(xhr, status) {
+            deferrer.reject(status);
+        }
+    });
+    /** Return deferrer */
+    return deferrer.promise();
+};
+Module.getBaseEntities = function(options, Collection) {
+    /** Variables */
+    var deferrer = $.Deferred();
+    var collection = new Collection(options);
+    /** Fetch collection */
+    collection.fetch({
+        data: this.filters,
+        success: function(data) {
+            deferrer.resolve(data);
+        },
+        error: function(xhr, status) {
+            deferrer.reject(status);
+        }
+    });
+    /** Return deferrer */
+    return deferrer.promise();
+};
+Module.getPageableBaseEntities = function(Model, userCanManage) {
+    return TastypiePageableCollection.extend({
+        'model': Model.extend({
+            userCanManage: userCanManage
+        }),
+        'url': Model.prototype.urlRoot || Model.prototype.url
+    });
+};
+
+module.exports = Module;

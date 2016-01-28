@@ -1,0 +1,14 @@
+AdvisorApp.module('CampaignModule.Children', function(Module, App) {
+
+    Module.BulkBidUpdateView = BulkUpdateView.extend({
+        template: Handlebars.templates.BulkTextInputUpdateForm,
+        title: 'Update Bids',
+        templateHelpers: {
+            type:        'bid',
+            title:       'Bid',
+            pluralTitle: 'Bids',
+            placeholder: 'e.g. 4.55'
+        }
+    });
+
+});

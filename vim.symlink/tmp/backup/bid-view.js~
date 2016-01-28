@@ -1,0 +1,214 @@
+/* global dependencies */
+var accounting = require('accounting');
+var $ = require('jquery');
+var Backbone = require('backbone');
+var _ = require('underscore');
+var Marionette = require('backbone.marionette');
+
+require('backbone.stickit');
+
+/* local dependencies */
+var record = require('../../record');
+
+/* templates */
+var BudgetBidTemplate = require('../../templates/budgetBid.hbs');
+
+var BidView = Marionette.ItemView.extend({
+    title: 'Set budget and bids',
+    /** Handlebar template */
+    template:   BudgetBidTemplate,
+    className: 'sc-adcreation-modal',
+    /** Template helpers */
+    templateHelpers: function() {
+        return _(this.options).extend({ title: this.getOption('title') });
+    },
+    /** UI */
+    ui: {
+         /** Bid dropdown */
+         'bidTitle':        '#bid button .value',
+         'bidSelection':    '#bid .dropdown-menu',
+         /** Budget dropdown */
+         'budgetTitle':     '#budget button .value',
+         'budgetSelection': '#budget .dropdown-menu',
+         /** Bid */
+         'daily':           'input.daily-budget',
+         'lifetime':        'input.lifetime-budget',
+         /** Budget inputs */
+         'actions':         'input.actions',
+         'reach':           'input.reach',
+         'clicks':          'input.clicks',
+         'social':          'input.social',
+         'impressions':     'input.impressions',
+         /** Update button */
+         'update':          '.btn-update'
+     },
+    /** Events */
+    events: {
+        'click @ui.bidSelection':    'setBid',
+        'click @ui.budgetSelection': 'setBudget',
+        'click @ui.update':          'update'
+    },
+    /** Data binding */
+    bindings: {
+        '@ui.bidTitle':    'bid_title',
+        '@ui.budgetTitle': 'budget_title',
+        '@ui.daily':       'daily_budget',
+        '@ui.lifetime':    'lifetime_budget',
+        '@ui.actions': {
+            key:     'ACTIONS',
+            observe: 'bid_info',
+            onSet:   'setArray',
+            onGet:   'getArray'
+        },
+        '@ui.reach': {
+            key:     'REACH',
+            observe: 'bid_info',
+            onSet:   'setArray',
+            onGet:   'getArray'
+        },
+        '@ui.clicks': {
+            key:     'CLICKS',
+            observe: 'bid_info',
+            onSet:   'setArray',
+            onGet:   'getArray'
+        },
+        '@ui.social': {
+            key:     'SOCIAL',
+            observe: 'bid_info',
+            onSet:   'setArray',
+            onGet:   'getArray'
+        },
+        '@ui.impressions': {
+            key:     'IMPRESSIONS',
+            observe: 'bid_info',
+            onSet:   'setArray',
+            onGet:   'getArray'
+        }
+    },
+    /** Behaviors */
+    behaviors: {
+        CurrencyValidate: {}
+    },
+    initialize: function() {
+        // Keeping it a very short debounce since we get lots of
+        // calls to toggleInput, which I'm assuming is due to multiple
+        // change events occurring simultaneously. Well, as simulataneous
+        // as javascript really allows.
+        this.toggleInputs = _.debounce(this.toggleInputs, 50);
+    },
+    /** @memberof App.module('AdCreationApp.Views').Budget */
+    onShow: function() {
+         /** Use UI keys in bindings */
+         this.bindings = Marionette.normalizeUIKeys(this.bindings, this._uiBindings);
+         /** Add stickit */
+         this.stickit();
+         /** Select first item in dropdown lists */
+         this.$('.dropdown-menu li:first-child a').trigger('click');
+         /** Listen to model change */
+         this.listenTo(this.model, 'all', this.toggleInputs);
+     },
+    /** @memberof App.module('AdCreationApp.Views').Budget */
+    update: function(event) {
+         /** Modules */
+         var Collection = record('collection:adcollections');
+         /** Model */
+         var model = this.model;
+         /** Get selected models */
+         var selected = Collection.where({ _selected: true });
+         /** Create a collection of selected models */
+         selected = new Backbone.Collection(selected);
+         /** Add attributes to collection models */
+         selected.invoke('set', model.attributes);
+         /** This causes the bid/budget inputs to reformat to dollars */
+         $('.sc-budget input').each(function() {
+            this.focus();
+            this.blur();
+        });
+         /** Close modal */
+         this.triggerMethod('modal:close');
+     },
+    /** @memberof App.module('AdCreationApp.Views').Budget */
+    setBid: function(event) {
+         /** Close popup */
+         var parent = $(event.currentTarget).parent();
+         parent.removeClass('open');
+         /** Set bid type */
+         this.model.set({
+            bid_type:     $(event.target).data('value'),
+            bid_title:    $(event.target).data('title'),
+            bid_selector: $(event.target).data('selector')
+        });
+         /** Clear bid */
+         this.model.unset('bid_info');
+         /** Toggle inputs */
+         this.toggleInputs();
+         /** Stop propagation */
+         return false;
+     },
+    setBudget: function(event) {
+         /** Close popup */
+         var parent = $(event.currentTarget).parent();
+         parent.removeClass('open');
+         /** Set budget type */
+         this.model.set({
+            budget_type:     $(event.target).data('value'),
+            budget_title:    $(event.target).data('title'),
+            budget_selector: $(event.target).data('selector')
+        });
+         /** Clear budget */
+         this.model.unset('daily_budget');
+         this.model.unset('lifetime_budget');
+         /** Toggle inputs */
+         this.toggleInputs();
+         /** Stop propagation */
+         return false;
+     },
+    /** @memberof App.module('AdCreationApp.Views').Budget */
+    toggleInputs: function() {
+         /** Selectors */
+         var budget    = this.model.get('budget_selector');
+         var bid       = this.model.get('bid_selector');
+         var selectors = this.$('[data-selector]');
+         /** Create a string of selectors */
+         var list = selectors.map(function() {
+            return $(this).data('selector');
+        }).get().join(',');
+         this.$(list).hide();
+         this.$(budget).show();
+         this.$(bid).show();
+     },
+    /** @memberof App.module('AdCreationApp.Views').Budget */
+    setArray: function(value, opts) {
+         /** Get values */
+         var values = this.model.get(opts.observe) || {};
+         /** Add value */
+         values[opts.key] = this.setCent(value);
+         // Unfortunately Backbone does not fire a change event when it
+         // updates a model's attribute if the attribute is an array. Stickit
+         // intelligently just adds to the array so no change event is fired.
+         // The "wiring" between the input and the model's attribute works
+         // great. There just isn't a `change` event that is fired. We have
+         // to fire this manually here then so that we can check and see if
+         // the user has filled in all the proper inputs before allowing
+         // them to "Save & Continue".
+         this.model.trigger('change', this.model);
+         /** Return values */
+         return values;
+     },
+    getArray: function(value, opts) {
+         /** Get bid from key */
+         var amount = value && value[opts.key] || undefined;
+         /** Return value */
+         return value && this.getDollar(amount);
+     },
+    setCent: function(value) {
+         /** Convert dollars to cent */
+         return value && parseInt(accounting.unformat(value) * 100, 10);
+     },
+    getDollar: function(value) {
+         /** Convert cents to dollars */
+         return value && accounting.unformat(value) / 100;
+     }
+});
+
+module.exports = BidView;

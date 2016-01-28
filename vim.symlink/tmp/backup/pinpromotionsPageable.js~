@@ -1,0 +1,10 @@
+/* global dependencies */
+var Backbone = require('backbone');
+var TastypiePageableCollection = require('advisor/config/TastypiePageableCollection');
+
+/* local dependencies */
+var Collection = require('./pinpromotions');
+
+module.exports = Collection.extend(
+    TastypiePageableCollection.extend()
+);

@@ -1,0 +1,11 @@
+AdvisorApp.module('CampaignModule.Views', function(Views) {
+    Views.SummaryWithoutChart = Views.SummaryBase.extend({
+        regions: {
+            pacingRegion: '.pacing'
+        },
+
+        initialize: function() {
+            this.createPacingView();
+        }
+    });
+});

@@ -1,0 +1,19 @@
+/* global dependencies */
+var Marionette = require('backbone.marionette');
+
+/* local dependencies */
+var ModalView = require('./modal-view');
+
+module.exports = Marionette.Region.extend({
+    el: '#modal-region',
+    attachHtml: function(view) {
+        var modalView = new ModalView({
+            view: view
+        });
+        this.$el.append(modalView.render().$el);
+    },
+    onBeforeSwapOut: function(view) {
+        // Close out existing modals
+        view.triggerMethod('modal:close');
+    }
+});

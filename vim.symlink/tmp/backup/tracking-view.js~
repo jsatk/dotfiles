@@ -1,0 +1,97 @@
+AdvisorApp.module('TrackingModule.Tracking', function(Tracking, App) {
+
+    var TagView = Marionette.ItemView.extend({
+
+        tagName: 'li',
+        template: Handlebars.templates.initiativeTrackingTag,
+        templateHelpers: function() {
+            return {
+                inUse: !_.isEmpty(this.model.get('campaigns'))
+            };
+        },
+        className: 'btn btn-xs js-tag btn-tag',
+
+        ui:{
+            removeTagBtn: '.js-close'
+        },
+
+        events:{
+            'click @ui.removeTagBtn': 'onRemoveTag'
+        },
+
+        onRemoveTag: function() {
+            this.trigger('remove:tag');
+        }
+    });
+
+    var TagCollectionView = Marionette.CompositeView.extend({
+
+        tagName: 'div',
+        className: 'panel sc-panel',
+        template: Handlebars.templates.initiativeTrackingTagCollection,
+        childViewContainer: '.tag-cloud',
+
+        ui: {
+            tagInput:'.js-taginput'
+        },
+
+        events:{
+            'keyup @ui.tagInput': 'onNewTag'
+        },
+
+        childView: TagView,
+        onNewTag: function(event) {
+            if (event.which !== 13) { return; } //enter key only beyond here
+            var $tagNameInput   = $(event.currentTarget);
+            var val             = $tagNameInput.val();
+
+            if (val.length > 1) {
+                this.collection.add({url: val, initiative: this.initiativeUri});
+            }
+            $tagNameInput.val('');
+        },
+        childEvents: {
+            'remove:tag': function(tagView) {
+                this.collection.remove(tagView.model);
+            }
+        },
+        behaviors: {
+            DisplayError: {
+                errorContainerSel: '.tag-edit-message'
+            }
+        },
+        initialize: function() {
+            this.initiativeUri = this.getOption('initiative').get('resource_uri');
+        }
+    });
+
+    var TrackingLayout = Marionette.LayoutView.extend({
+
+        className: 'initiative-tracking-sc',
+        template: Handlebars.templates.initiativeTrackingLayout,
+        regions:{
+            'tagRegion': '#tracking-tag',
+            'pixelRegion': '#tracking-pixel'
+        }
+
+    });
+
+    App.module('InitiativeModule').on('start', function() {
+
+        var moduleChannel = this.moduleChannel;
+
+        moduleChannel.reqres.setHandler('tracking:layout:View', function() {
+            return TrackingLayout;
+        });
+
+        moduleChannel.reqres.setHandler('tracking:tag:View', function() {
+            return TagView;
+        });
+
+        moduleChannel.reqres.setHandler('tracking:tagCollection:View', function() {
+            return TagCollectionView;
+        });
+
+    });
+
+});
