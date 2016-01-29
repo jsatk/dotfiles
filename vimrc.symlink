@@ -49,7 +49,8 @@ Plugin 'gmarik/Vundle.vim'                      " Alternative to Pathogen.  Love
 Plugin 'tpope/vim-fugitive'                     " Git support in vim.  Incredible handy for merge conflicts.
 Plugin 'scrooloose/nerdtree.git'                " A vim explorer replacement.  Much nicer and easier to use.
 Plugin 'scrooloose/syntastic'                   " Adds error checking while writing or on save in vim.
-Plugin 'bling/vim-airline'                      " Adds a gorgeous toolbar with useful info to bottom of vim.
+Plugin 'vim-airline/vim-airline'                " Adds a gorgeous toolbar with useful info to bottom of vim.
+Plugin 'vim-airline/vim-airline-themes'         " Airline themes.  Self explanatory
 Plugin 'tpope/vim-commentary'                   " Easier comment support in vim.  Comment out blocks with gcc.
 Plugin 'editorconfig/editorconfig-vim'          " Maintain consistent coding styles between different editors and IDEs.
 Plugin 'dag/vim-fish'                           " Fish Shell syntax highlighting for vim.
@@ -63,6 +64,7 @@ Plugin 'vim-scripts/BufOnly.vim'                " Close all buffers except the c
 Plugin 'tpope/vim-dispatch'                     " Terminal in your vim. See: https://vimeo.com/63116209
 Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
 Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
+Plugin 'flazz/vim-colorschemes'                 " All the colorschemes money can buy
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -240,9 +242,13 @@ abbr ios iOS
 abbr iOs iOS
 abbr IOS iOS
 
-" }}}
-" Repo-Specific Settings {{{
+" Increment alpha strings with vim
+" https://blog.mozilla.org/jv/2011/01/12/incrementing-alpha-strings-with-vim/
+set nf=octal,hex,alpha
 
+" Cycle through buffers http://vim.wikia.com/wiki/Cycle_through_buffers_including_hidden_buffers
+" nnoremap <C-n> :bnext<CR>
+" nnoremap <C-p> :bprevious<CR>
 " }}}
 " Look & Feel {{{
 
@@ -250,7 +256,12 @@ abbr IOS iOS
 " Here's the top 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
 " List of favorites: Tomorrow-Night, lessnau_dark, railscasts, inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
 " You can make your own colorschemes here: http://www.villustrator.com/
+" I'm importing a fuck ton of colorschemes via this plugin: github.com/flazz/vim-colorschemes
 colorscheme lucius
+
+" Many colorschemes support both light and dark backgrounds.  Dark is nicer on
+" my eyes.
+set background=dark
 
 " Sets the ColorColumn to a sensible color.  Default is 'Dark Red'.
 highlight ColorColumn ctermbg=237 guibg=#3a3a3a
@@ -800,16 +811,4 @@ let g:ctrlp_match_window = 'results:20'
 " Shows the hidden dot files
 let g:ctrlp_show_hidden = 0
 
-" }}}
-" Airline {{{
-let g:airline_theme = 'onedark'
-" }}}
-" Learn Vimscript the Hard Way {{{
-
-" noremap <leader><leader>- -
-" noremap <leader>_ _
-" inoremap <leader><c-u> <esc>bveUi
-" noremap <leader><c-u> bveU<esc>
-
-" :autocmd BufNewFile * :write
 " }}}
