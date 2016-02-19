@@ -1,22 +1,30 @@
-# remap prefix to Control + a
+# tmux plugin manager: https://github.com/tmux-plugins/tpm
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+# Automatically renumber tmux windows
+set -g renumber-windows on
+
+# Remap prefix to Control + a
 set -g prefix C-a
 unbind C-b
 bind C-a send-prefix
 
-# force a reload of the config file
-unbind r
-bind r source-file ~/.tmux.conf
-
-# quick pane cycling
-unbind ^A
-bind ^A select-pane -t :.+
-
 # Let me use my fucking mouse to scroll, tmux.
-setw -g mode-mouse on
-set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+# This was stolen from this shitshow of a thread:
+# https://github.com/tmux/tmux/issues/145
+set -g mouse on
+bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'copy-mode -e; send-keys -M'"
 
-##############################
-### Color & Style Settings ###
-##############################
+# pane movement shortcuts
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
 
-source ~/Dropbox/dotfiles/theme.sh
+# Bind Ctrl-a Ctrl-a to last window
+bind-key C-a last-window
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'

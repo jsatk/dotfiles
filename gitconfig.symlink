@@ -108,8 +108,5 @@
   email            = jesse.atkinson@me.com
   name             = 'Jesse Atkinson'
 
-[credential]
-  helper           = /opt/boxen/bin/boxen-git-credential
-
 [hub]
 protocol           = https

@@ -2,3 +2,4 @@ DS_Store
 .DS_Store
 vim.symlink/bundle/
 vim.symlink/tmp/
+tmux.symlink/

@@ -27,7 +27,7 @@ export EDITOR="vim"
 # ----
 
 # Ensure user-installed binaries take precedence
-export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 # Add Postgres to path
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
@@ -37,9 +37,6 @@ test -f ~/.bashrc && source ~/.bashrc
 
 # Sets PATH for executable scripts
 export PATH=$PATH:$HOME/Library/Scripts
-
-# Enable shims and autocompletion for rbenv.
-eval "$(rbenv init -)"
 
 # ---------------
 # Bash Completion

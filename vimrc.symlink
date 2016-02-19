@@ -252,16 +252,16 @@ set nf=octal,hex,alpha
 " }}}
 " Look & Feel {{{
 
+" Many colorschemes support both light and dark backgrounds.  Dark is nicer on
+" my eyes.
+set background=dark
+
 " Color schemes are located in ~/.vim/colors/
 " Here's the top 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
 " List of favorites: Tomorrow-Night, lessnau_dark, railscasts, inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
 " You can make your own colorschemes here: http://www.villustrator.com/
 " I'm importing a fuck ton of colorschemes via this plugin: github.com/flazz/vim-colorschemes
 colorscheme lucius
-
-" Many colorschemes support both light and dark backgrounds.  Dark is nicer on
-" my eyes.
-set background=dark
 
 " Sets the ColorColumn to a sensible color.  Default is 'Dark Red'.
 highlight ColorColumn ctermbg=237 guibg=#3a3a3a
@@ -308,22 +308,22 @@ nnoremap <CR> :nohlsearch<cr>
 
 " Only show cursorline in the current window and in normal mode.
 augroup cline
-    autocmd!
+  autocmd!
 
-    autocmd WinLeave,InsertEnter * set nocursorline
-    autocmd WinEnter,InsertLeave * set cursorline
+  autocmd WinLeave,InsertEnter * set nocursorline
+  autocmd WinEnter,InsertLeave * set cursorline
 augroup END
 
 " Indent Guides
 let g:indentguides_state = 0
 function! IndentGuides() " {{{
-    if g:indentguides_state
-        let g:indentguides_state = 0
-        2match None
-    else
-        let g:indentguides_state = 1
-        execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
-    endif
+  if g:indentguides_state
+    let g:indentguides_state = 0
+    2match None
+  else
+    let g:indentguides_state = 1
+    execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
+  endif
 endfunction " }}}
 hi def IndentGuides guibg=#303030 ctermbg=234
 nnoremap <leader>I :call IndentGuides()<cr>
@@ -339,16 +339,16 @@ nnoremap <leader>z zMzvzz
 " On save strip trailing whitespace and convert line endings to Unix format
 " http://stackoverflow.com/questions/356126/how-can-you-automatically-remove-trailing-whitespace-in-vim
 augroup prewrites
-    autocmd!
+  autocmd!
 
-    autocmd BufWritePre,FileWritePre * :%s/\s\+$//e | %s/\r$//e
+  autocmd BufWritePre,FileWritePre * :%s/\s\+$//e | %s/\r$//e
 augroup END
 
 " Source the .vimrc file after saving it.  This way, you don't have to reload Vim to see the changes.
 augroup myvimrchooks
-    autocmd!
+  autocmd!
 
-    autocmd bufwritepost .vimrc source ~/.vimrc
+  autocmd bufwritepost .vimrc source ~/.vimrc
 augroup END
 
 " }}}
@@ -362,11 +362,11 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace ()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    :%s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
+  let save_cursor = getpos(".")
+  let old_query = getreg('/')
+  :%s/\s\+$//e
+  call setpos('.', save_cursor)
+  call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace ()<CR>
 
@@ -419,11 +419,11 @@ inoremap <right> <nop>
 " Use the Linux dictionary when spelling is in doubt.
 " Window users can copy the file to their machine.
 function! Tab_Or_Complete()
-    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-        return "\<C-N>"
-    else
-        return "\<Tab>"
-    endif
+  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    return "\<C-N>"
+  else
+    return "\<Tab>"
+  endif
 endfunction
 inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 set dictionary="/usr/dict/words"
@@ -433,13 +433,13 @@ set dictionary="/usr/dict/words"
 
 " Rename current file
 function! RenameFile()
-    let old_name = expand('%')
-    let new_name = input('New file name: ', expand('%'))
-    if new_name != '' && new_name != old_name
-        exec ':saveas ' . new_name
-        exec ':silent !rm ' . old_name
-        redraw!
-    endif
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'))
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
 endfunction
 
 map <leader>rn :call RenameFile()<cr>
@@ -449,10 +449,10 @@ map <leader>rn :call RenameFile()<cr>
 
 " Only shown when not in insert mode so I don't go insane.
 augroup trailing
-    autocmd!
+  autocmd!
 
-    autocmd InsertEnter * :set listchars-=trail:⌴
-    autocmd InsertLeave * :set listchars+=trail:⌴
+  autocmd InsertEnter * :set listchars-=trail:⌴
+  autocmd InsertLeave * :set listchars+=trail:⌴
 augroup END
 
 " }}}
@@ -461,12 +461,12 @@ augroup END
 " Make sure Vim returns to the same line when you reopen a file.
 " Thanks, Amit
 augroup line_return
-    autocmd!
+  autocmd!
 
-    autocmd BufReadPost *
-                \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                \     execute 'normal! g`"zvzz' |
-                \ endif
+  autocmd BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \     execute 'normal! g`"zvzz' |
+            \ endif
 augroup END
 
 " }}}
@@ -482,65 +482,65 @@ set directory=~/.vim/tmp/swap//   " swap files
 
 " Make those folders automatically if they don't already exist.
 if !isdirectory(expand(&undodir))
-    call mkdir(expand(&undodir), "p")
+  call mkdir(expand(&undodir), "p")
 endif
 
 if !isdirectory(expand(&backupdir))
-    call mkdir(expand(&backupdir), "p")
+  call mkdir(expand(&backupdir), "p")
 endif
 
 if !isdirectory(expand(&directory))
-    call mkdir(expand(&directory), "p")
+  call mkdir(expand(&directory), "p")
 endif
 
 " }}}
 " JavaScript {{{
 
 augroup ft_javascript
-    autocmd!
+  autocmd!
 
-    " For Syntastic
-    let g:syntastic_javascript_checkers = ['eslint']
+  " For Syntastic
+  let g:syntastic_javascript_checkers = ['eslint']
 
-    autocmd FileType javascript setlocal foldmethod=marker
-    autocmd FileType javascript setlocal foldmarker={,}
+  autocmd FileType javascript setlocal foldmethod=marker
+  autocmd FileType javascript setlocal foldmarker={,}
 
-    " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
-    " positioned inside of them AND the following code doesn't get unfolded.
-    autocmd Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
-    " }
+  " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
+  " positioned inside of them AND the following code doesn't get unfolded.
+  autocmd Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
+  " }
 
-    " Prettify a hunk of JSON with <localleader>p
-    autocmd FileType javascript nnoremap <buffer> <localleader>p ^vg_:!python -m json.tool<cr>
-    autocmd FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
+  " Prettify a hunk of JSON with <localleader>p
+  autocmd FileType javascript nnoremap <buffer> <localleader>p ^vg_:!python -m json.tool<cr>
+  autocmd FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
 
-    " Set which javascript libraries I use with https://github.com/othree/javascript-libraries-syntax.vim
-    let g:used_javascript_libs = 'lo-dash,angularjs,jquery,chai'
+  " Set which javascript libraries I use with https://github.com/othree/javascript-libraries-syntax.vim
+  let g:used_javascript_libs = 'lo-dash,angularjs,jquery,chai'
 augroup END
 
 " }}}
 " Markdown {{{
 
 augroup ft_markdown
-    autocmd!
+  autocmd!
 
-    autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
+  autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
 
-    set formatoptions+=t
-    set textwidth=80
-    set softtabstop=4
-    set tabstop=4
-    set shiftwidth=4
+  set formatoptions+=t
+  set textwidth=80
+  set softtabstop=4
+  set tabstop=4
+  set shiftwidth=4
 augroup END
 
 " }}}
 " Ruby {{{
 
 augroup ft_ruby
-    autocmd!
+  autocmd!
 
-    autocmd Filetype ruby setlocal foldmethod=syntax
-    autocmd BufRead,BufNewFile Capfile setlocal filetype=ruby
+  autocmd Filetype ruby setlocal foldmethod=syntax
+  autocmd BufRead,BufNewFile Capfile setlocal filetype=ruby
 augroup END
 
 " Tells Vim to set the syntax for our .irbrc file to Ruby.
@@ -550,21 +550,21 @@ autocmd BufNewFile,BufRead .irbrc set syntax=html
 " Handlebars {{{
 
 augroup ft_handlebars
-    autocmd!
+  autocmd!
 
-    autocmd Filetype html.handlebars setlocal foldmethod=indent
-    autocmd BufNewFile,BufRead *.hbs setlocal filetype=html.handlebars
+  autocmd Filetype html.handlebars setlocal foldmethod=indent
+  autocmd BufNewFile,BufRead *.hbs setlocal filetype=html.handlebars
 augroup END
 
 " }}}
 " Haml {{{
 
 augroup ft_haml
-    autocmd!
+  autocmd!
 
-    autocmd Filetype haml setlocal foldmethod=syntax
-    autocmd Filetype haml setlocal colorcolumn=0
-    autocmd BufRead,BufNewFile Capfile setlocal filetype=haml
+  autocmd Filetype haml setlocal foldmethod=syntax
+  autocmd Filetype haml setlocal colorcolumn=0
+  autocmd BufRead,BufNewFile Capfile setlocal filetype=haml
 augroup END
 
 " }}}
@@ -576,206 +576,206 @@ nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
 :command! BeautifyCSS :g#\({\n\)\@<=#.,/}/sort <bar> %s/:\(\S\+;\)/: \1/g
 
 augroup ft_css
-    autocmd!
+  autocmd!
 
-    autocmd BufNewFile,BufRead *.less setlocal filetype=less
+  autocmd BufNewFile,BufRead *.less setlocal filetype=less
 
-    autocmd Filetype less,css setlocal foldmethod=marker
-    autocmd Filetype less,css setlocal foldmarker={,}
-    autocmd Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd Filetype less,css setlocal iskeyword+=-
+  autocmd Filetype less,css setlocal foldmethod=marker
+  autocmd Filetype less,css setlocal foldmarker={,}
+  autocmd Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd Filetype less,css setlocal iskeyword+=-
 
-    " Use <leader>S to sort properties.  Turns this:
-    "
-    "     p {
-    "         width: 200px;
-    "         height: 100px;
-    "         background: red;
-    "
-    "         ...
-    "     }
-    "
-    " into this:
-    "
-    "     p {
-    "         background: red;
-    "         height: 100px;
-    "         width: 200px;
-    "
-    "         ...
-    "     }
-    autocmd BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+  " Use <leader>S to sort properties.  Turns this:
+  "
+  "     p {
+  "         width: 200px;
+  "         height: 100px;
+  "         background: red;
+  "
+  "         ...
+  "     }
+  "
+  " into this:
+  "
+  "     p {
+  "         background: red;
+  "         height: 100px;
+  "         width: 200px;
+  "
+  "         ...
+  "     }
+  autocmd BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
-    " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
-    " positioned inside of them AND the following code doesn't get unfolded.
-    autocmd BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+  " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
+  " positioned inside of them AND the following code doesn't get unfolded.
+  autocmd BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
 augroup END
 
 " }}}
 " Fish {{{
 
 augroup ft_fish
-    autocmd!
+  autocmd!
 
-    autocmd BufNewFile,BufRead *.fish setlocal filetype=fish
-    " Enable folding of block structures in fish.
-    autocmd FileType fish setlocal foldmethod=expr
-    " Set this to have long lines wrap inside comments.
-    autocmd FileType fish setlocal textwidth=79
-    " Set up :make to use fish for syntax checking.
-    autocmd FileType fish compiler fish
+  autocmd BufNewFile,BufRead *.fish setlocal filetype=fish
+  " Enable folding of block structures in fish.
+  autocmd FileType fish setlocal foldmethod=expr
+  " Set this to have long lines wrap inside comments.
+  autocmd FileType fish setlocal textwidth=79
+  " Set up :make to use fish for syntax checking.
+  autocmd FileType fish compiler fish
 augroup END
 
 " }}}
 " Vim {{{
 :command! ClearQuickfixList cexpr []
 augroup ft_vim
-    autocmd!
+  autocmd!
 
-    autocmd FileType vim setlocal foldmethod=marker
-    autocmd FileType help setlocal textwidth=78
-    autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
+  autocmd FileType vim setlocal foldmethod=marker
+  autocmd FileType help setlocal textwidth=78
+  autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
 augroup END
 
 " }}}
 " Yaml {{{
 
 augroup ft_yaml
-    autocmd!
+  autocmd!
 
-    autocmd FileType yaml set shiftwidth=2
+  autocmd FileType yaml set shiftwidth=2
 augroup END
 
 " }}}
 " XML {{{
 
 augroup ft_xml
-    autocmd!
+  autocmd!
 
-    autocmd FileType xml setlocal foldmethod=manual
+  autocmd FileType xml setlocal foldmethod=manual
 
-    " Use <localleader>f to fold the current tag.
-    autocmd FileType xml nnoremap <buffer> <localleader>f Vatzf
+  " Use <localleader>f to fold the current tag.
+  autocmd FileType xml nnoremap <buffer> <localleader>f Vatzf
 
-    " Indent tag
-    autocmd FileType xml nnoremap <buffer> <localleader>= Vat=
+  " Indent tag
+  autocmd FileType xml nnoremap <buffer> <localleader>= Vat=
 augroup END
 
 " }}}
 " Nyan! {{{
 
 function! NyanMe() "
-    hi NyanFur             guifg=#BBBBBB
-    hi NyanPoptartEdge     guifg=#ffd0ac
-    hi NyanPoptartFrosting guifg=#fd3699 guibg=#fe98ff
-    hi NyanRainbow1        guifg=#6831f8
-    hi NyanRainbow2        guifg=#0099fc
-    hi NyanRainbow3        guifg=#3cfa04
-    hi NyanRainbow4        guifg=#fdfe00
-    hi NyanRainbow5        guifg=#fc9d00
-    hi NyanRainbow6        guifg=#fe0000
+  hi NyanFur             guifg=#BBBBBB
+  hi NyanPoptartEdge     guifg=#ffd0ac
+  hi NyanPoptartFrosting guifg=#fd3699 guibg=#fe98ff
+  hi NyanRainbow1        guifg=#6831f8
+  hi NyanRainbow2        guifg=#0099fc
+  hi NyanRainbow3        guifg=#3cfa04
+  hi NyanRainbow4        guifg=#fdfe00
+  hi NyanRainbow5        guifg=#fc9d00
+  hi NyanRainbow6        guifg=#fe0000
 
 
-    echohl NyanRainbow1
-    echon "≈"
-    echohl NyanRainbow2
-    echon "≋"
-    echohl NyanRainbow3
-    echon "≈"
-    echohl NyanRainbow4
-    echon "≋"
-    echohl NyanRainbow5
-    echon "≈"
-    echohl NyanRainbow6
-    echon "≋"
-    echohl NyanRainbow1
-    echon "≈"
-    echohl NyanRainbow2
-    echon "≋"
-    echohl NyanRainbow3
-    echon "≈"
-    echohl NyanRainbow4
-    echon "≋"
-    echohl NyanRainbow5
-    echon "≈"
-    echohl NyanRainbow6
-    echon "≋"
-    echohl None
-    echo ""
+  echohl NyanRainbow1
+  echon "≈"
+  echohl NyanRainbow2
+  echon "≋"
+  echohl NyanRainbow3
+  echon "≈"
+  echohl NyanRainbow4
+  echon "≋"
+  echohl NyanRainbow5
+  echon "≈"
+  echohl NyanRainbow6
+  echon "≋"
+  echohl NyanRainbow1
+  echon "≈"
+  echohl NyanRainbow2
+  echon "≋"
+  echohl NyanRainbow3
+  echon "≈"
+  echohl NyanRainbow4
+  echon "≋"
+  echohl NyanRainbow5
+  echon "≈"
+  echohl NyanRainbow6
+  echon "≋"
+  echohl None
+  echo ""
 
-    echohl NyanRainbow1
-    echon "≈"
-    echohl NyanRainbow2
-    echon "≋"
-    echohl NyanRainbow3
-    echon "≈"
-    echohl NyanRainbow4
-    echon "≋"
-    echohl NyanRainbow5
-    echon "≈"
-    echohl NyanRainbow6
-    echon "≋"
-    echohl NyanRainbow1
-    echon "≈"
-    echohl NyanRainbow2
-    echon "≋"
-    echohl NyanRainbow3
-    echon "≈"
-    echohl NyanRainbow4
-    echon "≋"
-    echohl NyanRainbow5
-    echon "≈"
-    echohl NyanRainbow6
-    echon "≋"
-    echohl NyanFur
-    echon "╰"
-    echohl NyanPoptartEdge
-    echon "⟨"
-    echohl NyanPoptartFrosting
-    echon "⣮⣯⡿"
-    echohl NyanPoptartEdge
-    echon "⟩"
-    echohl NyanFur
-    echon "⩾^ω^⩽"
-    echohl None
-    echo ""
+  echohl NyanRainbow1
+  echon "≈"
+  echohl NyanRainbow2
+  echon "≋"
+  echohl NyanRainbow3
+  echon "≈"
+  echohl NyanRainbow4
+  echon "≋"
+  echohl NyanRainbow5
+  echon "≈"
+  echohl NyanRainbow6
+  echon "≋"
+  echohl NyanRainbow1
+  echon "≈"
+  echohl NyanRainbow2
+  echon "≋"
+  echohl NyanRainbow3
+  echon "≈"
+  echohl NyanRainbow4
+  echon "≋"
+  echohl NyanRainbow5
+  echon "≈"
+  echohl NyanRainbow6
+  echon "≋"
+  echohl NyanFur
+  echon "╰"
+  echohl NyanPoptartEdge
+  echon "⟨"
+  echohl NyanPoptartFrosting
+  echon "⣮⣯⡿"
+  echohl NyanPoptartEdge
+  echon "⟩"
+  echohl NyanFur
+  echon "⩾^ω^⩽"
+  echohl None
+  echo ""
 
-    echohl NyanRainbow1
-    echon "≈"
-    echohl NyanRainbow2
-    echon "≋"
-    echohl NyanRainbow3
-    echon "≈"
-    echohl NyanRainbow4
-    echon "≋"
-    echohl NyanRainbow5
-    echon "≈"
-    echohl NyanRainbow6
-    echon "≋"
-    echohl NyanRainbow1
-    echon "≈"
-    echohl NyanRainbow2
-    echon "≋"
-    echohl NyanRainbow3
-    echon "≈"
-    echohl NyanRainbow4
-    echon "≋"
-    echohl NyanRainbow5
-    echon "≈"
-    echohl NyanRainbow6
-    echon "≋"
-    echohl None
-    echon " "
-    echohl NyanFur
-    echon "”   ‟"
-    echohl None
+  echohl NyanRainbow1
+  echon "≈"
+  echohl NyanRainbow2
+  echon "≋"
+  echohl NyanRainbow3
+  echon "≈"
+  echohl NyanRainbow4
+  echon "≋"
+  echohl NyanRainbow5
+  echon "≈"
+  echohl NyanRainbow6
+  echon "≋"
+  echohl NyanRainbow1
+  echon "≈"
+  echohl NyanRainbow2
+  echon "≋"
+  echohl NyanRainbow3
+  echon "≈"
+  echohl NyanRainbow4
+  echon "≋"
+  echohl NyanRainbow5
+  echon "≈"
+  echohl NyanRainbow6
+  echon "≋"
+  echohl None
+  echon " "
+  echohl NyanFur
+  echon "”   ‟"
+  echohl None
 
-    sleep 1
-    redraw
-    echo " "
-    echo " "
-    echo "Noms?"
-    redraw
+  sleep 1
+  redraw
+  echo " "
+  echo " "
+  echo "Noms?"
+  redraw
 endfunction "
 command! NyanMe call NyanMe()
 

@@ -3,32 +3,13 @@
 # Fish functions are all stored in ~/.config/fish/functions/
 # See: http://fishshell.com/docs/current/tutorial.html#tut_startup
 
-# Default browser
+# $PATH is set via $fish_user_paths.
+# See: https://fishshell.com/docs/current/tutorial.html#tut_universal
+
+# Universal Defaults
 set BROWSER open safari
-
-# Default text editor
 set EDITOR vim
-
-# NOTE: There is probably a sexier nicer way to do this, but until I figure that out I am manually unsetting here.
-# Unsets PATH
-set -gx PATH
-
-# Using rbenv for ruby. See: https://github.com/sstephenson/rbenv
-# Enable shims and autocompletion for rbenv.
-set -gx PATH $PATH $HOME/.rbenv/shims
-
-# This allows us to use Homebrew versions of things (like git) rather than the pre-installed or XCode installed versions.
-# See http://blog.grayghostvisuals.com/git/how-to-keep-git-updated/ for reference.
-set -gx PATH $PATH /usr/local/bin
-
-# Sets necessary PATH defaults
-set -gx PATH $PATH /usr/bin /bin /usr/sbin /sbin
-
-# Adds custom scripts to path.
-set -gx PATH $PATH $HOME/Library/Scripts/*
-
-# Postgres commandline tools. http://postgresapp.com/documentation/cli-tools.html
-set -gx PATH $PATH /Applications/Postgres.app/Contents/Versions/9.4/bin
+set DEVELOPER ~/Developer
 
 # For Autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and . /usr/local/share/autojump/autojump.fish
@@ -37,6 +18,13 @@ set -gx PATH $PATH /Applications/Postgres.app/Contents/Versions/9.4/bin
 set -x HOMEBREW_CASK_OPTS '--appdir=/Applications'
 
 # For Docker
-# eval (docker-machine env default)
+eval (docker-machine env default)
+
+# For Fry ruby version manager
+if test -f /usr/local/share/fry/fry.fish
+  source /usr/local/share/fry/fry.fish
+  # Set default version of ruby
+  fry use 2.0.0-p648
+end
 
 ulimit -n 10000
