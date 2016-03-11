@@ -65,6 +65,7 @@ Plugin 'tpope/vim-dispatch'                     " Terminal in your vim. See: htt
 Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
 Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
 Plugin 'flazz/vim-colorschemes'                 " All the colorschemes money can buy
+Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -101,13 +102,16 @@ set t_Co=256
 set number
 set relativenumber
 
-" Make tabs as wide as two spaces
-set softtabstop=2
-set tabstop=2
+" Tabs and Spaces
+set expandtab   " Make sure that every file uses spaces, not tabs
+set shiftround  " Round indent to multiple of 'shiftwidth'
+set smartindent " Do smart indenting when starting a new line
+set autoindent  " Copy indent from current line, over to the new line
 
-" Controls how many spaces to indent when using >>
+" Make tabs as wide as two spaces
+set tabstop=2
 set shiftwidth=2
-set expandtab
+set softtabstop=2
 
 " Highlight current line
 set cursorline
@@ -148,9 +152,6 @@ set autoread
 " :make, CTRL-] and CTRL-^ command; and when a :buffer, CTRL-O, CTRL-I,
 " '{A-Z0-9}, or `{A-Z0-9} command takes one to another file.
 set autowrite
-
-" Round indent to multiple of 'shiftwidth'.
-set shiftround
 
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=800
@@ -208,9 +209,6 @@ set wrapmargin=0
 
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
-
-" Indents properly
-set autoindent
 
 " Highlight matching braces as you type.
 set showmatch
@@ -501,6 +499,7 @@ augroup ft_javascript
 
   " For Syntastic
   let g:syntastic_javascript_checkers = ['eslint']
+  let g:syntastic_javascript_eslint_exec = "./node_modules/eslint/bin/eslint.js"
 
   autocmd FileType javascript setlocal foldmethod=marker
   autocmd FileType javascript setlocal foldmarker={,}
@@ -528,9 +527,6 @@ augroup ft_markdown
 
   set formatoptions+=t
   set textwidth=80
-  set softtabstop=4
-  set tabstop=4
-  set shiftwidth=4
 augroup END
 
 " }}}
@@ -800,7 +796,7 @@ nmap ga <Plug>(EasyAlign)
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
- \ 'dir':  '\v[\/](bower_components|node_modules|false|\.build|\.tmp)$'
+ \ 'dir':  '\v[\/](bower_components|node_modules|false|\.build|\.tmp|dist)$'
  \ }
 
 " Allows indexing of more files

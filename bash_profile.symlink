@@ -273,3 +273,9 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # Set my fucking ulimit to a really high number
 ulimit -n 10000
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/jesseatkinson/google-cloud-sdk/path.bash.inc'
+
+# The next line enables shell command completion for gcloud.
+source '/Users/jesseatkinson/google-cloud-sdk/completion.bash.inc'
