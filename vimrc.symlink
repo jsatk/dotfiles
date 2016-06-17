@@ -66,6 +66,7 @@ Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
 Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
 Plugin 'flazz/vim-colorschemes'                 " All the colorschemes money can buy
 Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
+Plugin 'wesQ3/vim-windowswap'                   " Swap windows without fucking up layout
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -121,7 +122,7 @@ syntax on
 
 " Show select “invisible” characters
 set list
-set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+set listchars=tab:▸\ ,extends:❯,precedes:❮
 
 " Prevents redrawing during automated tasks.
 set lazyredraw

@@ -17,14 +17,9 @@ set DEVELOPER ~/Developer
 # Sets brew cask symlink to /Applications instead of ~/Applications
 set -x HOMEBREW_CASK_OPTS '--appdir=/Applications'
 
-# For Docker
-eval (docker-machine env default)
-
 # For Fry ruby version manager
 if test -f /usr/local/share/fry/fry.fish
   source /usr/local/share/fry/fry.fish
   # Set default version of ruby
   fry use 2.0.0-p648
 end
-
-ulimit -n 10000

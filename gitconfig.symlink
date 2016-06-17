@@ -50,7 +50,7 @@
   excludesfile     = /opt/boxen/config/git/gitignore
   ignorecase       = false
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
-  editor           = /usr/local/bin/vim # Something about my .vimrc makes specifying the which git to use necessary here.  If I find out what it I'm going to murder it.
+  editor           = vim
 
 [color "branch"]
   current          = yellow reverse
@@ -93,6 +93,9 @@
 [branch]
   autosetuprebase  = always
 
+[rerere]
+  enabled = true
+
 [push]
   default          = tracking
 
@@ -109,4 +112,4 @@
   name             = 'Jesse Atkinson'
 
 [hub]
-protocol           = https
+  protocol         = https
