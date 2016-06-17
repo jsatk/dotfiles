@@ -472,7 +472,7 @@ augroup END
 " Backups {{{
 
 set backup                        " enable backups
-set noswapfile                    " it's 2015, Vim.
+set noswapfile                    " it's 2016, Vim.
 " The extra slash on the end saves files under the name of their full path
 " with the / character replaced with a %.
 set undodir=~/.vim/tmp/undo//     " undo files
