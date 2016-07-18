@@ -7,10 +7,11 @@
 
 " Preamble {{{
 
-" Author: Jesse Atkinson
-" Email: jesse.atkinson@me.com
-" Source: https://github.com/jsatk/dotfiles/blob/master/vimrc.symlink
-" Twitter: @jsatk
+" Author:   Jesse Atkinson
+" Email:    jesse.atkinson@me.com
+" Source:   https://github.com/jsatk/dotfiles/blob/master/vimrc.symlink
+" Twitter:  @jsatk
+
 " References: http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 "             https://github.com/paulirish/dotfiles/blob/master/.vimrc
 "             http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
@@ -20,6 +21,7 @@
 
 " Special thanks to Steve Losh and Tim Pope who I have stolen *so* much from.
 " Sincerely thank you.
+
 " }}}
 " Vundle {{{
 
@@ -61,12 +63,13 @@ Plugin 'othree/javascript-libraries-syntax.vim' " Provides syntax for many popul
 Plugin 'burnettk/vim-angular'                   " Provides some nicities for working with AngularJS.
 Plugin 'tpope/vim-unimpaired'                   " Provides some nice key mappings
 Plugin 'vim-scripts/BufOnly.vim'                " Close all buffers except the current
-Plugin 'tpope/vim-dispatch'                     " Terminal in your vim. See: https://vimeo.com/63116209
+Plugin 'tpope/vim-dispatch'                     " Terminal in your vim.  Works best with tmux.  See: https://vimeo.com/63116209
 Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
 Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
 Plugin 'flazz/vim-colorschemes'                 " All the colorschemes money can buy
 Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
 Plugin 'wesQ3/vim-windowswap'                   " Swap windows without fucking up layout
+Plugin 'fatih/vim-go'                           " Makes working with Go easier
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -100,8 +103,8 @@ set t_Co=256
 " Show relative line numbers
 " Since we are also showing the line number then the line we are on will
 " show its number but all surrounding lines will show their relative number.
-set number
-set relativenumber
+" set number
+" set relativenumber
 
 " Tabs and Spaces
 set expandtab   " Make sure that every file uses spaces, not tabs
@@ -236,31 +239,22 @@ set timeoutlen=500
 " Highlight column 120 as a soft reminder
 set colorcolumn=120
 
-" never mis-spell iOS again
-abbr ios iOS
-abbr iOs iOS
-abbr IOS iOS
-
 " Increment alpha strings with vim
 " https://blog.mozilla.org/jv/2011/01/12/incrementing-alpha-strings-with-vim/
 set nf=octal,hex,alpha
 
-" Cycle through buffers http://vim.wikia.com/wiki/Cycle_through_buffers_including_hidden_buffers
-" nnoremap <C-n> :bnext<CR>
-" nnoremap <C-p> :bprevious<CR>
 " }}}
 " Look & Feel {{{
 
-" Many colorschemes support both light and dark backgrounds.  Dark is nicer on
-" my eyes.
+" Many colorschemes support both light and dark backgrounds.  Dark is nicer on my eyes.
 set background=dark
 
 " Color schemes are located in ~/.vim/colors/
 " Here's the top 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
-" List of favorites: Tomorrow-Night, lessnau_dark, railscasts, inkpot, lettuce, lucius, molokai, solarized, tir_black, zenburn
+" List of favorites: Tomorrow-Night, Tomorrow-Night-Eighties, railscasts, badwolf, lucius, molokai, solarized
 " You can make your own colorschemes here: http://www.villustrator.com/
-" I'm importing a fuck ton of colorschemes via this plugin: github.com/flazz/vim-colorschemes
-colorscheme lucius
+" I'm importing a fuck-ton of colorschemes via this plugin: github.com/flazz/vim-colorschemes
+colorscheme Tomorrow-Night
 
 " Sets the ColorColumn to a sensible color.  Default is 'Dark Red'.
 highlight ColorColumn ctermbg=237 guibg=#3a3a3a
@@ -289,7 +283,7 @@ nnoremap <leader>n :setlocal number!<cr>
 " filetyped Gist.  Requires the Gist command line tool (brew install gist).
 vnoremap <leader>G :w !gist -p -t %:e \|pbcopy<cr>
 
-" Bubble single lines (kicks butt)
+" Bubble single lines
 " http://vimcasts.org/episodes/bubbling-text/
 " Due to OS X keybinding of the C-Up key, I chose to remap to C-k and so forth.
 nmap <C-k> ddkP
@@ -325,6 +319,7 @@ function! IndentGuides() " {{{
   endif
 endfunction " }}}
 hi def IndentGuides guibg=#303030 ctermbg=234
+" Toggles indent guides
 nnoremap <leader>I :call IndentGuides()<cr>
 
 " }}}
@@ -394,7 +389,8 @@ nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 " Kill Arrow Keys {{{
 
 " New Vim users will want the following lines to teach them to do things right
-" For training only.  Remove when need be.
+" For training only.  Remove when need be.  Honestly though, I'll probably never
+" re-enable this.
 nnoremap <up> <nop>
 nnoremap <down> <nop>
 nnoremap <left> <nop>
@@ -411,6 +407,8 @@ inoremap <right> <nop>
 
 " Use TAB to complete when typing words, else inserts TABs as usual.
 " Uses dictionary and source files to find matching words to complete.
+" There's probably a cool vim plugin that does this, but this is a blunt and
+" simple too and it works for me.
 
 " See help completion for source,
 " Note: usual completion is on <C-n> but more trouble to press all the time.
@@ -493,6 +491,8 @@ if !isdirectory(expand(&directory))
 endif
 
 " }}}
+" Filetype specific configurations {{{
+
 " JavaScript {{{
 
 augroup ft_javascript
@@ -565,7 +565,7 @@ augroup ft_haml
 augroup END
 
 " }}}
-" CSS and Less {{{
+" CSS {{{
 
 " Sorts CSS properties.  Most useful command ever.
 " See: http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
@@ -575,12 +575,10 @@ nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
 augroup ft_css
   autocmd!
 
-  autocmd BufNewFile,BufRead *.less setlocal filetype=less
-
-  autocmd Filetype less,css setlocal foldmethod=marker
-  autocmd Filetype less,css setlocal foldmarker={,}
-  autocmd Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd Filetype less,css setlocal iskeyword+=-
+  autocmd Filetype css setlocal foldmethod=marker
+  autocmd Filetype css setlocal foldmarker={,}
+  autocmd Filetype css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd Filetype css setlocal iskeyword+=-
 
   " Use <leader>S to sort properties.  Turns this:
   "
@@ -601,11 +599,11 @@ augroup ft_css
   "
   "         ...
   "     }
-  autocmd BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+  autocmd BufNewFile,BufRead *.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
   " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
   " positioned inside of them AND the following code doesn't get unfolded.
-  autocmd BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+  autocmd BufNewFile,BufRead *.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
 augroup END
 
 " }}}
@@ -625,6 +623,7 @@ augroup END
 
 " }}}
 " Vim {{{
+
 :command! ClearQuickfixList cexpr []
 augroup ft_vim
   autocmd!
@@ -659,124 +658,10 @@ augroup ft_xml
 augroup END
 
 " }}}
-" Nyan! {{{
-
-function! NyanMe() "
-  hi NyanFur             guifg=#BBBBBB
-  hi NyanPoptartEdge     guifg=#ffd0ac
-  hi NyanPoptartFrosting guifg=#fd3699 guibg=#fe98ff
-  hi NyanRainbow1        guifg=#6831f8
-  hi NyanRainbow2        guifg=#0099fc
-  hi NyanRainbow3        guifg=#3cfa04
-  hi NyanRainbow4        guifg=#fdfe00
-  hi NyanRainbow5        guifg=#fc9d00
-  hi NyanRainbow6        guifg=#fe0000
-
-
-  echohl NyanRainbow1
-  echon "≈"
-  echohl NyanRainbow2
-  echon "≋"
-  echohl NyanRainbow3
-  echon "≈"
-  echohl NyanRainbow4
-  echon "≋"
-  echohl NyanRainbow5
-  echon "≈"
-  echohl NyanRainbow6
-  echon "≋"
-  echohl NyanRainbow1
-  echon "≈"
-  echohl NyanRainbow2
-  echon "≋"
-  echohl NyanRainbow3
-  echon "≈"
-  echohl NyanRainbow4
-  echon "≋"
-  echohl NyanRainbow5
-  echon "≈"
-  echohl NyanRainbow6
-  echon "≋"
-  echohl None
-  echo ""
-
-  echohl NyanRainbow1
-  echon "≈"
-  echohl NyanRainbow2
-  echon "≋"
-  echohl NyanRainbow3
-  echon "≈"
-  echohl NyanRainbow4
-  echon "≋"
-  echohl NyanRainbow5
-  echon "≈"
-  echohl NyanRainbow6
-  echon "≋"
-  echohl NyanRainbow1
-  echon "≈"
-  echohl NyanRainbow2
-  echon "≋"
-  echohl NyanRainbow3
-  echon "≈"
-  echohl NyanRainbow4
-  echon "≋"
-  echohl NyanRainbow5
-  echon "≈"
-  echohl NyanRainbow6
-  echon "≋"
-  echohl NyanFur
-  echon "╰"
-  echohl NyanPoptartEdge
-  echon "⟨"
-  echohl NyanPoptartFrosting
-  echon "⣮⣯⡿"
-  echohl NyanPoptartEdge
-  echon "⟩"
-  echohl NyanFur
-  echon "⩾^ω^⩽"
-  echohl None
-  echo ""
-
-  echohl NyanRainbow1
-  echon "≈"
-  echohl NyanRainbow2
-  echon "≋"
-  echohl NyanRainbow3
-  echon "≈"
-  echohl NyanRainbow4
-  echon "≋"
-  echohl NyanRainbow5
-  echon "≈"
-  echohl NyanRainbow6
-  echon "≋"
-  echohl NyanRainbow1
-  echon "≈"
-  echohl NyanRainbow2
-  echon "≋"
-  echohl NyanRainbow3
-  echon "≈"
-  echohl NyanRainbow4
-  echon "≋"
-  echohl NyanRainbow5
-  echon "≈"
-  echohl NyanRainbow6
-  echon "≋"
-  echohl None
-  echon " "
-  echohl NyanFur
-  echon "”   ‟"
-  echohl None
-
-  sleep 1
-  redraw
-  echo " "
-  echo " "
-  echo "Noms?"
-  redraw
-endfunction "
-command! NyanMe call NyanMe()
 
 " }}}
+" Vim Plugin Configurations {{{
+
 " NERDTree {{{
 
 " Maps NERDTree to ^n.
@@ -807,5 +692,13 @@ let g:ctrlp_match_window = 'results:20'
 
 " Shows the hidden dot files
 let g:ctrlp_show_hidden = 0
+
+" }}}
+" Airline {{{
+
+" Allows us to get the lovely symbols for Airline in the prompt
+let g:airline_powerline_fonts = 1
+
+" }}}
 
 " }}}
