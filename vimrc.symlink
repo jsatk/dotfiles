@@ -682,7 +682,7 @@ nmap ga <Plug>(EasyAlign)
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
- \ 'dir':  '\v[\/](bower_components|node_modules|false|\.build|\.tmp|dist)$'
+ \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist)$'
  \ }
 
 " Allows indexing of more files
