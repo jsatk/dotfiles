@@ -1,0 +1,66 @@
+# Basic Options --------------------------------------
+set   wait_key    = no      # shut up, mutt
+set    mbox_type  = Maildir # mailbox type
+set   timeout     = 3       # idle time before scanning
+set   mail_check  = 0       # minimum time between scans
+set ssl_starttls  = yes
+set ssl_force_tls = yes
+unset move                  # gmail does that
+set   delete                # don't ask, just do
+unset confirmappend         # don't ask, just do!
+set   quit                  # don't ask, just do!!
+unset mark_old              # read/new is good enough for me
+set   beep_new              # bell on new mails
+set   pipe_decode           # strip headers and eval mimes when piping
+set   thorough_search       # strip headers and eval mimes before searching
+
+# Status Bar -----------------------------------------
+# set status_chars  = " *%A"
+# set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+# Header Options -------------------------------------
+ignore * # ignore all headers
+
+# Folder hooks
+folder-hook 'earnest' 'source ~/.mutt/earnest'
+folder-hook 'me'      'source ~/.mutt/me'
+
+# Default account
+source ~/.mutt/account.me
+
+set editor              = "vim"
+
+bind index G imap-fetch-mail
+
+# Index View Options ---------------------------------
+set date_format  = "%m/%d"
+set index_format = "[%Z]  %D  %-20.20F  %s"
+set sort         = threads                     # like gmail
+set sort_aux     = reverse-last-date-received  # like gmail
+set uncollapse_jump                            # don't collapse on an unread message
+
+# Color Theme ----------------------------------------
+color hdrdefault cyan   default
+color attachment yellow default
+
+color header brightyellow default "From: "
+color header brightyellow default "Subject: "
+color header brightyellow default "Date: "
+
+color quoted  green default
+color quoted1 cyan  default
+color quoted2 green default
+color quoted3 cyan  default
+
+color error     red             default         # error messages
+color message   white           default         # message  informational messages
+color indicator white           red             # indicator for the "current message"
+color status    white           blue            # status lines in the folder index sed for the mini-help line
+color tree      red             default         # the "tree" display of threads within the folder index
+color search    white           blue            # search matches found with search within the internal pager
+color markers   red             default         # The markers indicate a wrapped line hen showing messages with looong lines
+
+color index     yellow default  '~O'
+color index     yellow default  '~N'
+color index     brightred       default '~F'    # Flagged Messages are important!
+color index     blue default    '~D'            # Deleted Mails - use dark color as these are already "dealt with"

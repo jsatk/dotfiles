@@ -19,7 +19,7 @@
 "             http://net.tutsplus.com/articles/general/top-10-pitfalls-when-switching-to-vim/
 "             http://vimregex.com
 
-" Special thanks to Steve Losh and Tim Pope who I have stolen *so* much from.
+" Special thanks to Steve Losh, Tim Pope, and Jess Frazelle who I have stolen *so* much from.
 " Sincerely thank you.
 
 " }}}
@@ -243,6 +243,14 @@ set colorcolumn=120
 " https://blog.mozilla.org/jv/2011/01/12/incrementing-alpha-strings-with-vim/
 set nf=octal,hex,alpha
 
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+  set mouse=a
+endif
+
+" Do not show stupid q: window
+map q: :q
+
 " }}}
 " Look & Feel {{{
 
@@ -251,7 +259,7 @@ set background=dark
 
 " Color schemes are located in ~/.vim/colors/
 " Here's the top 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
-" List of favorites: Tomorrow-Night, Tomorrow-Night-Eighties, railscasts, badwolf, lucius, molokai, solarized
+" List of favorites: onedark, Tomorrow-Night, Tomorrow-Night-Eighties, railscasts, badwolf, lucius, molokai, solarized
 " You can make your own colorschemes here: http://www.villustrator.com/
 " I'm importing a fuck-ton of colorschemes via this plugin: github.com/flazz/vim-colorschemes
 colorscheme Tomorrow-Night
@@ -502,7 +510,7 @@ augroup ft_javascript
   let g:syntastic_javascript_checkers = ['eslint']
   let g:syntastic_javascript_eslint_exec = "./node_modules/eslint/bin/eslint.js"
 
-  autocmd FileType javascript setlocal foldmethod=marker
+  autocmd FileType javascript setlocal foldmethod=syntax
   autocmd FileType javascript setlocal foldmarker={,}
 
   " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
@@ -527,7 +535,6 @@ augroup ft_markdown
   autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
 
   set formatoptions+=t
-  set textwidth=80
 augroup END
 
 " }}}
@@ -658,6 +665,40 @@ augroup ft_xml
 augroup END
 
 " }}}
+" Go {{{
+
+augroup ft_golang
+  autocmd!
+
+  au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+augroup END
+
+" }}}
+" Scala {{{
+
+augroup ft_scala
+  autocmd!
+
+  autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2 expandtab
+augroup END
+
+" }}}
+" Git Commits {{{
+augroup ft_gitcommit
+  autocmd!
+
+  " spell check for git commits
+  autocmd FileType gitcommit setlocal spell
+augroup END
+" }}}
+" Dockerfile {{{
+
+augroup ft_dockerfile
+  autocmd!
+
+  autocmd FileType dockerfile set noexpandtab
+augroup END
+" }}}
 
 " }}}
 " Vim Plugin Configurations {{{
@@ -698,6 +739,11 @@ let g:ctrlp_show_hidden = 0
 
 " Allows us to get the lovely symbols for Airline in the prompt
 let g:airline_powerline_fonts = 1
+
+" }}}
+" vim-javascript {{{
+
+let g:javascript_plugin_jsdoc = 1 " https://github.com/pangloss/vim-javascript#configuration-variables
 
 " }}}
 

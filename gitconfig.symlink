@@ -8,9 +8,6 @@
   # Pretty log
   prettylog        = log --name-only --decorate=full
 
-  # Clean up history. Useful for feature branches with lots of silly little commits you don't want in master's history.
-  cleanup          = !git rebase --interactive origin/master
-
   # Log Me
   logme            = log --color --name-only --decorate=full --author="Jesse"
 
@@ -20,26 +17,11 @@
   # Get Outgoing Changes
   outgoing         = log @{u}..
 
-  # Merges the latest from master into your feature branch keeping you up-to-date.
-  remaster         = !git stash && git fetch origin && git merge origin/master && git stash pop;
-
-  # Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
-  damnit           = reset --soft HEAD^
-
-  # Destroy all local changes and reset to HEAD.
-  fuckit           = reset --hard HEAD
-
-  # For morning stand-up.
-  standup          = !"git log --reverse --branches --since=$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi) --author='Jesse Atkinson' --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
-
   # list branch dates
   branchdate       = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
 
-  # A quick way to get fired.
-  # yolo           = !git add -A && and git commit -am '#YOLO' && git push --force origin master
-
   # Delete all branches that have already been merged into the current branch.
-  deletemerged = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+  deletemerged     = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 
 [apply]
   whitespace       = fix
@@ -95,7 +77,7 @@
   autosetuprebase  = always
 
 [rerere]
-  enabled = true
+  enabled          = true
 
 [push]
   default          = tracking
@@ -110,9 +92,11 @@
 
 [user]
   email            = jesse.atkinson@me.com
-  name             = 'Jesse Atkinson'
+  name             = "Jesse Atkinson"
+  signingkey       = "DC5AC6E4"
 
 [hub]
   protocol         = https
+
 [commit]
-	gpgsign = true
+  gpgsign          = true
