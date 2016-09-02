@@ -684,12 +684,24 @@ augroup END
 
 " }}}
 " Git Commits {{{
+
 augroup ft_gitcommit
   autocmd!
 
   " spell check for git commits
   autocmd FileType gitcommit setlocal spell
 augroup END
+
+" }}}
+" mail {{{
+
+augroup ft_mail
+  autocmd!
+
+  " spell check for git commits
+  autocmd FileType mail setlocal spell
+augroup END
+
 " }}}
 " Dockerfile {{{
 
@@ -698,6 +710,27 @@ augroup ft_dockerfile
 
   autocmd FileType dockerfile set noexpandtab
 augroup END
+
+" }}}
+" muttrc {{{
+
+augroup ft_muttrc
+  autocmd!
+
+  au BufRead,BufNewFile *.muttrc set filetype=muttrc
+  autocmd FileType muttrc setlocal foldmethod=marker
+  autocmd Filetype muttrc setlocal foldmarker={{{,}}}
+augroup END
+
+" }}}
+" make {{{
+
+augroup ft_make
+  autocmd!
+
+  set noexpandtab
+augroup END
+
 " }}}
 
 " }}}

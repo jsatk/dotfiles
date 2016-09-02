@@ -1,66 +1,106 @@
-# Basic Options --------------------------------------
-set   wait_key    = no      # shut up, mutt
-set    mbox_type  = Maildir # mailbox type
-set   timeout     = 3       # idle time before scanning
-set   mail_check  = 0       # minimum time between scans
-set ssl_starttls  = yes
-set ssl_force_tls = yes
-unset move                  # gmail does that
-set   delete                # don't ask, just do
-unset confirmappend         # don't ask, just do!
-set   quit                  # don't ask, just do!!
-unset mark_old              # read/new is good enough for me
-set   beep_new              # bell on new mails
-set   pipe_decode           # strip headers and eval mimes when piping
-set   thorough_search       # strip headers and eval mimes before searching
+#  __    __     __  __     ______   ______   ______     ______
+# /\ "-./  \   /\ \/\ \   /\__  _\ /\__  _\ /\  == \   /\  ___\
+# \ \ \-./\ \  \ \ \_\ \  \/_/\ \/ \/_/\ \/ \ \  __<   \ \ \____
+#  \ \_\ \ \_\  \ \_____\    \ \_\    \ \_\  \ \_\ \_\  \ \_____\
+#   \/_/  \/_/   \/_____/     \/_/     \/_/   \/_/ /_/   \/_____/
 
-# Status Bar -----------------------------------------
-# set status_chars  = " *%A"
-# set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+# Preamble {{{
 
-# Header Options -------------------------------------
-ignore * # ignore all headers
+# Author:   Jesse Atkinson
+# Email:    jesse.atkinson@me.com
+# Source:   https://github.com/jsatk/dotfiles/blob/master/muttrc.symlink
+# Twitter:  @jsatk
+
+# }}}
+# Editor {{{
+
+set editor = "vim"
+
+# }}}
+# Contacts {{{
+
+# Use the OS X address book
+set query_command = "contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
+bind editor <Tab> complete-query
+bind editor ^T    complete
+
+# }}}
+# Color Theme {{{
+
+source ~/.mutt/themes/bad-wolf/bad-wolf.muttrc
+
+# }}}
+# Basic Options {{{
+
+set   wait_key        = no      # shut up, mutt
+set   mbox_type       = Maildir # mailbox type
+set   timeout         = 3       # idle time before scanning
+set   mail_check      = 0       # minimum time between scans
+set   ssl_starttls    = yes
+set   ssl_force_tls   = yes
+set   send_charset    = "us-ascii:utf-8:iso-8859-1"
+set   delete                    # don't ask, just do
+set   quit                      # don't ask, just do!!
+set   beep_new                  # bell on new mails
+set   pipe_decode               # strip headers and eval mimes when piping
+set   thorough_search           # strip headers and eval mimes before searching
+set   use_from                  # respect the From: address the editor sends back
+unset move                      # gmail does that
+unset confirmappend             # don't ask, just do!
+unset mark_old                  # read/new is good enough for me
+
+# }}}
+# Compose View Options {{{
+
+set envelope_from                       # which from?
+set edit_headers                        # show headers when composing
+set fast_reply                          # skip to compose when replying
+set askcc                               # ask for CC:
+set fcc_attach                          # save attachments with the body
+set forward_format = "Fwd: %s"          # format of subject when forwarding
+set forward_decode                      # decode when forwarding
+set attribution    = "On %d, %n wrote:" # format of quoting header
+set reply_to                            # reply to Reply to: field
+set reverse_name                        # reply as whomever it was to
+set include                             # include message in replies
+set forward_quote                       # include message in forwards
+unset mime_forward                      # forward attachments as part of body
+
+# }}}
+# Headers {{{
+
+ignore *                                # ignore all headers
+unignore from: to: cc: date: subject:   # show only these
+unhdr_order *
+hdr_order from: to: cc: date: subject:  # and in this order
+
+# }}}
+# Accounts {{{
 
 # Folder hooks
 folder-hook 'earnest' 'source ~/.mutt/earnest'
 folder-hook 'me'      'source ~/.mutt/me'
+folder-hook . "exec collapse-all" # By default, collapse all threads
+
 
 # Default account
-source ~/.mutt/account.me
+source ~/.mutt/account.earnest.muttrc
 
-set editor              = "vim"
+# }}}
+# Key Bindings & Macros {{{
 
 bind index G imap-fetch-mail
 
-# Index View Options ---------------------------------
+macro index <f1> '<sync-mailbox><enter-command>source ~/.mutt/account.earnest.muttrc<enter><change-folder>!<enter>'
+macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/account.me.muttrc<enter><change-folder>!<enter>'
+
+# }}}
+# Index View Options {{{
+
 set date_format  = "%m/%d"
 set index_format = "[%Z]  %D  %-20.20F  %s"
 set sort         = threads                     # like gmail
 set sort_aux     = reverse-last-date-received  # like gmail
 set uncollapse_jump                            # don't collapse on an unread message
 
-# Color Theme ----------------------------------------
-color hdrdefault cyan   default
-color attachment yellow default
-
-color header brightyellow default "From: "
-color header brightyellow default "Subject: "
-color header brightyellow default "Date: "
-
-color quoted  green default
-color quoted1 cyan  default
-color quoted2 green default
-color quoted3 cyan  default
-
-color error     red             default         # error messages
-color message   white           default         # message  informational messages
-color indicator white           red             # indicator for the "current message"
-color status    white           blue            # status lines in the folder index sed for the mini-help line
-color tree      red             default         # the "tree" display of threads within the folder index
-color search    white           blue            # search matches found with search within the internal pager
-color markers   red             default         # The markers indicate a wrapped line hen showing messages with looong lines
-
-color index     yellow default  '~O'
-color index     yellow default  '~N'
-color index     brightred       default '~F'    # Flagged Messages are important!
-color index     blue default    '~D'            # Deleted Mails - use dark color as these are already "dealt with"
+# }}}

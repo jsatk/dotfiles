@@ -1,8 +1,5 @@
-# tmux plugin manager: https://github.com/tmux-plugins/tpm
-# List of plugins
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'seebi/tmux-colors-solarized'
+# Give me all the colors
+set -g default-terminal "screen-256color"
 
 # Automatically renumber tmux windows
 set -g renumber-windows on
@@ -12,11 +9,25 @@ set -g prefix C-a
 unbind C-b
 bind C-a send-prefix
 
-# Let me use my fucking mouse to scroll, tmux.
-# This was stolen from this shitshow of a thread:
-# https://github.com/tmux/tmux/issues/145
-set -g mouse on
-bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'copy-mode -e; send-keys -M'"
+# Bind Ctrl-a Ctrl-a to last window
+bind-key C-a last-window
+
+# Make mouse useful in copy mode
+setw -g mode-mouse on
+
+# Allow mouse to select which pane to use
+set -g mouse-select-pane on
+
+# Allow xterm titles in terminal window, terminal scrolling with scrollbar, and setting overrides of C-Up, C-Down, C-Left, C-Right
+set -g terminal-overrides "xterm*:XT:smcup@:rmcup@:kUP5=\eOA:kDN5=\eOB:kLFT5=\eOD:kRIT5=\eOC"
+
+# Scroll History
+set -g history-limit 30000
+
+# setup | and - for window splitting
+unbind %
+bind | split-window -h
+bind - split-window -v
 
 # pane movement shortcuts
 bind h select-pane -L
@@ -24,8 +35,27 @@ bind j select-pane -D
 bind k select-pane -U
 bind l select-pane -R
 
-# Bind Ctrl-a Ctrl-a to last window
-bind-key C-a last-window
+# unicode
+setw -g utf8 on
+set -g status-utf8 on
 
-# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-run '~/.tmux/plugins/tpm/tpm'
+# default statusbar colors
+set-option -g status-bg colour0
+set-option -g status-fg colour7
+set-option -g status-attr default
+
+# default window title colors
+set-window-option -g window-status-fg colour6
+set-window-option -g window-status-bg default
+#set-window-option -g window-status-attr dim
+set-window-option -g automatic-rename on
+
+# active window title colors
+setw -g window-status-current-format "|#I:#W|"
+set-window-option -g window-status-current-fg colour4
+set-window-option -g window-status-current-bg default
+#set-window-option -g window-status-current-attr bright
+
+# pane border
+set-option -g pane-border-fg colour235 #base02
+set-option -g pane-active-border-fg colour240 #base01
