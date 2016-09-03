@@ -1,3 +1,19 @@
+#  ______     __     ______   ______     ______     __   __     ______   __     ______
+# /\  ___\   /\ \   /\__  _\ /\  ___\   /\  __ \   /\ "-.\ \   /\  ___\ /\ \   /\  ___\
+# \ \ \__ \  \ \ \  \/_/\ \/ \ \ \____  \ \ \/\ \  \ \ \-.  \  \ \  __\ \ \ \  \ \ \__ \
+#  \ \_____\  \ \_\    \ \_\  \ \_____\  \ \_____\  \ \_\\"\_\  \ \_\    \ \_\  \ \_____\
+#   \/_____/   \/_/     \/_/   \/_____/   \/_____/   \/_/ \/_/   \/_/     \/_/   \/_____/
+
+# preamble {{{
+
+# Author:     Jesse Atkinson
+# Email:      jesse.atkinson@me.com
+# Source:     https://github.com/jsatk/dotfiles/blob/master/gitconfig
+# Twitter:    @jsatk
+
+# }}}
+# alias {{{
+
 [alias]
   s                = status --short
   lg               = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
@@ -23,8 +39,14 @@
   # Delete all branches that have already been merged into the current branch.
   deletemerged     = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 
+# }}}
+# apply {{{
+
 [apply]
   whitespace       = fix
+
+# }}}
+# core {{{
 
 [core]
   attributesfile   = ~/.gitattributes
@@ -34,6 +56,9 @@
   whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
   editor           = vim
   pager            = diff-so-fancy | less --tabs=4 -RFX
+
+# }}}
+# colors {{{
 
 [color "branch"]
   current          = yellow reverse
@@ -51,11 +76,20 @@
   changed          = green
   untracked        = cyan
 
+# }}}
+# merge {{{
+
 [merge]
   log              = true
 
+# }}}
+# grep {{{
+
 [grep]
   patternType      = "fixed"
+
+# }}}
+# github {{{
 
 [url "git@github.com:"]
   insteadOf        = "gh:"
@@ -73,18 +107,6 @@
 [url "git://gist.github.com/"]
   insteadOf        = "gist:"
 
-[branch]
-  autosetuprebase  = always
-
-[rerere]
-  enabled          = true
-
-[push]
-  default          = tracking
-
-[help]
-  autocorrect      = 1
-
 # Any GitHub repo with my username should be checked out r/w by default
 # http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
 [url "git@github.com:jsatk/"]
@@ -98,5 +120,32 @@
 [hub]
   protocol         = https
 
+# }}}
+# branch {{{
+
+[branch]
+  autosetuprebase  = always
+# }}}
+# rerere {{{
+
+[rerere]
+  enabled          = true
+
+# }}}
+# push {{{
+
+[push]
+  default          = tracking
+
+# }}}
+# help {{{
+
+[help]
+  autocorrect      = 1
+# }}}
+# commit {{{
+
 [commit]
   gpgsign          = true
+
+# }}}

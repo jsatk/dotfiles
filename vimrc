@@ -1,15 +1,14 @@
-"             _
-"   __ __    (_)    _ __      _ _    __
-"   \ V /    | |   | '  \    | '_|  / _|
-"   _\_/_   _|_|_  |_|_|_|  _|_|_   \__|_
-" _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
-" `-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'
+"  __   __   __     __    __     ______     ______
+" /\ \ / /  /\ \   /\ "-./  \   /\  == \   /\  ___\
+" \ \ \'/   \ \ \  \ \ \-./\ \  \ \  __<   \ \ \____
+"  \ \__|    \ \_\  \ \_\ \ \_\  \ \_\ \_\  \ \_____\
+"   \/_/      \/_/   \/_/  \/_/   \/_/ /_/   \/_____/
 
 " Preamble {{{
 
 " Author:   Jesse Atkinson
 " Email:    jesse.atkinson@me.com
-" Source:   https://github.com/jsatk/dotfiles/blob/master/vimrc.symlink
+" Source:   https://github.com/jsatk/dotfiles/blob/master/vimrc
 " Twitter:  @jsatk
 
 " References: http://stevelosh.com/blog/2010/09/coming-home-to-vim/
@@ -728,7 +727,20 @@ augroup END
 augroup ft_make
   autocmd!
 
-  set noexpandtab
+  autocmd Filetype conf setlocal noexpandtab
+  autocmd FileType make setlocal foldmethod=marker
+  autocmd Filetype make setlocal foldmarker={{{,}}}
+augroup END
+
+" }}}
+" conf {{{
+
+augroup ft_conf
+  autocmd!
+
+  au BufNewFile,BufRead bash_profile,gitconfig set filetype=conf
+  autocmd FileType conf setlocal foldmethod=marker
+  autocmd Filetype conf setlocal foldmarker={{{,}}}
 augroup END
 
 " }}}

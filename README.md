@@ -2,30 +2,28 @@
 
 This is how I do computers.  If you want to do computers like me this is the repository for you.
 
-It's important to note that I use Fish Shell.  If this scares you that's okay.  Just comment out the lines related to Fish Shell in `setup_computer.rb`.
-
-# Contents
+It's important to note that I use Fish Shell.  If this scares you that's okay.  But you shouldn't be scared.
 
 * Fish Shell configuration
 * Bash configuration
 * vim configuration
 * tmux configuration
 * git configuration
-* osx configuration (No longer used, but leaving here in case others can glean some knowledge from it.)
-* Computer setup script
+* Makefile that sets it all up
 
 # Install
 
-(Note: If you don't clone this to `~/Dropbox/dotfiles` you'll have to change the path in the `setup_computer.rb` script.  It's a fairly trivial change so fear not.)
+Just run `make` and this will set up all your dotfiles and install a ton of useful stuff like...
 
-1. `git clone https://github.com/jsatk/dotfiles.git ~/Dropbox/dotfiles`
-2. `cd ~/Dropbox/dotfiles`
-3. `ruby setup_computer.rb` Totoro will guide you through the setup process.
+* Symlinks for `.bash_profile`, `.gitconfig`, `.irbrc`, `.muttrc`, `.tmux.conf`, `.vimrc`, and the `.config` folder which houses my `config.fish` and fish `functions` folder.
+* Installs [homebrew](http://brew.sh) all the formulae I tend to want as well as global `npm` packages I use.
+* Update everything!  This was design so that it can be ran repeatedly and be non-harmful.  It only installs stuff as needed.
 
 # References
 
 Big thanks to these people who are much smarter than me for publishing their own dotfiles and allowing me to steal from them.
 
+* [https://github.com/stephencelis/dotfiles](https://github.com/stephencelis/dotfiles)
 * [https://github.com/nicknisi/dotfiles](https://github.com/nicknisi/dotfiles)
 * [https://bitbucket.org/sjl/dotfiles](https://bitbucket.org/sjl/dotfiles)
 * [https://github.com/paulirish/dotfiles](https://github.com/paulirish/dotfiles)
