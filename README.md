@@ -1,6 +1,6 @@
 # Jesse's dotfiles.
 
-This is how I do computers.  If you want to do computers like me this is the repository for you.
+This is how I do computers.  If you want to do computers like me this is the repository for you.  It assumes an OS X environment.  If you run Linux or windows then this repo may not be for you.
 
 It's important to note that I use Fish Shell.  If this scares you that's okay.  But you shouldn't be scared.
 
