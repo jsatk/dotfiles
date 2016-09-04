@@ -3,3 +3,6 @@ DS_Store
 vim.symlink/bundle/
 vim.symlink/tmp/
 tmux.symlink/
+*.secrets*
+mutt/earnest/
+mutt/me/

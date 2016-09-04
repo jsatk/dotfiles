@@ -1,0 +1,29 @@
+# Credentials {{{
+
+source "gpg -d ~/.mutt/account.me.secrets.gpg |"
+
+# }}}
+# Paths {{{
+
+set message_cachedir    = ~/.mutt/me/cache/bodies
+set alias_file          = ~/.mutt/me/alias         # where to store aliases
+set mailcap_path        = ~/.mutt/me/mailcap       # entries for filetypes
+set signature           = ~/.mutt/me/sig           # my signature file
+set certificate_file    = ~/.mutt/me/certificates
+
+# }}}
+# Account Settings {{{
+
+set imap_user           = "jesse.atkinson"
+set from                = "jesse.atkinson@me.com"
+set smtp_url            = "smtp://smtp.mail.me.com:587/"
+set realname            = "Jesse Atkinson"
+set folder              = "imaps://${ICLOUD_USER}@imap.mail.me.com"
+set spoolfile           = "+Inbox"
+set postponed           = "+Drafts"
+set ssl_starttls        = yes
+set ssl_force_tls       = yes
+set record              = "+Sent"
+set imap_pipeline_depth = 0
+
+# }}}
