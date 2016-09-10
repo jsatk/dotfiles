@@ -6,3 +6,4 @@ tmux.symlink/
 *.secrets*
 mutt/earnest/
 mutt/me/
+completer.hist
