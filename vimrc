@@ -69,6 +69,7 @@ Plugin 'flazz/vim-colorschemes'                 " All the colorschemes money can
 Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
 Plugin 'wesQ3/vim-windowswap'                   " Swap windows without fucking up layout
 Plugin 'fatih/vim-go'                           " Makes working with Go easier
+Plugin 'derekwyatt/vim-scala'                   " Makes working with Scala easier
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -741,6 +742,15 @@ augroup ft_conf
   au BufNewFile,BufRead bash_profile,gitconfig set filetype=conf
   autocmd FileType conf setlocal foldmethod=marker
   autocmd Filetype conf setlocal foldmarker={{{,}}}
+augroup END
+
+" }}}
+" json {{{
+
+augroup ft_json
+  autocmd!
+
+  autocmd FileType json setlocal foldmethod=syntax
 augroup END
 
 " }}}
