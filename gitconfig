@@ -39,6 +39,9 @@
   # Delete all branches that have already been merged into the current branch.
   deletemerged     = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 
+  # List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
+  aliases          = "!git config -l | grep ^alias | cut -c 7- | sort"
+
 # }}}
 # apply {{{
 
