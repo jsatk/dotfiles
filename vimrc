@@ -623,7 +623,7 @@ augroup ft_fish
   " Enable folding of block structures in fish.
   autocmd FileType fish setlocal foldmethod=expr
   " Set this to have long lines wrap inside comments.
-  autocmd FileType fish setlocal textwidth=79
+  autocmd FileType fish setlocal textwidth=80
   " Set up :make to use fish for syntax checking.
   autocmd FileType fish compiler fish
 augroup END
@@ -636,7 +636,7 @@ augroup ft_vim
   autocmd!
 
   autocmd FileType vim setlocal foldmethod=marker
-  autocmd FileType help setlocal textwidth=78
+  autocmd FileType help setlocal textwidth=80
   autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
 augroup END
 
@@ -700,6 +700,7 @@ augroup ft_mail
 
   " spell check for git commits
   autocmd FileType mail setlocal spell
+  autocmd FileType mail setlocal textwidth=0
 augroup END
 
 " }}}

@@ -16,8 +16,8 @@ set certificate_file    = ~/.mutt/earnest/certificates
 # Account Settings {{{
 
 set imap_user           = "jesse.atkinson@earnest.com"
-set smtp_url            = "smtp://jesse.atkinson@earnest.com@smtp.gmail.com:587/"
 set from                = "jesse.atkinson@earnest.com"
+set smtp_url            = "smtp://jesse.atkinson@earnest.com@smtp.gmail.com:587/"
 set realname            = "Jesse Atkinson"
 set folder              = "imaps://imap.gmail.com:993"
 set spoolfile           = "+INBOX"
@@ -26,5 +26,10 @@ set ssl_starttls        = yes
 set ssl_force_tls       = yes
 set move                = no # gmail does that
 set smtp_authenticators = ‘gssapi:login’
+
+# }}}
+# Key Bindings & Macros {{{
+
+macro index,pager y "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive"
 
 # }}}

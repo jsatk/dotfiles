@@ -5,6 +5,7 @@ source "gpg -d ~/.mutt/account.me.secrets.gpg |"
 # }}}
 # Paths {{{
 
+set header_cache        = ~/.mutt/me/cache/headers # where to store headers
 set message_cachedir    = ~/.mutt/me/cache/bodies
 set alias_file          = ~/.mutt/me/alias         # where to store aliases
 set mailcap_path        = ~/.mutt/me/mailcap       # entries for filetypes
@@ -18,12 +19,17 @@ set imap_user           = "jesse.atkinson"
 set from                = "jesse.atkinson@me.com"
 set smtp_url            = "smtp://smtp.mail.me.com:587/"
 set realname            = "Jesse Atkinson"
-set folder              = "imaps://${ICLOUD_USER}@imap.mail.me.com"
+set folder              = "imaps://jesse.atkinson@imap.mail.me.com"
 set spoolfile           = "+Inbox"
 set postponed           = "+Drafts"
 set ssl_starttls        = yes
 set ssl_force_tls       = yes
 set record              = "+Sent"
 set imap_pipeline_depth = 0
+
+# }}}
+# Key Bindings & Macros {{{
+
+macro index,pager y "<save-message>=Archive<enter><enter>" "Archive"
 
 # }}}
