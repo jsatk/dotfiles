@@ -34,6 +34,7 @@ symlinks = \
 	irbrc \
 	muttrc \
 	tmux.conf \
+	tmux.conf.local \
 	vimrc \
 
 formulae = \

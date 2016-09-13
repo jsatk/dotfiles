@@ -30,6 +30,6 @@ set imap_pipeline_depth = 0
 # }}}
 # Key Bindings & Macros {{{
 
-macro index,pager y "<save-message>=Archive<enter><enter>" "Archive"
+macro index,pager e "<save-message>=Archive<enter><enter>" "Archive"
 
 # }}}

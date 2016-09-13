@@ -30,6 +30,6 @@ set smtp_authenticators = ‘gssapi:login’
 # }}}
 # Key Bindings & Macros {{{
 
-macro index,pager y "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive"
+macro index,pager e "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive"
 
 # }}}

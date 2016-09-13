@@ -36,9 +36,11 @@ set   wait_key        = no      # shut up, mutt
 set   mbox_type       = Maildir # mailbox type
 set   timeout         = 3       # idle time before scanning
 set   mail_check      = 0       # minimum time between scans
+set   sleep_time      = 0       # be fast
 set   ssl_starttls    = yes
 set   ssl_force_tls   = yes
 set   send_charset    = "us-ascii:utf-8:iso-8859-1"
+set   smart_wrap
 set   delete                    # don't ask, just do
 set   quit                      # don't ask, just do!!
 set   beep_new                  # bell on new mails
