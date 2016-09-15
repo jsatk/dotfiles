@@ -53,6 +53,7 @@ formulae = \
 	mutt \
 	node-build \
 	postgresql \
+	reattach-to-user-namespace \
 	ruby-build \
 	sbt \
 	scala \
@@ -74,7 +75,7 @@ update: | install
 	gem update
 	npm update --global --quiet
 	vim +VundleUpdate +quitall
-	mas upgrade
+	reattach-to-user-namespace mas upgrade
 
 clean: | install
 	brew cleanup

@@ -28,6 +28,7 @@ SET fish_pager_color_completion:normal
 SET fish_pager_color_description:555\x1eyellow
 SET fish_pager_color_prefix:cyan
 SET fish_pager_color_progress:cyan
+SET fish_user_paths:/usr/local/sbin\x1e/usr/local/sbin\x1e/Users/jesseatkinson/\x2erubies/2\x2e0\x2e0\x2dp648/bin
 SET fry_auto_switch:0
 SET fry_installer:ruby\x2dbuild
 SET fry_prepend_path:0

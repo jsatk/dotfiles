@@ -114,3 +114,8 @@ tmux_conf_new_session_prompt=true
 # this is the place to further customize tmux's configuration
 
 # set -g history-limit 10000
+
+# remap prefix from 'C-b' to 'C-a'
+unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix

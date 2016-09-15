@@ -142,10 +142,10 @@ set splitbelow
 set splitright
 
 " Allows jumping between splits with Ctrl + movement keys.
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 " When a file has been detected to have been changed outside of Vim and
 " it has not been changed inside of Vim, automatically read it again.
@@ -206,6 +206,9 @@ set linebreak
 
 " Turns line wrapping on
 set wrap
+
+" wrap lines without changing the amount of indent.
+set breakindent
 
 " Turns off physical line wrapping (ie: automatic insertion of newlines)
 set textwidth=0
@@ -740,7 +743,7 @@ augroup END
 augroup ft_conf
   autocmd!
 
-  au BufNewFile,BufRead bash_profile,gitconfig set filetype=conf
+  au BufNewFile,BufRead *.conf,bash_profile,gitconfig set filetype=conf
   autocmd FileType conf setlocal foldmethod=marker
   autocmd Filetype conf setlocal foldmarker={{{,}}}
 augroup END
