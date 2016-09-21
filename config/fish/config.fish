@@ -18,7 +18,7 @@ set DEVELOPER ~/Developer
 set -x HOMEBREW_CASK_OPTS '--appdir=/Applications'
 
 # Golang workspace
-set -x GOPATH $HOME/Developer/gocode
+set -x GOPATH $HOME/Developer
 
 # For Fry ruby version manager
 if test -f /usr/local/share/fry/fry.fish

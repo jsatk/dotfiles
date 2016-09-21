@@ -119,3 +119,6 @@ tmux_conf_new_session_prompt=true
 unbind C-b
 set-option -g prefix C-a
 bind-key C-a send-prefix
+# vi kebindings
+set-window-option -g mode-keys vi
+set-window-option -g mouse on

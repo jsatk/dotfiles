@@ -254,6 +254,10 @@ endif
 " Do not show stupid q: window
 map q: :q
 
+" Make vim resize on host window resize.  Great for increaseing/decreasing
+" font or when you disconnect from your external monitor.
+autocmd VimResized * wincmd =
+
 " }}}
 " Look & Feel {{{
 
