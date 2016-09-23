@@ -1,5 +1,6 @@
 #!/usr/bin/env osascript
 # Returns the current playing song in Spotify for OSX
+# Stolen from: https://github.com/dickeyxxx/tmux-spotify-info/blob/master/tmux-spotify-info
 
 tell application "Spotify"
   if it is running then
