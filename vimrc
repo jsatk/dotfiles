@@ -70,6 +70,7 @@ Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
 Plugin 'wesQ3/vim-windowswap'                   " Swap windows without fucking up layout
 Plugin 'fatih/vim-go'                           " Makes working with Go easier
 Plugin 'derekwyatt/vim-scala'                   " Makes working with Scala easier
+Plugin 'mattn/gist-vim'                         " Send text straight to a gist
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -540,6 +541,7 @@ augroup ft_markdown
   autocmd!
 
   autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
+  autocmd FileType markdown setlocal textwidth=0
 
   set formatoptions+=t
 augroup END

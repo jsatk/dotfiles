@@ -1,6 +1,7 @@
 #!/usr/bin/env osascript
 # Returns the current playing song in Spotify for OSX
 # Stolen from: https://github.com/dickeyxxx/tmux-spotify-info/blob/master/tmux-spotify-info
+# TODO: Get this to cut at a certain amount and scroll
 
 tell application "Spotify"
   if it is running then
@@ -10,10 +11,10 @@ tell application "Spotify"
 
       if artist_name > 0
         # If the track has an artist set and is therefore most likely a song rather than an advert
-        "🎧  " & artist_name & " - " & track_name
+        "#[fg=colour125]♬#[fg=colour232]  " & artist_name & " - " & track_name
       else
         # If the track doesn't have an artist set and is therefore most likely an advert rather than a song
-        "🎧  ~ " & track_name
+        "#[fg=colour125]♬#[fg=colour232]  ~ " & track_name
       end if
     else
       "🔇"

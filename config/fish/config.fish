@@ -3,7 +3,7 @@
 # Fish functions are all stored in ~/.config/fish/functions/
 # See: http://fishshell.com/docs/current/tutorial.html#tut_startup
 
-# $PATH is set via $fish_user_paths.
+# $PATH is set via $fish_user_paths with `set -U` so it persists.
 # See: https://fishshell.com/docs/current/tutorial.html#tut_universal
 
 # Universal Defaults

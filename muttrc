@@ -32,14 +32,17 @@ source ~/.mutt/themes/bad-wolf/bad-wolf.muttrc
 # }}}
 # Basic Options {{{
 
-set   wait_key        = no      # shut up, mutt
-set   mbox_type       = Maildir # mailbox type
-set   timeout         = 3       # idle time before scanning
-set   mail_check      = 0       # minimum time between scans
-set   sleep_time      = 0       # be fast
-set   ssl_starttls    = yes
-set   ssl_force_tls   = yes
-set   send_charset    = "us-ascii:utf-8:iso-8859-1"
+set   wait_key       = no       # shut up, mutt
+set   mbox_type      = Maildir  # mailbox type
+set   timeout        = 3        # idle time before scanning
+set   mail_check     = 0        # minimum time between scans
+set   sleep_time     = 0        # be fast
+set   ssl_starttls   = yes
+set   ssl_force_tls  = yes
+set   send_charset   = "us-ascii:utf-8:iso-8859-1"
+set   imap_keepalive = 120      # Keep IMAP connection alive by polling intermittently (time in seconds).
+set   mail_check     = 60       # How often to check for new mail (time in seconds).
+set   imap_idle                 # Use IMAP IDLE protocol for notification of new mail.
 set   smart_wrap
 set   delete                    # don't ask, just do
 set   quit                      # don't ask, just do!!
@@ -50,7 +53,6 @@ set   use_from                  # respect the From: address the editor sends bac
 unset move                      # gmail does that
 unset confirmappend             # don't ask, just do!
 unset mark_old                  # read/new is good enough for me
-
 # }}}
 # Compose View Options {{{
 

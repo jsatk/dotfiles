@@ -9,7 +9,6 @@
 #  \ \_\ \ \_\  \ \_\ \_\  \ \_\ \_\  \ \_____\  \ \_\    \ \_\  \ \_____\  \ \_____\
 #   \/_/  \/_/   \/_/\/_/   \/_/\/_/   \/_____/   \/_/     \/_/   \/_____/   \/_____/
 
-
 # Preamble {{{
 
 # Author:     Jesse Atkinson
@@ -32,9 +31,9 @@ symlinks = \
 	config \
 	gitconfig \
 	irbrc \
+	jsatk.tmuxtheme \
 	muttrc \
 	tmux.conf \
-	tmux.conf.local \
 	vimrc \
 
 formulae = \
@@ -57,6 +56,7 @@ formulae = \
 	ruby-build \
 	sbt \
 	scala \
+	spark \
 	the_platinum_searcher \
 	tmux \
 	trash \
