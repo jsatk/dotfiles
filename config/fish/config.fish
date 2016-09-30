@@ -1,3 +1,18 @@
+#  ______     ______     __   __     ______   __     ______     ______   __     ______     __  __
+# /\  ___\   /\  __ \   /\ "-.\ \   /\  ___\ /\ \   /\  ___\   /\  ___\ /\ \   /\  ___\   /\ \_\ \
+# \ \ \____  \ \ \/\ \  \ \ \-.  \  \ \  __\ \ \ \  \ \ \__ \  \ \  __\ \ \ \  \ \___  \  \ \  __ \
+#  \ \_____\  \ \_____\  \ \_\\"\_\  \ \_\    \ \_\  \ \_____\  \ \_\    \ \_\  \/\_____\  \ \_\ \_\
+#   \/_____/   \/_____/   \/_/ \/_/   \/_/     \/_/   \/_____/   \/_/     \/_/   \/_____/   \/_/\/_/
+
+# Preamble {{{
+
+# Author:     Jesse Atkinson
+# Email:      jesse.atkinson@me.com
+# Source:     https://github.com/jsatk/dotfiles/blob/master/bash_profile
+# Twitter:    @jsatk
+
+# }}}
+
 # Note: All git aliases and configs stored in ~/.gitconfig.
 # Fish prompt can be modified via `fish_config` command or in ~/.config/fish/functions/fish_prompt.fish
 # Fish functions are all stored in ~/.config/fish/functions/

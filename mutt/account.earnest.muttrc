@@ -33,3 +33,15 @@ set smtp_authenticators = ‘gssapi:login’
 macro index,pager e "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive"
 
 # }}}
+# Sidebar Patch {{{
+
+mailboxes +INBOX \
+          +Github \
+          +sent \
+          +drafts \
+
+# Other special folders.
+set mbox      = "+archive"
+set postponed = "+drafts"
+
+# }}}

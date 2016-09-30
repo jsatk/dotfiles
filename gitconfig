@@ -15,146 +15,148 @@
 # alias {{{
 
 [alias]
-  s                = status --short
-  lg               = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	s = status --short
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 
-  # Undo a `git push`
-  undopush         = push --force origin HEAD^:master
+	# Undo a `git push`
+	undopush = push --force origin HEAD^:master
 
-  # Pretty log
-  prettylog        = log --name-only --decorate=full
+	# Pretty log
+	prettylog = log --name-only --decorate=full
 
-  # Log Me
-  logme            = log --color --name-only --decorate=full --author="Jesse"
+	# Log Me
+	logme = log --color --name-only --decorate=full --author="Jesse"
 
-  # Get Incoming Changes
-  incoming         = log ..@{u}
+	# Get Incoming Changes
+	incoming = log ..@{u}
 
-  # Get Outgoing Changes
-  outgoing         = log @{u}..
+	# Get Outgoing Changes
+	outgoing = log @{u}..
 
-  # list branch dates
-  branchdate       = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
+	# list branch dates
+	branchdate = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
 
-  # Delete all branches that have already been merged into the current branch.
-  deletemerged     = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+	# Delete all branches that have already been merged into the current branch.
+	deletemerged = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 
-  # List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
-  aliases          = "!git config -l | grep ^alias | cut -c 7- | sort"
+	# List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
+	aliases = "!git config -l | grep ^alias | cut -c 7- | sort"
 
-  # Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
-  damnit           = reset --soft HEAD^
+	# Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
+	damnit = reset --soft HEAD^
 
-  # Destroy all local changes and reset to HEAD.
-  fuckit           = reset --hard HEAD
+	# Destroy all local changes and reset to HEAD.
+	fuckit = reset --hard HEAD
+	grog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
+	please = push --force-with-lease
 
 # }}}
 # apply {{{
 
 [apply]
-  whitespace       = fix
+	whitespace = fix
 
 # }}}
 # core {{{
 
 [core]
-  attributesfile   = ~/.gitattributes
-  autocrlf         = input
-  excludesfile     = /opt/boxen/config/git/gitignore
-  ignorecase       = false
-  whitespace       = fix,space-before-tab,tab-in-indent,trailing-space
-  editor           = vim
-  pager            = diff-so-fancy | less --tabs=4 -RFX
+	attributesfile = ~/.gitattributes
+	autocrlf = input
+	excludesfile = /opt/boxen/config/git/gitignore
+	ignorecase = false
+	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+	editor = vim
+	pager = diff-so-fancy | less --tabs=4 -RFX
 
 # }}}
 # colors {{{
 
 [color "branch"]
-  current          = yellow reverse
-  local            = yellow
-  remote           = green
+	current = yellow reverse
+	local = yellow
+	remote = green
 
 [color "diff"]
-  frag             = magenta bold
-  meta             = yellow bold
-  new              = green bold
-  old              = red bold
+	frag = magenta bold
+	meta = yellow bold
+	new = green bold
+	old = red bold
 
 [color "status"]
-  added            = yellow
-  changed          = green
-  untracked        = cyan
+	added = yellow
+	changed = green
+	untracked = cyan
 
 # }}}
 # merge {{{
 
 [merge]
-  log              = true
+	log = true
 
 # }}}
 # grep {{{
 
 [grep]
-  patternType      = "fixed"
+	patternType = "fixed"
 
 # }}}
 # github {{{
 
 [url "git@github.com:"]
-  insteadOf        = "gh:"
-  pushInsteadOf    = "github:"
-  pushInsteadOf    = "git://github.com/"
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
 
 [url "git://github.com/"]
-  insteadOf        = "github:"
+	insteadOf = "github:"
 
 [url "git@gist.github.com:"]
-  insteadOf        = "gst:"
-  pushInsteadOf    = "gist:"
-  pushInsteadOf    = "git://gist.github.com/"
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
 
 [url "git://gist.github.com/"]
-  insteadOf        = "gist:"
+	insteadOf = "gist:"
 
 # Any GitHub repo with my username should be checked out r/w by default
 # http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
 [url "git@github.com:jsatk/"]
-  insteadOf        = "git://github.com/jsatk/"
+	insteadOf = "git://github.com/jsatk/"
 
 [user]
-  email            = jesse.atkinson@me.com
-  name             = "Jesse Atkinson"
-  signingkey       = "DC5AC6E4"
+	email = jesse.atkinson@me.com
+	name = "Jesse Atkinson"
+	signingkey = "DC5AC6E4"
 
 [hub]
-  protocol         = https
+	protocol = https
 
 # }}}
 # branch {{{
 
 [branch]
-  autosetuprebase  = always
+	autosetuprebase = always
 # }}}
 # rerere {{{
 
 [rerere]
-  enabled          = true
+	enabled = true
 
 # }}}
 # push {{{
 
 [push]
-  default          = tracking
+	default = tracking
 
 # }}}
 # help {{{
 
 [help]
-  autocorrect      = 1
+	autocorrect = 1
 # }}}
 # commit {{{
 
 [commit]
-  gpgsign          = true
+	gpgsign = true
 
 # }}}

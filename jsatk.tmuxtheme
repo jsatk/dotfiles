@@ -21,16 +21,25 @@ set -g status-fg colour238
 set -g status-bg colour233
 
 # Left side of status bar
+status_left_session_name="#[fg=colour232,bg=colour245,bold] #S #[fg=colour245,bg=colour240,nobold]"
+status_left_user_name="#[fg=colour233,bg=colour240] #(whoami) #[fg=colour240,bg=colour235]"
+status_left_window_counter="#[fg=colour240,bg=colour235] #I:#P #[fg=colour235,bg=colour233,nobold]"
+
 set -g status-left-bg colour233
 set -g status-left-fg colour243
 set -g status-left-length 40
-set -g status-left "#[fg=colour232,bg=colour245,bold] #S #[fg=colour245,bg=colour240,nobold]#[fg=colour233,bg=colour240] #(whoami) #[fg=colour240,bg=colour235]#[fg=colour240,bg=colour235] #I:#P #[fg=colour235,bg=colour233,nobold]"
+set -g status-left "${status_left_session_name}${status_left_user_name}${status_left_window_counter}"
 
 # Right side of status bar
 set -g status-right-bg colour233
 set -g status-right-fg colour243
 set -g status-right-length 150
-set -g status-right "#[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] #(/usr/local/bin/battery -t)#[fg=colour240,bg=colour235] #[fg=colour233,bg=colour240] %H:%M:%S | %d-%b-%y #[fg=colour245,bg=colour240]#[fg=colour232,bg=colour245,bold] #(spotify-now-playing | cut -c 1-60) "
+
+status_right_prefix="#{?client_prefix,#[bold]⌨ #[nobold],} "
+status_right_battery="#[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] #(/usr/local/bin/battery -t)#[fg=colour240,bg=colour235] "
+status_right_datetime="#[fg=colour233,bg=colour240] %H:%M:%S | %d-%b-%y #[fg=colour245,bg=colour240]"
+status_right_now_playing="#[fg=colour232,bg=colour245,bold] #(spotify-now-playing | cut -c 1-60) "
+set -g status-right "${status_right_prefix}${status_right_battery}${status_right_datetime}${status_right_now_playing}"
 
 # Window status
 set -g window-status-format " #I:#W#F "

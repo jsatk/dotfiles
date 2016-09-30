@@ -338,6 +338,8 @@ hi def IndentGuides guibg=#303030 ctermbg=234
 " Toggles indent guides
 nnoremap <leader>I :call IndentGuides()<cr>
 
+" For Earnest development.  Run's test suite.
+nnoremap <leader>t :Dispatch ./go test<cr>
 " }}}
 " Folding {{{
 
@@ -507,81 +509,22 @@ if !isdirectory(expand(&directory))
 endif
 
 " }}}
+" File & Filetype specific configurations {{{
+
 " Filetype specific configurations {{{
 
-" JavaScript {{{
+" conf {{{
 
-augroup ft_javascript
+augroup ft_conf
   autocmd!
 
-  " For Syntastic
-  let g:syntastic_javascript_checkers = ['eslint']
-  let g:syntastic_javascript_eslint_exec = "./node_modules/eslint/bin/eslint.js"
-
-  autocmd FileType javascript setlocal foldmethod=syntax
-  autocmd FileType javascript setlocal foldmarker={,}
-
-  " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
-  " positioned inside of them AND the following code doesn't get unfolded.
-  autocmd Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
-  " }
-
-  " Prettify a hunk of JSON with <localleader>p
-  autocmd FileType javascript nnoremap <buffer> <localleader>p ^vg_:!python -m json.tool<cr>
-  autocmd FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
-
-  " Set which javascript libraries I use with https://github.com/othree/javascript-libraries-syntax.vim
-  let g:used_javascript_libs = 'lo-dash,angularjs,jquery,chai'
+  au BufNewFile,BufRead *.conf set filetype=conf
+  autocmd FileType conf setlocal foldmethod=marker
+  autocmd Filetype conf setlocal foldmarker={{{,}}}
 augroup END
 
 " }}}
-" Markdown {{{
-
-augroup ft_markdown
-  autocmd!
-
-  autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
-  autocmd FileType markdown setlocal textwidth=0
-
-  set formatoptions+=t
-augroup END
-
-" }}}
-" Ruby {{{
-
-augroup ft_ruby
-  autocmd!
-
-  autocmd Filetype ruby setlocal foldmethod=syntax
-  autocmd BufRead,BufNewFile Capfile setlocal filetype=ruby
-augroup END
-
-" Tells Vim to set the syntax for our .irbrc file to Ruby.
-autocmd BufNewFile,BufRead .irbrc set syntax=html
-
-" }}}
-" Handlebars {{{
-
-augroup ft_handlebars
-  autocmd!
-
-  autocmd Filetype html.handlebars setlocal foldmethod=indent
-  autocmd BufNewFile,BufRead *.hbs setlocal filetype=html.handlebars
-augroup END
-
-" }}}
-" Haml {{{
-
-augroup ft_haml
-  autocmd!
-
-  autocmd Filetype haml setlocal foldmethod=syntax
-  autocmd Filetype haml setlocal colorcolumn=0
-  autocmd BufRead,BufNewFile Capfile setlocal filetype=haml
-augroup END
-
-" }}}
-" CSS {{{
+" css {{{
 
 " Sorts CSS properties.  Most useful command ever.
 " See: http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
@@ -623,7 +566,16 @@ augroup ft_css
 augroup END
 
 " }}}
-" Fish {{{
+" dockerfile {{{
+
+augroup ft_dockerfile
+  autocmd!
+
+  autocmd FileType dockerfile set noexpandtab
+augroup END
+
+" }}}
+" fish {{{
 
 augroup ft_fish
   autocmd!
@@ -638,7 +590,138 @@ augroup ft_fish
 augroup END
 
 " }}}
-" Vim {{{
+" gitcommit {{{
+
+augroup ft_gitcommit
+  autocmd!
+
+  " spell check for git commits
+  autocmd FileType gitcommit setlocal spell
+augroup END
+
+" }}}
+" go {{{
+
+augroup ft_golang
+  autocmd!
+
+  au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+augroup END
+
+" }}}
+" haml {{{
+
+augroup ft_haml
+  autocmd!
+
+  autocmd Filetype haml setlocal foldmethod=syntax
+  autocmd Filetype haml setlocal colorcolumn=0
+  autocmd BufRead,BufNewFile Capfile setlocal filetype=haml
+augroup END
+
+" }}}
+" handlebars {{{
+
+augroup ft_handlebars
+  autocmd!
+
+  autocmd Filetype html.handlebars setlocal foldmethod=indent
+  autocmd BufNewFile,BufRead *.hbs setlocal filetype=html.handlebars
+augroup END
+
+" }}}
+" javascript {{{
+
+augroup ft_javascript
+  autocmd!
+
+  " For Syntastic
+  let g:syntastic_javascript_checkers = ['eslint']
+  let g:syntastic_javascript_eslint_exec = "./node_modules/eslint/bin/eslint.js"
+
+  autocmd FileType javascript setlocal foldmethod=syntax
+  autocmd FileType javascript setlocal foldmarker={,}
+
+  " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
+  " positioned inside of them AND the following code doesn't get unfolded.
+  autocmd Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
+  " }
+
+  " Prettify a hunk of JSON with <localleader>p
+  autocmd FileType javascript nnoremap <buffer> <localleader>p ^vg_:!python -m json.tool<cr>
+  autocmd FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
+
+  " Set which javascript libraries I use with https://github.com/othree/javascript-libraries-syntax.vim
+  let g:used_javascript_libs = 'lo-dash,angularjs,jquery,chai'
+augroup END
+
+" }}}
+" json {{{
+
+augroup ft_json
+  autocmd!
+
+  autocmd FileType json setlocal foldmethod=syntax
+augroup END
+
+" }}}
+" mail {{{
+
+augroup ft_mail
+  autocmd!
+
+  " spell check for git commits
+  autocmd FileType mail setlocal spell
+  autocmd FileType mail setlocal textwidth=0
+augroup END
+
+" }}}
+" make {{{
+
+augroup ft_make
+  autocmd!
+
+  autocmd Filetype conf setlocal noexpandtab
+  autocmd FileType make setlocal foldmethod=marker
+  autocmd Filetype make setlocal foldmarker={{{,}}}
+augroup END
+
+" }}}
+" markdown {{{
+
+augroup ft_markdown
+  autocmd!
+
+  autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
+  autocmd FileType markdown setlocal textwidth=0
+
+  set formatoptions+=t
+augroup END
+
+" }}}
+" ruby {{{
+
+augroup ft_ruby
+  autocmd!
+
+  autocmd Filetype ruby setlocal foldmethod=syntax
+  autocmd BufRead,BufNewFile Capfile setlocal filetype=ruby
+augroup END
+
+" Tells Vim to set the syntax for our .irbrc file to Ruby.
+autocmd BufNewFile,BufRead .irbrc set syntax=html
+
+" }}}
+" scala {{{
+
+augroup ft_scala
+  autocmd!
+
+  autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2 expandtab
+augroup END
+
+" }}}
+" vim {{{
 
 :command! ClearQuickfixList cexpr []
 augroup ft_vim
@@ -650,16 +733,7 @@ augroup ft_vim
 augroup END
 
 " }}}
-" Yaml {{{
-
-augroup ft_yaml
-  autocmd!
-
-  autocmd FileType yaml set shiftwidth=2
-augroup END
-
-" }}}
-" XML {{{
+" xml {{{
 
 augroup ft_xml
   autocmd!
@@ -705,51 +779,47 @@ augroup ft_xml
 augroup END
 
 " }}}
-" Go {{{
+" yml {{{
 
-augroup ft_golang
+augroup ft_yaml
   autocmd!
 
-  au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+  autocmd FileType yaml set shiftwidth=2
 augroup END
 
 " }}}
-" Scala {{{
 
-augroup ft_scala
+" }}}
+" File specific configurations {{{
+
+" bash_profile {{{
+
+augroup ft_bash_profile
   autocmd!
 
-  autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2 expandtab
+  au BufNewFile,BufRead .bash_profile setlocal foldmethod=marker
+  au BufNewFile,BufRead .bash_profile setlocal foldmarker={{{,}}}
 augroup END
 
 " }}}
-" Git Commits {{{
+" config.fish {{{
 
-augroup ft_gitcommit
+augroup ft_config_fish
   autocmd!
 
-  " spell check for git commits
-  autocmd FileType gitcommit setlocal spell
+  au BufNewFile,BufRead config.fish setlocal foldmethod=marker
+  au BufNewFile,BufRead config.fish setlocal foldmarker={{{,}}}
 augroup END
 
 " }}}
-" mail {{{
+" gitconfig {{{
 
-augroup ft_mail
+augroup ft_gitconfig
   autocmd!
 
-  " spell check for git commits
-  autocmd FileType mail setlocal spell
-  autocmd FileType mail setlocal textwidth=0
-augroup END
-
-" }}}
-" Dockerfile {{{
-
-augroup ft_dockerfile
-  autocmd!
-
-  autocmd FileType dockerfile set noexpandtab
+  autocmd Filetype gitconfig setlocal noexpandtab
+  autocmd FileType gitconfig setlocal foldmethod=marker
+  autocmd Filetype gitconfig setlocal foldmarker={{{,}}}
 augroup END
 
 " }}}
@@ -764,47 +834,30 @@ augroup ft_muttrc
 augroup END
 
 " }}}
-" make {{{
-
-augroup ft_make
-  autocmd!
-
-  autocmd Filetype conf setlocal noexpandtab
-  autocmd FileType make setlocal foldmethod=marker
-  autocmd Filetype make setlocal foldmarker={{{,}}}
-augroup END
-
-" }}}
-" conf {{{
-
-augroup ft_conf
-  autocmd!
-
-  au BufNewFile,BufRead *.conf,bash_profile,gitconfig set filetype=conf
-  autocmd FileType conf setlocal foldmethod=marker
-  autocmd Filetype conf setlocal foldmarker={{{,}}}
-augroup END
-
-" }}}
-" json {{{
-
-augroup ft_json
-  autocmd!
-
-  autocmd FileType json setlocal foldmethod=syntax
-augroup END
 
 " }}}
 
 " }}}
 " Vim Plugin Configurations {{{
 
-" NERDTree {{{
+" Airline {{{
 
-" Maps NERDTree to ^n.
-map <C-n> :NERDTreeToggle<CR>
+" Allows us to get the lovely symbols for Airline in the prompt
+let g:airline_powerline_fonts = 1
 
-let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]', 'docs[[dir]]', 'junit-reports[[dir]]']
+" }}}
+" CtrlP {{{
+
+let g:ctrlp_custom_ignore = {
+ \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist)$'
+ \ }
+
+" Allows indexing of more files
+let g:ctrlp_max_depth = 40
+let g:ctrlp_match_window = 'results:20'
+
+" Shows the hidden dot files
+let g:ctrlp_show_hidden = 0
 
 " }}}
 " EasyAlign {{{
@@ -816,25 +869,12 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
-" CtrlP {{{
+" NERDTree {{{
 
-let g:ctrlp_custom_ignore = {
- \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist)$'
- \ }
+" Maps NERDTree to ^n.
+map <C-n> :NERDTreeToggle<CR>
 
-" Allows indexing of more files
-let g:ctrlp_max_files = 0
-let g:ctrlp_max_depth = 40
-let g:ctrlp_match_window = 'results:20'
-
-" Shows the hidden dot files
-let g:ctrlp_show_hidden = 0
-
-" }}}
-" Airline {{{
-
-" Allows us to get the lovely symbols for Airline in the prompt
-let g:airline_powerline_fonts = 1
+let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]', 'docs[[dir]]', 'junit-reports[[dir]]']
 
 " }}}
 " vim-javascript {{{

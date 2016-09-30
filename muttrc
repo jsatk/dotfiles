@@ -73,6 +73,7 @@ unset mime_forward                      # forward attachments as part of body
 # }}}
 # Headers {{{
 
+# These options hide some of the extra email headers we don’t care about when viewing and composing email.
 ignore *                                # ignore all headers
 unignore from: to: cc: date: subject:   # show only these
 unhdr_order *
@@ -85,7 +86,6 @@ hdr_order from: to: cc: date: subject:  # and in this order
 folder-hook 'earnest' 'source ~/.mutt/earnest'
 folder-hook 'me'      'source ~/.mutt/me'
 folder-hook . "exec collapse-all" # By default, collapse all threads
-
 
 # Default account
 source ~/.mutt/account.earnest.muttrc
@@ -107,4 +107,12 @@ set sort         = threads                     # like gmail
 set sort_aux     = reverse-last-date-received  # like gmail
 set uncollapse_jump                            # don't collapse on an unread message
 
+# }}}
+# Sidebar Patch {{{
+# set sidebar_visible = yes
+set sidebar_width   = 24
+color sidebar_new color221 color233
+
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
 # }}}
