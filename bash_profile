@@ -211,13 +211,6 @@ function FUCK () { echo "Calm down"; }
 function FUCKFUCK () { echo "Calm down"; }
 
 # Fix the shitty OS X Open With menu duplicates
-function fixopenwith () {
-  /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user
-  killall Finder
-  echo 'Open With has been rebuilt, Finder will relaunch'
-}
-
-# Fix the shitty OS X Open With menu duplicates
 function fixopenwith() {
   /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user
   killall Finder
