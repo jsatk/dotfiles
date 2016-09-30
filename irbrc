@@ -1,3 +1,18 @@
+#  __     ______     ______     ______     ______
+# /\ \   /\  == \   /\  == \   /\  == \   /\  ___\
+# \ \ \  \ \  __<   \ \  __<   \ \  __<   \ \ \____
+#  \ \_\  \ \_\ \_\  \ \_____\  \ \_\ \_\  \ \_____\
+#   \/_/   \/_/ /_/   \/_____/   \/_/ /_/   \/_____/
+
+# Preamble {{{
+
+# Author:     Jesse Atkinson
+# Email:      jesse.atkinson@me.com
+# Source:     https://github.com/jsatk/dotfiles/blob/master/irbrc
+# Twitter:    @jsatk
+
+# }}}
+
 require 'irb/completion'
 require 'date'
 require 'irb/ext/save-history'

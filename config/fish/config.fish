@@ -8,7 +8,7 @@
 
 # Author:     Jesse Atkinson
 # Email:      jesse.atkinson@me.com
-# Source:     https://github.com/jsatk/dotfiles/blob/master/bash_profile
+# Source:     https://github.com/jsatk/dotfiles/blob/master/config/fish/config.fish
 # Twitter:    @jsatk
 
 # }}}
