@@ -260,6 +260,28 @@ map q: :q
 autocmd VimResized * wincmd =
 
 " }}}
+" Spelling {{{
+
+" Stolen from Steve Losh
+"
+" There are three dictionaries I use for spellchecking:
+"
+"   /usr/share/dict/words
+"   Basic stuff.
+"
+"   ~/.vim/custom-dictionary.utf-8.add
+"   Custom words (like my name).  This is in my (version-controlled) dotfiles.
+"
+"   ~/.vim-local-dictionary.utf-8.add
+"   More custom words.  This is *not* version controlled, so I can stick
+"   work stuff in here without leaking internal names and shit.
+"
+" I also remap zG to add to the local dict (vanilla zG is useless anyway).
+set dictionary=/usr/share/dict/words
+set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add
+nnoremap zG 2zg
+
+" }}}
 " Look & Feel {{{
 
 " Many colorschemes support both light and dark backgrounds.  Dark is nicer on my eyes.
@@ -272,7 +294,7 @@ set background=dark
 " I'm importing a fuck-ton of colorschemes via this plugin: github.com/flazz/vim-colorschemes
 colorscheme Tomorrow-Night
 
-" Sets the ColorColumn to a sensible color.  Default is 'Dark Red'.
+" Sets the ColorColumn to a sensible color.
 highlight ColorColumn ctermbg=237 guibg=#3a3a3a
 
 " Set font type and size.  Depends on the resolution.  Larger screens, prefer h20
@@ -294,10 +316,6 @@ nnoremap <leader>n :setlocal number!<cr>
 " Use Python style regular expressions instead of vim's style.
 " nnoremap / /\v
 " vnoremap / /\v
-
-" This sends the visually selected text to gist.github.com as a private,
-" filetyped Gist.  Requires the Gist command line tool (brew install gist).
-vnoremap <leader>G :w !gist -p -t %:e \|pbcopy<cr>
 
 " Bubble single lines
 " http://vimcasts.org/episodes/bubbling-text/
@@ -400,8 +418,12 @@ noremap <leader>ss :call StripWhitespace ()<CR>
 " }}}
 " Quick Editing {{{
 
-" Lets me open my .vimrc on the fly to quickly add useful stuff to it.
-nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nnoremap <leader>ed :vsplit ~/.vim/custom-dictionary.utf-8.add<cr>
+nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
+nnoremap <leader>eg :vsplit ~/.gitconfig<cr>
+nnoremap <leader>em :vsplit ~/.mutt/muttrc<cr>
+nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 " }}}
 " Kill Arrow Keys {{{
@@ -587,7 +609,8 @@ augroup ft_fish
   autocmd FileType fish setlocal textwidth=80
   " Set up :make to use fish for syntax checking.
   autocmd FileType fish compiler fish
-augroup END
+  autocmd FileType fish setlocal foldmethod=marker
+  autocmd FileType fish setlocal foldmarker={{{,}}}
 
 " }}}
 " gitcommit {{{
@@ -799,16 +822,6 @@ augroup ft_bash_profile
 
   au BufNewFile,BufRead .bash_profile setlocal foldmethod=marker
   au BufNewFile,BufRead .bash_profile setlocal foldmarker={{{,}}}
-augroup END
-
-" }}}
-" config.fish {{{
-
-augroup ft_config_fish
-  autocmd!
-
-  au BufNewFile,BufRead config.fish setlocal foldmethod=marker
-  au BufNewFile,BufRead config.fish setlocal foldmarker={{{,}}}
 augroup END
 
 " }}}
