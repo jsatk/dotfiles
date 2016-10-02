@@ -297,6 +297,12 @@ colorscheme Tomorrow-Night
 " Sets the ColorColumn to a sensible color.
 highlight ColorColumn ctermbg=237 guibg=#3a3a3a
 
+" Set's comments to italics
+" Reference: https://www.reddit.com/r/vim/comments/24g8r8/italics_in_terminal_vim_and_tmux/
+set t_ZH=[3m
+set t_ZR=[23m
+highlight Comment cterm=italic
+
 " Set font type and size.  Depends on the resolution.  Larger screens, prefer h20
 " My two favorite programming typefaces are Hack and Inconsolata.
 " Hack can be found here: http://sourcefoundry.org/hack/

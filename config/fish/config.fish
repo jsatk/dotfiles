@@ -41,3 +41,5 @@ if test -f /usr/local/share/fry/fry.fish
   # Set default version of ruby
   fry use 2.0.0-p648
 end
+
+export powerline_symbols="$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
