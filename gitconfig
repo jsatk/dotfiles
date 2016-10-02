@@ -21,9 +21,6 @@
 	# Undo a `git push`
 	undopush = push --force origin HEAD^:master
 
-	# Pretty log
-	prettylog = log --name-only --decorate=full
-
 	# Log Me
 	logme = log --color --name-only --decorate=full --author="Jesse"
 

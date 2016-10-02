@@ -299,6 +299,8 @@ highlight ColorColumn ctermbg=237 guibg=#3a3a3a
 
 " Set's comments to italics
 " Reference: https://www.reddit.com/r/vim/comments/24g8r8/italics_in_terminal_vim_and_tmux/
+" I realize setting t_ZH and t_ZR directly is probably 'bad' to more advanced
+" vim folks.  Practicality beats purity.
 set t_ZH=[3m
 set t_ZR=[23m
 highlight Comment cterm=italic
@@ -546,6 +548,7 @@ endif
 augroup ft_conf
   autocmd!
 
+  autocmd Filetype conf setlocal noexpandtab
   au BufNewFile,BufRead *.conf set filetype=conf
   autocmd FileType conf setlocal foldmethod=marker
   autocmd Filetype conf setlocal foldmarker={{{,}}}
@@ -613,6 +616,7 @@ augroup ft_fish
   autocmd FileType fish setlocal foldmethod=expr
   " Set this to have long lines wrap inside comments.
   autocmd FileType fish setlocal textwidth=80
+  autocmd Filetype fish setlocal noexpandtab
   " Set up :make to use fish for syntax checking.
   autocmd FileType fish compiler fish
   autocmd FileType fish setlocal foldmethod=marker
@@ -710,7 +714,7 @@ augroup END
 augroup ft_make
   autocmd!
 
-  autocmd Filetype conf setlocal noexpandtab
+  autocmd Filetype make setlocal noexpandtab
   autocmd FileType make setlocal foldmethod=marker
   autocmd Filetype make setlocal foldmarker={{{,}}}
 augroup END

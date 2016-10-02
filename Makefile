@@ -20,8 +20,9 @@
 # }}}
 # TODO {{{
 
-# Figure out how to properly install fonts
-# Figure out how to set fish as the default shell
+# * Figure out how to properly install fonts
+# * Figure out how to set fish as the default shell
+# * Figure out how to install a set list of default gems
 
 # }}}
 # setup {{{

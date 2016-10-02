@@ -20,6 +20,6 @@ tell application "Spotify"
       "🔇 "
     end if
   else
-    "📴 "
+		"🔇 "
   end if
 end tell

@@ -60,9 +60,6 @@ fi
 # }}}
 # Aliases {{{
 
-# Blow all Docker shit away
-alias fuckdocker="docker stop $(docker-compose ps -q) && docker rmi -f $(docker images -q) && docker rm -f $(docker ps -aq)"
-
 # Be nice
 alias please=sudo
 

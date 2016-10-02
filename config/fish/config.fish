@@ -35,11 +35,9 @@ set -x HOMEBREW_CASK_OPTS '--appdir=/Applications'
 # Golang workspace
 set -x GOPATH $HOME/Developer
 
-# For Fry ruby version manager
-if test -f /usr/local/share/fry/fry.fish
-  source /usr/local/share/fry/fry.fish
-  # Set default version of ruby
-  fry use 2.0.0-p648
+# For rbenv ruby version manager
+if test -f /usr/local/bin/rbenv
+	status --is-interactive; and . (rbenv init -|psub)
 end
 
 export powerline_symbols="$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
