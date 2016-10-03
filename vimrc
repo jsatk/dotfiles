@@ -46,31 +46,32 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Our Vim plugins!
+Plugin 'burnettk/vim-angular'                   " Provides some nicities for working with AngularJS.
+Plugin 'ctrlpvim/ctrlp.vim'                     " True fuzzy find.  The greatest thing ever for us lazy folk.
+Plugin 'dag/vim-fish'                           " Fish Shell syntax highlighting for vim.
+Plugin 'derekwyatt/vim-scala'                   " Makes working with Scala easier
+Plugin 'editorconfig/editorconfig-vim'          " Maintain consistent coding styles between different editors and IDEs.
+Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
+Plugin 'fatih/vim-go'                           " Makes working with Go easier
+Plugin 'flazz/vim-colorschemes'                 " All the colorschemes money can buy
 Plugin 'gmarik/Vundle.vim'                      " Alternative to Pathogen.  Lovely plugin manager for vim.
+Plugin 'junegunn/goyo.vim'                      " Makes working with plain text/markdown nicer
+Plugin 'junegunn/vim-easy-align'                " Aligns multiple lines on any given point.  Useful for assignments.
+Plugin 'mattn/gist-vim'                         " Send text straight to a gist
+Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
+Plugin 'othree/javascript-libraries-syntax.vim' " Provides syntax for many popular JavaScript libraries.
+Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
+Plugin 'tpope/vim-commentary'                   " Easier comment support in vim.  Comment out blocks with gcc.
+Plugin 'tpope/vim-dispatch'                     " Terminal in your vim.  Works best with tmux.  See: https://vimeo.com/63116209
 Plugin 'tpope/vim-fugitive'                     " Git support in vim.  Incredible handy for merge conflicts.
+Plugin 'tpope/vim-unimpaired'                   " Provides some nice key mappings
+Plugin 'Raimondi/delimitMate'                   " Provides auto closing of parens, braces, and brackets in insert mode.
 Plugin 'scrooloose/nerdtree.git'                " A vim explorer replacement.  Much nicer and easier to use.
 Plugin 'scrooloose/syntastic'                   " Adds error checking while writing or on save in vim.
 Plugin 'vim-airline/vim-airline'                " Adds a gorgeous toolbar with useful info to bottom of vim.
 Plugin 'vim-airline/vim-airline-themes'         " Airline themes.  Self explanatory
-Plugin 'tpope/vim-commentary'                   " Easier comment support in vim.  Comment out blocks with gcc.
-Plugin 'editorconfig/editorconfig-vim'          " Maintain consistent coding styles between different editors and IDEs.
-Plugin 'dag/vim-fish'                           " Fish Shell syntax highlighting for vim.
-Plugin 'junegunn/vim-easy-align'                " Aligns multiple lines on any given point.  Useful for assignments.
-Plugin 'ctrlpvim/ctrlp.vim'                     " True fuzzy find.  The greatest thing ever for us lazy folk.
-Plugin 'Raimondi/delimitMate'                   " Provides auto closing of parens, braces, and brackets in insert mode.
-Plugin 'othree/javascript-libraries-syntax.vim' " Provides syntax for many popular JavaScript libraries.
-Plugin 'burnettk/vim-angular'                   " Provides some nicities for working with AngularJS.
-Plugin 'tpope/vim-unimpaired'                   " Provides some nice key mappings
 Plugin 'vim-scripts/BufOnly.vim'                " Close all buffers except the current
-Plugin 'tpope/vim-dispatch'                     " Terminal in your vim.  Works best with tmux.  See: https://vimeo.com/63116209
-Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
-Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
-Plugin 'flazz/vim-colorschemes'                 " All the colorschemes money can buy
-Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
 Plugin 'wesQ3/vim-windowswap'                   " Swap windows without fucking up layout
-Plugin 'fatih/vim-go'                           " Makes working with Go easier
-Plugin 'derekwyatt/vim-scala'                   " Makes working with Scala easier
-Plugin 'mattn/gist-vim'                         " Send text straight to a gist
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -872,7 +873,7 @@ let g:airline_powerline_fonts = 1
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
- \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist)$'
+ \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist|docs)$'
  \ }
 
 " Allows indexing of more files

@@ -42,7 +42,6 @@ formulae = \
 	bash \
 	bash-completion \
 	fish \
-	fry \
 	git \
 	gist \
 	go \
@@ -53,6 +52,7 @@ formulae = \
 	mutt \
 	node-build \
 	postgresql \
+	rbenv \
 	reattach-to-user-namespace \
 	ruby-build \
 	sbt \
