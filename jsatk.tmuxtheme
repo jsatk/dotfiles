@@ -36,7 +36,7 @@ set -g status-right-fg colour243
 set -g status-right-length 150
 
 status_right_prefix="#{?client_prefix,#[bold]⌨ #[nobold],} "
-status_right_battery="#[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] #(/usr/local/bin/battery -t) #[fg=colour240,bg=colour235] "
+status_right_battery="#[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] #(/usr/local/bin/battery -t)#[fg=colour240,bg=colour235]  "
 status_right_datetime="#[fg=colour233,bg=colour240] %H:%M:%S | %d-%b-%y #[fg=colour245,bg=colour240]"
 status_right_now_playing="#[fg=colour232,bg=colour245,bold] #(spotify-now-playing | cut -c 1-60) "
 set -g status-right "${status_right_prefix}${status_right_battery}${status_right_datetime}${status_right_now_playing}"

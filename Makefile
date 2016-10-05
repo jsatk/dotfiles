@@ -23,6 +23,7 @@
 # * Figure out how to properly install fonts
 # * Figure out how to set fish as the default shell
 # * Figure out how to install a set list of default gems
+# * Figure out how to set up proper tmux $TERM so it fucking supports italics
 
 # }}}
 # setup {{{
@@ -35,6 +36,7 @@ symlinks = \
 	jsatk.tmuxtheme \
 	muttrc \
 	tmux.conf \
+	vim \
 	vimrc \
 
 formulae = \

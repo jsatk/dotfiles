@@ -1,7 +1,7 @@
 DS_Store
 .DS_Store
-vim.symlink/bundle/
-vim.symlink/tmp/
+vim/bundle/
+vim/tmp/
 tmux.symlink/
 *.secrets*
 mutt/earnest/
