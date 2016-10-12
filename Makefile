@@ -59,6 +59,7 @@ formulae = \
 	ruby-build \
 	sbt \
 	scala \
+        screenfetch \
 	spark \
 	the_platinum_searcher \
 	tmux \
