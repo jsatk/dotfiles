@@ -16,6 +16,8 @@
 
 [alias]
 	s = status --short
+
+# Pretty git log
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 
 	# Undo a `git push`
@@ -44,7 +46,8 @@
 
 	# Destroy all local changes and reset to HEAD.
 	fuckit = reset --hard HEAD
-	grog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
+
+# A slightly-less-destructive and risky git push --force
 	please = push --force-with-lease
 
 # }}}
