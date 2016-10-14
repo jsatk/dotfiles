@@ -307,10 +307,11 @@ set t_ZR=[23m
 highlight Comment cterm=italic
 
 " Set font type and size.  Depends on the resolution.  Larger screens, prefer h20
-" My two favorite programming typefaces are Hack and Inconsolata.
+" My two favorite programming typefaces are Operator Mono, Hack and Inconsolata.
+" Operator Mono can be found here: http://www.typography.com/fonts/operator/overview/
 " Hack can be found here: http://sourcefoundry.org/hack/
 " Inconsolata can be found here: http://levien.com/type/myfonts/inconsolata.html
-set guifont=Hack:h20
+set guifont=OperatorMonoForPowerline-Book:h20
 
 " }}}
 " Convenience mappings {{{
