@@ -62,8 +62,9 @@ Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
 Plugin 'othree/javascript-libraries-syntax.vim' " Provides syntax for many popular JavaScript libraries.
 Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
 Plugin 'tpope/vim-commentary'                   " Easier comment support in vim.  Comment out blocks with gcc.
-Plugin 'tpope/vim-dispatch'                     " Terminal in your vim.  Works best with tmux.  See: https://vimeo.com/63116209
+Plugin 'tpope/vim-dispatch'                     " Terminal in your vim.  Works best with tmux.
 Plugin 'tpope/vim-fugitive'                     " Git support in vim.  Incredible handy for merge conflicts.
+Plugin 'tpope/vim-sensible.git'                 " A universal set of defaults that (hopefully) everyone can agree on.
 Plugin 'tpope/vim-unimpaired'                   " Provides some nice key mappings
 Plugin 'Raimondi/delimitMate'                   " Provides auto closing of parens, braces, and brackets in insert mode.
 Plugin 'scrooloose/nerdtree.git'                " A vim explorer replacement.  Much nicer and easier to use.
@@ -567,6 +568,8 @@ nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
 augroup ft_css
   autocmd!
 
+  " TODO: Investigate whether or not we can simply use `foldmethod=syntax`
+  " for CSS
   autocmd Filetype css setlocal foldmethod=marker
   autocmd Filetype css setlocal foldmarker={,}
   autocmd Filetype css setlocal omnifunc=csscomplete#CompleteCSS
