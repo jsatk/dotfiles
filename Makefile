@@ -51,6 +51,7 @@ formulae = \
 	jq \
 	mas \
 	mercurial \
+	mtr \
 	mutt \
 	node-build \
 	postgresql \
