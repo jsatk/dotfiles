@@ -48,7 +48,7 @@ call vundle#begin()
 " Our Vim plugins!
 Plugin 'burnettk/vim-angular'                   " Provides some nicities for working with AngularJS.
 Plugin 'ctrlpvim/ctrlp.vim'                     " True fuzzy find.  The greatest thing ever for us lazy folk.
-Plugin 'dag/vim-fish'                           " Fish Shell syntax highlighting for vim.
+Plugin 'onodera-punpun/vim-fish'                " Fish Shell syntax highlighting for vim.  This is a fork of dag/vim-fish as that repo appears abandoned.  See: https://github.com/dag/vim-fish/pull/32#issuecomment-174207605
 Plugin 'derekwyatt/vim-scala'                   " Makes working with Scala easier
 Plugin 'editorconfig/editorconfig-vim'          " Maintain consistent coding styles between different editors and IDEs.
 Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
