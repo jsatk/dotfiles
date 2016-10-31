@@ -48,7 +48,6 @@ call vundle#begin()
 " Our Vim plugins!
 Plugin 'burnettk/vim-angular'                   " Provides some nicities for working with AngularJS.
 Plugin 'ctrlpvim/ctrlp.vim'                     " True fuzzy find.  The greatest thing ever for us lazy folk.
-Plugin 'onodera-punpun/vim-fish'                " Fish Shell syntax highlighting for vim.  This is a fork of dag/vim-fish as that repo appears abandoned.  See: https://github.com/dag/vim-fish/pull/32#issuecomment-174207605
 Plugin 'derekwyatt/vim-scala'                   " Makes working with Scala easier
 Plugin 'editorconfig/editorconfig-vim'          " Maintain consistent coding styles between different editors and IDEs.
 Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
@@ -59,16 +58,17 @@ Plugin 'junegunn/goyo.vim'                      " Makes working with plain text/
 Plugin 'junegunn/vim-easy-align'                " Aligns multiple lines on any given point.  Useful for assignments.
 Plugin 'mattn/gist-vim'                         " Send text straight to a gist
 Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
+Plugin 'onodera-punpun/vim-fish'                " Fish Shell syntax highlighting for vim.  This is a fork of dag/vim-fish as that repo appears abandoned.  See: https://github.com/dag/vim-fish/pull/32#issuecomment-174207605
 Plugin 'othree/javascript-libraries-syntax.vim' " Provides syntax for many popular JavaScript libraries.
 Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
+Plugin 'Raimondi/delimitMate'                   " Provides auto closing of parens, braces, and brackets in insert mode.
+Plugin 'scrooloose/nerdtree.git'                " A vim explorer replacement.  Much nicer and easier to use.
+Plugin 'scrooloose/syntastic'                   " Adds error checking while writing or on save in vim.
 Plugin 'tpope/vim-commentary'                   " Easier comment support in vim.  Comment out blocks with gcc.
 Plugin 'tpope/vim-dispatch'                     " Terminal in your vim.  Works best with tmux.
 Plugin 'tpope/vim-fugitive'                     " Git support in vim.  Incredible handy for merge conflicts.
 Plugin 'tpope/vim-sensible.git'                 " A universal set of defaults that (hopefully) everyone can agree on.
 Plugin 'tpope/vim-unimpaired'                   " Provides some nice key mappings
-Plugin 'Raimondi/delimitMate'                   " Provides auto closing of parens, braces, and brackets in insert mode.
-Plugin 'scrooloose/nerdtree.git'                " A vim explorer replacement.  Much nicer and easier to use.
-Plugin 'scrooloose/syntastic'                   " Adds error checking while writing or on save in vim.
 Plugin 'vim-airline/vim-airline'                " Adds a gorgeous toolbar with useful info to bottom of vim.
 Plugin 'vim-airline/vim-airline-themes'         " Airline themes.  Self explanatory
 Plugin 'vim-scripts/BufOnly.vim'                " Close all buffers except the current
@@ -243,7 +243,8 @@ map Q <Nop>
 set timeoutlen=500
 
 " Highlight column 120 as a soft reminder
-set colorcolumn=120
+" Disabling for now 'cause it's annoying me.
+" set colorcolumn=120
 
 " Increment alpha strings with vim
 " https://blog.mozilla.org/jv/2011/01/12/incrementing-alpha-strings-with-vim/
@@ -299,10 +300,15 @@ colorscheme Tomorrow-Night
 " Sets the ColorColumn to a sensible color.
 highlight ColorColumn ctermbg=237 guibg=#3a3a3a
 
+" Sets the background as transparent (i.e. Uses your Terminal's background color/image)
+" This is probably stupid, but giving it a whirl. 🤔
+" highlight Normal guibg=NONE
+" highlight Normal ctermbg=NONE
+
 " Set's comments to italics
 " Reference: https://www.reddit.com/r/vim/comments/24g8r8/italics_in_terminal_vim_and_tmux/
 " I realize setting t_ZH and t_ZR directly is probably 'bad' to more advanced
-" vim folks.  Practicality beats purity.
+" vim folks.  Practicality beats purity. ¯\_(ツ)_/¯
 set t_ZH=[3m
 set t_ZR=[23m
 highlight Comment cterm=italic
@@ -635,6 +641,7 @@ augroup ft_gitcommit
 
   " spell check for git commits
   autocmd FileType gitcommit setlocal spell
+  autocmd FileType gitcommit setlocal textwidth=70
 augroup END
 
 " }}}
@@ -678,15 +685,10 @@ augroup ft_javascript
   let g:syntastic_javascript_eslint_exec = "./node_modules/eslint/bin/eslint.js"
 
   autocmd FileType javascript setlocal foldmethod=syntax
-  autocmd FileType javascript setlocal foldmarker={,}
 
   " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
   " positioned inside of them AND the following code doesn't get unfolded.
   autocmd Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
-
-  " Prettify a hunk of JSON with <localleader>p
-  autocmd FileType javascript nnoremap <buffer> <localleader>p ^vg_:!python -m json.tool<cr>
-  autocmd FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
 
   " Set which javascript libraries I use with https://github.com/othree/javascript-libraries-syntax.vim
   let g:used_javascript_libs = 'lo-dash,angularjs,jquery,chai'
@@ -896,10 +898,20 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
+" EditorConfig {{{
+
+let g:EditorConfig_max_line_indicator = "none"
+
+" }}}
 " Goyo {{{
 
 " Maps Goyo to <leader>g.
 map <leader>g :Goyo<CR>
+
+" }}}
+" LocalVimrc {{{
+
+let g:localvimrc_ask=0 " Don't ask before loading a vimrc file
 
 " }}}
 " NERDTree {{{
