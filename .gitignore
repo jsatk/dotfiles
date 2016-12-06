@@ -9,3 +9,5 @@ mutt/me/
 completer.hist
 fishd.*
 config/fish/fish_history
+scripts/generate-prod-db-credentials
+tmux-client-*
