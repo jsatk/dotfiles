@@ -64,6 +64,7 @@ Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
 Plugin 'Raimondi/delimitMate'                   " Provides auto closing of parens, braces, and brackets in insert mode.
 Plugin 'scrooloose/nerdtree.git'                " A vim explorer replacement.  Much nicer and easier to use.
 Plugin 'scrooloose/syntastic'                   " Adds error checking while writing or on save in vim.
+Plugin 'tmhedberg/SimpylFold'                   " Python code folding
 Plugin 'tpope/vim-commentary'                   " Easier comment support in vim.  Comment out blocks with gcc.
 Plugin 'tpope/vim-dispatch'                     " Terminal in your vim.  Works best with tmux.
 Plugin 'tpope/vim-fugitive'                     " Git support in vim.  Incredible handy for merge conflicts.
@@ -701,6 +702,9 @@ augroup ft_json
   autocmd!
 
   autocmd FileType json setlocal foldmethod=syntax
+
+  " Make JSON not look like ass
+  com! FormatJSON %!python -m json.tool
 augroup END
 
 " }}}
