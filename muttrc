@@ -109,7 +109,8 @@ set uncollapse_jump                            # don't collapse on an unread mes
 
 # }}}
 # Sidebar Patch {{{
-# set sidebar_visible = yes
+
+set sidebar_visible = yes
 set sidebar_width   = 24
 color sidebar_new color221 color233
 

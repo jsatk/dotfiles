@@ -128,7 +128,6 @@ node: | $(node)
 	npm install --global \
 		npm@latest \
 		n@latest \
-		keybase@latest \
 		diff-so-fancy@latest
 
 $(node): | brew install node
