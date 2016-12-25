@@ -640,7 +640,6 @@ augroup ft_fish
 augroup ft_gitcommit
   autocmd!
 
-  " spell check for git commits
   autocmd FileType gitcommit setlocal spell
   autocmd FileType gitcommit setlocal textwidth=70
 augroup END
@@ -713,7 +712,6 @@ augroup END
 augroup ft_mail
   autocmd!
 
-  " spell check for git commits
   autocmd FileType mail setlocal spell
   autocmd FileType mail setlocal textwidth=0
 augroup END
@@ -737,6 +735,7 @@ augroup ft_markdown
 
   autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
   autocmd FileType markdown setlocal textwidth=0
+  autocmd FileType markdown setlocal spell
 
   set formatoptions+=t
 augroup END
