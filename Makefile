@@ -77,7 +77,7 @@ install: | brew ln node
 
 update: | install
 	brew update
-	brew upgrade --all
+	brew upgrade
 	gem update
 	npm update --global --quiet
 	vim +VundleUpdate +quitall
