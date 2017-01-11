@@ -565,6 +565,11 @@ augroup ft_conf
 augroup END
 
 " }}}
+" crontab {{{
+
+autocmd filetype crontab setlocal nobackup nowritebackup
+
+" }}}
 " css {{{
 
 " Sorts CSS properties.  Most useful command ever.

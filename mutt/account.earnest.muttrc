@@ -1,8 +1,3 @@
-# Credentials {{{
-
-source "gpg -d ~/.mutt/account.earnest.secrets.gpg |"
-
-# }}}
 # Paths {{{
 
 set header_cache        = ~/.mutt/earnest/cache/headers # where to store headers
@@ -15,17 +10,10 @@ set certificate_file    = ~/.mutt/earnest/certificates
 # }}}
 # Account Settings {{{
 
-set imap_user           = "jesse.atkinson@earnest.com"
-set from                = "jesse.atkinson@earnest.com"
-set smtp_url            = "smtp://jesse.atkinson@earnest.com@smtp.gmail.com:587/"
-set realname            = "Jesse Atkinson"
-set folder              = "imaps://imap.gmail.com:993"
-set spoolfile           = "+INBOX"
+set folder              = "~/.mail/earnest"
+set spoolfile           = "+Inbox"
 set postponed           = "+[Gmail]/Drafts"
-set ssl_starttls        = yes
-set ssl_force_tls       = yes
 set move                = no # gmail does that
-set smtp_authenticators = ‘gssapi:login’
 
 # }}}
 # Key Bindings & Macros {{{
@@ -35,7 +23,7 @@ macro index,pager e "<save-message>=[Gmail]/All <enter><enter>" "Archive"
 # }}}
 # Sidebar Patch {{{
 
-mailboxes +INBOX \
+mailboxes +Inbox \
           +Github \
           +sent \
           +drafts \

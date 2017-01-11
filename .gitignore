@@ -4,6 +4,8 @@ vim/bundle/
 vim/tmp/
 tmux.symlink/
 *.secrets*
+*.password*
+*cache*
 mutt/earnest/
 mutt/me/
 completer.hist

@@ -36,13 +36,8 @@ set   wait_key       = no       # shut up, mutt
 set   mbox_type      = Maildir  # mailbox type
 set   timeout        = 3        # idle time before scanning
 set   mail_check     = 0        # minimum time between scans
-set   sleep_time     = 0        # be fast
-set   ssl_starttls   = yes
-set   ssl_force_tls  = yes
 set   send_charset   = "us-ascii:utf-8:iso-8859-1"
-set   imap_keepalive = 120      # Keep IMAP connection alive by polling intermittently (time in seconds).
-set   mail_check     = 60       # How often to check for new mail (time in seconds).
-set   imap_idle                 # Use IMAP IDLE protocol for notification of new mail.
+set   mail_check     = 0        # How often to check for new mail (time in seconds).
 set   smart_wrap
 set   delete                    # don't ask, just do
 set   quit                      # don't ask, just do!!
@@ -50,7 +45,6 @@ set   beep_new                  # bell on new mails
 set   pipe_decode               # strip headers and eval mimes when piping
 set   thorough_search           # strip headers and eval mimes before searching
 set   use_from                  # respect the From: address the editor sends back
-unset move                      # gmail does that
 unset confirmappend             # don't ask, just do!
 unset mark_old                  # read/new is good enough for me
 # }}}
@@ -84,8 +78,8 @@ hdr_order from: to: cc: date: subject:  # and in this order
 
 # Folder hooks
 folder-hook 'earnest' 'source ~/.mutt/earnest'
-folder-hook 'me'      'source ~/.mutt/me'
-folder-hook . "exec collapse-all" # By default, collapse all threads
+folder-hook 'icloud'  'source ~/.mutt/icloud'
+folder-hook . 'exec collapse-all' # By default, collapse all threads
 
 # Default account
 source ~/.mutt/account.earnest.muttrc
@@ -93,10 +87,8 @@ source ~/.mutt/account.earnest.muttrc
 # }}}
 # Key Bindings & Macros {{{
 
-bind index G imap-fetch-mail
-
 macro index <f1> '<sync-mailbox><enter-command>source ~/.mutt/account.earnest.muttrc<enter><change-folder>!<enter>'
-macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/account.me.muttrc<enter><change-folder>!<enter>'
+macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/account.icloud.muttrc<enter><change-folder>!<enter>'
 
 # }}}
 # Index View Options {{{
@@ -110,7 +102,7 @@ set uncollapse_jump                            # don't collapse on an unread mes
 # }}}
 # Sidebar Patch {{{
 
-set sidebar_visible = yes
+set sidebar_visible = no
 set sidebar_width   = 24
 color sidebar_new color221 color233
 

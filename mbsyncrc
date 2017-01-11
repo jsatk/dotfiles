@@ -1,0 +1,73 @@
+# General {{{
+
+# }}}
+# Earnest {{{
+
+IMAPAccount earnest
+# Address to connect to
+Host imap.gmail.com
+User jesse.atkinson@earnest.com
+# To store the password in an encrypted file use PassCmd instead of Pass
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/account.earnest.password.gpg"
+# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+CertificateFile /etc/ssl/cert.pem
+# Fixes weird auth issue
+# See: https://sourceforge.net/p/isync/mailman/message/35516737/
+AuthMechs LOGIN
+# Use SSL
+SSLType IMAPS
+
+IMAPStore earnest-remote
+Account earnest
+
+MaildirStore earnest-local
+# The trailing "/" is important
+Path ~/.mail/earnest/
+Inbox ~/.mail/earnest/Inbox
+
+Channel earnest
+Master :earnest-remote:
+Slave :earnest-local:
+# Don't sync drafts since they are stored unencrypted
+Patterns * !Drafts
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Save the synchronization state files in the relevant directory
+SyncState *
+
+# }}}
+# iCloud {{{
+
+IMAPAccount icloud
+# Address to connect to
+Host imap.mail.me.com
+User jesse.atkinson@me.com
+# To store the password in an encrypted file use PassCmd instead of Pass
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/account.icloud.password.gpg"
+# Use SSL
+CertificateFile /etc/ssl/cert.pem
+# Fixes weird auth issue
+# See: https://sourceforge.net/p/isync/mailman/message/35516737/
+AuthMechs LOGIN
+# Use SSL
+SSLType IMAPS
+
+IMAPStore icloud-remote
+Account icloud
+
+MaildirStore icloud-local
+# The trailing "/" is important
+Path ~/.mail/icloud/
+Inbox ~/.mail/icloud/Inbox
+
+Channel icloud
+Master :icloud-remote:
+Slave :icloud-local:
+# Don't sync drafts since they are stored unencrypted
+Patterns * !Drafts
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Save the synchronization state files in the relevant directory
+SyncState *
+
+# }}}

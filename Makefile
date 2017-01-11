@@ -34,6 +34,7 @@ symlinks = \
 	gitconfig \
 	irbrc \
 	jsatk.tmuxtheme \
+	mbsyncrc \
 	muttrc \
 	tmux.conf \
 	vim \
