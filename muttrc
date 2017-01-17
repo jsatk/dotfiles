@@ -47,6 +47,10 @@ set   thorough_search           # strip headers and eval mimes before searching
 set   use_from                  # respect the From: address the editor sends back
 unset confirmappend             # don't ask, just do!
 unset mark_old                  # read/new is good enough for me
+bind pager <up> previous-line #scroll inside the message rather than the index
+bind pager <down> next-line
+mailboxes $Mail
+
 # }}}
 # Compose View Options {{{
 
@@ -77,8 +81,6 @@ hdr_order from: to: cc: date: subject:  # and in this order
 # Accounts {{{
 
 # Folder hooks
-folder-hook 'earnest' 'source ~/.mutt/earnest'
-folder-hook 'icloud'  'source ~/.mutt/icloud'
 folder-hook . 'exec collapse-all' # By default, collapse all threads
 
 # Default account
@@ -88,7 +90,7 @@ source ~/.mutt/account.earnest.muttrc
 # Key Bindings & Macros {{{
 
 macro index <f1> '<sync-mailbox><enter-command>source ~/.mutt/account.earnest.muttrc<enter><change-folder>!<enter>'
-macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/account.icloud.muttrc<enter><change-folder>!<enter>'
+macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/account.jsatk.muttrc<enter><change-folder>!<enter>'
 
 # }}}
 # Index View Options {{{
@@ -108,4 +110,5 @@ color sidebar_new color221 color233
 
 set status_chars  = " *%A"
 set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
 # }}}

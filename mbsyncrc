@@ -1,4 +1,15 @@
-# General {{{
+#  __    __     ______     ______     __  __     __   __     ______
+# /\ "-./  \   /\  == \   /\  ___\   /\ \_\ \   /\ "-.\ \   /\  ___\
+# \ \ \-./\ \  \ \  __<   \ \___  \  \ \____ \  \ \ \-.  \  \ \ \____
+#  \ \_\ \ \_\  \ \_____\  \/\_____\  \/\_____\  \ \_\\"\_\  \ \_____\
+#   \/_/  \/_/   \/_____/   \/_____/   \/_____/   \/_/ \/_/   \/_____/
+
+# Preamble {{{
+
+# Author:   Jesse Atkinson
+# Email:    jesse.atkinson@me.com
+# Source:   https://github.com/jsatk/dotfiles/blob/master/muttrc.symlink
+# Twitter:  @jsatk
 
 # }}}
 # Earnest {{{
@@ -8,8 +19,7 @@ IMAPAccount earnest
 Host imap.gmail.com
 User jesse.atkinson@earnest.com
 # To store the password in an encrypted file use PassCmd instead of Pass
-PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/account.earnest.password.gpg"
-# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+PassCmd "/usr/local/MacGPG2/bin/gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/account.earnest.password.gpg"
 CertificateFile /etc/ssl/cert.pem
 # Fixes weird auth issue
 # See: https://sourceforge.net/p/isync/mailman/message/35516737/
@@ -36,15 +46,14 @@ Create Both
 SyncState *
 
 # }}}
-# iCloud {{{
+# jsatk.us {{{
 
-IMAPAccount icloud
+IMAPAccount jsatk
 # Address to connect to
-Host imap.mail.me.com
-User jesse.atkinson@me.com
+Host imap.fastmail.com
+User jesse@jsatk.us
 # To store the password in an encrypted file use PassCmd instead of Pass
-PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/account.icloud.password.gpg"
-# Use SSL
+PassCmd "/usr/local/MacGPG2/bin/gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/account.jsatk.password.gpg"
 CertificateFile /etc/ssl/cert.pem
 # Fixes weird auth issue
 # See: https://sourceforge.net/p/isync/mailman/message/35516737/
@@ -52,17 +61,17 @@ AuthMechs LOGIN
 # Use SSL
 SSLType IMAPS
 
-IMAPStore icloud-remote
-Account icloud
+IMAPStore jsatk-remote
+Account jsatk
 
-MaildirStore icloud-local
+MaildirStore jsatk-local
 # The trailing "/" is important
-Path ~/.mail/icloud/
-Inbox ~/.mail/icloud/Inbox
+Path ~/.mail/jsatk/
+Inbox ~/.mail/jsatk/Inbox
 
-Channel icloud
-Master :icloud-remote:
-Slave :icloud-local:
+Channel jsatk
+Master :jsatk-remote:
+Slave :jsatk-local:
 # Don't sync drafts since they are stored unencrypted
 Patterns * !Drafts
 # Automatically create missing mailboxes, both locally and on the server

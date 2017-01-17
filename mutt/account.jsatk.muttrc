@@ -1,0 +1,35 @@
+# Paths {{{
+
+set header_cache        = ~/.mutt/jsatk/cache/headers # where to store headers
+set message_cachedir    = ~/.mutt/jsatk/cache/bodies
+set alias_file          = ~/.mutt/jsatk/alias         # where to store aliases
+set mailcap_path        = ~/.mutt/jsatk/mailcap       # entries for filetypes
+set signature           = ~/.mutt/jsatk/sig           # my signature file
+set certificate_file    = ~/.mutt/jsatk/certificates
+
+# }}}
+# Account Settings {{{
+
+set from      = "jesse@jsatk.com"
+set folder    = "~/.mail/jsatk"
+set spoolfile = "+Inbox"
+set postponed = "+Drafts"
+set record    = "+Sent"
+set move      = no
+set trash     = "~/.mail/jsatk/Archive" # Archive, don't delete
+
+# }}}
+# Sidebar Patch {{{
+
+mailboxes +Inbox \
+          +Sent \
+          +Drafts \
+          +Junk \
+          +Deleted \
+          +Archive \
+
+# Other special folders.
+set mbox      = "+Archive"
+set postponed = "+Drafts"
+
+# }}}

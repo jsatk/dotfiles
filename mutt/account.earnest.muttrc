@@ -10,26 +10,24 @@ set certificate_file    = ~/.mutt/earnest/certificates
 # }}}
 # Account Settings {{{
 
-set folder              = "~/.mail/earnest"
-set spoolfile           = "+Inbox"
-set postponed           = "+[Gmail]/Drafts"
-set move                = no # gmail does that
-
-# }}}
-# Key Bindings & Macros {{{
-
-macro index,pager e "<save-message>=[Gmail]/All <enter><enter>" "Archive"
+set from      = "jesse.atkinson@earnest.com"
+set folder    = "~/.mail/earnest"
+set spoolfile = "+Inbox"
+set postponed = "+[Gmail]/.Drafts"
+set move      = no # gmail does that
+set trash     = "~/.mail/earnest/[Gmail]/.All Mail" # Archive, don't delete
 
 # }}}
 # Sidebar Patch {{{
 
 mailboxes +Inbox \
+          +Starred \
           +Github \
-          +sent \
-          +drafts \
+          +Sent Mail \
+          +Drafts \
 
 # Other special folders.
-set mbox      = "+archive"
-set postponed = "+drafts"
+set mbox      = "+[Gmail/.All Mail"
+set postponed = "+[Gmail/.Drafts"
 
 # }}}

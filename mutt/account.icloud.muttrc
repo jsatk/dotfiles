@@ -10,14 +10,25 @@ set certificate_file    = ~/.mutt/icloud/certificates
 # }}}
 # Account Settings {{{
 
+set from                = "jesse.atkinson@me.com"
 set folder              = "~/.mail/icloud"
 set spoolfile           = "+Inbox"
 set postponed           = "+Drafts"
-set record              = "+Sent"
+set record              = "+Sent Messages"
+set move                = no
 
 # }}}
-# Key Bindings & Macros {{{
+# Sidebar Patch {{{
 
-macro index,pager e "<save-message>=Archive<enter><enter>" "Archive"
+mailboxes +Inbox \
+          +Sent Messages \
+          +Drafts \
+          +Junk \
+          +Deleted Messages \
+          +Archive \
+
+# Other special folders.
+set mbox      = "+Archive"
+set postponed = "+Drafts"
 
 # }}}

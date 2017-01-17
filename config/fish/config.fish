@@ -41,3 +41,4 @@ if test -f /usr/local/bin/rbenv
 end
 
 export powerline_symbols="$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
+export EDITOR

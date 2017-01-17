@@ -14,3 +14,5 @@ config/fish/fish_history
 scripts/generate-prod-db-credentials
 tmux-client-*
 scripts/pgauth
+scripts/arcanist/
+scripts/libphutil/
