@@ -44,6 +44,7 @@ formulae = \
 	autojump \
 	bash \
 	bash-completion \
+	contacts \
 	fish \
 	git \
 	gist \
