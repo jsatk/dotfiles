@@ -764,6 +764,8 @@ autocmd BufNewFile,BufRead .irbrc set syntax=html
 augroup ft_scala
   autocmd!
 
+  autocmd Filetype scala setlocal foldmethod=syntax
+  autocmd FileType help setlocal textwidth=160
   autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2 expandtab
 augroup END
 
