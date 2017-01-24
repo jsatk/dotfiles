@@ -12,7 +12,7 @@
 # Preamble {{{
 
 # Author:     Jesse Atkinson
-# Email:      jesse.atkinson@me.com
+# Email:      jesse@jsatk.us
 # Source:     https://github.com/jsatk/dotfiles/blob/master/Makefile
 # Twitter:    @jsatk
 # References: https://github.com/stephencelis/dotfiles/blob/master/Makefile

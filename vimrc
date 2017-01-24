@@ -7,7 +7,7 @@
 " Preamble {{{
 
 " Author:   Jesse Atkinson
-" Email:    jesse.atkinson@me.com
+" Email:    jesse@jsatk.us
 " Source:   https://github.com/jsatk/dotfiles/blob/master/vimrc
 " Twitter:  @jsatk
 
@@ -553,6 +553,17 @@ endif
 
 " Filetype specific configurations {{{
 
+" bash {{{
+
+augroup ft_sh
+  autocmd!
+
+  " Lets me fold functions in bash
+  autocmd FileType sh setlocal foldmethod=marker
+  autocmd Filetype sh setlocal foldmarker={,}
+augroup END
+
+" }}}
 " conf {{{
 
 augroup ft_conf
@@ -696,7 +707,7 @@ augroup ft_javascript
   autocmd Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
 
   " Set which javascript libraries I use with https://github.com/othree/javascript-libraries-syntax.vim
-  let g:used_javascript_libs = 'lo-dash,angularjs,jquery,chai'
+  let g:used_javascript_libs = 'react,lo-dash,angularjs,jquery,chai'
 augroup END
 
 " }}}
@@ -787,7 +798,7 @@ augroup END
 augroup ft_xml
   autocmd!
 
-  autocmd FileType xml setlocal foldmethod=manual
+  autocmd FileType xml setlocal foldmethod=indent
 
   " Use <localleader>f to fold the current tag.
   autocmd FileType xml nnoremap <buffer> <localleader>f Vatzf
@@ -888,7 +899,7 @@ let g:airline_powerline_fonts = 1
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
- \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist|docs)$'
+ \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist|docs|project/target)$'
  \ }
 
 " Allows indexing of more files

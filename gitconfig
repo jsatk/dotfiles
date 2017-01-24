@@ -7,7 +7,7 @@
 # preamble {{{
 
 # Author:     Jesse Atkinson
-# Email:      jesse.atkinson@me.com
+# Email:      jesse@jsatk.us
 # Source:     https://github.com/jsatk/dotfiles/blob/master/gitconfig
 # Twitter:    @jsatk
 
@@ -124,7 +124,7 @@
 	insteadOf = "git://github.com/jsatk/"
 
 [user]
-	email = jesse.atkinson@me.com
+	email = jesse@jsatk.us
 	name = "Jesse Atkinson"
 	signingkey = "DC5AC6E4"
 

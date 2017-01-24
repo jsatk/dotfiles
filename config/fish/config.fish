@@ -7,7 +7,7 @@
 # Preamble {{{
 
 # Author:     Jesse Atkinson
-# Email:      jesse.atkinson@me.com
+# Email:      jesse@jsatk.us
 # Source:     https://github.com/jsatk/dotfiles/blob/master/config/fish/config.fish
 # Twitter:    @jsatk
 
