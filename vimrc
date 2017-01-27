@@ -51,14 +51,15 @@ Plugin 'ctrlpvim/ctrlp.vim'                     " True fuzzy find.  The greatest
 Plugin 'derekwyatt/vim-scala'                   " Makes working with Scala easier
 Plugin 'editorconfig/editorconfig-vim'          " Maintain consistent coding styles between different editors and IDEs.
 Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
+Plugin 'ensime/ensime-vim'                      " Adds support for Ensime plugin that gives me IDE-like stuffs when working with Scala
 Plugin 'fatih/vim-go'                           " Makes working with Go easier
 Plugin 'flazz/vim-colorschemes'                 " All the colorschemes money can buy
 Plugin 'gmarik/Vundle.vim'                      " Alternative to Pathogen.  Lovely plugin manager for vim.
 Plugin 'junegunn/goyo.vim'                      " Makes working with plain text/markdown nicer
 Plugin 'junegunn/vim-easy-align'                " Aligns multiple lines on any given point.  Useful for assignments.
+Plugin 'jsatk/vim-fish'                         " Fish Shell syntax highlighting for vim.  Fork of dag/vim-fish as that repo is abandoned.
 Plugin 'mattn/gist-vim'                         " Send text straight to a gist
 Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
-Plugin 'onodera-punpun/vim-fish'                " Fish Shell syntax highlighting for vim.  This is a fork of dag/vim-fish as that repo appears abandoned.  See: https://github.com/dag/vim-fish/pull/32#issuecomment-174207605
 Plugin 'othree/javascript-libraries-syntax.vim' " Provides syntax for many popular JavaScript libraries.
 Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
 Plugin 'Raimondi/delimitMate'                   " Provides auto closing of parens, braces, and brackets in insert mode.
@@ -374,8 +375,6 @@ hi def IndentGuides guibg=#303030 ctermbg=234
 " Toggles indent guides
 nnoremap <leader>I :call IndentGuides()<cr>
 
-" For Earnest development.  Run's test suite.
-nnoremap <leader>t :Dispatch ./go test<cr>
 " }}}
 " Folding {{{
 
@@ -777,7 +776,15 @@ augroup ft_scala
 
   autocmd Filetype scala setlocal foldmethod=syntax
   autocmd FileType help setlocal textwidth=160
+
   autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2 expandtab
+
+  " Settings for Ensime http://ensime.org/editors/vim/install/
+  " Typechecking after writing
+  autocmd BufWritePost *.scala silent :EnTypeCheck
+  " Easy Type Inspection
+  nnoremap <localleader>t :EnTypeCheck<CR>
+  au FileType scala nnoremap <localleader>df :EnDeclarationSplit v<CR>
 augroup END
 
 " }}}
@@ -899,7 +906,7 @@ let g:airline_powerline_fonts = 1
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
- \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist|docs|project/target)$'
+ \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist|docs|project|target)$'
  \ }
 
 " Allows indexing of more files
@@ -940,7 +947,7 @@ let g:localvimrc_ask=0 " Don't ask before loading a vimrc file
 " Maps NERDTree to ^n.
 map <C-n> :NERDTreeToggle<CR>
 
-let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]', 'docs[[dir]]', 'junit-reports[[dir]]']
+let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]', 'docs[[dir]]', 'junit-reports[[dir]]', 'target[[dir]]', 'project[[dir]]']
 
 " }}}
 " vim-javascript {{{
