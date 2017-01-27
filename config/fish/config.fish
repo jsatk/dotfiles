@@ -36,6 +36,7 @@ set -x HOMEBREW_CASK_OPTS '--appdir=/Applications'
 set -x GOPATH $HOME/Developer
 
 # For rbenv ruby version manager
+# This modifies your path and adds the `.rbenv` folder to it.
 if test -f /usr/local/bin/rbenv
 	status --is-interactive; and . (rbenv init -|psub)
 end
