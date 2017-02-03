@@ -49,6 +49,7 @@ call vundle#begin()
 Plugin 'burnettk/vim-angular'                   " Provides some nicities for working with AngularJS.
 Plugin 'ctrlpvim/ctrlp.vim'                     " True fuzzy find.  The greatest thing ever for us lazy folk.
 Plugin 'derekwyatt/vim-scala'                   " Makes working with Scala easier
+Plugin 'derekwyatt/vim-sbt'                     " Adds very basic support for SBT
 Plugin 'editorconfig/editorconfig-vim'          " Maintain consistent coding styles between different editors and IDEs.
 Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
 Plugin 'ensime/ensime-vim'                      " Adds support for Ensime plugin that gives me IDE-like stuffs when working with Scala

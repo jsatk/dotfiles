@@ -10,7 +10,7 @@ set certificate_file    = ~/.mutt/jsatk/certificates
 # }}}
 # Account Settings {{{
 
-set from      = "jesse@jsatk.com"
+set from      = "jesse@jsatk.us"
 set folder    = "~/.mail/jsatk"
 set spoolfile = "+Inbox"
 set postponed = "+Drafts"

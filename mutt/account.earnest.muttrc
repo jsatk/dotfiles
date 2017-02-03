@@ -27,7 +27,7 @@ mailboxes +Inbox \
           +Drafts \
 
 # Other special folders.
-set mbox      = "+[Gmail/.All Mail"
-set postponed = "+[Gmail/.Drafts"
+set mbox      = "+[Gmail]/.All Mail"
+set postponed = "+[Gmail]/.Drafts"
 
 # }}}
