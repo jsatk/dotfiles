@@ -1,3 +1,4 @@
+# vim: ft=muttrc
 # Paths {{{
 
 set header_cache        = ~/.mutt/earnest/cache/headers # where to store headers
@@ -17,6 +18,22 @@ set postponed     = "+[Gmail]/.Drafts"
 set move          = no # gmail does that
 set trash         = "+[Gmail]/.All Mail" # Archive, don't delete
 set mbox          = "+[Gmail]/.All Mail"
-set sendmail      = "/usr/local/bin/msmtp -a earnest"
+set sendmail      = "/usr/local/bin/msmtp -a earnest" # Send email from this account using this config for msmtp
+
+# }}}
+# Mailboxes to show in the sidebar {{{
+
+unmailboxes * # When we switch accounts unset all folders added to sidebar by the previous account
+mailboxes +Inbox \
+          +Github \
+          +Snap \
+          +[Gmail]/.All Mail \
+          +[Gmail]/.Drafts \
+          +[Gmail]/.Important \
+          +[Gmail]/.Sent Mail \
+          +[Gmail]/.Spam \
+          +[Gmail]/.Starred \
+          +[Gmail]/.Trash \
+          +../temporary/search
 
 # }}}

@@ -35,7 +35,9 @@ symlinks = \
 	mbsyncrc \
 	msmtprc \
 	muttrc \
+	notmuch-config \
 	tmux.conf \
+	urlview \
 	vim \
 	vimrc \
 
@@ -57,6 +59,7 @@ formulae = \
 	mtr \
 	mutt \
 	node-build \
+	notmuch \
 	postgresql \
 	rbenv \
 	reattach-to-user-namespace \
@@ -69,6 +72,7 @@ formulae = \
 	tldr \
 	tmux \
 	trash \
+	urlview \
 	vim \
 	wget \
 

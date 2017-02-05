@@ -1,3 +1,4 @@
+# vim: ft=muttrc
 # Paths {{{
 
 set header_cache        = ~/.mutt/jsatk/cache/headers # where to store headers
@@ -16,21 +17,20 @@ set spoolfile = "+Inbox"
 set postponed = "+Drafts"
 set record    = "+Sent"
 set move      = no
-set trash     = "~/.mail/jsatk/Archive" # Archive, don't delete
-set sendmail  = "/usr/local/bin/msmtp -a jsatk"
+set trash     = "+Archive" # Archive, don't delete
+set mbox      = "+Archive"
+set sendmail  = "/usr/local/bin/msmtp -a jsatk" # Send email from this account using this config for msmtp
 
 # }}}
-# Sidebar Patch {{{
+# Mailboxes to show in the sidebar {{{
 
+unmailboxes * # When we switch accounts unset all folders added to sidebar by the previous account
 mailboxes +Inbox \
           +Sent \
           +Drafts \
           +Junk \
           +Deleted \
           +Archive \
-
-# Other special folders.
-set mbox      = "+Archive"
-set postponed = "+Drafts"
+          +../temporary/search
 
 # }}}
