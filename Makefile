@@ -22,8 +22,6 @@
 
 # * Figure out how to properly install fonts
 # * Figure out how to set fish as the default shell
-# * Figure out how to install a set list of default gems
-# * Figure out how to set up proper tmux $TERM so it fucking supports italics
 
 # }}}
 # setup {{{
@@ -35,6 +33,7 @@ symlinks = \
 	irbrc \
 	jsatk.tmuxtheme \
 	mbsyncrc \
+	msmtprc \
 	muttrc \
 	tmux.conf \
 	vim \
@@ -50,21 +49,23 @@ formulae = \
 	gist \
 	go \
 	htop-osx \
+	isync \
 	jq \
 	mas \
 	mercurial \
+	msmtp \
 	mtr \
 	mutt \
 	node-build \
 	postgresql \
 	rbenv \
 	reattach-to-user-namespace \
-	ripgrep \
 	ruby-build \
 	sbt \
 	scala \
 	screenfetch \
 	spark \
+	the_platinum_searcher \
 	tldr \
 	tmux \
 	trash \

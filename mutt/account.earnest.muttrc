@@ -10,24 +10,13 @@ set certificate_file    = ~/.mutt/earnest/certificates
 # }}}
 # Account Settings {{{
 
-set from      = "jesse.atkinson@earnest.com"
-set folder    = "~/.mail/earnest"
-set spoolfile = "+Inbox"
-set postponed = "+[Gmail]/.Drafts"
-set move      = no # gmail does that
-set trash     = "~/.mail/earnest/[Gmail]/.All Mail" # Archive, don't delete
-
-# }}}
-# Sidebar Patch {{{
-
-mailboxes +Inbox \
-          +Starred \
-          +Github \
-          +Sent Mail \
-          +Drafts \
-
-# Other special folders.
-set mbox      = "+[Gmail]/.All Mail"
-set postponed = "+[Gmail]/.Drafts"
+set from          = "jesse.atkinson@earnest.com"
+set folder        = "~/.mail/earnest"
+set spoolfile     = "+Inbox"
+set postponed     = "+[Gmail]/.Drafts"
+set move          = no # gmail does that
+set trash         = "+[Gmail]/.All Mail" # Archive, don't delete
+set mbox          = "+[Gmail]/.All Mail"
+set sendmail      = "/usr/local/bin/msmtp -a earnest"
 
 # }}}

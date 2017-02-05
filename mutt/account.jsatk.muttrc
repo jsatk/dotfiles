@@ -17,6 +17,7 @@ set postponed = "+Drafts"
 set record    = "+Sent"
 set move      = no
 set trash     = "~/.mail/jsatk/Archive" # Archive, don't delete
+set sendmail  = "/usr/local/bin/msmtp -a jsatk"
 
 # }}}
 # Sidebar Patch {{{
