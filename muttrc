@@ -53,9 +53,6 @@ unset confirmappend             # don't ask, just do!
 unset mark_old                  # read/new is good enough for me
 unset record
 
-bind pager <up> previous-line #scroll inside the message rather than the index
-bind pager <down> next-line
-
 mailboxes $Mail
 
 # }}}
