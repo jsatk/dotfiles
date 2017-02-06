@@ -24,16 +24,16 @@ set sendmail      = "/usr/local/bin/msmtp -a earnest" # Send email from this acc
 # Mailboxes to show in the sidebar {{{
 
 unmailboxes * # When we switch accounts unset all folders added to sidebar by the previous account
-mailboxes +Inbox \
-          +Github \
-          +Snap \
-          +[Gmail]/.All Mail \
-          +[Gmail]/.Drafts \
-          +[Gmail]/.Important \
-          +[Gmail]/.Sent Mail \
-          +[Gmail]/.Spam \
-          +[Gmail]/.Starred \
-          +[Gmail]/.Trash \
-          +../temporary/search
+mailboxes +"Inbox" \
+          +"Github" \
+          +"Snap" \
+          +"[Gmail]/.All Mail" \
+          +"[Gmail]/.Drafts" \
+          +"[Gmail]/.Important" \
+          +"[Gmail]/.Sent Mail" \
+          +"[Gmail]/.Spam" \
+          +"[Gmail]/.Starred" \
+          +"[Gmail]/.Trash" \
+          +"../temporary/search"
 
 # }}}

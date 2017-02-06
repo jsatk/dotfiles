@@ -439,7 +439,7 @@ noremap <leader>ss :call StripWhitespace ()<CR>
 nnoremap <leader>ed :vsplit ~/.vim/custom-dictionary.utf-8.add<cr>
 nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
 nnoremap <leader>eg :vsplit ~/.gitconfig<cr>
-nnoremap <leader>em :vsplit ~/.mutt/muttrc<cr>
+nnoremap <leader>em :vsplit ~/.muttrc<cr>
 nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 

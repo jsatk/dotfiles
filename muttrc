@@ -22,7 +22,10 @@ set editor = "vim"
 # Contacts {{{
 
 # Use the OS X address book
-set query_command = "contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
+# Why am I sending the errors to `/dev/null`?
+# I'm glad you asked!
+# https://github.com/keith/contacts-cli/issues/3#issuecomment-277574990
+set query_command = "contacts '%s' 2> /dev/null"
 bind editor <Tab> complete-query
 bind editor ^T    complete
 

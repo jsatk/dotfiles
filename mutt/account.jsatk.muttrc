@@ -25,12 +25,12 @@ set sendmail  = "/usr/local/bin/msmtp -a jsatk" # Send email from this account u
 # Mailboxes to show in the sidebar {{{
 
 unmailboxes * # When we switch accounts unset all folders added to sidebar by the previous account
-mailboxes +Inbox \
-          +Sent \
-          +Drafts \
-          +Junk \
-          +Deleted \
-          +Archive \
-          +../temporary/search
+mailboxes +"Inbox" \
+          +"Sent" \
+          +"Drafts" \
+          +"Junk" \
+          +"Deleted" \
+          +"Archive" \
+          +"../temporary/search"
 
 # }}}
