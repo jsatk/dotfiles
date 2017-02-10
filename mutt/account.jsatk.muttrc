@@ -4,7 +4,6 @@
 set header_cache        = ~/.mutt/jsatk/cache/headers # where to store headers
 set message_cachedir    = ~/.mutt/jsatk/cache/bodies
 set alias_file          = ~/.mutt/jsatk/alias         # where to store aliases
-set mailcap_path        = ~/.mutt/jsatk/mailcap       # entries for filetypes
 set signature           = ~/.mutt/jsatk/sig           # my signature file
 set certificate_file    = ~/.mutt/jsatk/certificates
 

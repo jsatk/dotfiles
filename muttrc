@@ -32,7 +32,7 @@ bind editor ^T    complete
 # }}}
 # Color Theme {{{
 
-source ~/.mutt/themes/bad-wolf/bad-wolf.muttrc
+source ~/.mutt/themes/vombatidae/vombatidae.mutt
 
 # }}}
 # Basic Options {{{
@@ -44,9 +44,9 @@ set   mail_check     = 0        # minimum time between scans
 set   send_charset   = "us-ascii:utf-8:iso-8859-1"
 set   mail_check     = 0        # How often to check for new mail (time in seconds).
 set   sendmail_wait  = 0        # No please don't silently fail, email is important
+set   text_flowed    = yes      # No weird line breaks in emails I send, please & thank you.
 set   smart_wrap
 set   delete                    # don't ask, just do
-set   quit                      # don't ask, just do!!
 set   beep_new                  # bell on new mails
 set   pipe_decode               # strip headers and eval mimes when piping
 set   thorough_search           # strip headers and eval mimes before searching
@@ -145,19 +145,20 @@ bind pager G  bottom
 bind pager R  group-reply
 
 # View attachments properly.
+set mailcap_path = ~/.mutt/mailcap # entries for filetypes
 bind attach <return> view-mailcap
 
-# Ctrl-R to mark all as read
+# Ctrl-r to mark all as read
 macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
 # Sync email
-macro index O "<shell-escape>mbsync --all<enter>" "Sync all mail using mbsync"
+macro index O "<shell-escape>mbsync --verbose --all<enter>" "Sync all mail using mbsync"
 
 # Saner copy/move dialogs
 macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
 macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 
-# Search using notmuch
+# Search email using notmuch
 macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py ~/.mail/temporary/search<enter><change-folder-readonly>+../temporary/search<enter>" "search mail (using notmuch)"
 
 # }}}

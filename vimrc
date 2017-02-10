@@ -569,7 +569,6 @@ augroup END
 augroup ft_conf
   autocmd!
 
-  autocmd Filetype conf setlocal noexpandtab
   au BufNewFile,BufRead *.conf set filetype=conf
   autocmd FileType conf setlocal foldmethod=marker
   autocmd Filetype conf setlocal foldmarker={{{,}}}
@@ -622,15 +621,6 @@ augroup ft_css
   " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
   " positioned inside of them AND the following code doesn't get unfolded.
   autocmd BufNewFile,BufRead *.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
-augroup END
-
-" }}}
-" dockerfile {{{
-
-augroup ft_dockerfile
-  autocmd!
-
-  autocmd FileType dockerfile set noexpandtab
 augroup END
 
 " }}}
@@ -728,6 +718,8 @@ augroup END
 augroup ft_mail
   autocmd!
 
+
+  autocmd FileType mail setlocal fo+=aw " No ugly line breaks in emails http://wcm1.web.rice.edu/mutt-tips.html
   autocmd FileType mail setlocal spell
   autocmd FileType mail setlocal textwidth=0
 augroup END
