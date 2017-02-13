@@ -53,6 +53,7 @@ formulae = \
 	htop-osx \
 	isync \
 	jq \
+	lynx \
 	mas \
 	mercurial \
 	msmtp \
