@@ -768,7 +768,7 @@ augroup ft_scala
   autocmd!
 
   autocmd Filetype scala setlocal foldmethod=syntax
-  autocmd FileType help setlocal textwidth=160
+  autocmd FileType help setlocal textwidth=120
 
   autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2 expandtab
 
