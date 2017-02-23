@@ -16,7 +16,8 @@
 # }}}
 # Editor {{{
 
-set editor = "vim"
+# Start vim and jump to the area where we want to type a message
+set editor = "/usr/local/bin/vim -c 'Goyo' -c 'normal! }' -c 'redraw'"
 
 # }}}
 # Contacts {{{
@@ -44,14 +45,13 @@ set   mail_check     = 0        # minimum time between scans
 set   send_charset   = "us-ascii:utf-8:iso-8859-1"
 set   mail_check     = 0        # How often to check for new mail (time in seconds).
 set   sendmail_wait  = 0        # No please don't silently fail, email is important
-set   text_flowed    = yes      # No weird line breaks in emails I send, please & thank you.
-set   smart_wrap
+set   text_flowed               # No weird line breaks in emails I send, please & thank you.
+set   smart_wrap                # Wrap emails sent to me so I can sanely read them
 set   delete                    # don't ask, just do
 set   beep_new                  # bell on new mails
 set   pipe_decode               # strip headers and eval mimes when piping
 set   thorough_search           # strip headers and eval mimes before searching
 set   use_from                  # respect the From: address the editor sends back
-
 unset confirmappend             # don't ask, just do!
 unset mark_old                  # read/new is good enough for me
 unset record
