@@ -38,7 +38,7 @@ symlinks = \
 	notmuch-config \
 	tmux.conf \
 	urlview \
-	vim \
+	vim/custom-dictionary.utf-8.add \
 	vimrc \
 
 formulae = \

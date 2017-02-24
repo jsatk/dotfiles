@@ -123,6 +123,8 @@ bind index G  last-entry
 bind index N search-opposite
 bind pager N search-opposite
 
+bind index u toggle-new
+
 bind index R        group-reply
 bind index <tab>    sync-mailbox
 bind index <space>  collapse-thread
