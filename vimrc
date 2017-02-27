@@ -386,17 +386,10 @@ nnoremap <leader>z zMzvzz
 
 " On save strip trailing whitespace and convert line endings to Unix format
 " http://stackoverflow.com/questions/356126/how-can-you-automatically-remove-trailing-whitespace-in-vim
-function! StripTrailingWhitespaceOnSave ()
-  " Don't strip on these filetypes
-  if &ft =~ 'mail'
-    return
-  endif
-  %s/\s\+$//e | %s/\r$//e
-endfunction
 augroup prewrites
   autocmd!
 
-  autocmd BufWritePre,FileWritePre * call StripTrailingWhitespaceOnSave()
+  autocmd BufWritePre,FileWritePre * :%s/\s\+$//e | %s/\r$//e
 augroup END
 
 " Source the .vimrc file after saving it.  This way, you don't have to reload Vim to see the changes.
