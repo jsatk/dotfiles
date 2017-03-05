@@ -45,7 +45,8 @@ formulae = \
 	autojump \
 	bash \
 	bash-completion \
-	keith/formulae/contacts-cli \
+	ctags \
+	keith/formulae/contacts-cli \ # I hate computers
 	fish \
 	git \
 	gist \

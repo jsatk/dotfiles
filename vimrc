@@ -10,16 +10,7 @@
 " Email:    jesse@jsatk.us
 " Source:   https://github.com/jsatk/dotfiles/blob/master/vimrc
 " Twitter:  @jsatk
-
-" References: http://stevelosh.com/blog/2010/09/coming-home-to-vim/
-"             https://github.com/paulirish/dotfiles/blob/master/.vimrc
-"             http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
-"             http://www.reddit.com/r/vim/
-"             http://net.tutsplus.com/articles/general/top-10-pitfalls-when-switching-to-vim/
-"             http://vimregex.com
-
 " Special thanks to Steve Losh, Tim Pope, and Jess Frazelle who I have stolen *so* much from.
-" Sincerely thank you.
 
 " }}}
 " Vundle {{{
@@ -39,6 +30,7 @@ if &shell =~# 'fish$'
 endif
 
 " Distiguishes between filetypes.  It is required to be set to 'off' for Vundle.
+" We'll re-enable it later below.
 filetype off
 
 " set the runtime path to include Vundle and initialize
@@ -46,12 +38,10 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Our Vim plugins!
-Plugin 'burnettk/vim-angular'                   " Provides some nicities for working with AngularJS.
 Plugin 'ctrlpvim/ctrlp.vim'                     " True fuzzy find.  The greatest thing ever for us lazy folk.
 Plugin 'derekwyatt/vim-scala'                   " Makes working with Scala easier
 Plugin 'derekwyatt/vim-sbt'                     " Adds very basic support for SBT
 Plugin 'editorconfig/editorconfig-vim'          " Maintain consistent coding styles between different editors and IDEs.
-Plugin 'embear/vim-localvimrc'                  " Allows you to use local vimrcs on a per-project basis.
 Plugin 'ensime/ensime-vim'                      " Adds support for Ensime plugin that gives me IDE-like stuffs when working with Scala
 Plugin 'fatih/vim-go'                           " Makes working with Go easier
 Plugin 'flazz/vim-colorschemes'                 " All the colorschemes money can buy
@@ -66,7 +56,6 @@ Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
 Plugin 'Raimondi/delimitMate'                   " Provides auto closing of parens, braces, and brackets in insert mode.
 Plugin 'scrooloose/nerdtree.git'                " A vim explorer replacement.  Much nicer and easier to use.
 Plugin 'scrooloose/syntastic'                   " Adds error checking while writing or on save in vim.
-Plugin 'tmhedberg/SimpylFold'                   " Python code folding
 Plugin 'tpope/vim-commentary'                   " Easier comment support in vim.  Comment out blocks with gcc.
 Plugin 'tpope/vim-dispatch'                     " Terminal in your vim.  Works best with tmux.
 Plugin 'tpope/vim-fugitive'                     " Git support in vim.  Incredible handy for merge conflicts.
@@ -74,8 +63,6 @@ Plugin 'tpope/vim-sensible.git'                 " A universal set of defaults th
 Plugin 'tpope/vim-unimpaired'                   " Provides some nice key mappings
 Plugin 'vim-airline/vim-airline'                " Adds a gorgeous toolbar with useful info to bottom of vim.
 Plugin 'vim-airline/vim-airline-themes'         " Airline themes.  Self explanatory
-Plugin 'vim-scripts/BufOnly.vim'                " Close all buffers except the current
-Plugin 'wesQ3/vim-windowswap'                   " Swap windows without fucking up layout
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -422,16 +409,22 @@ noremap <leader>ss :call StripWhitespace ()<CR>
 :command! -nargs=1 -range SuperRetab <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
 
 " }}}
-" Casing {{{
+"  Tags {{{
 
-" Lowercases all HTML tags: http://vim.wikia.com/wiki/Changing_case_with_regular_expressions
-:command! LowerCaseHTML :%s/<\/\=\(\w\+\)\>/\L&/g
+" Stolen from: https://github.com/mcantor/no_plugins/blob/master/no_plugins.vim#L86
 
-" Lowercases an entire file
-:command! LowerCaseFile :%s/.*/\L&/g
+" TAG JUMPING:
 
-" Uppercases an entire file (I can't think of when this would ever be useful)
-:command! UpperCaseFile :%s/.*/\U&/g
+" Create the `tags` file (may need to install ctags first)
+command! MakeTags !ctags -R .
+
+" NOW WE CAN:
+" - Use ^] to jump to tag under cursor
+" - Use g^] for ambiguous tags
+" - Use ^t to jump back up the tag stack
+
+" THINGS TO CONSIDER:
+" - This doesn't help if you want a visual list of tags
 
 " }}}
 " Quick Editing {{{
