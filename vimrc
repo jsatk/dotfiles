@@ -285,7 +285,7 @@ set background=dark
 " List of favorites: onedark, Tomorrow-Night, Tomorrow-Night-Eighties, railscasts, badwolf, lucius, molokai, solarized
 " You can make your own colorschemes here: http://www.villustrator.com/
 " I'm importing a fuck-ton of colorschemes via this plugin: github.com/flazz/vim-colorschemes
-colorscheme Tomorrow-Night
+colorscheme Tomorrow-Night-Eighties
 
 " Sets the ColorColumn to a sensible color.
 highlight ColorColumn ctermbg=237 guibg=#3a3a3a

@@ -22,7 +22,7 @@ set editor = "/usr/local/bin/vim -c 'Goyo' -c 'normal! }' -c 'redraw'"
 # }}}
 # Contacts {{{
 
-# Use the OS X address book
+# Use the macOS address book
 # Why am I sending the errors to `/dev/null`?
 # I'm glad you asked!
 # https://github.com/keith/contacts-cli/issues/3#issuecomment-277574990
@@ -149,8 +149,8 @@ bind attach <return> view-mailcap
 # Ctrl-r to mark all as read
 macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
-# Sync email
-macro index O "<shell-escape>mbsync --verbose --all<enter>" "Sync all mail using mbsync"
+# Sync email and index it for searching
+macro index O "<shell-escape>mbsync --verbose --all && notmuch new<enter>" "Sync all mail using mbsync and then index it using notmuch"
 
 # Saner copy/move dialogs
 macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
