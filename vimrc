@@ -135,10 +135,10 @@ set splitbelow
 set splitright
 
 " Allows jumping between splits with Ctrl + movement keys.
-" nnoremap <C-J> <C-W><C-J>
-" nnoremap <C-K> <C-W><C-K>
-" nnoremap <C-L> <C-W><C-L>
-" nnoremap <C-H> <C-W><C-H>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " When a file has been detected to have been changed outside of Vim and
 " it has not been changed inside of Vim, automatically read it again.
@@ -175,7 +175,7 @@ set laststatus=2
 " Don’t reset cursor to start of line when moving around.
 set nostartofline
 
-" Goddammit vim.  Make fucking backspace/delete on OS X work correctly.
+" Goddammit vim.  Make fucking backspace/delete on macOS work correctly.
 " http://vim.wikia.com/wiki/Backspace_and_delete_problems
 set backspace=indent,eol,start
 
@@ -290,15 +290,11 @@ colorscheme Tomorrow-Night
 " Sets the ColorColumn to a sensible color.
 highlight ColorColumn ctermbg=237 guibg=#3a3a3a
 
-" Sets the background as transparent (i.e. Uses your Terminal's background color/image)
-" This is probably stupid, but giving it a whirl. 🤔
-" highlight Normal guibg=NONE
-" highlight Normal ctermbg=NONE
-
 " Set's comments to italics
 " Reference: https://www.reddit.com/r/vim/comments/24g8r8/italics_in_terminal_vim_and_tmux/
 " I realize setting t_ZH and t_ZR directly is probably 'bad' to more advanced
 " vim folks.  Practicality beats purity. ¯\_(ツ)_/¯
+" Check out my blog post about this here: https://jsatk.us/vim-tmux-italics-and-insanity-9a96b69eeca6#.q0ygz6too
 set t_ZH=[3m
 set t_ZR=[23m
 highlight Comment cterm=italic
@@ -311,7 +307,7 @@ highlight Comment cterm=italic
 set guifont=OperatorMonoForPowerline-Book:h20
 
 " }}}
-" Convenience mappings {{{
+" Convenience Mappings {{{
 
 " Split line (sister to [J]oin lines)
 " The normal usage of S is reproducable with cc which is the same amount of keystrokes.
@@ -326,7 +322,7 @@ nnoremap <leader>n :setlocal number!<cr>
 
 " Bubble single lines
 " http://vimcasts.org/episodes/bubbling-text/
-" Due to OS X keybinding of the C-Up key, I chose to remap to C-k and so forth.
+" Due to macOS keybinding of the C-Up key, I chose to remap to C-k and so forth.
 nmap <C-k> ddkP
 nmap <C-j> ddp
 
@@ -363,6 +359,17 @@ hi def IndentGuides guibg=#303030 ctermbg=234
 " Toggles indent guides
 nnoremap <leader>I :call IndentGuides()<cr>
 
+" Quick Editing {{{
+
+nnoremap <leader>ed :vsplit ~/.vim/custom-dictionary.utf-8.add<cr>
+nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
+nnoremap <leader>eg :vsplit ~/.gitconfig<cr>
+nnoremap <leader>em :vsplit ~/.muttrc<cr>
+nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" }}}
+
 " }}}
 " Folding {{{
 
@@ -379,7 +386,7 @@ augroup prewrites
   autocmd BufWritePre,FileWritePre * :%s/\s\+$//e | %s/\r$//e
 augroup END
 
-" Source the .vimrc file after saving it.  This way, you don't have to reload Vim to see the changes.
+" Source the .vimrc file after saving it.  This way you don't have to reload Vim to see the changes.
 augroup myvimrchooks
   autocmd!
 
@@ -416,7 +423,25 @@ noremap <leader>ss :call StripWhitespace ()<CR>
 " TAG JUMPING:
 
 " Create the `tags` file (may need to install ctags first)
-command! MakeTags !ctags -R .
+" Default ctags that comes with macOS is hot garbage.  `brew install ctags`
+" There's probably a sexy regular expression to do what I'm doing with all the
+" multiple exclude statements, but I don't really care.  I'd rather have this be
+" verbose and stupidly readable and editable.
+command! MakeTags !ctags --recurse
+  \ --exclude=".build"
+  \ --exclude=".bundle"
+  \ --exclude=".git"
+  \ --exclude=".tmp"
+  \ --exclude="bower_components"
+  \ --exclude="coverage"
+  \ --exclude="dist"
+  \ --exclude="docs"
+  \ --exclude="log"
+  \ --exclude="node_modules"
+  \ --exclude="project"
+  \ --exclude="target"
+  \ --exclude="vendor"
+  \ .
 
 " NOW WE CAN:
 " - Use ^] to jump to tag under cursor
@@ -425,16 +450,6 @@ command! MakeTags !ctags -R .
 
 " THINGS TO CONSIDER:
 " - This doesn't help if you want a visual list of tags
-
-" }}}
-" Quick Editing {{{
-
-nnoremap <leader>ed :vsplit ~/.vim/custom-dictionary.utf-8.add<cr>
-nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
-nnoremap <leader>eg :vsplit ~/.gitconfig<cr>
-nnoremap <leader>em :vsplit ~/.muttrc<cr>
-nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 " }}}
 " Kill Arrow Keys {{{
@@ -493,7 +508,7 @@ endfunction
 map <leader>rn :call RenameFile()<cr>
 
 " }}}
-" Trailing whitespace {{{
+" Trailing Whitespace {{{
 
 " Only shown when not in insert mode so I don't go insane.
 augroup trailing
@@ -542,9 +557,9 @@ if !isdirectory(expand(&directory))
 endif
 
 " }}}
-" File & Filetype specific configurations {{{
+" File & Filetype Specific Configurations {{{
 
-" Filetype specific configurations {{{
+" Filetype Specific Configurations {{{
 
 " bash {{{
 
@@ -841,7 +856,7 @@ augroup END
 " }}}
 
 " }}}
-" File specific configurations {{{
+" File Specific Configurations {{{
 
 " bash_profile {{{
 
@@ -931,7 +946,7 @@ let g:localvimrc_ask=0 " Don't ask before loading a vimrc file
 " Maps NERDTree to ^n.
 map <C-n> :NERDTreeToggle<CR>
 
-let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]', 'docs[[dir]]', 'junit-reports[[dir]]', 'target[[dir]]', 'project[[dir]]']
+let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]', 'docs[[dir]]', 'target[[dir]]', 'project[[dir]]']
 
 " }}}
 " vim-javascript {{{
