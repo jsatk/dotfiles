@@ -17,6 +17,7 @@ set postponed     = "+[Gmail]/.Drafts"
 set move          = no # gmail does that
 set trash         = "+[Gmail]/.All Mail" # Archive, don't delete
 set mbox          = "+[Gmail]/.All Mail"
+set record        = "+[Gmail]/.Sent Mail"
 set sendmail      = "/usr/local/bin/msmtp -a earnest" # Send email from this account using this config for msmtp
 
 # }}}
