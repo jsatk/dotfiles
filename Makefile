@@ -30,6 +30,7 @@ symlinks = \
 	bash_profile \
 	config \
 	gitconfig \
+	hyper.js \
 	irbrc \
 	jsatk.tmuxtheme \
 	mbsyncrc \
@@ -46,7 +47,7 @@ formulae = \
 	bash \
 	bash-completion \
 	ctags \
-	keith/formulae/contacts-cli \ # I hate computers
+	keith/formulae/contacts-cli \
 	fish \
 	git \
 	gist \
