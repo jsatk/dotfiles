@@ -63,6 +63,7 @@ Plugin 'tpope/vim-sensible.git'                 " A universal set of defaults th
 Plugin 'tpope/vim-unimpaired'                   " Provides some nice key mappings
 Plugin 'vim-airline/vim-airline'                " Adds a gorgeous toolbar with useful info to bottom of vim.
 Plugin 'vim-airline/vim-airline-themes'         " Airline themes.  Self explanatory
+Plugin 'vim-scripts/LargeFile'                  " Add support for working with big ass files
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -536,7 +537,7 @@ augroup END
 " Backups {{{
 
 set backup                        " enable backups
-set noswapfile                    " it's 2016, Vim.
+set noswapfile                    " it's 2017, Vim.
 " The extra slash on the end saves files under the name of their full path
 " with the / character replaced with a %.
 set undodir=~/.vim/tmp/undo//     " undo files
@@ -686,6 +687,15 @@ augroup ft_handlebars
 
   autocmd Filetype html.handlebars setlocal foldmethod=indent
   autocmd BufNewFile,BufRead *.hbs setlocal filetype=html.handlebars
+augroup END
+
+" }}}
+" html {{{
+
+augroup ft_html
+  autocmd!
+
+  autocmd Filetype html setlocal foldmethod=indent
 augroup END
 
 " }}}
@@ -946,7 +956,7 @@ let g:localvimrc_ask=0 " Don't ask before loading a vimrc file
 " Maps NERDTree to ^n.
 map <C-n> :NERDTreeToggle<CR>
 
-let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]', 'docs[[dir]]', 'target[[dir]]', 'project[[dir]]']
+let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]', 'docs[[dir]]', 'target[[dir]]', 'project[[dir]]', 'coverage[[dir]]']
 
 " }}}
 " vim-javascript {{{

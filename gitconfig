@@ -161,3 +161,9 @@
 	gpgsign = true
 
 # }}}
+# gpg {{{
+
+[gpg]
+        program = gpg2
+
+# }}}

@@ -50,7 +50,7 @@ function fish_prompt
   set -l blue (set_color -o blue)
   set -l normal (set_color normal)
 
-  set -l arrow "👻  $red➜ "
+  set -l arrow "$red➜ "
   if [ $USER = 'root' ]
     set arrow "$red# "
   end
