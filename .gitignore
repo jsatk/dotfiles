@@ -16,3 +16,4 @@ tmux-client-*
 scripts/pgauth
 scripts/arcanist/
 scripts/libphutil/
+config/configstore
