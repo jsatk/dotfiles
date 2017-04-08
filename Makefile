@@ -20,8 +20,13 @@
 # }}}
 # TODO {{{
 
-# * Figure out how to properly install fonts
-# * Figure out how to set fish as the default shell
+$(info TODO: 📝)
+$(info  )
+$(info 1. Figure out how to install and/or update n.  We are currently doing this manually.)
+$(info 2. Figure out how to install and/or update yarn.  We are currently doing this manually.)
+$(info 3. Figure out how to properly install fonts.)
+$(info 4. Figure out how to set fish as the default shell.)
+$(info  )
 
 # }}}
 # setup {{{
