@@ -35,7 +35,6 @@ symlinks = \
 	bash_profile \
 	config \
 	gitconfig \
-	hyper.js \
 	irbrc \
 	jsatk.tmuxtheme \
 	mbsyncrc \
