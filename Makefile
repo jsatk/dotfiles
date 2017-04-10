@@ -94,13 +94,13 @@ update: | install
 	brew upgrade
 	gem update
 	npm update --global --quiet
-	vim +VundleUpdate +quitall
+	vim +PlugUpdate +quitall
 	reattach-to-user-namespace mas upgrade
 
 clean: | install
 	brew cleanup
 	gem clean
-	vim +VundleClean +quitall
+	vim +PlugClean +quitall
 
 # }}}
 # brew {{{

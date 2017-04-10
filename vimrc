@@ -13,7 +13,8 @@
 " Special thanks to Steve Losh, Tim Pope, and Jess Frazelle who I have stolen *so* much from.
 
 " }}}
-" Vundle {{{
+" Vim Plug {{{
+" https://github.com/junegunn/vim-plug
 
 " Make vim more useful
 " Why am I including this?  Better safe than sorry.
@@ -29,45 +30,36 @@ if &shell =~# 'fish$'
   set shell=sh
 endif
 
-" Distiguishes between filetypes.  It is required to be set to 'off' for Vundle.
-" We'll re-enable it later below.
-filetype off
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin()
 
 " Our Vim plugins!
-Plugin 'ctrlpvim/ctrlp.vim'                     " True fuzzy find.  The greatest thing ever for us lazy folk.
-Plugin 'derekwyatt/vim-scala'                   " Makes working with Scala easier
-Plugin 'derekwyatt/vim-sbt'                     " Adds very basic support for SBT
-Plugin 'editorconfig/editorconfig-vim'          " Maintain consistent coding styles between different editors and IDEs.
-Plugin 'ensime/ensime-vim'                      " Adds support for Ensime plugin that gives me IDE-like stuffs when working with Scala
-Plugin 'fatih/vim-go'                           " Makes working with Go easier
-Plugin 'flazz/vim-colorschemes'                 " All the colorschemes money can buy
-Plugin 'gmarik/Vundle.vim'                      " Alternative to Pathogen.  Lovely plugin manager for vim.
-Plugin 'junegunn/goyo.vim'                      " Makes working with plain text/markdown nicer
-Plugin 'junegunn/vim-easy-align'                " Aligns multiple lines on any given point.  Useful for assignments.
-Plugin 'jsatk/vim-fish'                         " Fish Shell syntax highlighting for vim.  Fork of dag/vim-fish as that repo is abandoned.
-Plugin 'mattn/gist-vim'                         " Send text straight to a gist
-Plugin 'mustache/vim-mustache-handlebars'       " Mustache & Handlebars support
-Plugin 'othree/javascript-libraries-syntax.vim' " Provides syntax for many popular JavaScript libraries.
-Plugin 'pangloss/vim-javascript.git'            " Adds some javascript nicities.
-Plugin 'Raimondi/delimitMate'                   " Provides auto closing of parens, braces, and brackets in insert mode.
-Plugin 'scrooloose/nerdtree.git'                " A vim explorer replacement.  Much nicer and easier to use.
-Plugin 'scrooloose/syntastic'                   " Adds error checking while writing or on save in vim.
-Plugin 'tpope/vim-commentary'                   " Easier comment support in vim.  Comment out blocks with gcc.
-Plugin 'tpope/vim-dispatch'                     " Terminal in your vim.  Works best with tmux.
-Plugin 'tpope/vim-fugitive'                     " Git support in vim.  Incredible handy for merge conflicts.
-Plugin 'tpope/vim-sensible.git'                 " A universal set of defaults that (hopefully) everyone can agree on.
-Plugin 'tpope/vim-unimpaired'                   " Provides some nice key mappings
-Plugin 'vim-airline/vim-airline'                " Adds a gorgeous toolbar with useful info to bottom of vim.
-Plugin 'vim-airline/vim-airline-themes'         " Airline themes.  Self explanatory
-Plugin 'vim-scripts/LargeFile'                  " Add support for working with big ass files
+Plug 'ctrlpvim/ctrlp.vim'               " True fuzzy find.  The greatest thing ever for us lazy folk.
+Plug 'derekwyatt/vim-scala'             " Makes working with Scala easier
+Plug 'derekwyatt/vim-sbt'               " Adds very basic support for SBT
+Plug 'editorconfig/editorconfig-vim'    " Maintain consistent coding styles between different editors and IDEs.
+Plug 'ensime/ensime-vim'                " Adds support for Ensime plugin that gives me IDE-like stuffs when working with Scala
+Plug 'fatih/vim-go'                     " Makes working with Go easier
+Plug 'flazz/vim-colorschemes'           " All the colorschemes money can buy
+Plug 'junegunn/goyo.vim'                " Makes working with plain text/markdown nicer
+Plug 'junegunn/vim-easy-align'          " Aligns multiple lines on any given point.  Useful for assignments.
+Plug 'junegunn/vim-github-dashboard'    " Browse GitHub events (user dashboard, user/repo activity) in Vim.
+Plug 'jsatk/vim-fish'                   " Fish Shell syntax highlighting for vim.  Fork of dag/vim-fish as that repo is abandoned.
+Plug 'mattn/gist-vim'                   " Send text straight to a gist
+Plug 'mustache/vim-mustache-handlebars' " Mustache & Handlebars support
+Plug 'pangloss/vim-javascript'          " Adds some javascript nicities.
+Plug 'Raimondi/delimitMate'             " Provides auto closing of parens, braces, and brackets in insert mode.
+Plug 'scrooloose/nerdtree'              " A vim explorer replacement.  Much nicer and easier to use.
+Plug 'scrooloose/syntastic'             " Adds error checking while writing or on save in vim.
+Plug 'tpope/vim-commentary'             " Easier comment support in vim.  Comment out blocks with gcc.
+Plug 'tpope/vim-dispatch'               " Terminal in your vim.  Works best with tmux.
+Plug 'tpope/vim-fugitive'               " Git support in vim.  Incredible handy for merge conflicts.
+Plug 'tpope/vim-sensible'               " A universal set of defaults that (hopefully) everyone can agree on.
+Plug 'tpope/vim-unimpaired'             " Provides some nice key mappings
+Plug 'vim-airline/vim-airline'          " Adds a gorgeous toolbar with useful info to bottom of vim.
+Plug 'vim-airline/vim-airline-themes'   " Airline themes.  Self explanatory
+Plug 'vim-scripts/LargeFile'            " Add support for working with big ass files
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
 
 " }}}
 " Basic Options {{{
@@ -699,26 +691,6 @@ augroup ft_html
 augroup END
 
 " }}}
-" javascript {{{
-
-augroup ft_javascript
-  autocmd!
-
-  " For Syntastic
-  let g:syntastic_javascript_checkers = ['eslint']
-  let g:syntastic_javascript_eslint_exec = "./node_modules/eslint/bin/eslint.js"
-
-  autocmd FileType javascript setlocal foldmethod=syntax
-
-  " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
-  " positioned inside of them AND the following code doesn't get unfolded.
-  autocmd Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space>.<cr><esc>kA<bs>
-
-  " Set which javascript libraries I use with https://github.com/othree/javascript-libraries-syntax.vim
-  let g:used_javascript_libs = 'react,lo-dash,angularjs,jquery,chai'
-augroup END
-
-" }}}
 " json {{{
 
 augroup ft_json
@@ -938,6 +910,11 @@ nmap ga <Plug>(EasyAlign)
 " EditorConfig {{{
 
 let g:EditorConfig_max_line_indicator = "none"
+
+" }}}
+" Github Dashboard {{{
+
+let g:github_dashboard = { 'username': 'jsatk', 'password': $VIMGHDTOKEN }
 
 " }}}
 " Goyo {{{

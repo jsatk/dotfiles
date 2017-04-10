@@ -43,3 +43,4 @@ end
 
 export powerline_symbols="$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
 export EDITOR
+. ~/.vim-ghd-token
