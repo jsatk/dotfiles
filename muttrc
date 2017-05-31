@@ -159,6 +159,9 @@ macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 # Search email using notmuch
 macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py ~/.mail/temporary/search<enter><change-folder-readonly>+../temporary/search<enter>" "search mail (using notmuch)"
 
+# Default directory for saving attachments so I don't go insane
+macro attach s <save-entry><bol>~/Downloads/<eol>
+
 # }}}
 # Index View Options {{{
 
