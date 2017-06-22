@@ -50,6 +50,7 @@ Plug 'pangloss/vim-javascript'          " Adds some javascript nicities.
 Plug 'Raimondi/delimitMate'             " Provides auto closing of parens, braces, and brackets in insert mode.
 Plug 'scrooloose/nerdtree'              " A vim explorer replacement.  Much nicer and easier to use.
 Plug 'scrooloose/syntastic'             " Adds error checking while writing or on save in vim.
+Plug 'tpope/vim-abolish'                " Better find and replace.
 Plug 'tpope/vim-commentary'             " Easier comment support in vim.  Comment out blocks with gcc.
 Plug 'tpope/vim-dispatch'               " Terminal in your vim.  Works best with tmux.
 Plug 'tpope/vim-fugitive'               " Git support in vim.  Incredible handy for merge conflicts.
@@ -548,6 +549,15 @@ endif
 if !isdirectory(expand(&directory))
   call mkdir(expand(&directory), "p")
 endif
+
+" }}}
+" Autosave {{{
+
+augroup autoSaveAndRead
+  autocmd!
+  autocmd TextChanged,InsertLeave,FocusLost * silent! wall
+  autocmd CursorHold * silent! checktime
+augroup END
 
 " }}}
 " File & Filetype Specific Configurations {{{
