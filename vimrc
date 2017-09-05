@@ -553,11 +553,15 @@ endif
 " }}}
 " Autosave {{{
 
-augroup autoSaveAndRead
-  autocmd!
-  autocmd TextChanged,InsertLeave,FocusLost * silent! wall
-  autocmd CursorHold * silent! checktime
-augroup END
+" Commenting this out as I simply don't want it anymore but leaving this for
+" reference or for others to discover.  I'm grumpy and old and prefer to manually save
+" my files like my father and his father before me.
+"
+" augroup autoSaveAndRead
+"   autocmd!
+"   autocmd TextChanged,InsertLeave,FocusLost * silent! wall
+"   autocmd CursorHold * silent! checktime
+" augroup END
 
 " }}}
 " File & Filetype Specific Configurations {{{

@@ -9,9 +9,9 @@ DNS
 Django
 Django's
 Dropbox
-Earnest's
 EBS
 EC2
+Earnest's
 Firefox
 GPG
 GPU
@@ -55,6 +55,7 @@ ack
 admin
 admins
 app
+architected
 arity
 autocommand
 autocommands
@@ -91,6 +92,7 @@ foo
 frontend
 fuckery
 gameplay
+github
 gmail
 greyscale
 handwaved
@@ -106,6 +108,7 @@ interop
 janky
 keychain
 keypresses
+linter
 maintainership
 meatspace
 metadata
@@ -159,3 +162,5 @@ wiki
 workflow
 workflows
 zsh
+Aways
+DM
