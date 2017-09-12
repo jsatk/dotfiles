@@ -964,7 +964,7 @@ let g:localvimrc_ask=0 " Don't ask before loading a vimrc file
 " Maps NERDTree to ^n.
 map <C-n> :NERDTreeToggle<CR>
 
-let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'vendor[[dir]]', 'target[[dir]]', 'project[[dir]]', 'coverage[[dir]]']
+let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'target[[dir]]', 'project[[dir]]', 'coverage[[dir]]']
 
 " }}}
 " vim-javascript {{{
