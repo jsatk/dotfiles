@@ -16,11 +16,6 @@
 " Vim Plug {{{
 " https://github.com/junegunn/vim-plug
 
-" Make vim more useful
-" Why am I including this?  Better safe than sorry.
-" http://stackoverflow.com/questions/5845557/in-a-vimrc-is-set-nocompatible-completely-useless
-set nocompatible
-
 " Vim needs a more POSIX compatible shell than fish for certain functionality
 " to work, such as :%!, compressed help pages and many third-party addons.  If
 " you use fish as your login shell or launch Vim from fish, you need to set
@@ -33,32 +28,39 @@ endif
 call plug#begin()
 
 " Our Vim plugins!
+
+Plug 'Raimondi/delimitMate'             " Provides auto closing of parens, braces, and brackets in insert mode.
 Plug 'ctrlpvim/ctrlp.vim'               " True fuzzy find.  The greatest thing ever for us lazy folk.
-Plug 'derekwyatt/vim-scala'             " Makes working with Scala easier
-Plug 'derekwyatt/vim-sbt'               " Adds very basic support for SBT
+Plug 'dag/vim-fish'                     " Fish Shell syntax highlighting for vim.
+Plug 'derekwyatt/vim-sbt'               " Adds very basic support for SBT.
+Plug 'derekwyatt/vim-scala'             " Makes working with Scala easier.
 Plug 'editorconfig/editorconfig-vim'    " Maintain consistent coding styles between different editors and IDEs.
-Plug 'ensime/ensime-vim'                " Adds support for Ensime plugin that gives me IDE-like stuffs when working with Scala
-Plug 'fatih/vim-go'                     " Makes working with Go easier
-Plug 'flazz/vim-colorschemes'           " All the colorschemes money can buy
-Plug 'junegunn/goyo.vim'                " Makes working with plain text/markdown nicer
+Plug 'fatih/vim-go'                     " Makes working with Go easier.
+Plug 'flazz/vim-colorschemes'           " All the colorschemes money can buy.
+Plug 'junegunn/goyo.vim'                " Makes working with plain text/markdown nicer.
 Plug 'junegunn/vim-easy-align'          " Aligns multiple lines on any given point.  Useful for assignments.
 Plug 'junegunn/vim-github-dashboard'    " Browse GitHub events (user dashboard, user/repo activity) in Vim.
-Plug 'jsatk/vim-fish'                   " Fish Shell syntax highlighting for vim.  Fork of dag/vim-fish as that repo is abandoned.
-Plug 'mattn/gist-vim'                   " Send text straight to a gist
-Plug 'mustache/vim-mustache-handlebars' " Mustache & Handlebars support
+Plug 'mattn/gist-vim'                   " Send text straight to a gist.
+Plug 'morhetz/gruvbox'                  " Cool colorscheme
+Plug 'mustache/vim-mustache-handlebars' " Mustache & Handlebars support.
 Plug 'pangloss/vim-javascript'          " Adds some javascript nicities.
-Plug 'Raimondi/delimitMate'             " Provides auto closing of parens, braces, and brackets in insert mode.
+Plug 'rizzatti/dash.vim'                " Easy look up of docs via Dash.app
+Plug 'rust-lang/rust.vim'               " Makes working with rust easier.
 Plug 'scrooloose/nerdtree'              " A vim explorer replacement.  Much nicer and easier to use.
-Plug 'scrooloose/syntastic'             " Adds error checking while writing or on save in vim.
 Plug 'tpope/vim-abolish'                " Better find and replace.
 Plug 'tpope/vim-commentary'             " Easier comment support in vim.  Comment out blocks with gcc.
+Plug 'tpope/vim-db'                     " For working with batabases.
 Plug 'tpope/vim-dispatch'               " Terminal in your vim.  Works best with tmux.
+Plug 'tpope/vim-endwise'                " Auto-adds end statements to languages such as Ruby and Vimscript
 Plug 'tpope/vim-fugitive'               " Git support in vim.  Incredible handy for merge conflicts.
+Plug 'tpope/vim-rails'                  " Makes working with Rails more better.
+Plug 'tpope/vim-rhubarb'                " Expands upon Fugitive.  Allows you to open files in github.
 Plug 'tpope/vim-sensible'               " A universal set of defaults that (hopefully) everyone can agree on.
-Plug 'tpope/vim-unimpaired'             " Provides some nice key mappings
+Plug 'tpope/vim-unimpaired'             " Provides some nice key mappings.
 Plug 'vim-airline/vim-airline'          " Adds a gorgeous toolbar with useful info to bottom of vim.
-Plug 'vim-airline/vim-airline-themes'   " Airline themes.  Self explanatory
-Plug 'vim-scripts/LargeFile'            " Add support for working with big ass files
+Plug 'vim-airline/vim-airline-themes'   " Airline themes.  Self explanatory.
+Plug 'vim-scripts/LargeFile'            " Add support for working with big-ass files.
+Plug 'w0rp/ale'                         " Adds error checking while writing or on save in vim.
 
 call plug#end()
 
@@ -73,9 +75,6 @@ set wildmenu
 
 " Auto-completion menu
 set wildmode=list:longest
-
-" Allow cursor keys in insert mode
-set esckeys
 
 " Optimize for fast terminal connections
 set ttyfast
@@ -96,19 +95,13 @@ set t_Co=256
 " Tabs and Spaces
 set expandtab   " Make sure that every file uses spaces, not tabs
 set shiftround  " Round indent to multiple of 'shiftwidth'
-set smartindent " Do smart indenting when starting a new line
-set autoindent  " Copy indent from current line, over to the new line
 
 " Make tabs as wide as two spaces
-set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 
 " Highlight current line
 set cursorline
-
-" Enable syntax highlighting
-syntax on
 
 " Show select “invisible” characters
 set list
@@ -127,12 +120,6 @@ set splitbelow
 
 " When on, splitting a window will put the new window right of the current one.
 set splitright
-
-" Allows jumping between splits with Ctrl + movement keys.
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
 
 " When a file has been detected to have been changed outside of Vim and
 " it has not been changed inside of Vim, automatically read it again.
@@ -191,9 +178,6 @@ set title
 " it only affects the way the file is displayed, not its contents.
 set linebreak
 
-" Turns line wrapping on
-set wrap
-
 " wrap lines without changing the amount of indent.
 set breakindent
 
@@ -204,7 +188,7 @@ set wrapmargin=0
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
-" Highlight matching braces as you type.
+" When a bracket is inserted, briefly jump to the matching one.
 set showmatch
 
 " Tenths of a second to show the matching paren, when 'showmatch' is set.
@@ -213,14 +197,11 @@ set matchtime=3
 " Add the g flag to search/replace by default
 set gdefault
 
-" Saves file on losing focus of VIM
-autocmd FocusLost * :wa
-
 " Remaps leader key to an easier key
 let mapleader = ","
 
 " I don't know how to use ex mode and it scares me.
-map Q <Nop>
+noremap Q <Nop>
 
 " Ever notice a slight lag after typing the leader key + command?
 " This lowers the timeout.
@@ -240,11 +221,10 @@ if has('mouse')
 endif
 
 " Do not show stupid q: window
-map q: :q
+noremap q: :q
 
-" Make vim resize on host window resize.  Great for increaseing/decreasing
-" font or when you disconnect from your external monitor.
-autocmd VimResized * wincmd =
+" Hides buffers instead of closing them.
+set hidden
 
 " }}}
 " Spelling {{{
@@ -279,12 +259,13 @@ set background=dark
 " List of favorites: onedark, Tomorrow-Night, Tomorrow-Night-Eighties, railscasts, badwolf, lucius, molokai, solarized
 " You can make your own colorschemes here: http://www.villustrator.com/
 " I'm importing a fuck-ton of colorschemes via this plugin: github.com/flazz/vim-colorschemes
-colorscheme Tomorrow-Night-Eighties
+" gruvbox comes from https://github.com/morhetz/gruvbox
+colorscheme gruvbox
 
 " Sets the ColorColumn to a sensible color.
 highlight ColorColumn ctermbg=237 guibg=#3a3a3a
 
-" Set's comments to italics
+" Sets comments to italics
 " Reference: https://www.reddit.com/r/vim/comments/24g8r8/italics_in_terminal_vim_and_tmux/
 " I realize setting t_ZH and t_ZR directly is probably 'bad' to more advanced
 " vim folks.  Practicality beats purity. ¯\_(ツ)_/¯
@@ -298,7 +279,7 @@ highlight Comment cterm=italic
 " Operator Mono can be found here: http://www.typography.com/fonts/operator/overview/
 " Hack can be found here: http://sourcefoundry.org/hack/
 " Inconsolata can be found here: http://levien.com/type/myfonts/inconsolata.html
-set guifont=OperatorMonoForPowerline-Book:h20
+set guifont=OperatorMonoForPowerline-Book:h18
 
 " }}}
 " Convenience Mappings {{{
@@ -310,22 +291,12 @@ nnoremap S i<cr><esc><right>
 " Toggle line numbers
 nnoremap <leader>n :setlocal number!<cr>
 
-" Use Python style regular expressions instead of vim's style.
-" nnoremap / /\v
-" vnoremap / /\v
-
-" Bubble single lines
-" http://vimcasts.org/episodes/bubbling-text/
-" Due to macOS keybinding of the C-Up key, I chose to remap to C-k and so forth.
-nmap <C-k> ddkP
-nmap <C-j> ddp
-
-" Bubble multiple lines
-vmap <C-k> xkP`[V`]
-vmap <C-j> xp`[V`]
-
 " switch to last file
 nnoremap <leader><leader> <c-^>
+
+" redraw the buffer.  This is convenient for when you resize or change
+" font-size and the buffer looks all wonky.
+nnoremap <leader>r :redraw!<cr>
 
 " Clear the search buffer when hitting return
 nnoremap <CR> :nohlsearch<cr>
@@ -340,7 +311,7 @@ augroup END
 
 " Indent Guides
 let g:indentguides_state = 0
-function! IndentGuides() " {{{
+function! IndentGuides() abort " {{{
   if g:indentguides_state
     let g:indentguides_state = 0
     2match None
@@ -367,6 +338,7 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " }}}
 " Folding {{{
 
+" Fold everything except what you're cursor is in
 nnoremap <leader>z zMzvzz
 
 " }}}
@@ -380,13 +352,6 @@ augroup prewrites
   autocmd BufWritePre,FileWritePre * :%s/\s\+$//e | %s/\r$//e
 augroup END
 
-" Source the .vimrc file after saving it.  This way you don't have to reload Vim to see the changes.
-augroup myvimrchooks
-  autocmd!
-
-  autocmd bufwritepost .vimrc source ~/.vimrc
-augroup END
-
 " }}}
 " Version Control {{{
 
@@ -397,7 +362,7 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " Whitespace {{{
 
 " Strip trailing whitespace (,ss)
-function! StripWhitespace ()
+function! StripWhitespace() abort
   let save_cursor = getpos(".")
   let old_query = getreg('/')
   :%s/\s\+$//e
@@ -446,23 +411,6 @@ command! MakeTags !ctags --recurse
 " - This doesn't help if you want a visual list of tags
 
 " }}}
-" Kill Arrow Keys {{{
-
-" New Vim users will want the following lines to teach them to do things right
-" For training only.  Remove when need be.  Honestly though, I'll probably never
-" re-enable this.
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-nnoremap k gk
-nnoremap j gj
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-
-" }}}
 " Tab Completion {{{
 
 " Use TAB to complete when typing words, else inserts TABs as usual.
@@ -475,7 +423,7 @@ inoremap <right> <nop>
 " Never type the same word twice and maybe learn a new spellings!
 " Use the Linux dictionary when spelling is in doubt.
 " Window users can copy the file to their machine.
-function! Tab_Or_Complete()
+function! Tab_Or_Complete() abort
   if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
     return "\<C-N>"
   else
@@ -489,7 +437,7 @@ set dictionary="/usr/dict/words"
 " Rename File {{{
 
 " Rename current file
-function! RenameFile()
+function! RenameFile() abort
   let old_name = expand('%')
   let new_name = input('New file name: ', expand('%'))
   if new_name != '' && new_name != old_name
@@ -499,7 +447,7 @@ function! RenameFile()
   endif
 endfunction
 
-map <leader>rn :call RenameFile()<cr>
+noremap <leader>rn :call RenameFile()<cr>
 
 " }}}
 " Trailing Whitespace {{{
@@ -516,7 +464,6 @@ augroup END
 " Line Return {{{
 
 " Make sure Vim returns to the same line when you reopen a file.
-" Thanks, Amit
 augroup line_return
   autocmd!
 
@@ -529,6 +476,7 @@ augroup END
 " }}}
 " Backups {{{
 
+set undofile                      " Maintain undo history between sessions
 set backup                        " enable backups
 set noswapfile                    " it's 2017, Vim.
 " The extra slash on the end saves files under the name of their full path
@@ -549,19 +497,6 @@ endif
 if !isdirectory(expand(&directory))
   call mkdir(expand(&directory), "p")
 endif
-
-" }}}
-" Autosave {{{
-
-" Commenting this out as I simply don't want it anymore but leaving this for
-" reference or for others to discover.  I'm grumpy and old and prefer to manually save
-" my files like my father and his father before me.
-"
-" augroup autoSaveAndRead
-"   autocmd!
-"   autocmd TextChanged,InsertLeave,FocusLost * silent! wall
-"   autocmd CursorHold * silent! checktime
-" augroup END
 
 " }}}
 " File & Filetype Specific Configurations {{{
@@ -592,12 +527,16 @@ augroup END
 " }}}
 " crontab {{{
 
-autocmd filetype crontab setlocal nobackup nowritebackup
+augroup ft_crontab
+  autocmd!
+
+  autocmd filetype crontab setlocal nobackup nowritebackup
+augroup END
 
 " }}}
 " css {{{
 
-" Sorts CSS properties.  Most useful command ever.
+" Sorts CSS properties.
 " See: http://stackoverflow.com/questions/3050797/how-to-alphabetize-a-css-file-in-vim
 nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
 :command! BeautifyCSS :g#\({\n\)\@<=#.,/}/sort <bar> %s/:\(\S\+;\)/: \1/g
@@ -605,10 +544,7 @@ nnoremap <leader>S :g#\({\n\)\@<=#.,/}/sort <bar> :%s/:\(\S\+;\)/: \1/g<CR>
 augroup ft_css
   autocmd!
 
-  " TODO: Investigate whether or not we can simply use `foldmethod=syntax`
-  " for CSS
-  autocmd Filetype css setlocal foldmethod=marker
-  autocmd Filetype css setlocal foldmarker={,}
+  autocmd Filetype css setlocal foldmethod=syntax
   autocmd Filetype css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd Filetype css setlocal iskeyword+=-
 
@@ -663,8 +599,18 @@ augroup ft_gitcommit
 
   autocmd FileType gitcommit setlocal spell
   autocmd FileType gitcommit setlocal textwidth=70
+  autocmd BufRead,BufNewFile gitcommit setlocal textwidth=70
 augroup END
 
+" }}}
+" groovy {{{
+augroup ft_sh
+  autocmd!
+
+  " Lets me fold blocks in Jenkins files
+  autocmd FileType groovy setlocal foldmethod=marker
+  autocmd Filetype groovy setlocal foldmarker={,}
+augroup END
 " }}}
 " go {{{
 
@@ -710,9 +656,13 @@ augroup END
 augroup ft_javascript
   autocmd!
 
-  " For Syntastic
-  let g:syntastic_javascript_checkers = ['eslint']
-  let g:syntastic_javascript_eslint_exec = "./node_modules/eslint/bin/eslint.js"
+  " :ALEFix will try and fix your JS code with ESLint.
+  let g:ale_fixers = {
+  \   'javascript': ['eslint'],
+  \}
+
+  " Enable completion where available.
+  let g:ale_completion_enabled = 1
 
   autocmd FileType javascript setlocal foldmethod=syntax
 
@@ -773,12 +723,11 @@ augroup END
 augroup ft_ruby
   autocmd!
 
+  " Tells Vim to set the syntax for our .irbrc file to Ruby.
+  autocmd BufNewFile,BufRead .irbrc set syntax=html
   autocmd Filetype ruby setlocal foldmethod=syntax
   autocmd BufRead,BufNewFile Capfile setlocal filetype=ruby
 augroup END
-
-" Tells Vim to set the syntax for our .irbrc file to Ruby.
-autocmd BufNewFile,BufRead .irbrc set syntax=html
 
 " }}}
 " scala {{{
@@ -790,13 +739,6 @@ augroup ft_scala
   autocmd FileType help setlocal textwidth=120
 
   autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2 expandtab
-
-  " Settings for Ensime http://ensime.org/editors/vim/install/
-  " Typechecking after writing
-  autocmd BufWritePost *.scala silent :EnTypeCheck
-  " Easy Type Inspection
-  nnoremap <localleader>t :EnTypeCheck<CR>
-  au FileType scala nnoremap <localleader>df :EnDeclarationSplit v<CR>
 augroup END
 
 " }}}
@@ -806,6 +748,9 @@ augroup END
 augroup ft_vim
   autocmd!
 
+  " Make vim resize on host window resize.  Great for increaseing/decreasing
+  " font or when you disconnect from your external monitor.
+  autocmd VimResized * wincmd =
   autocmd FileType vim setlocal foldmethod=marker
   autocmd FileType help setlocal textwidth=80
   autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
@@ -826,7 +771,7 @@ augroup ft_xml
   autocmd FileType xml nnoremap <buffer> <localleader>= Vat=
 
   " Source: http://vim.wikia.com/wiki/Pretty-formatting_XML
-  function! DoPrettyXML()
+  function! DoPrettyXML() abort
     " save the filetype so we can restore it later
     let l:origft = &ft
     set ft=
@@ -931,10 +876,11 @@ let g:ctrlp_show_hidden = 0
 " }}}
 " EasyAlign {{{
 
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+" Intentionally not using `nnoremap`
 nmap ga <Plug>(EasyAlign)
 
 " }}}
@@ -951,20 +897,15 @@ let g:github_dashboard = { 'username': 'jsatk', 'password': $VIMGHDTOKEN }
 " Goyo {{{
 
 " Maps Goyo to <leader>g.
-map <leader>g :Goyo<CR>
-
-" }}}
-" LocalVimrc {{{
-
-let g:localvimrc_ask=0 " Don't ask before loading a vimrc file
+noremap <leader>g :Goyo<CR>
 
 " }}}
 " NERDTree {{{
 
 " Maps NERDTree to ^n.
-map <C-n> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<CR>
 
-let NERDTreeIgnore=['node_modules[[dir]]', 'dist[[dir]]', 'target[[dir]]', 'project[[dir]]', 'coverage[[dir]]']
+let NERDTreeIgnore = ['node_modules[[dir]]', 'dist[[dir]]', 'target[[dir]]', 'project[[dir]]', 'coverage[[dir]]']
 
 " }}}
 " vim-javascript {{{

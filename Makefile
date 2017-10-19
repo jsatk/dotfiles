@@ -26,6 +26,8 @@ $(info 1. Figure out how to install and/or update n.  We are currently doing thi
 $(info 2. Figure out how to install and/or update yarn.  We are currently doing this manually.)
 $(info 3. Figure out how to properly install fonts.)
 $(info 4. Figure out how to set fish as the default shell.)
+$(info 5. Figure out how install pip packages.)
+$(info 6. Figure out how setup path.)
 $(info  )
 
 # }}}
@@ -36,11 +38,13 @@ symlinks = \
 	config \
 	gitconfig \
 	irbrc \
+	irssi \
 	jsatk.tmuxtheme \
 	mbsyncrc \
 	msmtprc \
 	muttrc \
 	notmuch-config \
+	powerline-shell \
 	tmux.conf \
 	urlview \
 	vim/custom-dictionary.utf-8.add \
@@ -57,6 +61,7 @@ formulae = \
 	gist \
 	go \
 	htop-osx \
+	irssi \
 	isync \
 	jq \
 	lynx \

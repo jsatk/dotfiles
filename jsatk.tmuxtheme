@@ -1,17 +1,12 @@
 #
-# Powerline Gray Block - Tmux Theme
+# Powerline Blue - Tmux Theme
 # Created by Jim Myhrberg <contact@jimeh.me>.
-# Modified by Jesse Atkinson <jesse@jsatk.us>.
 #
 # Inspired by vim-powerline: https://github.com/Lokaltog/powerline
 #
 # Requires terminal to be using a powerline compatible font, find one here:
 # https://github.com/Lokaltog/powerline-fonts
 #
-# Light Gray   colour245
-# Medium Gray  colour240
-# Dark Gray    colour235
-# Darkest Gray color233
 
 # Status update interval
 set -g status-interval 1
@@ -21,36 +16,27 @@ set -g status-fg colour238
 set -g status-bg colour233
 
 # Left side of status bar
-status_left_session_name="#[fg=colour232,bg=colour245,bold] #S #[fg=colour245,bg=colour240,nobold]"
-status_left_user_name="#[fg=colour233,bg=colour240] #(whoami) #[fg=colour240,bg=colour235]"
-status_left_window_counter="#[fg=colour240,bg=colour235] #I:#P #[fg=colour235,bg=colour233,nobold]"
-
 set -g status-left-bg colour233
 set -g status-left-fg colour243
 set -g status-left-length 40
-set -g status-left "${status_left_session_name}${status_left_user_name}${status_left_window_counter}"
+set -g status-left "#[fg=colour232,bg=colour24,bold] #S #[fg=colour24,bg=colour240,nobold]#[fg=colour233,bg=colour240] #(whoami) #[fg=colour240,bg=colour235]#[fg=colour240,bg=colour235] #I:#P #[fg=colour235,bg=colour233,nobold]"
 
 # Right side of status bar
 set -g status-right-bg colour233
 set -g status-right-fg colour243
 set -g status-right-length 150
-
-status_right_prefix="#{?client_prefix,#[bold]⌨ #[nobold],} "
-status_right_battery="#[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] #(/usr/local/bin/battery -t)#[fg=colour240,bg=colour235]  "
-status_right_datetime="#[fg=colour233,bg=colour240] %H:%M:%S | %m-%d-%y #[fg=colour245,bg=colour240]"
-status_right_now_playing="#[fg=colour232,bg=colour245,bold] #(osascript -l JavaScript ~/Library/scripts/now-playing.js | cut -c 1-60) "
-set -g status-right "${status_right_prefix}${status_right_battery}${status_right_datetime}${status_right_now_playing}"
+set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} #[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] 🕰  %H:%M:%S #[fg=colour240,bg=colour235]#[fg=colour233,bg=colour240] 📅  %d-%b-%y #[fg=colour245,bg=colour240]#[fg=colour232,bg=colour245,bold] #(osascript -l JavaScript ~/Library/scripts/now-playing.js | cut -c 1-60) "
 
 # Window status
-set -g window-status-format " #I:#W#F "
-set -g window-status-current-format " #I:#W#F "
+set -g window-status-format "  #I:#W#F  "
+set -g window-status-current-format "#[fg=colour233,bg=black]#[fg=colour33,nobold] #I:#W#F #[fg=colour233,bg=black,nobold]"
 
 # Current window status
-set -g window-status-current-bg colour245
-set -g window-status-current-fg colour232
+set -g window-status-current-bg colour100
+set -g window-status-current-fg colour235
 
 # Window with activity status
-set -g window-status-activity-bg colour243 # fg and bg are flipped here due to
+set -g window-status-activity-bg colour245 # fg and bg are flipped here due to
 set -g window-status-activity-fg colour233 # a bug in tmux
 
 # Window separator
@@ -61,28 +47,28 @@ set -g status-justify centre
 
 # Pane border
 set -g pane-border-bg default
-set -g pane-border-fg colour235
+set -g pane-border-fg colour238
 
 # Active pane border
 set -g pane-active-border-bg default
-set -g pane-active-border-fg colour240
+set -g pane-active-border-fg colour24
 
 # Pane number indicator
 set -g display-panes-colour colour233
 set -g display-panes-active-colour colour245
 
 # Clock mode
-set -g clock-mode-colour colour240
+set -g clock-mode-colour colour24
 set -g clock-mode-style 24
 
 # Message
-set -g message-bg colour245
-set -g message-fg colour232
+set -g message-bg colour24
+set -g message-fg black
 
 # Command message
 set -g message-command-bg colour233
-set -g message-command-fg colour250
+set -g message-command-fg black
 
 # Mode
-set -g mode-bg colour243
-set -g mode-fg colour232
+set -g mode-bg colour24
+set -g mode-fg colour231

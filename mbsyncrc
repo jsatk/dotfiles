@@ -34,6 +34,7 @@ MaildirStore earnest-local
 # The trailing "/" is important
 Path ~/.mail/earnest/
 Inbox ~/.mail/earnest/Inbox
+SubFolders Verbatim
 
 Channel earnest
 Master :earnest-remote:
@@ -68,6 +69,7 @@ MaildirStore jsatk-local
 # The trailing "/" is important
 Path ~/.mail/jsatk/
 Inbox ~/.mail/jsatk/Inbox
+SubFolders Verbatim
 
 Channel jsatk
 Master :jsatk-remote:
