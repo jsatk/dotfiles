@@ -19,15 +19,27 @@
 
 # }}}
 # TODO {{{
+#
+# # Stuff to fix in Makefile
+#
+# * Install n
+# * Install vim plug
+# * Set fish shell as default
+# * Install up contacts-cli
+# * Make caps lock to escape
+# * Set ruby to rbenv
+# * Install fonts
+# * Symlink ~/Library/scripts
 
 $(info TODO: 📝)
 $(info  )
-$(info 1. Figure out how to install and/or update n.  We are currently doing this manually.)
-$(info 2. Figure out how to install and/or update yarn.  We are currently doing this manually.)
-$(info 3. Figure out how to properly install fonts.)
-$(info 4. Figure out how to set fish as the default shell.)
-$(info 5. Figure out how install pip packages.)
-$(info 6. Figure out how setup path.)
+$(info "1. Figure out how to install and/or update n.  We are currently doing this manually.")
+$(info "2. Figure out how to install and/or update yarn.  We are currently doing this manually.")
+$(info "3. Figure out how to properly install fonts.")
+$(info "4. Figure out how to set fish as the default shell.")
+$(info "5. Figure out how install pip packages.")
+$(info "6. Figure out how setup path.")
+$(info "7. Figure out how install npm, pip, and gems if they are not already installed.  (I.E.  What we're alredy doing with Homebrew).")
 $(info  )
 
 # }}}
@@ -42,9 +54,11 @@ symlinks = \
 	jsatk.tmuxtheme \
 	mbsyncrc \
 	msmtprc \
+	mutt \
 	muttrc \
 	notmuch-config \
 	powerline-shell \
+	terminfo \
 	tmux.conf \
 	urlview \
 	vim/custom-dictionary.utf-8.add \
@@ -59,8 +73,9 @@ formulae = \
 	fish \
 	git \
 	gist \
+	gnupg \
 	go \
-	htop-osx \
+	htop \
 	irssi \
 	isync \
 	jq \
@@ -72,6 +87,7 @@ formulae = \
 	mutt \
 	node-build \
 	notmuch \
+	pinentry-mac \
 	postgresql \
 	rbenv \
 	reattach-to-user-namespace \
@@ -87,6 +103,7 @@ formulae = \
 	urlview \
 	vim \
 	wget \
+	# yarn --without-node \ # Figure out how to handle flags
 
 # }}}
 # core targets {{{

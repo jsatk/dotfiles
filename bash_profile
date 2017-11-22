@@ -39,7 +39,7 @@ export EDITOR="vim"
 # Path {{{
 
 # Ensure user-installed binaries take precedence
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:~/n/bin
 
 # Add Postgres to path
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
@@ -282,3 +282,5 @@ source '/Users/jesseatkinson/google-cloud-sdk/path.bash.inc'
 source '/Users/jesseatkinson/google-cloud-sdk/completion.bash.inc'
 
 # }}}
+
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

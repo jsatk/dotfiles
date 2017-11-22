@@ -41,6 +41,10 @@ if test -f /usr/local/bin/rbenv
 	status --is-interactive; and . (rbenv init -|psub)
 end
 
-export powerline_symbols="$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
 export EDITOR
+
+# For prompt
+export powerline_symbols="$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
+
+# For Github Dashboard in Vim
 . ~/.vim-ghd-token

@@ -26,7 +26,7 @@ set editor = "/usr/local/bin/vim -c 'Goyo' -c 'normal! }' -c 'redraw'"
 # Why am I sending the errors to `/dev/null`?
 # I'm glad you asked!
 # https://github.com/keith/contacts-cli/issues/3#issuecomment-277574990
-set query_command = "contacts '%s' 2> /dev/null"
+set query_command = "contacts '%s'"
 bind editor <Tab> complete-query
 bind editor ^T    complete
 
@@ -150,7 +150,7 @@ bind attach <return> view-mailcap
 macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
 # Sync email and index it for searching
-macro index O "<shell-escape>mbsync --verbose --all && notmuch new<enter>" "Sync all mail using mbsync and then index it using notmuch"
+macro index O "<shell-escape>mbsync --all && notmuch new<enter>" "Sync all mail using mbsync and then index it using notmuch"
 
 # Saner copy/move dialogs
 macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
