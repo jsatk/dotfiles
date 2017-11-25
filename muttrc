@@ -33,7 +33,7 @@ bind editor ^T    complete
 # }}}
 # Color Theme {{{
 
-source ~/.mutt/themes/vombatidae/vombatidae.mutt
+source ~/.mutt/themes/bad-wolf/bad-wolf.muttrc
 
 # }}}
 # Basic Options {{{

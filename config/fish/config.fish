@@ -25,6 +25,8 @@
 set BROWSER open safari
 set EDITOR vim
 set DEVELOPER ~/Developer
+# Required for n
+set --export N_PREFIX ~/n
 
 # For Autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and . /usr/local/share/autojump/autojump.fish
