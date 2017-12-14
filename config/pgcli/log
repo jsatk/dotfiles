@@ -1,0 +1,5 @@
+2017-12-11 14:43:44,727 (89211/MainThread) pgcli.main INFO - No default pager found in environment. Using os default pager
+2017-12-11 14:43:44,751 (89211/MainThread) pgcli.main ERROR - traceback: 'Traceback (most recent call last):\n  File "/usr/local/Cellar/pgcli/1.8.1/libexec/lib/python2.7/site-packages/pgcli/main.py", line 389, in connect\n    raise e\nOperationalError: could not translate host name "psql.staging.earnest.com:5432:earnest:earnest:mYts2iJ0E3draV1Toc1a" to address: nodename nor servname provided, or not known\n\n'
+2017-12-11 14:44:13,237 (89342/MainThread) pgcli.main INFO - No default pager found in environment. Using os default pager
+2017-12-11 14:44:13,251 (89342/MainThread) pgcli.main ERROR - traceback: 'Traceback (most recent call last):\n  File "/usr/local/Cellar/pgcli/1.8.1/libexec/lib/python2.7/site-packages/pgcli/main.py", line 389, in connect\n    raise e\nOperationalError: could not translate host name "psql.staging.earnest.com:5432" to address: nodename nor servname provided, or not known\n\n'
+2017-12-11 14:44:26,829 (89405/MainThread) pgcli.main INFO - No default pager found in environment. Using os default pager
