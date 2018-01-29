@@ -75,7 +75,6 @@ formulae = \
 	gist \
 	gnupg \
 	go \
-	htop \
 	irssi \
 	isync \
 	jq \

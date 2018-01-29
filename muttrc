@@ -38,22 +38,22 @@ source ~/.mutt/themes/bad-wolf/bad-wolf.muttrc
 # }}}
 # Basic Options {{{
 
-set   wait_key       = no       # shut up, mutt
-set   mbox_type      = Maildir  # mailbox type
-set   timeout        = 3        # idle time before scanning
-set   mail_check     = 0        # minimum time between scans
-set   send_charset   = "us-ascii:utf-8:iso-8859-1"
-set   mail_check     = 0        # How often to check for new mail (time in seconds).
-set   sendmail_wait  = 0        # No please don't silently fail, email is important
-set   text_flowed               # No weird line breaks in emails I send, please & thank you.
-set   smart_wrap                # Wrap emails sent to me so I can sanely read them
-set   delete                    # don't ask, just do
-set   beep_new                  # bell on new mails
-set   pipe_decode               # strip headers and eval mimes when piping
-set   thorough_search           # strip headers and eval mimes before searching
-set   use_from                  # respect the From: address the editor sends back
-unset confirmappend             # don't ask, just do!
-unset mark_old                  # read/new is good enough for me
+set   wait_key      = no      # shut up, mutt
+set   mbox_type     = Maildir # mailbox type
+set   timeout       = 3       # idle time before scanning
+set   mail_check    = 0       # minimum time between scans
+set   send_charset  = "us-ascii:utf-8:iso-8859-1"
+set   mail_check    = 0       # How often to check for new mail (time in seconds).
+set   sendmail_wait = 0       # No please don't silently fail, email is important
+set   text_flowed             # No weird line breaks in emails I send, please & thank you.
+set   smart_wrap              # Wrap emails sent to me so I can sanely read them
+set   delete                  # don't ask, just do
+set   beep_new                # bell on new mails
+set   pipe_decode             # strip headers and eval mimes when piping
+set   thorough_search         # strip headers and eval mimes before searching
+set   use_from                # respect the From: address the editor sends back
+unset confirmappend           # don't ask, just do!
+unset mark_old                # read/new is good enough for me
 unset record
 
 mailboxes $Mail
@@ -128,6 +128,7 @@ bind index u toggle-new
 bind index R        group-reply
 bind index <tab>    sync-mailbox
 bind index <space>  collapse-thread
+bind index _        collapse-all
 
 # Sidebar Navigation
 bind index,pager <down>  sidebar-next
