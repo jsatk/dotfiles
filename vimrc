@@ -61,9 +61,7 @@ Plug 'vim-airline/vim-airline'          " Adds a gorgeous toolbar with useful in
 Plug 'vim-airline/vim-airline-themes'   " Airline themes.  Self explanatory.
 Plug 'vim-scripts/LargeFile'            " Add support for working with big-ass files.
 Plug 'w0rp/ale'                         " Adds error checking while writing or on save in vim.
-
 call plug#end()
-
 " }}}
 " Basic Options {{{
 
