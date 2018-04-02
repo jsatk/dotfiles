@@ -10,7 +10,7 @@
   const spotify = Application('Spotify')
   const itunesIsPlaying = itunes.running() && itunes.playerState() === 'playing'
   const spotifyIsPlaying = spotify.running() && spotify.playerState() === 'playing'
-  const trim = 80 // Trim string at the 80th character.  Change this if you wish for a different max length or remove the `.substr` calls entirely if you wish for no trimming.
+  const trim = 50 // Trim string at the 50th character.  Change this if you wish for a different max length or remove the `.substr` calls entirely if you wish for no trimming.
 
   if (itunesIsPlaying) {
     const track = itunes.currentTrack

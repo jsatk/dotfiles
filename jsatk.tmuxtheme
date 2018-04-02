@@ -25,7 +25,7 @@ set -g status-left "#[fg=colour245,bg=colour24,bold] #S #[fg=colour24,bg=colour2
 set -g status-right-bg colour233
 set -g status-right-fg colour243
 set -g status-right-length 150
-set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} #[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] 🕰  %H:%M:%S #[fg=colour240,bg=colour235]#[fg=colour233,bg=colour240] 📅  %d-%b-%y #[fg=colour245,bg=colour240]#[fg=colour232,bg=colour245,bold] #(osascript -l JavaScript ~/Library/scripts/now-playing.js | cut -c 1-60) "
+set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} #[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] 🕰  %H:%M:%S #[fg=colour240,bg=colour235]#[fg=colour233,bg=colour240] 📅  %d-%b-%y #[fg=colour245,bg=colour240]#[fg=colour232,bg=colour245,bold] #(osascript -l JavaScript ~/Library/scripts/now-playing.js) #[nobold]"
 
 # Window status
 set -g window-status-format "  #I:#W#F  "
