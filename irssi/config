@@ -141,7 +141,6 @@ channels = (
   { name = "#Node.js"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#scala"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "##javascript"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "##security"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "##crypto"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#fish"; chatnet = "oftc"; autojoin = "yes"; },
   { name = "#rust"; chatnet = "Mozilla"; autojoin = "yes"; },
@@ -446,7 +445,7 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "##security";
+        name = "##crypto";
         tag = "Freenode";
       }
     );
@@ -456,22 +455,12 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "##crypto";
-        tag = "Freenode";
-      }
-    );
-  };
-  7 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
         name = "#fish";
         tag = "OFTC";
       }
     );
   };
-  8 = {
+  7 = {
     items = (
       {
         type = "CHANNEL";
@@ -481,7 +470,7 @@ windows = {
       }
     );
   };
-  9 = {
+  8 = {
     items = (
       {
         type = "CHANNEL";
@@ -500,7 +489,6 @@ ignores = (
       "#Node.js",
       "#scala",
       "##javascript",
-      "##security",
       "##crypto",
       "#fish"
     );
@@ -513,7 +501,6 @@ ignores = (
       "#Node.js",
       "#scala",
       "##javascript",
-      "##security",
       "##crypto",
       "#fish"
     );
