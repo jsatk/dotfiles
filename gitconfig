@@ -62,7 +62,6 @@
 [core]
 	attributesfile = ~/.gitattributes
 	autocrlf = input
-	excludesfile = /opt/boxen/config/git/gitignore
 	ignorecase = false
 	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
 	editor = vim
