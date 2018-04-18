@@ -125,7 +125,12 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
-  Mozilla = { type = "IRC"; max_kicks = "1"; max_msgs = "1"; max_whois = "1"; };
+  Mozilla = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
 };
 
 channels = (
@@ -485,24 +490,12 @@ mainwindows = { 1 = { first_line = "1"; lines = "37"; }; };
 ignores = (
   {
     level = "JOINS PARTS QUITS NICKS";
-    channels = (
-      "#Node.js",
-      "#scala",
-      "##javascript",
-      "##crypto",
-      "#fish"
-    );
+    channels = ( #Node.js, ##javascript, #scala, ##crypto, #fish, #rust-beginners, #rust );
   },
   {
     level = "ACTIONS";
     pattern = "(away|gone|back|playin|weg|wech|returned)";
     regexp = "yes";
-    channels = (
-      "#Node.js",
-      "#scala",
-      "##javascript",
-      "##crypto",
-      "#fish"
-    );
+    channels = ( #Node.js, ##javascript, #scala, ##crypto, #fish, #rust-beginners, #rust );
   }
 );
