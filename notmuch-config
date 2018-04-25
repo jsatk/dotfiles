@@ -32,7 +32,7 @@ path=/Users/jesseatkinson/.mail
 
 [user]
 name=Jesse Atkinson
-primary_email=jesse.atkinson@earnest.com;
+primary_email=jesse@khanacademy.org;
 other_email=jesse@jsatk.us;
 
 # Configuration for "notmuch new"

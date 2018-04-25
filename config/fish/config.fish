@@ -27,6 +27,7 @@ set EDITOR vim
 set DEVELOPER ~/Developer
 # Required for n
 set --export N_PREFIX ~/n
+set PATH $N_PREFIX/bin ~/.rbenv/shims /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/MacGPG2/bin ~/Library/scripts
 
 # For Autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
@@ -34,19 +35,16 @@ set --export N_PREFIX ~/n
 # Sets brew cask symlink to /Applications instead of ~/Applications
 set -x HOMEBREW_CASK_OPTS '--appdir=/Applications'
 
-# Golang workspace
-set -x GOPATH $HOME/Developer
-
-# For rbenv ruby version manager
-# This modifies your path and adds the `.rbenv` folder to it.
-if test -f /usr/local/bin/rbenv
-	status --is-interactive; and source (rbenv init -|psub)
-end
-
 export EDITOR
 
 # For prompt
 export powerline_symbols="$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
+
+# For rbenv ruby version manager
+# This modifies your path and adds the `.rbenv` folder to it.
+if test -f /usr/local/bin/rbenv
+    status --is-interactive; and source (rbenv init -|psub)
+end
 
 # For Github Dashboard in Vim
 source ~/.vim-ghd-token

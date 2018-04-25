@@ -12,14 +12,14 @@
 # Twitter:  @jsatk
 
 # }}}
-# Earnest {{{
+# Khan Academy {{{
 
-IMAPAccount earnest
+IMAPAccount khan-academy
 # Address to connect to
 Host imap.gmail.com
-User jesse.atkinson@earnest.com
+User jesse@khanacademy.org
 # To store the password in an encrypted file use PassCmd instead of Pass
-PassCmd "/usr/local/MacGPG2/bin/gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/account.earnest.password.gpg"
+PassCmd "/usr/local/MacGPG2/bin/gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/account.khan-academy.password.gpg"
 CertificateFile /etc/ssl/cert.pem
 # Fixes weird auth issue
 # See: https://sourceforge.net/p/isync/mailman/message/35516737/
@@ -27,18 +27,18 @@ AuthMechs LOGIN
 # Use SSL
 SSLType IMAPS
 
-IMAPStore earnest-remote
-Account earnest
+IMAPStore khan-academy-remote
+Account khan-academy
 
-MaildirStore earnest-local
+MaildirStore khan-academy-local
 # The trailing "/" is important
-Path ~/.mail/earnest/
-Inbox ~/.mail/earnest/Inbox
+Path ~/.mail/khan-academy/
+Inbox ~/.mail/khan-academy/Inbox
 SubFolders Verbatim
 
-Channel earnest
-Master :earnest-remote:
-Slave :earnest-local:
+Channel khan-academy
+Master :khan-academy-remote:
+Slave :khan-academy-local:
 # Don't sync drafts since they are stored unencrypted
 Patterns * !Drafts
 # Automatically create missing mailboxes, both locally and on the server

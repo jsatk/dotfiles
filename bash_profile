@@ -276,10 +276,10 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # The next line updates PATH for the Google Cloud SDK.
-source '/Users/jesseatkinson/google-cloud-sdk/path.bash.inc'
+# source '/Users/jesseatkinson/google-cloud-sdk/path.bash.inc'
 
 # The next line enables shell command completion for gcloud.
-source '/Users/jesseatkinson/google-cloud-sdk/completion.bash.inc'
+# source '/Users/jesseatkinson/google-cloud-sdk/completion.bash.inc'
 
 # }}}
 

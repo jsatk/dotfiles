@@ -73,7 +73,6 @@ formulae = \
 	fish \
 	git \
 	gist \
-	gnupg \
 	go \
 	irssi \
 	isync \
