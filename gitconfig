@@ -66,6 +66,7 @@
 	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
 	editor = vim
 	pager = diff-so-fancy | less --tabs=4 -RFX
+	excludesfile = ~/.gitignore
 
 # }}}
 # colors {{{
@@ -167,3 +168,5 @@
 	program = gpg
 
 # }}}
+[kaclone]
+	email = jesse@khanacademy.org

@@ -27,7 +27,7 @@ set EDITOR vim
 set DEVELOPER ~/Developer
 # Required for n
 set --export N_PREFIX ~/n
-set PATH $N_PREFIX/bin ~/.rbenv/shims /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/MacGPG2/bin ~/Library/scripts
+set PATH $N_PREFIX/bin ~/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /usr/local/MacGPG2/bin ~/Library/scripts
 
 # For Autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
@@ -48,3 +48,10 @@ end
 
 # For Github Dashboard in Vim
 source ~/.vim-ghd-token
+
+# For Google Cloud
+# The next line updates PATH for the Google Cloud SDK.
+bass source "$HOME/google-cloud-sdk/path.bash.inc"
+
+# The next line enables shell command completion for gcloud.
+bass source "$HOME/google-cloud-sdk/completion.bash.inc"

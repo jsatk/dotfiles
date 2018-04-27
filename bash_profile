@@ -13,6 +13,21 @@
 # Twitter:    @jsatk
 
 # }}}
+# For Khan Academy {{{
+
+# Local .bash_profile.
+# Feel free to add whatever you like after the 'bash_profile.khan' line.
+#
+# Note that .bash_profile.khan automatically sources ~/.profile if it
+# exists, so you don't have to worry that the addition of this file
+# "hides" .profile (bash won't load a .profile file if it sees a
+# .bash_profile file instead).
+
+if [ -s ~/.bash_profile.khan ]; then
+    source ~/.bash_profile.khan
+fi
+
+# }}}
 # Basics, etc… {{{
 
 # Set architecture flags
@@ -39,7 +54,7 @@ export EDITOR="vim"
 # Path {{{
 
 # Ensure user-installed binaries take precedence
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:~/n/bin
+export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 
 # Add Postgres to path
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
@@ -107,12 +122,25 @@ alias safari="open -a \"Safari\""
 # http://brettterpstra.com/2013/03/31/a-few-more-of-my-favorite-shell-aliases/
 # make executable
 alias ax="chmod a+x"
+
+# Quick edits
+# edit whatever in your $EDITOR
+alias e="$EDITOR"
 # edit .bash_profile
-alias bp="$EDITOR ~/.bash_profile"
+alias eb="$EDITOR ~/.bash_profile"
+# edit config.fish
+alias ef="$EDITOR ~/.config/fish/config.fish"
+# edit .gitconfig
+alias eg="$EDITOR ~/.gitconfig"
+# edit .muttrc
+alias em="$EDITOR ~/.muttrc"
+# edit .tmux.conf
+alias et="$EDITOR ~/.tmux.conf"
 # edit .vimrc
 alias ev="$EDITOR ~/.vimrc"
 # edit keybindings.dict
 alias kb="$EDITOR ~/Library/KeyBindings/DefaultKeyBinding.dict"
+
 # reload your bash config
 alias src="source ~/.bash_profile"
 
@@ -130,6 +158,9 @@ alias eject="diskutil unmount"
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"
 alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
+
+# So tmux can handle italics
+alias tmux="env TERM=myterm-it tmux -2"
 
 # }}}
 # Functions {{{
@@ -217,51 +248,13 @@ function fixopenwith() {
 # }}}
 # Bash Prompt {{{
 
-# @gf3’s Sexy Bash Prompt, inspired by “Extravagant Zsh Prompt”
-# Shamelessly copied from https://github.com/gf3/dotfiles
-
-if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-  export TERM=gnome-256color
-elif infocmp xterm-256color >/dev/null 2>&1; then
-  export TERM=xterm-256color
-fi
-
-if tput setaf 1 &> /dev/null; then
-  tput sgr0
-  if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
-    MAGENTA=$(tput setaf 9)
-    ORANGE=$(tput setaf 172)
-    GREEN=$(tput setaf 190)
-    PURPLE=$(tput setaf 141)
-    WHITE=$(tput setaf 256)
-  else
-    MAGENTA=$(tput setaf 5)
-    ORANGE=$(tput setaf 4)
-    GREEN=$(tput setaf 2)
-    PURPLE=$(tput setaf 1)
-    WHITE=$(tput setaf 7)
-  fi
-  BOLD=$(tput bold)
-  RESET=$(tput sgr0)
-else
-  MAGENTA="\033[1;31m"
-  ORANGE="\033[1;33m"
-  GREEN="\033[1;32m"
-  PURPLE="\033[1;35m"
-  WHITE="\033[1;37m"
-  BOLD=""
-  RESET="\033[m"
-fi
-
-function parse_git_dirty() {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+function _update_ps1() {
+  PS1=$(powerline-shell $?)
 }
 
-function parse_git_branch() {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
-}
-
-PS1="\n\[$RESET\]┌─▪\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[${BOLD}${MAGENTA}\]\u \[$WHITE\]on \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$RESET\]\n└─▪ "
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
 
 # }}}
 # Stuff for tools, etc... {{{
@@ -276,11 +269,13 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # The next line updates PATH for the Google Cloud SDK.
-# source '/Users/jesseatkinson/google-cloud-sdk/path.bash.inc'
+source '/Users/jesseatkinson/google-cloud-sdk/path.bash.inc'
 
 # The next line enables shell command completion for gcloud.
-# source '/Users/jesseatkinson/google-cloud-sdk/completion.bash.inc'
+source '/Users/jesseatkinson/google-cloud-sdk/completion.bash.inc'
+
+# For n – the node version manager.
+export N_PREFIX="$HOME/n"
+export PATH="$N_PREFIX/bin:$PATH"
 
 # }}}
-
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

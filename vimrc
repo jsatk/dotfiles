@@ -648,6 +648,7 @@ augroup ft_html
   autocmd!
 
   autocmd Filetype html setlocal foldmethod=indent
+  autocmd Filetype htmldjango setlocal foldmethod=indent
 augroup END
 
 " }}}
