@@ -12,6 +12,7 @@
 # Twitter:    @jsatk
 
 # }}}
+# General {{{
 
 # Note: All git aliases and configs stored in ~/.gitconfig.
 # Fish prompt can be modified via `fish_config` command or in ~/.config/fish/functions/fish_prompt.fish
@@ -48,10 +49,35 @@ end
 
 # For Github Dashboard in Vim
 source ~/.vim-ghd-token
+# }}}
+# For Khan Academy  {{{
 
 # For Google Cloud
-# The next line updates PATH for the Google Cloud SDK.
-bass source "$HOME/google-cloud-sdk/path.bash.inc"
+if test -d $HOME/google-cloud-sdk
+  # bass allows fish shell to invoke bash scripts.
+  # It's a function at ~/.config/fish/functions/bass.fish
 
-# The next line enables shell command completion for gcloud.
-bass source "$HOME/google-cloud-sdk/completion.bash.inc"
+  # The next line updates PATH for the Google Cloud SDK.
+  bass source "$HOME/google-cloud-sdk/path.bash.inc"
+
+  # The next line enables shell command completion for gcloud.
+  bass source "$HOME/google-cloud-sdk/completion.bash.inc"
+end
+
+if test -d $HOME/khan/webapp
+  # Add frankenserver bins to PATH
+  set PATH $HOME/khan/webapp/third_party/frankenserver $PATH
+end
+
+if test -d $HOME/khan/devtools
+  # Add devtools bins to PATH
+  # TODO(mroth): rewrite these paths at install time based on user preference
+  set --export KA_DEVROOT $HOME/khan/devtools
+  set PATH $KA_DEVROOT/arcanist/khan-bin $KA_DEVROOT/git-workflow/bin $KA_DEVROOT/ka-clone/bin $KA_DEVROOT/khan-linter/bin $PATH
+end
+
+# For virtualfish, a Fish Shell wrapper for virtualenv
+eval (python -m virtualfish)
+vf activate khan27
+
+# }}}

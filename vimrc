@@ -37,12 +37,14 @@ Plug 'derekwyatt/vim-scala'             " Makes working with Scala easier.
 Plug 'editorconfig/editorconfig-vim'    " Maintain consistent coding styles between different editors and IDEs.
 Plug 'fatih/vim-go'                     " Makes working with Go easier.
 Plug 'flazz/vim-colorschemes'           " All the colorschemes money can buy.
+Plug 'flowtype/vim-flow'                " Adds type checking for javascript projects that use Flow.
 Plug 'junegunn/goyo.vim'                " Makes working with plain text/markdown nicer.
 Plug 'junegunn/vim-easy-align'          " Aligns multiple lines on any given point.  Useful for assignments.
 Plug 'junegunn/vim-github-dashboard'    " Browse GitHub events (user dashboard, user/repo activity) in Vim.
 Plug 'mattn/gist-vim'                   " Send text straight to a gist.
 Plug 'morhetz/gruvbox'                  " Cool colorscheme
 Plug 'mustache/vim-mustache-handlebars' " Mustache & Handlebars support.
+Plug 'mxw/vim-jsx'                      " Syntax highlighting for React's JSX.
 Plug 'pangloss/vim-javascript'          " Adds some javascript nicities.
 Plug 'rizzatti/dash.vim'                " Easy look up of docs via Dash.app
 Plug 'rust-lang/rust.vim'               " Makes working with rust easier.
@@ -56,6 +58,7 @@ Plug 'tpope/vim-fugitive'               " Git support in vim.  Incredible handy 
 Plug 'tpope/vim-rails'                  " Makes working with Rails more better.
 Plug 'tpope/vim-rhubarb'                " Expands upon Fugitive.  Allows you to open files in github.
 Plug 'tpope/vim-sensible'               " A universal set of defaults that (hopefully) everyone can agree on.
+Plug 'tpope/vim-surround'               " Makes surrounding stuff with characters easier.
 Plug 'tpope/vim-unimpaired'             " Provides some nice key mappings.
 Plug 'vim-airline/vim-airline'          " Adds a gorgeous toolbar with useful info to bottom of vim.
 Plug 'vim-airline/vim-airline-themes'   " Airline themes.  Self explanatory.
@@ -864,7 +867,7 @@ let g:airline_powerline_fonts = 1
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
- \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist|docs|project|target)$'
+ \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist|docs|project|target|genfiles|kake|third_party)$'
  \ }
 
 " Allows indexing of more files
@@ -907,6 +910,28 @@ noremap <leader>g :Goyo<CR>
 noremap <C-n> :NERDTreeToggle<CR>
 
 let NERDTreeIgnore = ['node_modules[[dir]]', 'dist[[dir]]', 'target[[dir]]', 'project[[dir]]', 'coverage[[dir]]']
+
+" }}}
+" vim-flow {{{
+
+" Use locally installed flow
+let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
+
+if matchstr(local_flow, "^\/\\w") == ''
+  let local_flow= getcwd() . "/" . local_flow
+endif
+
+if executable(local_flow)
+  let g:flow#flowpath = local_flow
+endif
+
+" If this is set to 1, the quickfix window will not be opened when there are no
+" errors, and will be automatically closed when previous errors are cleared.
+let g:flow#autoclose = 1
+
+" I'm already using Ale for syntax checking, which plays nice with Flow.
+" No need to show me a quickfix window everytime Flow gets angry.
+let g:flow#showquickfix = 0
 
 " }}}
 " vim-javascript {{{

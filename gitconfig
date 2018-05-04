@@ -168,5 +168,9 @@
 	program = gpg
 
 # }}}
+# khan academy {{{
+
 [kaclone]
 	email = jesse@khanacademy.org
+
+# }}}
