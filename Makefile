@@ -89,12 +89,12 @@ formulae = \
 	postgresql \
 	rbenv \
 	reattach-to-user-namespace \
+	ripgrep \
 	ruby-build \
 	sbt \
 	scala \
 	screenfetch \
 	spark \
-	the_platinum_searcher \
 	tldr \
 	tmux \
 	trash \
