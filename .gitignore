@@ -20,3 +20,4 @@ config/configstore
 config/pgcli/history
 config/pgcli/log
 config/gcloud/
+config/fish/extras.fish
