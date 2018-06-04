@@ -160,10 +160,10 @@ $(prefixed_symlinks):
 
 node: | $(node)
 	npm install --global \
+		diff-so-fancy@latest \
 		npm@latest \
-		n@latest \
-		diff-so-fancy@latest
-
+		speed-test@latest \
+		vtop@latest
 $(node): | brew install node
 
 # }}}

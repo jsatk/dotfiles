@@ -29,7 +29,6 @@ call plug#begin()
 
 " Our Vim plugins!
 
-Plug 'Raimondi/delimitMate'             " Provides auto closing of parens, braces, and brackets in insert mode.
 Plug 'ctrlpvim/ctrlp.vim'               " True fuzzy find.  The greatest thing ever for us lazy folk.
 Plug 'dag/vim-fish'                     " Fish Shell syntax highlighting for vim.
 Plug 'derekwyatt/vim-sbt'               " Adds very basic support for SBT.
@@ -46,9 +45,11 @@ Plug 'morhetz/gruvbox'                  " Cool colorscheme
 Plug 'mustache/vim-mustache-handlebars' " Mustache & Handlebars support.
 Plug 'mxw/vim-jsx'                      " Syntax highlighting for React's JSX.
 Plug 'pangloss/vim-javascript'          " Adds some javascript nicities.
+Plug 'Raimondi/delimitMate'             " Provides auto closing of parens, braces, and brackets in insert mode.
 Plug 'rizzatti/dash.vim'                " Easy look up of docs via Dash.app
 Plug 'rust-lang/rust.vim'               " Makes working with rust easier.
 Plug 'scrooloose/nerdtree'              " A vim explorer replacement.  Much nicer and easier to use.
+Plug 'solarnz/arcanist.vim'             " Syntax highlighting for Phabricator/Arc files.
 Plug 'tpope/vim-abolish'                " Better find and replace.
 Plug 'tpope/vim-commentary'             " Easier comment support in vim.  Comment out blocks with gcc.
 Plug 'tpope/vim-db'                     " For working with batabases.
@@ -932,6 +933,9 @@ let g:flow#autoclose = 1
 " I'm already using Ale for syntax checking, which plays nice with Flow.
 " No need to show me a quickfix window everytime Flow gets angry.
 let g:flow#showquickfix = 0
+
+" Increasing timeout for huge codebases.
+let g:flow#timeout = 4
 
 " }}}
 " vim-javascript {{{

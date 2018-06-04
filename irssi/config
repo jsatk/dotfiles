@@ -147,6 +147,7 @@ channels = (
   { name = "#scala"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "##javascript"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "##crypto"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#vim"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#fish"; chatnet = "oftc"; autojoin = "yes"; },
   { name = "#rust"; chatnet = "Mozilla"; autojoin = "yes"; },
   { name = "#rust-beginners"; chatnet = "Mozilla"; autojoin = "yes"; }
@@ -460,12 +461,22 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
+        name = "#vim";
+        tag = "Freenode";
+      }
+    );
+  };
+  7 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
         name = "#fish";
         tag = "OFTC";
       }
     );
   };
-  7 = {
+  8 = {
     items = (
       {
         type = "CHANNEL";
@@ -475,7 +486,7 @@ windows = {
       }
     );
   };
-  8 = {
+  9 = {
     items = (
       {
         type = "CHANNEL";
@@ -490,12 +501,30 @@ mainwindows = { 1 = { first_line = "1"; lines = "37"; }; };
 ignores = (
   {
     level = "JOINS PARTS QUITS NICKS";
-    channels = ( #Node.js, ##javascript, #scala, ##crypto, #fish, #rust-beginners, #rust );
+    channels = (
+      "#Node.js",
+      "#scala",
+      "##javascript",
+      "##crypto",
+      "#fish",
+      "#vim",
+      "#rust",
+      "#rest-beginners"
+    );
   },
   {
     level = "ACTIONS";
     pattern = "(away|gone|back|playin|weg|wech|returned)";
     regexp = "yes";
-    channels = ( #Node.js, ##javascript, #scala, ##crypto, #fish, #rust-beginners, #rust );
+    channels = (
+      "#Node.js",
+      "#scala",
+      "##javascript",
+      "##crypto",
+      "#fish",
+      "#vim",
+      "#rust",
+      "#rest-beginners"
+    );
   }
 );
