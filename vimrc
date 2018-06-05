@@ -50,6 +50,7 @@ Plug 'rizzatti/dash.vim'                " Easy look up of docs via Dash.app
 Plug 'rust-lang/rust.vim'               " Makes working with rust easier.
 Plug 'scrooloose/nerdtree'              " A vim explorer replacement.  Much nicer and easier to use.
 Plug 'solarnz/arcanist.vim'             " Syntax highlighting for Phabricator/Arc files.
+Plug 'tmhedberg/SimpylFold'             " Code folding for Python
 Plug 'tpope/vim-abolish'                " Better find and replace.
 Plug 'tpope/vim-commentary'             " Easier comment support in vim.  Comment out blocks with gcc.
 Plug 'tpope/vim-db'                     " For working with batabases.
@@ -723,6 +724,19 @@ augroup ft_markdown
 augroup END
 
 " }}}
+" python {{{
+
+augroup ft_python
+  autocmd!
+
+  " Note: `foldmethod` is set by plugin SimpylFold
+
+  " Ignore compiled python
+  set wildignore=*.pyc
+  let g:netrw_list_hide= '.*\.pyc$'
+augroup END
+
+" }}}
 " ruby {{{
 
 augroup ft_ruby
@@ -741,7 +755,6 @@ augroup ft_scala
   autocmd!
 
   autocmd Filetype scala setlocal foldmethod=syntax
-  autocmd FileType help setlocal textwidth=120
 
   autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2 expandtab
 augroup END
