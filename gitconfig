@@ -47,7 +47,7 @@
 	# Destroy all local changes and reset to HEAD.
 	fuckit = reset --hard HEAD
 
-# A slightly-less-destructive and risky git push --force
+        # A slightly-less-destructive and risky git push --force
 	please = push --force-with-lease
 
 # }}}

@@ -922,7 +922,7 @@ let g:completor_racer_binary = '~/.cargo/bin/racer'
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
- \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist|docs|project|target|genfiles|kake|third_party)$'
+ \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist|docs|project|target|genfiles|kake|third_party|genfiles)$'
  \ }
 
 " Allows indexing of more files
@@ -931,6 +931,9 @@ let g:ctrlp_match_window = 'results:20'
 
 " Shows the hidden dot files
 let g:ctrlp_show_hidden = 0
+
+" Only search stuff tracked by git.
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 " }}}
 " EasyAlign {{{
