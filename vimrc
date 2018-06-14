@@ -36,10 +36,10 @@ Plug 'derekwyatt/vim-scala'             " Makes working with Scala easier.
 Plug 'editorconfig/editorconfig-vim'    " Maintain consistent coding styles between different editors and IDEs.
 Plug 'fatih/vim-go'                     " Makes working with Go easier.
 Plug 'flazz/vim-colorschemes'           " All the colorschemes money can buy.
-Plug 'flowtype/vim-flow'                " Adds type checking for javascript projects that use Flow.
 Plug 'junegunn/goyo.vim'                " Makes working with plain text/markdown nicer.
 Plug 'junegunn/vim-easy-align'          " Aligns multiple lines on any given point.  Useful for assignments.
 Plug 'junegunn/vim-github-dashboard'    " Browse GitHub events (user dashboard, user/repo activity) in Vim.
+Plug 'maralla/completor.vim'            " Autocompletion.  Requires Vim 8.
 Plug 'mattn/gist-vim'                   " Send text straight to a gist.
 Plug 'morhetz/gruvbox'                  " Cool colorscheme
 Plug 'mustache/vim-mustache-handlebars' " Mustache & Handlebars support.
@@ -400,10 +400,12 @@ command! MakeTags !ctags --recurse
   \ --exclude="coverage"
   \ --exclude="dist"
   \ --exclude="docs"
+  \ --exclude="genfiles"
   \ --exclude="log"
   \ --exclude="node_modules"
   \ --exclude="project"
   \ --exclude="target"
+  \ --exclude="third_party"
   \ --exclude="vendor"
   \ .
 
@@ -414,29 +416,6 @@ command! MakeTags !ctags --recurse
 
 " THINGS TO CONSIDER:
 " - This doesn't help if you want a visual list of tags
-
-" }}}
-" Tab Completion {{{
-
-" Use TAB to complete when typing words, else inserts TABs as usual.
-" Uses dictionary and source files to find matching words to complete.
-" There's probably a cool vim plugin that does this, but this is a blunt and
-" simple too and it works for me.
-
-" See help completion for source,
-" Note: usual completion is on <C-n> but more trouble to press all the time.
-" Never type the same word twice and maybe learn a new spellings!
-" Use the Linux dictionary when spelling is in doubt.
-" Window users can copy the file to their machine.
-function! Tab_Or_Complete() abort
-  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-    return "\<C-N>"
-  else
-    return "\<Tab>"
-  endif
-endfunction
-inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
-set dictionary="/usr/dict/words"
 
 " }}}
 " Rename File {{{
@@ -662,10 +641,31 @@ augroup END
 augroup ft_javascript
   autocmd!
 
+  " Auto-fixing
+
   " :ALEFix will try and fix your JS code with ESLint.
   let g:ale_fixers = {
   \   'javascript': ['eslint'],
   \}
+
+  " Set this variable to 1 to fix files when you save them.
+  let g:ale_fix_on_save = 1
+
+  " Linting
+
+  " Asynchronous Lint Engine (ALE)
+  " Limit linters used for JavaScript.
+  let g:ale_linters = {
+  \  'javascript': ['flow'],
+  \}
+  highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
+  highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
+  let g:ale_sign_error = '🔥' " could use emoji
+  let g:ale_sign_warning = '⚠️' " could use emoji
+  let g:ale_statusline_format = ['X %d', '? %d', '']
+  " %linter% is the name of the linter that provided the message
+  " %s is the error or warning message
+  let g:ale_echo_msg_format = '%linter% says %s'
 
   " Enable completion where available.
   let g:ale_completion_enabled = 1
@@ -878,6 +878,47 @@ augroup END
 let g:airline_powerline_fonts = 1
 
 " }}}
+" Completor {{{
+
+set dictionary="/usr/dict/words"
+
+" Use TAB to complete when typing words, else inserts TABs as usual.  Uses
+" dictionary, source files, and completor to find matching words to complete.
+
+" Note: usual completion is on <C-n> but more trouble to press all the time.
+" Never type the same word twice and maybe learn a new spellings!
+" Use the Linux dictionary when spelling is in doubt.
+function! Tab_Or_Complete() abort
+  " If completor is already open the `tab` cycles through suggested completions.
+  if pumvisible()
+    return "\<C-N>"
+  " If completor is not open and we are in the middle of typing a word then
+  " `tab` opens completor menu.
+  elseif col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    return "\<C-R>=completor#do('complete')\<CR>"
+  else
+    " If we aren't typing a word and we press `tab` simply do the normal `tab`
+    " action.
+    return "\<Tab>"
+  endif
+endfunction
+
+" Use `tab` key to select completions.  Default is arrow keys.
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Use tab to trigger auto completion.  Default suggests completions as you type.
+let g:completor_auto_trigger = 0
+inoremap <expr> <Tab> Tab_Or_Complete()
+
+" Binary for javascript completion
+let g:completor_node_binary = '~/n/bin/node'
+" Binary for Python completion
+let g:completor_python_binary = '~/.virtualenv/khan27/bin/python'
+" Binary for Rust completion
+let g:completor_racer_binary = '~/.cargo/bin/racer'
+
+" }}}
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
@@ -924,31 +965,6 @@ noremap <leader>g :Goyo<CR>
 noremap <C-n> :NERDTreeToggle<CR>
 
 let NERDTreeIgnore = ['node_modules[[dir]]', 'dist[[dir]]', 'target[[dir]]', 'project[[dir]]', 'coverage[[dir]]']
-
-" }}}
-" vim-flow {{{
-
-" Use locally installed flow
-let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
-
-if matchstr(local_flow, "^\/\\w") == ''
-  let local_flow= getcwd() . "/" . local_flow
-endif
-
-if executable(local_flow)
-  let g:flow#flowpath = local_flow
-endif
-
-" If this is set to 1, the quickfix window will not be opened when there are no
-" errors, and will be automatically closed when previous errors are cleared.
-let g:flow#autoclose = 1
-
-" I'm already using Ale for syntax checking, which plays nice with Flow.
-" No need to show me a quickfix window everytime Flow gets angry.
-let g:flow#showquickfix = 0
-
-" Increasing timeout for huge codebases.
-let g:flow#timeout = 4
 
 " }}}
 " vim-javascript {{{
