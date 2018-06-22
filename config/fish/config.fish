@@ -23,23 +23,24 @@
 # See: https://fishshell.com/docs/current/tutorial.html#tut_universal
 
 # Universal Defaults
-set BROWSER open safari
-set EDITOR vim
-set DEVELOPER ~/Developer
-# Required for n
+set --export BROWSER open safari
+set --export EDITOR vim
+set --export DEVELOPER ~/Developer
+# Required for n, a node version manager – alternative to nvm.
 set --export N_PREFIX ~/n
+# Required for gpg... sometimes... gpg is fickle and frustrating.
+set --export GPG_TTY (tty)
+
 set PATH $N_PREFIX/bin ~/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /usr/local/MacGPG2/bin ~/Library/scripts
 
 # For Autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
 
 # Sets brew cask symlink to /Applications instead of ~/Applications
-set -x HOMEBREW_CASK_OPTS '--appdir=/Applications'
+set --export HOMEBREW_CASK_OPTS '--appdir=/Applications'
 
-export EDITOR
-
-# For prompt
-export powerline_symbols="$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
+# For my Powerline prompt
+set --export powerline_symbols "$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
 
 # For rbenv ruby version manager
 # This modifies your path and adds the `.rbenv` folder to it.
@@ -49,6 +50,7 @@ end
 
 # For Github Dashboard in Vim
 source ~/.vim-ghd-token
+
 # }}}
 # Extras {{{
 

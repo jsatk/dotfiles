@@ -364,22 +364,6 @@ augroup END
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " }}}
-" Whitespace {{{
-
-" Strip trailing whitespace (,ss)
-function! StripWhitespace() abort
-  let save_cursor = getpos(".")
-  let old_query = getreg('/')
-  :%s/\s\+$//e
-  call setpos('.', save_cursor)
-  call setreg('/', old_query)
-endfunction
-noremap <leader>ss :call StripWhitespace ()<CR>
-
-" Super retab: http://vim.wikia.com/wiki/Super_retab
-:command! -nargs=1 -range SuperRetab <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
-
-" }}}
 "  Tags {{{
 
 " Stolen from: https://github.com/mcantor/no_plugins/blob/master/no_plugins.vim#L86
