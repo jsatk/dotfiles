@@ -28,8 +28,6 @@ set --export EDITOR vim
 set --export DEVELOPER ~/Developer
 # Required for n, a node version manager – alternative to nvm.
 set --export N_PREFIX ~/n
-# Required for gpg... sometimes... gpg is fickle and frustrating.
-set --export GPG_TTY (tty)
 
 set PATH $N_PREFIX/bin ~/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /usr/local/MacGPG2/bin ~/Library/scripts
 
