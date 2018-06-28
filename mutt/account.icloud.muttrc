@@ -1,3 +1,4 @@
+# vim: ft=muttrc
 # Paths {{{
 
 set header_cache        = ~/.mutt/icloud/cache/headers # where to store headers

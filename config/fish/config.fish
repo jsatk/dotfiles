@@ -28,6 +28,9 @@ set --export EDITOR vim
 set --export DEVELOPER ~/Developer
 # Required for n, a node version manager – alternative to nvm.
 set --export N_PREFIX ~/n
+# Config file for ripgrep.  See:
+# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+set --export RIPGREP_CONFIG_PATH ~/.ripgreprc
 
 set PATH $N_PREFIX/bin ~/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /usr/local/MacGPG2/bin ~/Library/scripts
 

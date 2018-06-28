@@ -58,6 +58,7 @@ symlinks = \
 	muttrc \
 	notmuch-config \
 	powerline-shell \
+	ripgreprc \
 	terminfo \
 	tmux.conf \
 	urlview \
@@ -95,6 +96,7 @@ formulae = \
 	scala \
 	screenfetch \
 	spark \
+	thefuck \
 	tldr \
 	tmux \
 	trash \
