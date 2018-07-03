@@ -62,6 +62,7 @@ Plug 'tpope/vim-rhubarb'                " Expands upon Fugitive.  Allows you to 
 Plug 'tpope/vim-sensible'               " A universal set of defaults that (hopefully) everyone can agree on.
 Plug 'tpope/vim-surround'               " Makes surrounding stuff with characters easier.
 Plug 'tpope/vim-unimpaired'             " Provides some nice key mappings.
+Plug 'udalov/kotlin-vim'                " Adds syntax highlighting for Kotlin
 Plug 'vim-airline/vim-airline'          " Adds a gorgeous toolbar with useful info to bottom of vim.
 Plug 'vim-airline/vim-airline-themes'   " Airline themes.  Self explanatory.
 Plug 'vim-scripts/LargeFile'            " Add support for working with big-ass files.

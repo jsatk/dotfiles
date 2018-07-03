@@ -26,6 +26,8 @@
 set --export BROWSER open safari
 set --export EDITOR vim
 set --export DEVELOPER ~/Developer
+# Required for gpg... sometimes... gpg is fickle and frustrating.
+set --export GPG_TTY (tty)
 # Required for n, a node version manager – alternative to nvm.
 set --export N_PREFIX ~/n
 # Config file for ripgrep.  See:
