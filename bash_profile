@@ -18,8 +18,8 @@
 # The extras file is for extra stuff that is generally work
 # specific that I don't want to check into github.
 
-if [ -s ~/.bash_profile.extras ]; then
-    source ~/.bash_profile.extras
+if [ -s ~/.bash_profile.khan ]; then
+    source ~/.bash_profile.khan
 fi
 
 # }}}
