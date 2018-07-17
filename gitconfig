@@ -165,7 +165,7 @@
 # gpg {{{
 
 [gpg]
-        program = gpg
+	program = gpg
 
 # }}}
 # khan academy {{{
