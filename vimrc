@@ -91,13 +91,6 @@ set encoding=utf-8 nobomb
 " Sets number of available colors
 set t_Co=256
 
-" Show line number
-" Show relative line numbers
-" Since we are also showing the line number then the line we are on will
-" show its number but all surrounding lines will show their relative number.
-" set number
-" set relativenumber
-
 " Tabs and Spaces
 set expandtab   " Make sure that every file uses spaces, not tabs
 set shiftround  " Round indent to multiple of 'shiftwidth'
@@ -346,17 +339,6 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 " Fold everything except what you're cursor is in
 nnoremap <leader>z zMzvzz
-
-" }}}
-" On Save {{{
-
-" On save strip trailing whitespace and convert line endings to Unix format
-" http://stackoverflow.com/questions/356126/how-can-you-automatically-remove-trailing-whitespace-in-vim
-augroup prewrites
-  autocmd!
-
-  autocmd BufWritePre,FileWritePre * :%s/\s\+$//e | %s/\r$//e
-augroup END
 
 " }}}
 " Version Control {{{
@@ -629,9 +611,10 @@ augroup ft_javascript
   " Auto-fixing
 
   " :ALEFix will try and fix your JS code with ESLint.
-  let g:ale_fixers = {
-  \   'javascript': ['eslint'],
-  \}
+  let g:ale_fixers = [
+  \   'trim_whitespace',
+  \   'remove_trailing_lines',
+  \]
 
   " Set this variable to 1 to fix files when you save them.
   let g:ale_fix_on_save = 1
@@ -639,15 +622,17 @@ augroup ft_javascript
   " Linting
 
   " Asynchronous Lint Engine (ALE)
-  " Limit linters used for JavaScript.
+  " Anything linters listed here cannot be autofixed by ALE.  You should not see
+  " duplicate entries between this list and the above `ale_fixers` list.
   let g:ale_linters = {
-  \  'javascript': ['flow', 'eslint'],
+  \   'javascript': ['flow'],
   \}
+
   highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
   highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
-  let g:ale_sign_error = '>>' " could use emoji
-  let g:ale_sign_warning = '--' " could use emoji
+
   let g:ale_statusline_format = ['X %d', '? %d', '']
+
   " %linter% is the name of the linter that provided the message
   " %s is the error or warning message
   let g:ale_echo_msg_format = '%linter% says %s'

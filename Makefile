@@ -103,7 +103,7 @@ formulae = \
 	urlview \
 	vim \
 	wget \
-	# yarn --without-node \ # Figure out how to handle flags
+	# yarn --without-node \
 
 # }}}
 # core targets {{{
@@ -115,7 +115,7 @@ update: | install
 	brew update
 	brew upgrade
 	gem update
-	npm update --global --quiet
+	yarn global upgrade --silent
 	vim +PlugUpdate +quitall
 	reattach-to-user-namespace mas upgrade
 
@@ -161,12 +161,12 @@ $(prefixed_symlinks):
 # node {{{
 
 node: | $(node)
-	npm install --global \
+	yarn global add --silent \
 		diff-so-fancy@latest \
-		npm@latest \
+		glow@latest \
 		speed-test@latest \
 		vtop@latest
-$(node): | brew install node
+$(node): | n stable
 
 # }}}
 # make {{{
