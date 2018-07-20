@@ -92,6 +92,7 @@
 
 [merge]
 	log = true
+	tool = vimdiff
 
 # }}}
 # grep {{{
