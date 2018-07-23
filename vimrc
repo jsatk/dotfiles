@@ -611,10 +611,15 @@ augroup ft_javascript
   " Auto-fixing
 
   " :ALEFix will try and fix your JS code with ESLint.
-  let g:ale_fixers = [
-  \   'trim_whitespace',
-  \   'remove_trailing_lines',
-  \]
+  let g:ale_fixers = {
+  \  '*': [
+  \    'trim_whitespace',
+  \    'remove_trailing_lines',
+  \  ],
+  \  'javascript': [
+  \    'eslint',
+  \  ],
+  \}
 
   " Set this variable to 1 to fix files when you save them.
   let g:ale_fix_on_save = 1
