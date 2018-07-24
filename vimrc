@@ -4,7 +4,7 @@
 "  \ \__|    \ \_\  \ \_\ \ \_\  \ \_\ \_\  \ \_____\
 "   \/_/      \/_/   \/_/  \/_/   \/_/ /_/   \/_____/
 
-" Preamble {{{
+" Preamble ---------------------------------------------------------------- {{{
 
 " Author:   Jesse Atkinson
 " Email:    jesse@jsatk.us
@@ -13,7 +13,7 @@
 " Special thanks to Steve Losh, Tim Pope, and Jess Frazelle who I have stolen *so* much from.
 
 " }}}
-" Vim Plug {{{
+" Vim Plug ---------------------------------------------------------------- {{{
 " https://github.com/junegunn/vim-plug
 
 " Vim needs a more POSIX compatible shell than fish for certain functionality
@@ -27,7 +27,7 @@ endif
 
 call plug#begin()
 
-" Our Vim plugins!
+" My Vim plugins!
 
 Plug 'ctrlpvim/ctrlp.vim'               " True fuzzy find.  The greatest thing ever for us lazy folk.
 Plug 'dag/vim-fish'                     " Fish Shell syntax highlighting for vim.
@@ -71,7 +71,7 @@ Plug 'w0rp/ale'                         " Adds error checking while writing or o
 call plug#end()
 
 " }}}
-" Basic Options {{{
+" Basic Options ----------------------------------------------------------- {{{
 
 " Prevents some security exploits having to do with modelines in files.
 set modelines=0
@@ -140,12 +140,6 @@ set incsearch
 set ignorecase
 set smartcase
 
-" Enable code folding
-set foldenable
-
-" Don't open my files with fucking folds, Vim.
-set foldlevelstart=20
-
 " Hide mouse when typing
 set mousehide
 
@@ -196,12 +190,6 @@ set matchtime=3
 " Add the g flag to search/replace by default
 set gdefault
 
-" Remaps leader key to an easier key
-let mapleader = ","
-
-" I don't know how to use ex mode and it scares me.
-noremap Q <Nop>
-
 " Ever notice a slight lag after typing the leader key + command?
 " This lowers the timeout.
 set timeoutlen=500
@@ -219,14 +207,11 @@ if has('mouse')
   set mouse=a
 endif
 
-" Do not show stupid q: window
-noremap q: :q
-
 " Hides buffers instead of closing them.
 set hidden
 
 " }}}
-" Spelling {{{
+" Spelling ---------------------------------------------------------------- {{{
 
 " Stolen from Steve Losh
 "
@@ -248,7 +233,7 @@ set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.a
 nnoremap zG 2zg
 
 " }}}
-" Look & Feel {{{
+" Look & Feel ------------------------------------------------------------- {{{
 
 " Many colorschemes support both light and dark backgrounds.  Dark is nicer on my eyes.
 set background=dark
@@ -280,8 +265,23 @@ highlight Comment cterm=italic
 " Inconsolata can be found here: http://levien.com/type/myfonts/inconsolata.html
 set guifont=OperatorMonoForPowerline-Book:h18
 
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
 " }}}
-" Convenience Mappings {{{
+" Convenience Mappings ---------------------------------------------------- {{{
+
+" Remaps leader key to an easier key
+let mapleader = ","
+
+" Do not show stupid q: window
+noremap q: :q
+
+" My garbage brain can't ever remember digraph codes
+inoremap <c-k><c-k> <esc>:help digraph-table<cr>
+
+" I don't know how to use ex mode and it scares me.
+noremap Q <Nop>
 
 " Split line (sister to [J]oin lines)
 " The normal usage of S is reproducable with cc which is the same amount of keystrokes.
@@ -335,19 +335,56 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " }}}
 
 " }}}
-" Folding {{{
+" Folding ----------------------------------------------------------------- {{{
 
-" Fold everything except what you're cursor is in
-nnoremap <leader>z zMzvzz
+" Enable code folding
+set foldenable
+
+" Don't open my files with folds.
+set foldlevelstart=99
+
+" Space to toggle folds.
+nnoremap <Space> za
+vnoremap <Space> za
+
+" Make zO recursively open whatever fold we're in, even if it's partially open.
+nnoremap zO zczO
+
+" "Focus" the current line.  Basically:
+"
+" 1. Close all folds.
+" 2. Open just the folds containing the current line.
+" 3. Move the line to a bit (25 lines) down from the top of the screen.
+" 4. Pulse the cursor line.  My eyes are bad.
+"
+" This mapping wipes out the z mark, which I never use.
+function! FocusLine()
+    let oldscrolloff = &scrolloff
+    set scrolloff=0
+    execute "keepjumps normal! mzzMzvzt25\<c-y>`z:Pulse\<cr>"
+    let &scrolloff = oldscrolloff
+endfunction
+nnoremap <leader>z :call FocusLine()<cr>
+
+function! MyFoldText() " {{{
+    let line = getline(v:foldstart)
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+endfunction " }}}
+set foldtext=MyFoldText()
 
 " }}}
-" Version Control {{{
-
-" Highlight VCS conflict markers
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
-
-" }}}
-"  Tags {{{
+" Tags -------------------------------------------------------------------- {{{
 
 " Stolen from: https://github.com/mcantor/no_plugins/blob/master/no_plugins.vim#L86
 
@@ -385,7 +422,7 @@ command! MakeTags !ctags --recurse
 " - This doesn't help if you want a visual list of tags
 
 " }}}
-" Rename File {{{
+" Rename File ------------------------------------------------------------- {{{
 
 " Rename current file
 function! RenameFile() abort
@@ -401,7 +438,7 @@ endfunction
 noremap <leader>rn :call RenameFile()<cr>
 
 " }}}
-" Trailing Whitespace {{{
+" Trailing Whitespace ----------------------------------------------------- {{{
 
 " Only shown when not in insert mode so I don't go insane.
 augroup trailing
@@ -412,7 +449,7 @@ augroup trailing
 augroup END
 
 " }}}
-" Line Return {{{
+" Line Return ------------------------------------------------------------- {{{
 
 " Make sure Vim returns to the same line when you reopen a file.
 augroup line_return
@@ -425,7 +462,7 @@ augroup line_return
 augroup END
 
 " }}}
-" Backups {{{
+" Backups ----------------------------------------------------------------- {{{
 
 set undofile                      " Maintain undo history between sessions
 set backup                        " enable backups
@@ -450,7 +487,7 @@ if !isdirectory(expand(&directory))
 endif
 
 " }}}
-" File & Filetype Specific Configurations {{{
+" File & Filetype Specific Configurations --------------------------------- {{{
 
 " Filetype Specific Configurations {{{
 
@@ -608,18 +645,13 @@ augroup END
 augroup ft_javascript
   autocmd!
 
+  " TODO Move ale shit to it's own section under plugins.
+  " TODO Get ale behaving correctly with eslint and prettier at work.
   " Auto-fixing
-
-  " :ALEFix will try and fix your JS code with ESLint.
-  let g:ale_fixers = {
-  \  '*': [
-  \    'trim_whitespace',
-  \    'remove_trailing_lines',
-  \  ],
-  \  'javascript': [
-  \    'eslint',
-  \  ],
-  \}
+  let g:ale_fixers = [
+  \  'trim_whitespace',
+  \  'remove_trailing_lines',
+  \]
 
   " Set this variable to 1 to fix files when you save them.
   let g:ale_fix_on_save = 1
@@ -630,7 +662,7 @@ augroup ft_javascript
   " Anything linters listed here cannot be autofixed by ALE.  You should not see
   " duplicate entries between this list and the above `ale_fixers` list.
   let g:ale_linters = {
-  \   'javascript': ['flow'],
+  \   'javascript': ['flow', 'eslint', 'prettier'],
   \}
 
   highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
@@ -845,7 +877,7 @@ augroup END
 " }}}
 
 " }}}
-" Vim Plugin Configurations {{{
+" Vim Plugin Configurations ----------------------------------------------- {{{
 
 " Airline {{{
 
@@ -948,6 +980,41 @@ let NERDTreeIgnore = ['node_modules[[dir]]', 'dist[[dir]]', 'target[[dir]]', 'pr
 " vim-javascript {{{
 
 let g:javascript_plugin_jsdoc = 1 " https://github.com/pangloss/vim-javascript#configuration-variables
+
+" }}}
+
+" }}}
+" Mini-plugins ------------------------------------------------------------ {{{
+
+" Pulse Line {{{
+
+function! s:Pulse() " {{{
+    redir => old_hi
+        silent execute 'hi CursorLine'
+    redir END
+    let old_hi = split(old_hi, '\n')[0]
+    let old_hi = substitute(old_hi, 'xxx', '', '')
+
+    let steps = 8
+    let width = 1
+    let start = width
+    let end = steps * width
+    let color = 233
+
+    for i in range(start, end, width)
+        execute "hi CursorLine ctermbg=" . (color + i)
+        redraw
+        sleep 6m
+    endfor
+    for i in range(end, start, -1 * width)
+        execute "hi CursorLine ctermbg=" . (color + i)
+        redraw
+        sleep 6m
+    endfor
+
+    execute 'hi ' . old_hi
+endfunction " }}}
+command! -nargs=0 Pulse call s:Pulse()
 
 " }}}
 
