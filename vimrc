@@ -210,6 +210,9 @@ endif
 " Hides buffers instead of closing them.
 set hidden
 
+" Allows for project-specific vimrc files
+set exrc
+
 " }}}
 " Spelling ---------------------------------------------------------------- {{{
 
@@ -310,15 +313,6 @@ augroup END
 
 " Indent Guides
 let g:indentguides_state = 0
-function! IndentGuides() abort " {{{
-  if g:indentguides_state
-    let g:indentguides_state = 0
-    2match None
-  else
-    let g:indentguides_state = 1
-    execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
-  endif
-endfunction " }}}
 hi def IndentGuides guibg=#303030 ctermbg=234
 " Toggles indent guides
 nnoremap <leader>I :call IndentGuides()<cr>
@@ -645,38 +639,6 @@ augroup END
 augroup ft_javascript
   autocmd!
 
-  " TODO Move ale shit to it's own section under plugins.
-  " TODO Get ale behaving correctly with eslint and prettier at work.
-  " Auto-fixing
-  let g:ale_fixers = [
-  \  'trim_whitespace',
-  \  'remove_trailing_lines',
-  \]
-
-  " Set this variable to 1 to fix files when you save them.
-  let g:ale_fix_on_save = 1
-
-  " Linting
-
-  " Asynchronous Lint Engine (ALE)
-  " Anything linters listed here cannot be autofixed by ALE.  You should not see
-  " duplicate entries between this list and the above `ale_fixers` list.
-  let g:ale_linters = {
-  \   'javascript': ['flow', 'eslint', 'prettier'],
-  \}
-
-  highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
-  highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
-
-  let g:ale_statusline_format = ['X %d', '? %d', '']
-
-  " %linter% is the name of the linter that provided the message
-  " %s is the error or warning message
-  let g:ale_echo_msg_format = '%linter% says %s'
-
-  " Enable completion where available.
-  let g:ale_completion_enabled = 1
-
   autocmd FileType javascript setlocal foldmethod=syntax
 
   " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
@@ -885,6 +847,50 @@ augroup END
 let g:airline_powerline_fonts = 1
 
 " }}}
+" Asynchronous Lint Engine (ALE) {{{
+
+" Auto-fixing
+
+" Things that can be automatically fixed by ALE
+let g:ale_fixers = {
+\   '*': [
+\       'trim_whitespace',
+\       'remove_trailing_lines',
+\   ],
+\   'javascript': [
+\       'eslint',
+\       'trim_whitespace',
+\       'remove_trailing_lines',
+\   ],
+\}
+
+" Set this variable to 1 to fix files when you save them.
+" Yes, I know this isn't "pure" and "breaks undo" or whatever.  But it also
+" means I don't have to manually trim trialing whitespace like a caveman so
+" purity be damned.
+let g:ale_fix_on_save = 1
+
+" Linting
+
+" Linters we want to run.  Note: Not all eslint errors can be automatically
+" fixed, which is why it is in both `ale_fixers` and `ale_linters`.
+let g:ale_linters = {
+\   'javascript': [
+\       'flow',
+\       'eslint',
+\   ],
+\}
+
+highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
+highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
+
+let g:ale_statusline_format = ['X %d', '? %d', '']
+
+" %linter% is the name of the linter that provided the message
+" %s is the error or warning message
+let g:ale_echo_msg_format = '%linter% says: "%severity% %...code...% – %s'
+
+" }}}
 " Completor {{{
 
 set dictionary="/usr/dict/words"
@@ -988,7 +994,7 @@ let g:javascript_plugin_jsdoc = 1 " https://github.com/pangloss/vim-javascript#c
 
 " Pulse Line {{{
 
-function! s:Pulse() " {{{
+function! s:Pulse()
     redir => old_hi
         silent execute 'hi CursorLine'
     redir END
@@ -1013,9 +1019,25 @@ function! s:Pulse() " {{{
     endfor
 
     execute 'hi ' . old_hi
-endfunction " }}}
+endfunction
 command! -nargs=0 Pulse call s:Pulse()
 
 " }}}
+" Indent Guides {{{
+
+function! IndentGuides() abort
+  if g:indentguides_state
+    let g:indentguides_state = 0
+    2match None
+  else
+    let g:indentguides_state = 1
+    execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
+  endif
+endfunction
 
 " }}}
+
+" }}}
+
+" To disable unsafe commands in project-specific .vimrc files
+set secure
