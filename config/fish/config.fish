@@ -34,7 +34,7 @@ set --export N_PREFIX ~/n
 # https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
 set --export RIPGREP_CONFIG_PATH ~/.ripgreprc
 
-set PATH $N_PREFIX/bin ~/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /usr/local/MacGPG2/bin ~/Library/scripts
+set PATH $N_PREFIX/bin ~/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /usr/local/MacGPG2/bin /Library/TeX/texbin ~/Library/scripts
 
 # For Autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish

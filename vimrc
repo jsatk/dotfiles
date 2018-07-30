@@ -853,22 +853,10 @@ let g:airline_powerline_fonts = 1
 
 " Things that can be automatically fixed by ALE
 let g:ale_fixers = {
-\   '*': [
-\       'trim_whitespace',
-\       'remove_trailing_lines',
-\   ],
 \   'javascript': [
 \       'eslint',
-\       'trim_whitespace',
-\       'remove_trailing_lines',
 \   ],
 \}
-
-" Set this variable to 1 to fix files when you save them.
-" Yes, I know this isn't "pure" and "breaks undo" or whatever.  But it also
-" means I don't have to manually trim trialing whitespace like a caveman so
-" purity be damned.
-let g:ale_fix_on_save = 1
 
 " Linting
 
@@ -1036,6 +1024,25 @@ function! IndentGuides() abort
 endfunction
 
 " }}}
+
+" }}}
+" Phabricator ------------------------------------------------------------- {{{
+
+" `arc pr` is an alias I have in my `~/.arcrc`.  Throw the following in your
+" `~/.arcrc` if you want to use it.
+
+" "pr": [
+"   "diff",
+"   "--amend-autofixes",
+"   "--amend-all",
+"   "--apply-patches",
+"   "--verbatim",
+"   "--browse",
+"   "--reviewers",
+"   "INSERT COWORKERS PHABRICATOR NAMES HERE"
+" ]
+
+command! -nargs=? PhabDiff Dispatch! arc pr --message <args>
 
 " }}}
 
