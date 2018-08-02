@@ -334,8 +334,7 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " Enable code folding
 set foldenable
 
-" Don't open my files with folds.
-set foldlevelstart=99
+set foldlevelstart=0
 
 " Space to toggle folds.
 nnoremap <Space> za
@@ -849,26 +848,6 @@ let g:airline_powerline_fonts = 1
 " }}}
 " Asynchronous Lint Engine (ALE) {{{
 
-" Auto-fixing
-
-" Things that can be automatically fixed by ALE
-let g:ale_fixers = {
-\   'javascript': [
-\       'eslint',
-\   ],
-\}
-
-" Linting
-
-" Linters we want to run.  Note: Not all eslint errors can be automatically
-" fixed, which is why it is in both `ale_fixers` and `ale_linters`.
-let g:ale_linters = {
-\   'javascript': [
-\       'flow',
-\       'eslint',
-\   ],
-\}
-
 highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
 highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
 
@@ -1024,25 +1003,6 @@ function! IndentGuides() abort
 endfunction
 
 " }}}
-
-" }}}
-" Phabricator ------------------------------------------------------------- {{{
-
-" `arc pr` is an alias I have in my `~/.arcrc`.  Throw the following in your
-" `~/.arcrc` if you want to use it.
-
-" "pr": [
-"   "diff",
-"   "--amend-autofixes",
-"   "--amend-all",
-"   "--apply-patches",
-"   "--verbatim",
-"   "--browse",
-"   "--reviewers",
-"   "INSERT COWORKERS PHABRICATOR NAMES HERE"
-" ]
-
-command! -nargs=? PhabDiff Dispatch! arc pr --message <args>
 
 " }}}
 
