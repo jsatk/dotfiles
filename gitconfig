@@ -35,17 +35,17 @@
 	# list branch dates
 	branchdate = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
 
-        # Delete all branches that have already been merged into the current
-        # branch.
+	# Delete all branches that have already been merged into the current
+	# branch.
 	deletemerged = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 
-        # List all aliases.
-        # Stolen from here:
-        # https://twitter.com/TrevorBramble/status/774292970681937920
+	# List all aliases.
+	# Stolen from here:
+	# https://twitter.com/TrevorBramble/status/774292970681937920
 	aliases = "!git config -l | grep ^alias | cut -c 7- | sort"
 
-        # Reset previous commit, but keep all the associated changes. Useful for
-        # avoiding nasty git merge commits.
+	# Reset previous commit, but keep all the associated changes. Useful for
+	# avoiding nasty git merge commits.
 	damnit = reset --soft HEAD^
 
 	# Destroy all local changes and reset to HEAD.
@@ -54,20 +54,20 @@
 	# A slightly-less-destructive and risky git push --force
 	please = push --force-with-lease
 
-        # Prints the SHA of the head commit.  I find myself needing to do this
-        # often enough for hot-fixes where I cherry-pick a commit over.  I'm
-        # making an alias for this because I can never remember the `%H` bit.
-        #
-        # The most practical application of this looks something like the following
-        # (which assumes a macOS environment).
-        #
-        # $ git headsha | pbcopy
-        # $ git checkout hot-fix-branch
-        # $ git cherry-pick <PASTE>
-        #
-        # And yes, if you're clever, you can use `xargs` and `|` to cherry-pick
-        # this all in one line.
-        headsha = !git log -1 --pretty=format:'%H'
+	# Prints the SHA of the head commit.  I find myself needing to do this
+	# often enough for hot-fixes where I cherry-pick a commit over.  I'm
+	# making an alias for this because I can never remember the `%H` bit.
+	#
+	# The most practical application of this looks something like the following
+	# (which assumes a macOS environment).
+	#
+	# $ git headsha | pbcopy
+	# $ git checkout hot-fix-branch
+	# $ git cherry-pick <PASTE>
+	#
+	# And yes, if you're clever, you can use `xargs` and `|` to cherry-pick
+	# this all in one line.
+	headsha = !git log -1 --pretty=format:'%H'
 
 # }}}
 # apply {{{
