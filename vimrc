@@ -562,11 +562,10 @@ augroup ft_fish
   autocmd!
 
   autocmd BufNewFile,BufRead *.fish setlocal filetype=fish
-  " Enable folding of block structures in fish.
-  autocmd FileType fish setlocal foldmethod=expr
   " Set this to have long lines wrap inside comments.
   autocmd FileType fish setlocal textwidth=80
   autocmd Filetype fish setlocal noexpandtab
+  autocmd Filetype fish setlocal shiftwidth=8
   " Set up :make to use fish for syntax checking.
   autocmd FileType fish compiler fish
   autocmd FileType fish setlocal foldmethod=marker
@@ -674,6 +673,7 @@ augroup ft_make
   autocmd!
 
   autocmd Filetype make setlocal noexpandtab
+  autocmd Filetype make setlocal shiftwidth=8
   autocmd FileType make setlocal foldmethod=marker
   autocmd Filetype make setlocal foldmarker={{{,}}}
 augroup END
@@ -724,7 +724,7 @@ augroup ft_scala
 
   autocmd Filetype scala setlocal foldmethod=syntax
 
-  autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2 expandtab
+  autocmd BufNewFile,BufReadPost *.scala setl shiftwidth=2
 augroup END
 
 " }}}
@@ -817,7 +817,9 @@ augroup END
 augroup ft_gitconfig
   autocmd!
 
+  autocmd FileType gitconfig setlocal textwidth=80
   autocmd Filetype gitconfig setlocal noexpandtab
+  autocmd Filetype gitconfig setlocal shiftwidth=8
   autocmd FileType gitconfig setlocal foldmethod=marker
   autocmd Filetype gitconfig setlocal foldmarker={{{,}}}
 augroup END
