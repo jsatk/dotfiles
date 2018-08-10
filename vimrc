@@ -10,12 +10,15 @@
 " Email:    jesse@jsatk.us
 " Source:   https://github.com/jsatk/dotfiles/blob/master/vimrc
 " Twitter:  @jsatk
-" Special thanks to Steve Losh, Tim Pope, and Jess Frazelle who I have stolen *so* much from.
+" Special thanks to Steve Losh, Tim Pope, & Jess Frazelle who I have stolen
+" *so* much from.
 
 " }}}
-" Vim Plug ---------------------------------------------------------------- {{{
-" https://github.com/junegunn/vim-plug
-
+" Vim Plugins ------------------------------------------------------------- {{{
+"
+" I'm using minpac to manage my Vim plugins which leverages Vim 8's packages
+" feature.  https://github.com/k-takata/minpac
+"
 " Vim needs a more POSIX compatible shell than fish for certain functionality
 " to work, such as :%!, compressed help pages and many third-party addons.  If
 " you use fish as your login shell or launch Vim from fish, you need to set
@@ -25,50 +28,61 @@ if &shell =~# 'fish$'
   set shell=sh
 endif
 
-call plug#begin()
+packadd minpac
 
-" My Vim plugins!
+call minpac#init()
 
-Plug 'ctrlpvim/ctrlp.vim'               " True fuzzy find.  The greatest thing ever for us lazy folk.
-Plug 'dag/vim-fish'                     " Fish Shell syntax highlighting for vim.
-Plug 'derekwyatt/vim-sbt'               " Adds very basic support for SBT.
-Plug 'derekwyatt/vim-scala'             " Makes working with Scala easier.
-Plug 'editorconfig/editorconfig-vim'    " Maintain consistent coding styles between different editors and IDEs.
-Plug 'fatih/vim-go'                     " Makes working with Go easier.
-Plug 'flazz/vim-colorschemes'           " All the colorschemes money can buy.
-Plug 'junegunn/goyo.vim'                " Makes working with plain text/markdown nicer.
-Plug 'junegunn/vim-easy-align'          " Aligns multiple lines on any given point.  Useful for assignments.
-Plug 'junegunn/vim-github-dashboard'    " Browse GitHub events (user dashboard, user/repo activity) in Vim.
-Plug 'maralla/completor.vim'            " Autocompletion.  Requires Vim 8.
-Plug 'mattn/gist-vim'                   " Send text straight to a gist.
-Plug 'morhetz/gruvbox'                  " Cool colorscheme
-Plug 'mustache/vim-mustache-handlebars' " Mustache & Handlebars support.
-Plug 'mxw/vim-jsx'                      " Syntax highlighting for React's JSX.
-Plug 'pangloss/vim-javascript'          " Adds some javascript nicities.
-Plug 'Raimondi/delimitMate'             " Provides auto closing of parens, braces, and brackets in insert mode.
-Plug 'rizzatti/dash.vim'                " Easy look up of docs via Dash.app
-Plug 'rust-lang/rust.vim'               " Makes working with rust easier.
-Plug 'scrooloose/nerdtree'              " A vim explorer replacement.  Much nicer and easier to use.
-Plug 'solarnz/arcanist.vim'             " Syntax highlighting for Phabricator/Arc files.
-Plug 'tmhedberg/SimpylFold'             " Code folding for Python
-Plug 'tpope/vim-abolish'                " Better find and replace.
-Plug 'tpope/vim-commentary'             " Easier comment support in vim.  Comment out blocks with gcc.
-Plug 'tpope/vim-db'                     " For working with batabases.
-Plug 'tpope/vim-dispatch'               " Terminal in your vim.  Works best with tmux.
-Plug 'tpope/vim-endwise'                " Auto-adds end statements to languages such as Ruby and Vimscript
-Plug 'tpope/vim-fugitive'               " Git support in vim.  Incredible handy for merge conflicts.
-Plug 'tpope/vim-rails'                  " Makes working with Rails more better.
-Plug 'tpope/vim-rhubarb'                " Expands upon Fugitive.  Allows you to open files in github.
-Plug 'tpope/vim-sensible'               " A universal set of defaults that (hopefully) everyone can agree on.
-Plug 'tpope/vim-surround'               " Makes surrounding stuff with characters easier.
-Plug 'tpope/vim-unimpaired'             " Provides some nice key mappings.
-Plug 'udalov/kotlin-vim'                " Adds syntax highlighting for Kotlin
-Plug 'vim-airline/vim-airline'          " Adds a gorgeous toolbar with useful info to bottom of vim.
-Plug 'vim-airline/vim-airline-themes'   " Airline themes.  Self explanatory.
-Plug 'vim-scripts/LargeFile'            " Add support for working with big-ass files.
-Plug 'w0rp/ale'                         " Adds error checking while writing or on save in vim.
+" minpac must have {'type': 'opt'} so that it can be loaded with `packadd`.
+call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-call plug#end()
+" Add other plugins here.
+call minpac#add('ctrlpvim/ctrlp.vim')               " True fuzzy find.  The greatest thing ever for us lazy folk.
+call minpac#add('dag/vim-fish')                     " Fish Shell syntax highlighting for vim.
+call minpac#add('derekwyatt/vim-sbt')               " Adds very basic support for SBT.
+call minpac#add('derekwyatt/vim-scala')             " Makes working with Scala easier.
+call minpac#add('editorconfig/editorconfig-vim')    " Maintain consistent coding styles between different editors and IDEs.
+call minpac#add('fatih/vim-go')                     " Makes working with Go easier.
+call minpac#add('jsatk/vim-colorschemes')           " All the colorschemes money can buy.
+call minpac#add('junegunn/goyo.vim')                " Makes working with plain text/markdown nicer.
+call minpac#add('junegunn/vim-easy-align')          " Aligns multiple lines on any given point.  Useful for assignments.
+call minpac#add('junegunn/vim-github-dashboard')    " Browse GitHub events (user dashboard, user/repo activity) in Vim.
+call minpac#add('maralla/completor.vim')            " Autocompletion.  Requires Vim 8.
+call minpac#add('mattn/gist-vim')                   " Send text straight to a gist.
+call minpac#add('morhetz/gruvbox')                  " Cool colorscheme
+call minpac#add('mustache/vim-mustache-handlebars') " Mustache & Handlebars support.
+call minpac#add('mxw/vim-jsx')                      " Syntax highlighting for React's JSX.
+call minpac#add('pangloss/vim-javascript')          " Adds some javascript nicities.
+call minpac#add('Raimondi/delimitMate')             " Provides auto closing of parens, braces, and brackets in insert mode.
+call minpac#add('rizzatti/dash.vim')                " Easy look up of docs via Dash.app
+call minpac#add('rust-lang/rust.vim')               " Makes working with rust easier.
+call minpac#add('scrooloose/nerdtree')              " A vim explorer replacement.  Much nicer and easier to use.
+call minpac#add('solarnz/arcanist.vim')             " Syntax highlighting for Phabricator/Arc files.
+call minpac#add('tmhedberg/SimpylFold')             " Code folding for Python
+call minpac#add('tpope/vim-abolish')                " Better find and replace.
+call minpac#add('tpope/vim-commentary')             " Easier comment support in vim.  Comment out blocks with gcc.
+call minpac#add('tpope/vim-db')                     " For working with batabases.
+call minpac#add('tpope/vim-dispatch')               " Terminal in your vim.  Works best with tmux.
+call minpac#add('tpope/vim-endwise')                " Auto-adds end statements to languages such as Ruby and Vimscript
+call minpac#add('tpope/vim-fugitive')               " Git support in vim.  Incredible handy for merge conflicts.
+call minpac#add('tpope/vim-rails')                  " Makes working with Rails more better.
+call minpac#add('tpope/vim-rhubarb')                " Expands upon Fugitive.  Allows you to open files in github.
+call minpac#add('tpope/vim-sensible')               " A universal set of defaults that (hopefully) everyone can agree on.
+call minpac#add('tpope/vim-surround')               " Makes surrounding stuff with characters easier.
+call minpac#add('tpope/vim-unimpaired')             " Provides some nice key mappings.
+call minpac#add('udalov/kotlin-vim')                " Adds syntax highlighting for Kotlin
+call minpac#add('vim-airline/vim-airline')          " Adds a gorgeous toolbar with useful info to bottom of vim.
+call minpac#add('vim-airline/vim-airline-themes')   " Airline themes.  Self explanatory.
+call minpac#add('vim-scripts/LargeFile')            " Add support for working with big-ass files.
+call minpac#add('w0rp/ale')                         " Adds error checking while writing or on save in vim.
+
+" Load the plugins right now.
+packloadall
+
+" Define user commands for updating/cleaning the plugins.
+" Each of them loads minpac, reloads .vimrc to register the
+" information of plugins, then performs the task.
+command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update()
+command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
 
 " }}}
 " Basic Options ----------------------------------------------------------- {{{
@@ -844,8 +858,25 @@ augroup END
 
 " Airline {{{
 
-" Allows us to get the lovely symbols for Airline in the prompt
-let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" For reasons I cannot understand or explain one day the powerline symbols
+" just stopped showing up.  The `g:airline_powerline_fonts = 1` stopped
+" working.  So I copy & pasted the powerline stuffs from `:help airline` under
+" the customization setting, which is what they recommend if airline stops
+" showing powerline symbols.
+"
+" let g:airline_powerline_fonts = 1
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
 
 " }}}
 " Asynchronous Lint Engine (ALE) {{{
