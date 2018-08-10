@@ -41,15 +41,10 @@ call minpac#add('dag/vim-fish')                     " Fish Shell syntax highligh
 call minpac#add('derekwyatt/vim-sbt')               " Adds very basic support for SBT.
 call minpac#add('derekwyatt/vim-scala')             " Makes working with Scala easier.
 call minpac#add('editorconfig/editorconfig-vim')    " Maintain consistent coding styles between different editors and IDEs.
-call minpac#add('fatih/vim-go')                     " Makes working with Go easier.
 call minpac#add('jsatk/vim-colorschemes')           " All the colorschemes money can buy.
 call minpac#add('junegunn/goyo.vim')                " Makes working with plain text/markdown nicer.
 call minpac#add('junegunn/vim-easy-align')          " Aligns multiple lines on any given point.  Useful for assignments.
-call minpac#add('junegunn/vim-github-dashboard')    " Browse GitHub events (user dashboard, user/repo activity) in Vim.
 call minpac#add('maralla/completor.vim')            " Autocompletion.  Requires Vim 8.
-call minpac#add('mattn/gist-vim')                   " Send text straight to a gist.
-call minpac#add('morhetz/gruvbox')                  " Cool colorscheme
-call minpac#add('mustache/vim-mustache-handlebars') " Mustache & Handlebars support.
 call minpac#add('mxw/vim-jsx')                      " Syntax highlighting for React's JSX.
 call minpac#add('pangloss/vim-javascript')          " Adds some javascript nicities.
 call minpac#add('Raimondi/delimitMate')             " Provides auto closing of parens, braces, and brackets in insert mode.
@@ -60,11 +55,10 @@ call minpac#add('solarnz/arcanist.vim')             " Syntax highlighting for Ph
 call minpac#add('tmhedberg/SimpylFold')             " Code folding for Python
 call minpac#add('tpope/vim-abolish')                " Better find and replace.
 call minpac#add('tpope/vim-commentary')             " Easier comment support in vim.  Comment out blocks with gcc.
-call minpac#add('tpope/vim-db')                     " For working with batabases.
+call minpac#add('tpope/vim-db')                     " For working with databases.
 call minpac#add('tpope/vim-dispatch')               " Terminal in your vim.  Works best with tmux.
 call minpac#add('tpope/vim-endwise')                " Auto-adds end statements to languages such as Ruby and Vimscript
 call minpac#add('tpope/vim-fugitive')               " Git support in vim.  Incredible handy for merge conflicts.
-call minpac#add('tpope/vim-rails')                  " Makes working with Rails more better.
 call minpac#add('tpope/vim-rhubarb')                " Expands upon Fugitive.  Allows you to open files in github.
 call minpac#add('tpope/vim-sensible')               " A universal set of defaults that (hopefully) everyone can agree on.
 call minpac#add('tpope/vim-surround')               " Makes surrounding stuff with characters easier.
@@ -348,7 +342,7 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " Enable code folding
 set foldenable
 
-set foldlevelstart=0
+set foldlevelstart=1
 
 " Space to toggle folds.
 nnoremap <Space> za
@@ -623,16 +617,6 @@ augroup ft_haml
   autocmd Filetype haml setlocal foldmethod=syntax
   autocmd Filetype haml setlocal colorcolumn=0
   autocmd BufRead,BufNewFile Capfile setlocal filetype=haml
-augroup END
-
-" }}}
-" handlebars {{{
-
-augroup ft_handlebars
-  autocmd!
-
-  autocmd Filetype html.handlebars setlocal foldmethod=indent
-  autocmd BufNewFile,BufRead *.hbs setlocal filetype=html.handlebars
 augroup END
 
 " }}}
