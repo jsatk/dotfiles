@@ -365,6 +365,7 @@ function! FocusLine()
 endfunction
 nnoremap <leader>z :call FocusLine()<cr>
 
+" This function defines what folded text looks like.
 function! MyFoldText() " {{{
     let line = getline(v:foldstart)
 
