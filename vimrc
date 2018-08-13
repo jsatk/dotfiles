@@ -36,7 +36,6 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " Add other plugins here.
-call minpac#add('ctrlpvim/ctrlp.vim')               " True fuzzy find.  The greatest thing ever for us lazy folk.
 call minpac#add('dag/vim-fish')                     " Fish Shell syntax highlighting for vim.
 call minpac#add('derekwyatt/vim-sbt')               " Adds very basic support for SBT.
 call minpac#add('derekwyatt/vim-scala')             " Makes working with Scala easier.
@@ -916,21 +915,16 @@ let g:completor_python_binary = '~/.virtualenv/khan27/bin/python'
 let g:completor_racer_binary = '~/.cargo/bin/racer'
 
 " }}}
-" CtrlP {{{
+" FZF {{{
 
-let g:ctrlp_custom_ignore = {
- \ 'dir':  '\v[\/](bower_components|node_modules|coverage|false|\.build|\.tmp|dist|docs|project|target|genfiles|kake|third_party|genfiles)$'
- \ }
-
-" Allows indexing of more files
-let g:ctrlp_max_depth = 40
-let g:ctrlp_match_window = 'results:20'
-
-" Shows the hidden dot files
-let g:ctrlp_show_hidden = 0
-
-" Only search stuff tracked by git.
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+" Allows us to use FZF in Vim.
+set rtp+=/usr/local/opt/fzf
+" Maps FZF to <C-p> because using Sublime & Vim's CtrlP plugin for years broke
+" my brain.
+nnoremap <C-p> :<C-u>FZF<CR>
+" Sets the search command for FZF.  `rg` follows `.gitignore`s rules if a
+" `.gitignore` is found.
+let $FZF_DEFAULT_COMMAND = 'rg --files'
 
 " }}}
 " EasyAlign {{{

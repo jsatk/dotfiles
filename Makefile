@@ -72,6 +72,7 @@ formulae = \
 	ctags \
 	keith/formulae/contacts-cli \
 	fish \
+	fzf \
 	git \
 	gist \
 	go \
