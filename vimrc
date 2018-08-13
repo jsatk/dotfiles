@@ -585,8 +585,8 @@ augroup ft_gitcommit
   autocmd!
 
   autocmd FileType gitcommit setlocal spell
-  autocmd FileType gitcommit setlocal textwidth=70
-  autocmd BufRead,BufNewFile gitcommit setlocal textwidth=70
+  autocmd FileType gitcommit setlocal textwidth=72
+  autocmd BufRead,BufNewFile gitcommit setlocal textwidth=72
 augroup END
 
 " }}}
