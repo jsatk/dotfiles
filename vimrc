@@ -105,6 +105,10 @@ endif
 " }}}
 " Spelling ---------------------------------------------------------------- {{{
 
+" Most modern syntax files for vim are intelligent enough to only run spell
+" check against comments and not code.
+set spell
+
 " Stolen from Steve Losh
 "
 " There are three dictionaries I use for spellchecking:
@@ -373,7 +377,6 @@ augroup ft_fish
 augroup ft_gitcommit
   autocmd!
 
-  autocmd FileType gitcommit setlocal spell
   autocmd FileType gitcommit setlocal textwidth=72
   autocmd BufRead,BufNewFile gitcommit setlocal textwidth=72
 augroup END
@@ -424,7 +427,6 @@ augroup END
 augroup ft_mail
   autocmd!
 
-  autocmd FileType mail setlocal spell
   autocmd FileType mail setlocal textwidth=0
 augroup END
 
@@ -448,7 +450,6 @@ augroup ft_markdown
 
   autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
   autocmd FileType markdown setlocal textwidth=0
-  autocmd FileType markdown setlocal spell
 
   set formatoptions+=t
 augroup END
