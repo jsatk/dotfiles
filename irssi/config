@@ -412,7 +412,7 @@ settings = {
     nick = "jsatk";
   };
   "fe-text" = { actlist_sort = "refnum"; };
-  "fe-common/core" = { theme = "xchat"; };
+  "fe-common/core" = { theme = "greyed-out"; };
 };
 windows = {
   1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };

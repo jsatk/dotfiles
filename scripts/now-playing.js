@@ -5,7 +5,7 @@
  */
 (function () {
   const noMusic = "🔇 "
-  const pinkMusicNote = '#[fg=colour125]♬#[fg=colour232] '
+  const pinkMusicNote = '#[fg=colour125]♬#[fg=colour245] '
   const itunes = Application('iTunes')
   const spotify = Application('Spotify')
   const itunesIsPlaying = itunes.running() && itunes.playerState() === 'playing'

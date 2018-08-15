@@ -1,5 +1,5 @@
 #
-# Powerline Blue - Tmux Theme
+# Powerline Gray - Tmux Theme
 # Created by Jim Myhrberg <contact@jimeh.me>.
 #
 # Inspired by vim-powerline: https://github.com/Lokaltog/powerline
@@ -13,31 +13,31 @@ set -g status-interval 1
 
 # Basic status bar colors
 set -g status-fg colour238
-set -g status-bg colour233
+set -g status-bg colour255
 
 # Left side of status bar
-set -g status-left-bg colour233
+set -g status-left-bg colour255
 set -g status-left-fg colour243
 set -g status-left-length 40
-set -g status-left "#[fg=colour232,bg=colour245,bold] #S #[fg=colour245,bg=colour240,nobold]#[fg=colour233,bg=colour240] #I:#P #[fg=colour240,bg=colour233,nobold]"
+set -g status-left "#[fg=colour233,bg=colour243,bold] #S #[fg=colour243,bg=colour247,nobold]#[fg=colour232,bg=colour247] #I:#P #[fg=colour247,bg=colour255,nobold]"
 
 # Right side of status bar
-set -g status-right-bg colour233
+set -g status-right-bg colour255
 set -g status-right-fg colour243
 set -g status-right-length 150
-set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} #[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] 🕰  %H:%M:%S #[fg=colour240,bg=colour235]#[fg=colour233,bg=colour240] 📅  %d-%b-%y #[fg=colour245,bg=colour240]#[fg=colour232,bg=colour245,bold] #(osascript -l JavaScript ~/Library/scripts/now-playing.js)"
+set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} #[fg=colour247,bg=colour255]#[fg=colour232,bg=colour247] 🕰  %H:%M:%S #[fg=colour243,bg=colour247]#[fg=colour232,bg=colour243] 📅  %d-%b-%y #[fg=colour233,bg=colour243]#[fg=colour245,bg=colour233,bold] #(osascript -l JavaScript ~/Library/scripts/now-playing.js)"
 
 # Window status
 set -g window-status-format "  #I:#W#F  "
-set -g window-status-current-format "#[fg=colour233,bg=black]#[fg=colour250,nobold] #I:#W#F #[fg=colour233,bg=black,nobold]"
+set -g window-status-current-format "#[fg=colour255,bg=colour240,nobold] #I:#W#F #[fg=colour255,bg=colour240,nobold]"
 
 # Current window status
-set -g window-status-current-bg black
-set -g window-status-current-fg colour250
+set -g window-status-current-bg colour255
+set -g window-status-current-fg colour243
 
 # Window with activity status
-set -g window-status-activity-bg colour243 # fg and bg are flipped here due to
-set -g window-status-activity-fg colour233 # a bug in tmux
+set -g window-status-activity-bg colour232 # fg and bg are flipped here due to
+set -g window-status-activity-fg colour250 # a bug in tmux
 
 # Window separator
 set -g window-status-separator ""

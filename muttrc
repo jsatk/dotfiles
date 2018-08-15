@@ -33,7 +33,7 @@ bind editor ^T    complete
 # }}}
 # Color Theme {{{
 
-source ~/.mutt/themes/bad-wolf/bad-wolf.muttrc
+source ~/.mutt/themes/jsatk.muttrc
 
 # }}}
 # Basic Options {{{
@@ -153,14 +153,14 @@ macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "ma
 # Sync email and index it for searching
 macro index O "<shell-escape>mbsync --all && notmuch new<enter>" "Sync all mail using mbsync and then index it using notmuch"
 
-# Saner copy/move dialogs
+# Saner copy/move dialogues
 macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
 macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 
 # Search email using notmuch
 macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py ~/.mail/temporary/search<enter><change-folder-readonly>+../temporary/search<enter>" "search mail (using notmuch)"
 
-# Default directory for saving attachments so I don't go insane
+# Default directory for saving attachments so I don't go insane.
 macro attach s <save-entry><bol>~/Downloads/<eol>
 
 # }}}
@@ -203,8 +203,6 @@ auto_view text/html # view html automatically
 
 set sidebar_visible = yes
 set sidebar_width   = 24
-
-color sidebar_new color221 color233
 
 set status_chars  = " *%A"
 set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
