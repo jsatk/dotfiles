@@ -1,0 +1,65 @@
+# colors that will be used in this theme
+
+# $Id: ir_christmas.theme 732 2010-12-17 19:48:53Z ed $
+# $URL: svn+ssh://s5h.net/home/ed/services/repos/desktop/home/ed/code/mutt_colors/ir_christmas.theme $
+
+# Theme by Ed Neville
+# http://www.s5h.net/
+
+color normal		color40		color0
+color error		color197	color0
+color markers		color124	color0
+color tilde		color160	color0
+color status		color43		color0
+
+# index stuff
+color tree		color231	color0
+color indicator		color232		color196
+color index		color77		color0 ~A
+color index		color77		color0 ~N
+color index		color77		color0 ~O
+color index		color77		color0 ~F
+
+# header stuff
+color header		color196        color0 .
+color header		color196	color0 "^cc:"
+color header		color196	color0 "^to:"
+color header		color196	color0 "^date:"
+color header		color196	color0 "^from:"
+color header		color196	color0 "^reply-to:"
+color header		color124	color0 "^Subject"
+color header		color124	color0 "^Message-ID:"
+
+# gpg stuff
+color body		color139	color0 "^gpg: Good signature.*"
+color body		color197	color134 "^gpg: BAD signature.*"
+color body		color197	color0 "^gpg: Can't check signature.*"
+color body		color132	color0 "^-----BEGIN PGP SIGNED MESSAGE-----"
+color body		color132	color0 "^-----BEGIN PGP SIGNATURE-----"
+color body		color132	color0 "^-----END PGP SIGNED MESSAGE-----"
+color body		color132	color0 "^-----END PGP SIGNATURE-----"
+color body		color132	color0 "^Version: GnuPG.*"
+color body		color132	color0 "^Comment: .*"
+
+# url, email and web stuff
+color body		color231	color0 "(finger|ftp|http|https|news|telnet)://[^ >]*"
+color body		color231	color0 "<URL:[^ ]*>"
+color body		color231	color0 "www\\.[-.a-z0-9]+\\.[a-z][a-z][a-z]?([-_./~a-z0-9]+)?"
+color body		color231	color0 "mailto: *[^ ]+\(\\i?subject=[^ ]+\)?"
+color body		color231	color0 "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+
+# misc body stuff
+color attachment	color204	color0
+color signature		color204	color0
+
+# quote levels
+color quoted		color124	color0
+color quoted1		color34		color0
+color quoted2		color124	color0
+color quoted3		color34		color0
+color quoted4		color124	color0
+color quoted5		color34		color0
+color quoted6		color124	color0
+color quoted7		color34		color0
+color quoted8		color124	color0
+color quoted9		color34		color0

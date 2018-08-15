@@ -1,0 +1,68 @@
+# colors that will be used in this theme
+
+# $Id: ir_green.theme 722 2010-12-15 20:31:16Z ed $
+# $URL: svn+ssh://s5h.net/home/ed/services/repos/desktop/home/ed/code/mutt_colors/ir_green.theme $
+
+# Theme by Ed Neville
+# http://www.s5h.net/
+
+# 28 <-- darker
+# 35
+# 43
+# 78
+# 41
+# 79
+# 47
+# 82 <-- lighter
+
+color normal		color43		color0
+color error		color47		color0
+color markers		color63		color0
+color tilde		color35		color0
+color status		color47		color0
+
+# index stuff
+color tree		color106	color0
+color indicator		color107	color22
+color index		color108	color0 ~A
+color index		color186	color0 ~N
+color index		color149	color0 ~O
+color index		color113	color0 ~F
+
+# header stuff
+color hdrdefault	color70		color0
+color header		color41		color0 "^Subject"
+
+# gpg stuff
+color body		color79		color0 "^gpg: Good signature.*"
+color body		color82		color22 "^gpg: BAD signature.*"
+color body		color35		color0 "^gpg: Can't check signature.*"
+color body		color35		color0 "^-----BEGIN PGP SIGNED MESSAGE-----"
+color body		color35		color0 "^-----BEGIN PGP SIGNATURE-----"
+color body		color35		color0 "^-----END PGP SIGNED MESSAGE-----"
+color body		color35		color0 "^-----END PGP SIGNATURE-----"
+color body		color35		color0 "^Version: GnuPG.*"
+color body		color35		color0 "^Comment: .*"
+
+# url, email and web stuff
+color body		color49		color0 "(finger|ftp|http|https|news|telnet)://[^ >]*"
+color body		color49		color0 "<URL:[^ ]*>"
+color body		color49		color0 "www\\.[-.a-z0-9]+\\.[a-z][a-z][a-z]?([-_./~a-z0-9]+)?"
+color body		color49		color0 "mailto: *[^ ]+\(\\i?subject=[^ ]+\)?"
+color body		color49		color0 "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+
+# misc body stuff
+color attachment	color157	color0
+color signature		color36		color0
+
+# quote levels
+color quoted		color30		color0
+color quoted1		color71		color0
+color quoted2		color30		color0
+color quoted3		color71		color0
+color quoted4		color30		color0
+color quoted5		color71		color0
+color quoted6		color30		color0
+color quoted7		color71		color0
+color quoted8		color30		color0
+color quoted9		color71		color0

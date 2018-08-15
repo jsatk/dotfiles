@@ -1,0 +1,53 @@
+color normal color45 color0
+color error color193 color124
+color markers color63 color0
+color tilde color69 color0
+color status color75 color0
+
+# index stuff
+color tree color105 color0
+color indicator color0 color110
+color index color99 color0 ~A
+color index color93 color0 ~N
+color index color105 color0 ~O
+color index color111 color0 ~F
+
+# header stuff
+color hdrdefault color124 color0
+color header color111 color0 .
+color header color111 color0 ":"
+color header color111 color0 "^Subject"
+
+# gpg stuff
+color body color34 color0 "^gpg: Good signature.*"
+color body color193 color124 "^gpg: BAD signature.*"
+color body color142 color0 "^gpg: Can't check signature.*"
+color body color142 color0 "^-----BEGIN PGP SIGNED MESSAGE-----"
+color body color142 color0 "^-----BEGIN PGP SIGNATURE-----"
+color body color142 color0 "^-----END PGP SIGNED MESSAGE-----"
+color body color142 color0 "^-----END PGP SIGNATURE-----"
+color body color142 color0 "^Version: GnuPG.*"
+color body color142 color0 "^Comment: .*"
+
+# url, email and web stuff
+color body color111 color0 "(finger|ftp|http|https|news|telnet)://[^ >]*"
+color body color111 color0 "<URL:[^ ]*>"
+color body color111 color0 "www\\.[-.a-z0-9]+\\.[a-z][a-z][a-z]?([-_./~a-z0-9]+)?"
+color body color111 color0 "mailto: *[^ ]+\(\\i?subject=[^ ]+\)?"
+color body color111 color0 "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+
+# misc body stuff
+color attachment color111 color0
+color signature color142 color0
+
+# quote levels
+color quoted color34 color0
+color quoted1 color142 color0
+color quoted2 color34 color0
+color quoted3 color142 color0
+color quoted4 color34 color0
+color quoted5 color142 color0
+color quoted6 color34 color0
+color quoted7 color142 color0
+color quoted8 color34 color0
+color quoted9 color142 color0
