@@ -52,7 +52,7 @@ other_email=jesse@jsatk.us;
 
 [new]
 tags=unread;inbox;
-ignore=search
+ignore=search;/.*/.mbsyncstate$/;/.*/.uidvalidity$/;
 
 # Search configuration
 #
