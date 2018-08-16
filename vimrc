@@ -28,9 +28,10 @@ call minpac#add('derekwyatt/vim-sbt')
 call minpac#add('derekwyatt/vim-scala')
 call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('jsatk/vim-colorschemes')
-call minpac#add('junegunn/goyo.vim')
-call minpac#add('junegunn/vim-easy-align')
 call minpac#add('junegunn/fzf.vim')
+call minpac#add('junegunn/goyo.vim')
+call minpac#add('junegunn/gv.vim')
+call minpac#add('junegunn/vim-easy-align')
 call minpac#add('maralla/completor.vim')
 call minpac#add('mxw/vim-jsx')
 call minpac#add('pangloss/vim-javascript')
@@ -42,6 +43,7 @@ call minpac#add('tpope/vim-db')
 call minpac#add('tpope/vim-dispatch')
 call minpac#add('tpope/vim-endwise')
 call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-projectionist')
 call minpac#add('tpope/vim-rhubarb')
 call minpac#add('tpope/vim-sensible')
 call minpac#add('tpope/vim-surround')
@@ -415,6 +417,7 @@ augroup END
 augroup ft_json
   autocmd!
 
+  autocmd FileType gitcommit setlocal nospell
   autocmd FileType json setlocal foldmethod=syntax
 
   " Make JSON not look like ass
@@ -492,7 +495,7 @@ augroup END
 augroup ft_vim
   autocmd!
 
-  " Make vim resize on host window resize.  Great for increaseing/decreasing
+  " Make vim resize on host window resize.  Great for increasing/decreasing
   " font or when you disconnect from your external monitor.
   autocmd VimResized * wincmd =
   autocmd FileType vim setlocal foldmethod=marker
