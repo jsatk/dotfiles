@@ -495,7 +495,7 @@ augroup END
 augroup ft_vim
   autocmd!
 
-  " Make vim resize on host window resize.  Great for increasing/decreasing
+  " Make vim resize on host window resize.  Great for increaseing/decreasing
   " font or when you disconnect from your external monitor.
   autocmd VimResized * wincmd =
   autocmd FileType vim setlocal foldmethod=marker
@@ -687,5 +687,5 @@ command! -nargs=0 Pulse call s:Pulse()
 
 " }}}
 
-" To disable unsafe commands in project-specific .vimrc files
+" To disable unsafe commands in project-specific .vimrc files.
 set secure
