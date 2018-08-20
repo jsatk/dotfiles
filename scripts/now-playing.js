@@ -25,7 +25,7 @@
     const artist = track.artist()
     const title = track.name()
 
-    return (`${pinkMusicNote} ${title} - ${artist}`).substr(0, trim)
+    return (`${pinkMusicNote} ${title} - ${artist} `).substr(0, trim)
   }
 
   return noMusic

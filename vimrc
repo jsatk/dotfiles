@@ -463,10 +463,9 @@ augroup END
 augroup ft_python
   autocmd!
 
-  " Note: `foldmethod` is set by plugin SimpylFold
-
   " Ignore compiled python
   set wildignore=*.pyc
+  set foldmethod=indent
   let g:netrw_list_hide= '.*\.pyc$'
 augroup END
 
@@ -609,6 +608,11 @@ let g:completor_auto_trigger = 0
 let g:completor_node_binary = '~/n/bin/node'
 let g:completor_python_binary = '~/.virtualenv/khan27/bin/python'
 let g:completor_racer_binary = '~/.cargo/bin/racer'
+
+" }}}
+" Dispatch {{{
+
+nnoremap <F9> :Dispatch<CR>
 
 " }}}
 " FZF {{{
