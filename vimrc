@@ -12,6 +12,19 @@
 " To see what any of the settings below do press `K` while your cursor is on
 " the setting in question and it will open the manual in a split.
 
+" This check is done in vim-sensible, however as of this writing that check
+" doesn't apply to Vim 8.  Until vim-dispatch works nicely with Fish shell or
+" until vim-sensible's Fish shell check applies to Vim 8 and above I need to
+" manually force my shell here.  Also setting it to simply `sh` instead of
+" `/bin/bash` because vim-dispatch apparently has trouble inferring the PID of
+" the task when `shell` is set to `/bin/bash`.
+"
+" See here:
+" https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim#L66-L68
+if &shell =~# 'fish$'
+  set shell=sh
+endif
+
 " }}}
 " Vim Plugins ------------------------------------------------------------- {{{
 
