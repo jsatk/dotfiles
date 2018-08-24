@@ -39,7 +39,6 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('dag/vim-fish')
 call minpac#add('derekwyatt/vim-sbt')
 call minpac#add('derekwyatt/vim-scala')
-call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('jsatk/vim-colorschemes')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('junegunn/goyo.vim')
@@ -50,12 +49,14 @@ call minpac#add('mxw/vim-jsx')
 call minpac#add('pangloss/vim-javascript')
 call minpac#add('rizzatti/dash.vim')
 call minpac#add('rust-lang/rust.vim')
+call minpac#add('sgur/vim-editorconfig')
 call minpac#add('tpope/vim-abolish')
 call minpac#add('tpope/vim-commentary')
 call minpac#add('tpope/vim-db')
 call minpac#add('tpope/vim-dispatch')
 call minpac#add('tpope/vim-endwise')
 call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-obsession')
 call minpac#add('tpope/vim-projectionist')
 call minpac#add('tpope/vim-rhubarb')
 call minpac#add('tpope/vim-sensible')
@@ -111,7 +112,6 @@ set gdefault
 set timeoutlen=500
 set nf=octal,hex,alpha " Increment alpha strings with vim
 set hidden
-set exrc " Allows for project-specific vimrc files
 
 if has('mouse')
   set mouse=a
@@ -628,17 +628,6 @@ let g:completor_racer_binary = '~/.cargo/bin/racer'
 nnoremap <F9> :Dispatch<CR>
 
 " }}}
-" FZF {{{
-
-" Allows us to use FZF in Vim.
-set rtp+=/usr/local/opt/fzf
-nnoremap <C-p> :<C-u>FZF<CR>
-nnoremap <C-p><C-f> :<C-u>Buffers<CR>
-" Sets the search command for FZF.  `rg` follows `.gitignore`s rules if a
-" `.gitignore` is found.
-let $FZF_DEFAULT_COMMAND = 'rg --files'
-
-" }}}
 " EasyAlign {{{
 
 " Start interactive EasyAlign in visual mode (e.g. vipga).
@@ -651,7 +640,18 @@ nmap ga <Plug>(EasyAlign)
 " }}}
 " EditorConfig {{{
 
-let g:EditorConfig_max_line_indicator = "none"
+" let g:EditorConfig_max_line_indicator = "none"
+
+" }}}
+" FZF {{{
+
+" Allows us to use FZF in Vim.
+set rtp+=/usr/local/opt/fzf
+nnoremap <C-p> :<C-u>FZF<CR>
+nnoremap <C-p><C-f> :<C-u>Buffers<CR>
+" Sets the search command for FZF.  `rg` follows `.gitignore`s rules if a
+" `.gitignore` is found.
+let $FZF_DEFAULT_COMMAND = 'rg --files'
 
 " }}}
 " Goyo {{{
@@ -659,7 +659,7 @@ let g:EditorConfig_max_line_indicator = "none"
 noremap <leader>g :Goyo<CR>
 
 " }}}
-" vim-javascript {{{
+" Javascript {{{
 
 let g:javascript_plugin_jsdoc = 1 " https://github.com/pangloss/vim-javascript#configuration-variables
 
@@ -704,5 +704,5 @@ command! -nargs=0 Pulse call s:Pulse()
 
 " }}}
 
-" To disable unsafe commands in project-specific .vimrc files.
-set secure
+set secure " Disables unsafe commands in project-specific .vimrc files.
+set exrc " Allows for project-specific vimrc files.
