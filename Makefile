@@ -117,13 +117,13 @@ update: | install
 	brew upgrade
 	gem update
 	yarn global upgrade --silent
-	vim +PlugUpdate +quitall
+	vim +PackUpdate +quitall
 	reattach-to-user-namespace mas upgrade
 
 clean: | install
 	brew cleanup
 	gem clean
-	vim +PlugClean +quitall
+	vim +PackClean +quitall
 
 # }}}
 # brew {{{
