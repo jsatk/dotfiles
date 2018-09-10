@@ -39,12 +39,12 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('dag/vim-fish')
 call minpac#add('derekwyatt/vim-sbt')
 call minpac#add('derekwyatt/vim-scala')
+call minpac#add('janko-m/vim-test')
 call minpac#add('jsatk/vim-colorschemes')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('junegunn/goyo.vim')
 call minpac#add('junegunn/gv.vim')
 call minpac#add('junegunn/vim-easy-align')
-call minpac#add('maralla/completor.vim')
 call minpac#add('mxw/vim-jsx')
 call minpac#add('pangloss/vim-javascript')
 call minpac#add('rizzatti/dash.vim')
@@ -120,10 +120,6 @@ endif
 " }}}
 " Spelling ---------------------------------------------------------------- {{{
 
-" Most modern syntax files for vim are intelligent enough to only run spell
-" check against comments and not code.
-set spell
-
 " Stolen from Steve Losh
 "
 " There are three dictionaries I use for spellchecking:
@@ -166,12 +162,25 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " Convenience Mappings ---------------------------------------------------- {{{
 
 let mapleader = ","
+
 noremap q: :q " Do not show stupid q: window
 noremap Q <Nop> " I don't know how to use ex mode and it scares me.
 nnoremap S i<cr><esc><right> " Split line (sister to [J]oin lines)
 nnoremap <leader><leader> <c-^> " switch to last file
 nnoremap <leader>r :redraw!<cr> " redraw the buffer
 nnoremap <CR> :nohlsearch<cr> " Clear the search buffer when hitting return
+" Don't jump-to-next when I use * to search for what's under cursor.
+nnoremap * *<c-o>
+
+" Keep search matches in the middle of the window.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Clean trailing whitespace.
+nnoremap <leader>w mz:%s/\s\+$//<cr>:let @/=''<cr>`z
+
+" Send visual selection to a private gist.
+vnoremap <leader>G :w !gist -p -t -s %:e \| pbcopy<cr>
 
 " My garbage brain can't ever remember digraph codes
 inoremap <c-k><c-k> <esc>:help digraph-table<cr>
@@ -184,7 +193,11 @@ augroup cline
   autocmd WinEnter,InsertLeave * set cursorline
 augroup END
 
-" Quick Editing {{{
+" Keep the cursor in place while joining lines
+nnoremap J mzJ`z
+
+" }}}
+" Quick Editing ----------------------------------------------------------- {{{
 
 nnoremap <leader>ed :vsplit ~/.vim/custom-dictionary.utf-8.add<cr>
 nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
@@ -194,12 +207,10 @@ nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 " }}}
-
-" }}}
 " Folding ----------------------------------------------------------------- {{{
 
 set foldenable
-set foldlevelstart=99
+set foldlevelstart=0
 
 nnoremap <Space> za
 vnoremap <Space> za
@@ -464,8 +475,8 @@ augroup END
 augroup ft_markdown
   autocmd!
 
-  autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
-  autocmd FileType markdown setlocal textwidth=0
+  autocmd BufNewFile,BufRead *.m*down,*.md setlocal spell filetype=markdown
+  autocmd FileType markdown setlocal textwidth=0 foldlevel=1
 
   set formatoptions+=t
 augroup END
@@ -493,6 +504,13 @@ augroup ft_ruby
 augroup END
 
 " }}}
+" sass, scss, & less {{{
+
+augroup ft_sass
+  autocmd!
+
+  autocmd BufRead,BufNewFile *.scss,*.less setlocal foldmethod=marker foldmarker={,}
+augroup END
 " scala {{{
 
 augroup ft_scala
@@ -554,6 +572,15 @@ augroup ft_muttrc
 augroup END
 
 " }}}
+" plan {{{
+
+augroup ft_plan
+  autocmd!
+
+  au BufRead,BufNewFile .plan set filetype=markdown
+augroup END
+
+" }}}
 
 " }}}
 
@@ -595,32 +622,10 @@ let g:ale_statusline_format = ['X %d', '? %d', '']
 let g:ale_echo_msg_format = '%linter% says: "%severity% %...code...% – %s'
 
 " }}}
-" Completor {{{
+" Dash {{{
 
-" Use TAB to complete when typing words, else inserts TABs as usual.
-function! Tab_Or_Complete() abort
-  " If completor is already open the `tab` cycles through suggested completions.
-  if pumvisible()
-    return "\<C-N>"
-  " If completor is not open and we are in the middle of typing a word then
-  " `tab` opens completor menu.
-  elseif col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-    return "\<C-R>=completor#do('complete')\<CR>"
-  else
-    " If we aren't typing a word and we press `tab` simply do the normal `tab`
-    " action.
-    return "\<Tab>"
-  endif
-endfunction
-inoremap <expr> <Tab> Tab_Or_Complete()
-
-" Use tab to trigger auto completion.  Default suggests completions as you type.
-let g:completor_auto_trigger = 0
-" See https://github.com/maralla/completor.vim#javascript to get javascript
-" completion working.
-let g:completor_node_binary = '~/n/bin/node'
-let g:completor_python_binary = '~/.virtualenv/khan27/bin/python'
-let g:completor_racer_binary = '~/.cargo/bin/racer'
+" Note: Using |:noremap| will not work with <Plug> mappings.
+nmap <silent> <leader>d <Plug>DashSearch
 
 " }}}
 " Dispatch {{{
@@ -635,12 +640,15 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 " Intentionally not using `nnoremap`.
+" Note: Using |:noremap| will not work with <Plug> mappings.
 nmap ga <Plug>(EasyAlign)
 
 " }}}
 " EditorConfig {{{
 
 " let g:EditorConfig_max_line_indicator = "none"
+
+" }}}
 
 " }}}
 " FZF {{{
