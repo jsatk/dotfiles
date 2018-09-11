@@ -403,7 +403,7 @@ augroup ft_fish
 augroup ft_gitcommit
   autocmd!
 
-  autocmd FileType gitcommit setlocal textwidth=72
+  autocmd FileType gitcommit setlocal textwidth=72 spell
   autocmd BufRead,BufNewFile gitcommit setlocal textwidth=72
 augroup END
 
@@ -441,7 +441,6 @@ augroup END
 augroup ft_json
   autocmd!
 
-  autocmd FileType gitcommit setlocal nospell
   autocmd FileType json setlocal foldmethod=syntax
 
   " Make JSON not look like ass
