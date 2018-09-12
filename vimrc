@@ -179,9 +179,6 @@ nnoremap N Nzzzv
 " Clean trailing whitespace.
 nnoremap <leader>w mz:%s/\s\+$//<cr>:let @/=''<cr>`z
 
-" Send visual selection to a private gist.
-vnoremap <leader>G :w !gist -p -t -s %:e \| pbcopy<cr>
-
 " My garbage brain can't ever remember digraph codes
 inoremap <c-k><c-k> <esc>:help digraph-table<cr>
 
@@ -299,6 +296,26 @@ augroup trailing
   autocmd InsertEnter * :set listchars-=trail:⌴
   autocmd InsertLeave * :set listchars+=trail:⌴
 augroup END
+
+" }}}
+" Auto-Completion --------------------------------------------------------- {{{
+
+" Use TAB to complete when typing words, else inserts TABs as usual.
+function! Tab_Or_Complete(move_to_next_word) abort
+  " If auto-complete menu is not open and we are in the middle of typing a
+  " word OR if auto-complete menu is already open the `tab` cycles through
+  " suggested completions.
+  if pumvisible() || (col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w')
+    return a:move_to_next_word
+  else
+    " If we aren't typing a word and we press `tab` simply do the normal `tab`
+    " action.
+    return "\<Tab>"
+  endif
+endfunction
+
+inoremap <expr> <Tab> Tab_Or_Complete("\<C-N>")
+inoremap <expr> <S-Tab> Tab_Or_Complete("\<C-P>")
 
 " }}}
 " Line Return ------------------------------------------------------------- {{{
