@@ -508,6 +508,8 @@ augroup ft_sass
 
   autocmd BufRead,BufNewFile *.scss,*.less setlocal foldmethod=marker foldmarker={,}
 augroup END
+
+" }}}
 " scala {{{
 
 augroup ft_scala
@@ -628,13 +630,6 @@ xmap ga <Plug>(EasyAlign)
 " Intentionally not using `nnoremap`.
 " Note: Using |:noremap| will not work with <Plug> mappings.
 nmap ga <Plug>(EasyAlign)
-
-" }}}
-" EditorConfig {{{
-
-" let g:EditorConfig_max_line_indicator = "none"
-
-" }}}
 
 " }}}
 " FZF {{{
