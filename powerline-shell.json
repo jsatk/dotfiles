@@ -7,5 +7,6 @@
     "jobs",
     "root"
   ],
-  "theme": "washed"
+  "theme": "washed",
+  "mode": "flat"
 }

@@ -39,6 +39,7 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('dag/vim-fish')
 call minpac#add('derekwyatt/vim-sbt')
 call minpac#add('derekwyatt/vim-scala')
+call minpac#add('ervandew/supertab')
 call minpac#add('janko-m/vim-test')
 call minpac#add('jsatk/vim-colorschemes')
 call minpac#add('junegunn/fzf.vim')
@@ -296,26 +297,6 @@ augroup trailing
   autocmd InsertEnter * :set listchars-=trail:⌴
   autocmd InsertLeave * :set listchars+=trail:⌴
 augroup END
-
-" }}}
-" Auto-Completion --------------------------------------------------------- {{{
-
-" Use TAB to complete when typing words, else inserts TABs as usual.
-function! Tab_Or_Complete(move_to_next_word) abort
-  " If auto-complete menu is not open and we are in the middle of typing a
-  " word OR if auto-complete menu is already open the `tab` cycles through
-  " suggested completions.
-  if pumvisible() || (col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w')
-    return a:move_to_next_word
-  else
-    " If we aren't typing a word and we press `tab` simply do the normal `tab`
-    " action.
-    return "\<Tab>"
-  endif
-endfunction
-
-inoremap <expr> <Tab> Tab_Or_Complete("\<C-N>")
-inoremap <expr> <S-Tab> Tab_Or_Complete("\<C-P>")
 
 " }}}
 " Line Return ------------------------------------------------------------- {{{
@@ -609,17 +590,6 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
-" For reasons I cannot understand or explain one day the powerline symbols
-" just stopped showing up.  The `g:airline_powerline_fonts = 1` stopped
-" working.  So I copy & pasted the powerline stuffs from `:help airline` under
-" the customization setting, which is what they recommend if airline stops
-" showing powerline symbols.
-"
-" let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'

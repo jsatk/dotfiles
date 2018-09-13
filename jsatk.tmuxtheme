@@ -1,31 +1,18 @@
-#
-# Powerline Gray - Tmux Theme
-# Created by Jim Myhrberg <contact@jimeh.me>.
-#
-# Inspired by vim-powerline: https://github.com/Lokaltog/powerline
-#
-# Requires terminal to be using a powerline compatible font, find one here:
-# https://github.com/Lokaltog/powerline-fonts
-#
-
 # Status update interval
 set -g status-interval 1
 
 # Basic status bar colors
 set -g status-fg colour238
-set -g status-bg colour255
 
 # Left side of status bar
-set -g status-left-bg colour255
 set -g status-left-fg colour243
 set -g status-left-length 40
-set -g status-left "#[fg=colour233,bg=colour243,bold] #S #[fg=colour243,bg=colour247,nobold]#[fg=colour232,bg=colour247] #I:#P #[fg=colour247,bg=colour255,nobold]"
+set -g status-left "#S » #I:#P »"
 
 # Right side of status bar
-set -g status-right-bg colour255
 set -g status-right-fg colour243
 set -g status-right-length 150
-set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} #[fg=colour247,bg=colour255]#[fg=colour232,bg=colour247] 🕰  %H:%M:%S #[fg=colour243,bg=colour247]#[fg=colour232,bg=colour243] 📅  %d-%b-%y #[fg=colour233,bg=colour243]#[fg=colour245,bg=colour233,bold] #(osascript -l JavaScript ~/Library/scripts/now-playing.js)"
+set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} « %H:%M:%S « %d-%b-%y « #(osascript -l JavaScript ~/Library/scripts/now-playing.js)"
 
 # Window status
 set -g window-status-format "  #I:#W#F  "
