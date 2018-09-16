@@ -7,6 +7,10 @@
     "jobs",
     "root"
   ],
-  "theme": "washed",
-  "mode": "flat"
+  "theme": "gruvbox",
+  "mode": "flat",
+  "cwd": {
+    "max_depth": 1,
+    "mode": "plain"
+  }
 }

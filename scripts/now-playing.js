@@ -3,14 +3,17 @@
  * in tmux prompt * If you wish to use this outside of tmux update the
  * `pinkMusicNote` const.
  */
-(function () {
+(() => {
   const noMusic = "🔇 "
-  const pinkMusicNote = '#[fg=colour125]♬#[fg=colour245] '
+  const pinkMusicNote = '#[fg=colour125]♬#[fg=colour255] '
   const itunes = Application('iTunes')
   const spotify = Application('Spotify')
   const itunesIsPlaying = itunes.running() && itunes.playerState() === 'playing'
   const spotifyIsPlaying = spotify.running() && spotify.playerState() === 'playing'
-  const trim = 50 // Trim string at the 50th character.  Change this if you wish for a different max length or remove the `.substr` calls entirely if you wish for no trimming.
+  // Trim string at the 50th character.  Change this if you wish for a
+  // different max length or remove the `.substr` calls entirely if you wish
+  // for no trimming.
+  const trim = 50
 
   if (itunesIsPlaying) {
     const track = itunes.currentTrack

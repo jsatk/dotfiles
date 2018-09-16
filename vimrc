@@ -143,7 +143,7 @@ nnoremap zG 2zg
 " }}}
 " Look & Feel ------------------------------------------------------------- {{{
 
-set background=light
+set background=dark
 colorscheme lucius
 
 " I realize setting t_ZH and t_ZR directly is probably 'bad' to more advanced

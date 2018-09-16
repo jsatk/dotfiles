@@ -1,16 +1,20 @@
+# jsatk
+# Custom theme by Jesse Atkinson
+
 # Status update interval
 set -g status-interval 1
 
 # Basic status bar colors
-set -g status-fg colour238
+set -g status-fg colour250
+set -g status-bg colour237
 
 # Left side of status bar
-set -g status-left-fg colour243
+set -g status-left-fg colour250
 set -g status-left-length 40
 set -g status-left "#S » #I:#P »"
 
 # Right side of status bar
-set -g status-right-fg colour243
+set -g status-right-fg colour250
 set -g status-right-length 150
 set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} « %H:%M:%S « %d-%b-%y « #(osascript -l JavaScript ~/Library/scripts/now-playing.js)"
 
@@ -20,7 +24,7 @@ set -g window-status-current-format "#[fg=colour255,bg=colour240,nobold] #I:#W#F
 
 # Current window status
 set -g window-status-current-bg colour255
-set -g window-status-current-fg colour243
+set -g window-status-current-fg colour250
 
 # Window with activity status
 set -g window-status-activity-bg colour232 # fg and bg are flipped here due to

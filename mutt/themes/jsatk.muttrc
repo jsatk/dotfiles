@@ -7,8 +7,8 @@
 # color compose composeobject foreground background
 # uncolor { index | header | body } { * | pattern ... }
 
-color normal black default
-color status black default
+color normal color250 default
+color status color250 default
 color error brightcolor15 color196
 color indicator color235 color250
 color markers color142 default
