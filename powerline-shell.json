@@ -7,7 +7,6 @@
     "jobs",
     "root"
   ],
-  "theme": "gruvbox",
   "mode": "flat",
   "cwd": {
     "max_depth": 1,

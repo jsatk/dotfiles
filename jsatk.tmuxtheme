@@ -6,7 +6,7 @@ set -g status-interval 1
 
 # Basic status bar colors
 set -g status-fg colour250
-set -g status-bg colour237
+set -g status-bg colour16
 
 # Left side of status bar
 set -g status-left-fg colour250
