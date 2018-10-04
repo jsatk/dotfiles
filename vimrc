@@ -46,6 +46,7 @@ call minpac#add('junegunn/fzf.vim')
 call minpac#add('junegunn/goyo.vim')
 call minpac#add('junegunn/gv.vim')
 call minpac#add('junegunn/vim-easy-align')
+call minpac#add('Konfekt/FastFold')
 call minpac#add('mxw/vim-jsx')
 call minpac#add('pangloss/vim-javascript')
 call minpac#add('rizzatti/dash.vim')
@@ -60,6 +61,7 @@ call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-obsession')
 call minpac#add('tpope/vim-projectionist')
 call minpac#add('tpope/vim-rhubarb')
+call minpac#add('tpope/vim-scriptease')
 call minpac#add('tpope/vim-sensible')
 call minpac#add('tpope/vim-surround')
 call minpac#add('tpope/vim-unimpaired')
@@ -376,7 +378,6 @@ augroup END
 augroup ft_css
   autocmd!
 
-  autocmd Filetype css setlocal foldmethod=syntax
   autocmd Filetype css setlocal iskeyword+=-
 augroup END
 
@@ -415,13 +416,12 @@ augroup ft_golang
 augroup END
 
 " }}}
-" html {{{
+" mail {{{
 
-augroup ft_html
+augroup ft_mail
   autocmd!
 
-  autocmd Filetype html setlocal foldmethod=indent
-  autocmd Filetype htmldjango setlocal foldmethod=indent
+  autocmd FileType mail setlocal textwidth=0
 augroup END
 
 " }}}
@@ -431,27 +431,6 @@ augroup ft_javascript
   autocmd!
 
   autocmd FileType javascript setlocal foldmethod=syntax
-augroup END
-
-" }}}
-" json {{{
-
-augroup ft_json
-  autocmd!
-
-  autocmd FileType json setlocal foldmethod=syntax
-
-  " Make JSON not look like ass
-  command! FormatJSON %!python -m json.tool
-augroup END
-
-" }}}
-" mail {{{
-
-augroup ft_mail
-  autocmd!
-
-  autocmd FileType mail setlocal textwidth=0
 augroup END
 
 " }}}
@@ -496,17 +475,8 @@ augroup END
 augroup ft_ruby
   autocmd!
 
-  autocmd Filetype ruby setlocal foldmethod=syntax
+  autocmd FileType ruby setlocal foldmethod=syntax
   autocmd BufRead,BufNewFile Capfile setlocal filetype=ruby
-augroup END
-
-" }}}
-" sass, scss, & less {{{
-
-augroup ft_sass
-  autocmd!
-
-  autocmd BufRead,BufNewFile *.scss,*.less setlocal foldmethod=marker foldmarker={,}
 augroup END
 
 " }}}
