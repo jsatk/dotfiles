@@ -425,15 +425,6 @@ augroup ft_mail
 augroup END
 
 " }}}
-" javascript {{{
-
-augroup ft_javascript
-  autocmd!
-
-  autocmd FileType javascript setlocal foldmethod=syntax
-augroup END
-
-" }}}
 " make {{{
 
 augroup ft_make
