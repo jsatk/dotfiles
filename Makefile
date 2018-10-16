@@ -19,17 +19,6 @@
 
 # }}}
 # TODO {{{
-#
-# # Stuff to fix in Makefile
-#
-# * Install n
-# * Install vim plug
-# * Set fish shell as default
-# * Install up contacts-cli
-# * Make caps lock to escape
-# * Set ruby to rbenv
-# * Install fonts
-# * Symlink ~/Library/scripts
 
 $(info TODO: 📝)
 $(info  )
@@ -38,8 +27,13 @@ $(info "2. Figure out how to install and/or update yarn.  We are currently doing
 $(info "3. Figure out how to properly install fonts.")
 $(info "4. Figure out how to set fish as the default shell.")
 $(info "5. Figure out how install pip packages.")
-$(info "6. Figure out how setup path.")
-$(info "7. Figure out how install npm, pip, and gems if they are not already installed.  (I.E.  What we're alredy doing with Homebrew).")
+$(info "6. Figure out how install go packages.")
+$(info "7. Figure out how setup path.")
+$(info "8. Figure out how install npm, pip, and gems if they are not already installed.  (I.E.  What we're alredy doing with Homebrew).")
+$(info "9. Map caps lock to escape.")
+$(info "10. Install fonts.")
+$(info "11. Set ruby to rbenv.")
+$(info "12. Symlink `~/Library/scripts`.")
 $(info  )
 
 # }}}
@@ -57,7 +51,6 @@ symlinks = \
 	mutt \
 	muttrc \
 	notmuch-config \
-	powerline-shell \
 	ripgreprc \
 	terminfo \
 	tmux.conf \

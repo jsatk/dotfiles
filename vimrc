@@ -40,6 +40,7 @@ call minpac#add('dag/vim-fish')
 call minpac#add('derekwyatt/vim-sbt')
 call minpac#add('derekwyatt/vim-scala')
 call minpac#add('ervandew/supertab')
+call minpac#add('fatih/vim-go')
 call minpac#add('janko-m/vim-test')
 call minpac#add('jsatk/vim-colorschemes')
 call minpac#add('junegunn/fzf.vim')
@@ -388,13 +389,14 @@ augroup ft_fish
   autocmd!
 
   autocmd BufNewFile,BufRead *.fish setlocal filetype=fish
+  autocmd FileType fish setlocal foldmarker={{{,}}}
+  autocmd FileType fish setlocal foldmethod=marker
+  autocmd FileType fish setlocal softtabstop=0
   autocmd FileType fish setlocal textwidth=80
   autocmd Filetype fish setlocal noexpandtab
   autocmd Filetype fish setlocal shiftwidth=8
   " Set up :make to use fish for syntax checking.
   autocmd FileType fish compiler fish
-  autocmd FileType fish setlocal foldmethod=marker
-  autocmd FileType fish setlocal foldmarker={{{,}}}
 
 " }}}
 " gitcommit {{{
@@ -651,6 +653,24 @@ endfunction
 command! -nargs=0 Pulse call s:Pulse()
 
 " }}}
+
+" }}}
+" Arc/Phabricator --------------------------------------------------------- {{{
+
+" Phabricator is the fucking worst, but I have to deal with it so here I am.
+" This is a tiny stupid wrapper I made so that I can simply run arc commands
+" from inside vim without having to type `:Dispatch` first.  Maybe someday
+" I'll expand on this and make it a proper plugin.
+"
+" Examples:
+" :Arc diff --verbatim --browse
+" :Arc upload ~/Desktop/screenshot.png
+" :Arc amend
+" :Arc land --onto master
+function! s:Arc(cmd)
+  execute "Dispatch arc " . a:cmd
+endfunction
+command! -nargs=1 Arc call s:Arc(<f-args>)
 
 " }}}
 

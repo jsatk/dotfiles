@@ -27,9 +27,10 @@ unmailboxes * # When we switch accounts unset all folders added to sidebar by th
 mailboxes +"Inbox" \
           +"Sent" \
           +"Drafts" \
-          +"Junk" \
-          +"Deleted" \
+          +"Spam" \
+          +"Starred" \
           +"Archive" \
+          +"Trash" \
           +"../temporary/search"
 
 # }}}

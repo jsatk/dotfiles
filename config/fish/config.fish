@@ -36,7 +36,10 @@ set --export RIPGREP_CONFIG_PATH ~/.ripgreprc
 # For Bat.  See: https://github.com/sharkdp/bat
 set --export BAT_THEME "Monokai Extended Light"
 
-set PATH $N_PREFIX/bin ~/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /usr/local/MacGPG2/bin /Library/TeX/texbin ~/Library/scripts
+set PATH $N_PREFIX/bin ~/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /usr/local/MacGPG2/bin /Library/TeX/texbin ~/Library/scripts ~/go/bin
+
+# For golang
+set -x -U GOPATH $HOME/go
 
 # For Autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
