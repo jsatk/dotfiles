@@ -76,16 +76,10 @@
 	whitespace = fix
 
 # }}}
-# core -------------------------------------------------------------------- {{{
+# branch ------------------------------------------------------------------ {{{
 
-[core]
-	attributesfile = ~/.gitattributes
-	autocrlf = input
-	ignorecase = false
-	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
-	editor = vim
-	pager = diff-so-fancy | less --tabs=4 -RFX
-	excludesfile = ~/.gitignore
+[branch]
+	autosetuprebase = always
 
 # }}}
 # colors ------------------------------------------------------------------ {{{
@@ -107,17 +101,34 @@
 	untracked = cyan
 
 # }}}
-# merge ------------------------------------------------------------------- {{{
+# commit ------------------------------------------------------------------ {{{
 
-[merge]
-	log = true
-	tool = vimdiff
+[commit]
+	gpgsign = true
 
 # }}}
-# grep -------------------------------------------------------------------- {{{
+# core -------------------------------------------------------------------- {{{
 
-[grep]
-	patternType = "fixed"
+[core]
+	attributesfile = ~/.gitattributes
+	autocrlf = input
+	ignorecase = false
+	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+	editor = vim
+	pager = diff-so-fancy | less --tabs=4 -RFX
+	excludesfile = ~/.gitignore
+
+# }}}
+# credential -------------------------------------------------------------- {{{
+
+[credential]
+	helper = osxkeychain
+
+# }}}
+# diff -------------------------------------------------------------------- {{{
+
+[diff]
+	algorithm = patience
 
 # }}}
 # github ------------------------------------------------------------------ {{{
@@ -152,16 +163,30 @@
 	protocol = https
 
 # }}}
-# branch ------------------------------------------------------------------ {{{
+# gpg --------------------------------------------------------------------- {{{
 
-[branch]
-	autosetuprebase = always
+[gpg]
+	program = gpg
 
 # }}}
-# rerere ------------------------------------------------------------------ {{{
+# grep -------------------------------------------------------------------- {{{
 
-[rerere]
-	enabled = true
+[grep]
+	patternType = "fixed"
+
+# }}}
+# help -------------------------------------------------------------------- {{{
+
+[help]
+	autocorrect = 1
+
+# }}}
+# merge ------------------------------------------------------------------- {{{
+
+[merge]
+	log = true
+	tool = vimdiff
+	conflictstyle = diff3
 
 # }}}
 # pull -------------------------------------------------------------------- {{{
@@ -176,31 +201,19 @@
 	default = tracking
 
 # }}}
-# help -------------------------------------------------------------------- {{{
+# rebase ------------------------------------------------------------------ {{{
 
-[help]
-	autocorrect = 1
-
-# }}}
-# commit ------------------------------------------------------------------ {{{
-
-[commit]
-	gpgsign = true
+[rebase]
+	autoStash = true
 
 # }}}
-# gpg --------------------------------------------------------------------- {{{
+# rerere ------------------------------------------------------------------ {{{
 
-[gpg]
-	program = gpg
-
-# }}}
-# credential -------------------------------------------------------------- {{{
-
-[credential]
-	helper = osxkeychain
+[rerere]
+	enabled = true
 
 # }}}
-# khan academy ------------------------------------------------------------ {{{
+# work stuff -------------------------------------------------------------- {{{
 
 [kaclone]
 	email = jesse@khanacademy.org
