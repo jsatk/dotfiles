@@ -69,6 +69,13 @@
 	# this all in one line.
 	headsha = !git log -1 --pretty=format:'%H'
 
+        # Show all changes that are currently staged for commit.
+        staged = diff --cached
+
+        # Append staged changes to head commit.
+        # Great for when you forget to add something.
+        append = commit --amend --no-edit
+
 # }}}
 # apply ------------------------------------------------------------------- {{{
 
@@ -219,3 +226,4 @@
 	email = jesse@khanacademy.org
 
 # }}}
+# vim: textwidth=80 noexpandtab shiftwidth=8 foldmethod=marker foldmarker={{{,}}}

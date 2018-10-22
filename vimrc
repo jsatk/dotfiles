@@ -20,7 +20,7 @@
 " until vim-sensible's Fish shell check applies to Vim 8 and above I need to
 " manually force my shell here.  Also setting it to simply `sh` instead of
 " `/bin/bash` because vim-dispatch apparently has trouble inferring the PID of
-" the task when `shell` is set to `/bin/bash`.
+" the task when `shell` is set to `/bin/bash`.  Computers are hard.
 "
 " See here:
 " https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim#L66-L68
@@ -49,6 +49,7 @@ call minpac#add('junegunn/gv.vim')
 call minpac#add('junegunn/vim-easy-align')
 call minpac#add('Konfekt/FastFold')
 call minpac#add('mxw/vim-jsx')
+call minpac#add('nicholaides/words-to-avoid.vim')
 call minpac#add('pangloss/vim-javascript')
 call minpac#add('rizzatti/dash.vim')
 call minpac#add('rust-lang/rust.vim')
@@ -61,6 +62,7 @@ call minpac#add('tpope/vim-endwise')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-obsession')
 call minpac#add('tpope/vim-projectionist')
+call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-rhubarb')
 call minpac#add('tpope/vim-scriptease')
 call minpac#add('tpope/vim-sensible')
@@ -149,12 +151,10 @@ nnoremap zG 2zg
 set background=dark
 colorscheme lucius
 
-" I realize setting t_ZH and t_ZR directly is probably 'bad' to more advanced
-" vim folks.  Practicality beats purity. ¯\_(ツ)_/¯ Check out my blog post
-" about this here:
+" Check out my blog post about this here:
 " https://jsatk.us/vim-tmux-italics-and-insanity-9a96b69eeca6#.q0ygz6too
-set t_ZH=[3m
-set t_ZR=[23m
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
 highlight Comment cterm=italic
 
 set guifont=OperatorMonoForPowerline-Book:h18
@@ -196,6 +196,9 @@ augroup END
 
 " Keep the cursor in place while joining lines
 nnoremap J mzJ`z
+
+" Toggle quickfix
+nnoremap yoq :<C-R>=QuickFixIsOpen() ? "cclose" : "copen"<CR><CR>
 
 " }}}
 " Quick Editing ----------------------------------------------------------- {{{
@@ -340,9 +343,7 @@ if !isdirectory(expand(&directory))
 endif
 
 " }}}
-" File & Filetype Specific Configurations --------------------------------- {{{
-
-" Filetype Specific Configurations {{{
+" Filetype Configurations ------------------------------------------------- {{{
 
 " bash {{{
 
@@ -361,7 +362,6 @@ augroup ft_conf
 
   au BufNewFile,BufRead *.conf set filetype=conf
   autocmd FileType conf setlocal foldmethod=marker
-  autocmd Filetype conf setlocal foldmarker={{{,}}}
 augroup END
 
 " }}}
@@ -389,13 +389,12 @@ augroup ft_fish
   autocmd!
 
   autocmd BufNewFile,BufRead *.fish setlocal filetype=fish
-  autocmd FileType fish setlocal foldmarker={{{,}}}
   autocmd FileType fish setlocal foldmethod=marker
   autocmd FileType fish setlocal softtabstop=0
   autocmd FileType fish setlocal textwidth=80
   autocmd Filetype fish setlocal noexpandtab
   autocmd Filetype fish setlocal shiftwidth=8
-  " Set up :make to use fish for syntax checking.
+  " The line below sets up :make to use fish for syntax checking.
   autocmd FileType fish compiler fish
 
 " }}}
@@ -435,7 +434,6 @@ augroup ft_make
   autocmd Filetype make setlocal noexpandtab
   autocmd Filetype make setlocal shiftwidth=8
   autocmd FileType make setlocal foldmethod=marker
-  autocmd Filetype make setlocal foldmarker={{{,}}}
 augroup END
 
 " }}}
@@ -446,6 +444,7 @@ augroup ft_markdown
 
   autocmd BufNewFile,BufRead *.m*down,*.md setlocal spell filetype=markdown
   autocmd FileType markdown setlocal textwidth=0 foldlevel=1
+  autocmd BufRead,BufNewFile .plan setlocal filetype=markdown
 
   set formatoptions+=t
 augroup END
@@ -498,55 +497,6 @@ augroup END
 " }}}
 
 " }}}
-" File Specific Configurations {{{
-
-" bash_profile {{{
-
-augroup ft_bash_profile
-  autocmd!
-
-  au BufNewFile,BufRead .bash_profile setlocal foldmethod=marker
-  au BufNewFile,BufRead .bash_profile setlocal foldmarker={{{,}}}
-augroup END
-
-" }}}
-" gitconfig {{{
-
-augroup ft_gitconfig
-  autocmd!
-
-  autocmd FileType gitconfig setlocal textwidth=80
-  autocmd Filetype gitconfig setlocal noexpandtab
-  autocmd Filetype gitconfig setlocal shiftwidth=8
-  autocmd FileType gitconfig setlocal foldmethod=marker
-  autocmd Filetype gitconfig setlocal foldmarker={{{,}}}
-augroup END
-
-" }}}
-" muttrc {{{
-
-augroup ft_muttrc
-  autocmd!
-
-  au BufRead,BufNewFile *.muttrc set filetype=muttrc
-  autocmd FileType muttrc setlocal foldmethod=marker
-  autocmd Filetype muttrc setlocal foldmarker={{{,}}}
-augroup END
-
-" }}}
-" plan {{{
-
-augroup ft_plan
-  autocmd!
-
-  au BufRead,BufNewFile .plan set filetype=markdown
-augroup END
-
-" }}}
-
-" }}}
-
-" }}}
 " Vim Plugin Configurations ----------------------------------------------- {{{
 
 " Airline {{{
@@ -593,6 +543,13 @@ xmap ga <Plug>(EasyAlign)
 " Intentionally not using `nnoremap`.
 " Note: Using |:noremap| will not work with <Plug> mappings.
 nmap ga <Plug>(EasyAlign)
+
+" }}}
+" Fugitive {{{
+
+" Get a direct link to the current line (with specific commit included!) and
+" copy it to the system clipboard
+command! GitLink silent! .Gbrowse! -
 
 " }}}
 " FZF {{{
