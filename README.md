@@ -8,13 +8,13 @@ Pretty much every file & folder in this directory gets symlinked into my `~` fol
 
 ## Install
 
-Just run `make` and this will set up all your dotfiles and install a ton of useful stuff like...
+Run `make` and this will set up all your dotfiles and install a ton of useful stuff like...
 
 * Create symlinks for all the dotfiles.
 * Installs [homebrew](http://brew.sh) all the formulae I tend to want as well as global `npm` packages I use.
 * Update everything!  This was design so that it can be ran repeatedly and be non-harmful.  It only installs stuff as needed.
 
-Obviously, if you plan on using this yourself you'll need to make sure to change all the stuff that's specific to me (like my email address & name) in the dotfiles.
+If you plan on using this yourself you'll need to make sure to change all the stuff that's specific to me (like my email address & name) in the dotfiles.
 
 ## References
 
