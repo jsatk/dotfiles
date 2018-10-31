@@ -34,7 +34,7 @@ function fish_prompt --description "Sets the Fish Shell prompt"
 #			The list of modules to load, separated by ','
 #				(valid choices: aws, cwd, docker, dotenv, duration, exit, git, gitlite, hg, host, jobs, load, nix-shell, perlbrew, perms, root, shell-var, ssh, termtitle, time, user, venv, node)
 #				(default "venv,user,host,ssh,cwd,perms,git,hg,jobs,exit,root")
-		-modules "docker,ssh,cwd,gitlite,hg,jobs,root" \
+		-modules "docker,ssh,cwd,gitlite,hg,root" \
 #		-newline
 #			Show the prompt on a new line
 #		-numeric-exit-codes
