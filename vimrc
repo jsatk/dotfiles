@@ -1,8 +1,4 @@
-"  __   __   __     __    __     ______     ______
-" /\ \ / /  /\ \   /\ "-./  \   /\  == \   /\  ___\
-" \ \ \'/   \ \ \  \ \ \-./\ \  \ \  __<   \ \ \____
-"  \ \__|    \ \_\  \ \_\ \ \_\  \ \_\ \_\  \ \_____\
-"   \/_/      \/_/   \/_/  \/_/   \/_/ /_/   \/_____/
+" ~/.vimrc
 
 " Preamble ---------------------------------------------------------------- {{{
 
@@ -60,12 +56,14 @@ call minpac#add('tpope/vim-db')
 call minpac#add('tpope/vim-dispatch')
 call minpac#add('tpope/vim-endwise')
 call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-git')
 call minpac#add('tpope/vim-obsession')
 call minpac#add('tpope/vim-projectionist')
 call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-rhubarb')
 call minpac#add('tpope/vim-scriptease')
 call minpac#add('tpope/vim-sensible')
+call minpac#add('tpope/vim-sleuth')
 call minpac#add('tpope/vim-surround')
 call minpac#add('tpope/vim-unimpaired')
 call minpac#add('tpope/vim-vinegar')
@@ -73,7 +71,6 @@ call minpac#add('vim-airline/vim-airline')
 call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('vim-scripts/LargeFile')
 call minpac#add('w0rp/ale')
-
 packloadall
 
 command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update()
@@ -198,6 +195,10 @@ augroup END
 nnoremap J mzJ`z
 
 " Toggle quickfix
+function! QuickFixIsOpen()
+  let l:result = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
+  return !empty(l:result)
+endfunction
 nnoremap yoq :<C-R>=QuickFixIsOpen() ? "cclose" : "copen"<CR><CR>
 
 " }}}
@@ -389,32 +390,9 @@ augroup ft_fish
   autocmd!
 
   autocmd BufNewFile,BufRead *.fish setlocal filetype=fish
-  autocmd FileType fish setlocal foldmethod=marker
-  autocmd FileType fish setlocal softtabstop=0
   autocmd FileType fish setlocal textwidth=80
-  autocmd Filetype fish setlocal noexpandtab
-  autocmd Filetype fish setlocal shiftwidth=8
   " The line below sets up :make to use fish for syntax checking.
   autocmd FileType fish compiler fish
-
-" }}}
-" gitcommit {{{
-
-augroup ft_gitcommit
-  autocmd!
-
-  autocmd FileType gitcommit setlocal textwidth=72 spell
-  autocmd BufRead,BufNewFile gitcommit setlocal textwidth=72
-augroup END
-
-" }}}
-" go {{{
-
-augroup ft_golang
-  autocmd!
-
-  au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-augroup END
 
 " }}}
 " mail {{{
@@ -431,8 +409,6 @@ augroup END
 augroup ft_make
   autocmd!
 
-  autocmd Filetype make setlocal noexpandtab
-  autocmd Filetype make setlocal shiftwidth=8
   autocmd FileType make setlocal foldmethod=marker
 augroup END
 
@@ -525,7 +501,6 @@ let g:ale_echo_msg_format = '%linter% says: "%severity% %...code...% – %s'
 " }}}
 " Dash {{{
 
-" Note: Using |:noremap| will not work with <Plug> mappings.
 nmap <silent> <leader>d <Plug>DashSearch
 
 " }}}
@@ -549,7 +524,7 @@ nmap ga <Plug>(EasyAlign)
 
 " Get a direct link to the current line (with specific commit included!) and
 " copy it to the system clipboard
-command! GitLink silent! .Gbrowse! -
+command! Glink silent! .Gbrowse! -
 
 " }}}
 " FZF {{{
@@ -570,7 +545,8 @@ noremap <leader>g :Goyo<CR>
 " }}}
 " Javascript {{{
 
-let g:javascript_plugin_jsdoc = 1 " https://github.com/pangloss/vim-javascript#configuration-variables
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_flow = 1
 
 " }}}
 
@@ -614,10 +590,10 @@ command! -nargs=0 Pulse call s:Pulse()
 " }}}
 " Arc/Phabricator --------------------------------------------------------- {{{
 
-" Phabricator is the fucking worst, but I have to deal with it so here I am.
-" This is a tiny stupid wrapper I made so that I can simply run arc commands
-" from inside vim without having to type `:Dispatch` first.  Maybe someday
-" I'll expand on this and make it a proper plugin.
+" Phabricator is the worst, but I have to deal with it so here I am.  This is
+" a tiny wrapper I made so that I can simply run arc commands from inside vim
+" without having to type `:Dispatch` first.  Maybe someday I'll expand on this
+" and make it a proper plugin.
 "
 " Examples:
 " :Arc diff --verbatim --browse

@@ -1,2 +1,3 @@
-# vim: ft=config
 COMMAND open %s
+
+# vim: ft=config
