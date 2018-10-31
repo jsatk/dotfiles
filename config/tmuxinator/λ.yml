@@ -51,10 +51,8 @@ windows:
   - "💬": irssi
   - "🛠 ": # Intentional extra space because... unicode.
       root: ~/.dotfiles
-      layout: main-vertical
       panes:
         - vim
-        - git status
   - "📈": vtop --theme monokai
   - "🍰":
       root: ~/khan/webapp
