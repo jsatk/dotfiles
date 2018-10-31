@@ -2,10 +2,6 @@
 
 # Taps --------------------------------------------------------------------- {{{
 
-# Lets me use `brew bundle` which uses this entire file.
-tap "homebrew/bundle"
-# For non-CLI macOS applications (i.e. Chrome, Spotify, etc.)
-tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
