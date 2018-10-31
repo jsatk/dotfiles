@@ -25,7 +25,7 @@ $(info "9. Map caps lock to escape.")
 $(info "10. Install fonts.")
 $(info "11. Set ruby to rbenv.")
 $(info "12. Symlink `~/Library/scripts`.")
-$(info "13. Install and use `rcm`.")
+$(info "13. Fix Homebrew now that we are using rcm and Brewfile.")
 $(info  )
 
 # }}}
