@@ -389,7 +389,6 @@ augroup ft_fish
   autocmd!
 
   autocmd BufNewFile,BufRead *.fish setlocal filetype=fish
-  autocmd FileType fish setlocal textwidth=80
   " The line below sets up :make to use fish for syntax checking.
   autocmd FileType fish compiler fish
 

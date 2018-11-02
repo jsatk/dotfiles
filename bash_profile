@@ -238,13 +238,51 @@ function fixopenwith() {
 # }}}
 # Bash Prompt {{{
 
-function _update_ps1() {
-  PS1=$(powerline-shell $?)
+# @gf3’s Sexy Bash Prompt, inspired by “Extravagant Zsh Prompt”
+# Shamelessly copied from https://github.com/gf3/dotfiles
+
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+  export TERM=gnome-256color
+elif infocmp xterm-256color >/dev/null 2>&1; then
+  export TERM=xterm-256color
+fi
+
+if tput setaf 1 &> /dev/null; then
+  tput sgr0
+  if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
+    MAGENTA=$(tput setaf 9)
+    ORANGE=$(tput setaf 172)
+    GREEN=$(tput setaf 190)
+    PURPLE=$(tput setaf 141)
+    WHITE=$(tput setaf 256)
+  else
+    MAGENTA=$(tput setaf 5)
+    ORANGE=$(tput setaf 4)
+    GREEN=$(tput setaf 2)
+    PURPLE=$(tput setaf 1)
+    WHITE=$(tput setaf 7)
+  fi
+  BOLD=$(tput bold)
+  RESET=$(tput sgr0)
+else
+  MAGENTA="\033[1;31m"
+  ORANGE="\033[1;33m"
+  GREEN="\033[1;32m"
+  PURPLE="\033[1;35m"
+  WHITE="\033[1;37m"
+  BOLD=""
+  RESET="\033[m"
+fi
+
+function parse_git_dirty() {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
 }
 
-if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
-    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
+function parse_git_branch() {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+}
+
+PS1="\n\[$RESET\]┌─▪\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[${BOLD}${MAGENTA}\]\u \[$WHITE\]on \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$RESET\]\n└─▪ "
 
 # }}}
 # Stuff for tools, etc... {{{
@@ -261,13 +299,12 @@ source "$HOME/google-cloud-sdk/path.bash.inc"
 # The next line enables shell command completion for gcloud.
 source "$HOME/google-cloud-sdk/completion.bash.inc"
 
-# For n – the node version manager.
-# export N_PREFIX="$HOME/n"
-# export PATH="$N_PREFIX/bin:$PATH"
-
-# For asdf
-. /usr/local/opt/asdf/asdf.sh
-. /usr/local/opt/asdf/completions/asdf.bash
+# For asdf – a version manager for all languages (no more nvm, rbenv, rvm,
+# etc.) https://github.com/asdf-vm/asdf
+[[ -s $(brew --prefix)/opt/asdf/asdf.sh ]] && \
+  . $(brew --prefix)/opt/asdf/asdf.sh
+[[ -s $(brew --prefix)/opt/asdf/completions/asdf.bash ]] && \
+  . $(brew --prefix)/opt/asdf/completions/asdf.bash
 
 # }}}
 # vim: foldmethod=marker foldmarker={{{,}}}
