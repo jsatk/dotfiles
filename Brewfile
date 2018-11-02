@@ -61,13 +61,15 @@ brew "irssi"
 # }}}
 # Programming Languages, DBs, & Language Tools ----------------------------- {{{
 
+# Programming language version manager for all languages.
+# As of this writing I only use it for Ruby & NodeJS.
+brew "asdf"
+
 brew "go"
 brew "postgresql"
-brew "rbenv"
 brew "ruby-build"
 brew "rust"
 brew "sbt"
-brew "scala"
 # I install node with `n`, so lets install `yarn` w/o it.
 brew "yarn", args: ["--without-node"]
 

@@ -56,7 +56,6 @@ call minpac#add('tpope/vim-db')
 call minpac#add('tpope/vim-dispatch')
 call minpac#add('tpope/vim-endwise')
 call minpac#add('tpope/vim-fugitive')
-call minpac#add('tpope/vim-git')
 call minpac#add('tpope/vim-obsession')
 call minpac#add('tpope/vim-projectionist')
 call minpac#add('tpope/vim-repeat')
@@ -393,6 +392,21 @@ augroup ft_fish
   autocmd FileType fish setlocal textwidth=80
   " The line below sets up :make to use fish for syntax checking.
   autocmd FileType fish compiler fish
+
+" }}}
+" gitcommit {{{
+
+" Add hanging indent auto-formatting for git commit messages.  Unfortunately
+" the gitcommit settings in Vim-Fugitive don't handle hanging indents for
+" bulleted lists.
+augroup ft_gitcommit
+  autocmd!
+
+  autocmd FileType gitcommit setlocal comments+=fb:-,fb:*
+  autocmd FileType gitcommit setlocal formatoptions+=q
+  autocmd FileType gitcommit setlocal formatoptions+=2
+  autocmd FileType gitcommit setlocal formatoptions+=n
+augroup END
 
 " }}}
 " mail {{{

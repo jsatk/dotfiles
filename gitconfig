@@ -87,6 +87,15 @@
 # }}}
 # colors ------------------------------------------------------------------ {{{
 
+[color]
+	ui = true
+
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+
 [color "branch"]
 	current = yellow reverse
 	local = yellow
@@ -94,9 +103,11 @@
 
 [color "diff"]
 	frag = magenta bold
-	meta = yellow bold
+	meta = yellow
 	new = green bold
 	old = red bold
+	commit = yellow bold
+	whitespace = red reverse
 
 [color "status"]
 	added = yellow

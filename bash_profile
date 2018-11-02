@@ -249,9 +249,6 @@ fi
 # }}}
 # Stuff for tools, etc... {{{
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
 # For autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
@@ -259,14 +256,18 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # The next line updates PATH for the Google Cloud SDK.
-source '/Users/jesseatkinson/google-cloud-sdk/path.bash.inc'
+source "$HOME/google-cloud-sdk/path.bash.inc"
 
 # The next line enables shell command completion for gcloud.
-source '/Users/jesseatkinson/google-cloud-sdk/completion.bash.inc'
+source "$HOME/google-cloud-sdk/completion.bash.inc"
 
 # For n – the node version manager.
-export N_PREFIX="$HOME/n"
-export PATH="$N_PREFIX/bin:$PATH"
+# export N_PREFIX="$HOME/n"
+# export PATH="$N_PREFIX/bin:$PATH"
+
+# For asdf
+. /usr/local/opt/asdf/asdf.sh
+. /usr/local/opt/asdf/completions/asdf.bash
 
 # }}}
 # vim: foldmethod=marker foldmarker={{{,}}}
