@@ -76,6 +76,17 @@ brew "yarn", args: ["--without-node"]
 # }}}
 # Utilities, etc. ---------------------------------------------------------- {{{
 
+# General unix tools that it's good to have
+brew "autoconf"
+brew "automake"
+brew "coreutils"
+brew "libtool"
+brew "libxslt"
+brew "libyaml"
+brew "openssl"
+brew "readline"
+brew "unixodbc"
+
 # Allow me to use `j` to jump around my filesystem.
 brew "autojump"
 # Better `cat`.
