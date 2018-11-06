@@ -405,6 +405,7 @@ augroup ft_gitcommit
   autocmd FileType gitcommit setlocal formatoptions+=q
   autocmd FileType gitcommit setlocal formatoptions+=2
   autocmd FileType gitcommit setlocal formatoptions+=n
+  autocmd FileType gitcommit setlocal foldlevelstart=-1
 augroup END
 
 " }}}
@@ -417,22 +418,14 @@ augroup ft_mail
 augroup END
 
 " }}}
-" make {{{
-
-augroup ft_make
-  autocmd!
-
-  autocmd FileType make setlocal foldmethod=marker
-augroup END
-
-" }}}
 " markdown {{{
 
 augroup ft_markdown
   autocmd!
 
   autocmd BufNewFile,BufRead *.m*down,*.md setlocal spell filetype=markdown
-  autocmd FileType markdown setlocal textwidth=0 foldlevel=1
+  autocmd FileType markdown setlocal textwidth=0
+  autocmd FileType markdown setlocal foldlevelstart=-1
   autocmd BufRead,BufNewFile .plan setlocal filetype=markdown
 
   set formatoptions+=t
