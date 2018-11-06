@@ -144,7 +144,6 @@ cask "google-chrome-canary"
 cask "google-cloud-sdk"
 cask "google-drive-file-stream"
 cask "google-hangouts"
-cask "gpg-suite"
 cask "iTerm2" # I prefer Terminal.app, but always good to have this fallback.
 cask "java8" # For work.
 cask "keybase"

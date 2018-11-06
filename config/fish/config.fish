@@ -11,8 +11,7 @@
 # Path {{{
 
 set PATH (brew --prefix)/bin (brew --prefix)/sbin /usr/bin /bin /usr/sbin /sbin
-set PATH $PATH /usr/local/MacGPG2/bin /Library/TeX/texbin $HOME/Library/scripts
-set PATH $PATH $HOME/go/bin
+set PATH $PATH /Library/TeX/texbin $HOME/Library/scripts $HOME/go/bin
 
 # }}}
 # Environment Variables {{{
