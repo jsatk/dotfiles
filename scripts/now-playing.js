@@ -1,7 +1,8 @@
 /**
- * Returns a string containing the currently playing song and artist for use
- * in tmux prompt * If you wish to use this outside of tmux update the
- * `pinkMusicNote` const.
+ * Returns a string containing the currently playing song and artist for use in
+ * tmux prompt * If you wish to use this outside of tmux update the
+ * `pinkMusicNote` const, otherwise you'll get a text string of the color
+ * settings.
  */
 (() => {
   const noMusic = "🔇 "
@@ -20,7 +21,7 @@
     const artist = track.artist()
     const title = track.name()
 
-    return (`${pinkMusicNote} ${title} - ${artist}`).substr(0, trim)
+    return (`${pinkMusicNote} ${title}`).substr(0, trim)
   }
 
   if (spotifyIsPlaying) {
@@ -28,7 +29,7 @@
     const artist = track.artist()
     const title = track.name()
 
-    return (`${pinkMusicNote} ${title} - ${artist} `).substr(0, trim)
+    return (`${pinkMusicNote} ${title}`).substr(0, trim)
   }
 
   return noMusic
