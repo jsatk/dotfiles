@@ -406,6 +406,7 @@ augroup ft_gitcommit
   autocmd FileType gitcommit setlocal formatoptions+=2
   autocmd FileType gitcommit setlocal formatoptions+=n
   autocmd FileType gitcommit setlocal foldlevelstart=-1
+  autocmd FileType gitcommit setlocal spell
 augroup END
 
 " }}}
