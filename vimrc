@@ -3,7 +3,6 @@
 " Preamble ---------------------------------------------------------------- {{{
 
 " Jesse Atkinson | jesse@jsatk.us | @jsatk
-" https://github.com/jsatk/dotfiles/blob/master/vimrc
 
 " To see what any of the settings below do press `K` while your cursor is on
 " the setting in question and it will open the manual in a split.
@@ -32,6 +31,7 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " Add other plugins here.
+call minpac#add('ap/vim-css-color')
 call minpac#add('dag/vim-fish')
 call minpac#add('derekwyatt/vim-sbt')
 call minpac#add('derekwyatt/vim-scala')
