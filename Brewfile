@@ -74,6 +74,17 @@ brew "sbt"
 brew "yarn", args: ["--without-node"]
 
 # }}}
+# Security ----------------------------------------------------------------- {{{
+
+brew "openssl"
+# Useful for printing GPG stuff to paper for physical backup.
+brew "paperkey"
+# For personalizing & working with Yubikeys.
+brew "ykpers"
+# For working with GPG stuff.
+brew "pinentry-mac"
+
+# }}}
 # Utilities, etc. ---------------------------------------------------------- {{{
 
 # General unix tools that it's good to have
@@ -83,7 +94,6 @@ brew "coreutils"
 brew "libtool"
 brew "libxslt"
 brew "libyaml"
-brew "openssl"
 brew "readline"
 brew "unixodbc"
 
@@ -111,8 +121,6 @@ brew "jq"
 brew "mas"
 # Gives me `sponge`.
 brew "moreutils"
-# For working with GPG stuff.
-brew "pinentry-mac"
 # CLI file navigator.
 brew "ranger"
 # Manages dotfiles.
