@@ -111,6 +111,8 @@ brew "fd"
 brew "fzf"
 # For when I need to mess with fonts.
 brew "fontforge"
+# Add GitHub support to git on the command-line.
+brew "hub"
 # My blog CMS of choice.
 brew "hugo"
 # Utility for doing stuff – mostly compression – to images.
