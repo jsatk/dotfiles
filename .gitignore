@@ -14,4 +14,5 @@ config/configstore
 config/gcloud/
 config/fish/extras.fish
 config/yarn
+config/hub
 tool-versions
