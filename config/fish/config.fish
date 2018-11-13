@@ -39,10 +39,6 @@ set --export powerline_symbols "$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fo
 [ -f (brew --prefix)/share/autojump/autojump.fish ]
 and source (brew --prefix)/share/autojump/autojump.fish
 
-# For asdf – a version manager for all languages (no more nvm, rbenv, rvm, etc.)
-[ -f (brew --prefix)/opt/asdf/asdf.fish ]
-and source (brew --prefix)/opt/asdf/asdf.fish
-
 # }}}
 # Extras {{{
 

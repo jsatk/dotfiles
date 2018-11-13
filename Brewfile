@@ -61,10 +61,8 @@ brew "irssi"
 # }}}
 # Programming Languages, DBs, & Language Tools ----------------------------- {{{
 
-# Programming language version manager for all languages.
-# As of this writing I only use it for Ruby & NodeJS.
-brew "asdf"
-
+# node version manager.
+brew "n"
 brew "go"
 brew "postgresql"
 brew "ruby-build"

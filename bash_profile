@@ -299,12 +299,5 @@ source "$HOME/google-cloud-sdk/path.bash.inc"
 # The next line enables shell command completion for gcloud.
 source "$HOME/google-cloud-sdk/completion.bash.inc"
 
-# For asdf – a version manager for all languages (no more nvm, rbenv, rvm,
-# etc.) https://github.com/asdf-vm/asdf
-[[ -s $(brew --prefix)/opt/asdf/asdf.sh ]] && \
-  . $(brew --prefix)/opt/asdf/asdf.sh
-[[ -s $(brew --prefix)/opt/asdf/completions/asdf.bash ]] && \
-  . $(brew --prefix)/opt/asdf/completions/asdf.bash
-
 # }}}
 # vim: foldmethod=marker foldmarker={{{,}}}
