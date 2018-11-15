@@ -50,19 +50,25 @@ windows:
           - O # Syncs mail
   - "💬": irssi
   - "🛠 ": # Intentional extra space because... unicode.
-      root: ~/.dotfiles
+      root: "~/.dotfiles"
   - "📈": vtop --theme monokai
+  - "📗":
+      root: "~/Dropbox (Personal)/Notes"
+      panes:
+        - notes:
+          - vim
+          - "-" # Shows folders
   - "🍰":
-      root: ~/khan/webapp
+      root: "~/khan/webapp"
       panes:
         - make serve
   - "🕵️‍♂️ ": # Intentional extra space because... unicode.
-      root: ~/khan/webapp
+      root: "~/khan/webapp"
       panes:
         - glow --watch
   - "📝":
-      root: ~/khan/webapp
+      root: "~/khan/webapp"
       panes:
         - vim
   - "🐠":
-      root: ~/khan/webapp
+      root: "~/khan/webapp"
