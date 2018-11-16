@@ -1,19 +1,3 @@
-# ~/.config/fish/config.fish
-
-# Preamble {{{
-
-# Jesse Atkinson | jesse@jsatk.us | @jsatk
-
-# Fish prompt can be modified via `fish_config` command or in ~/.config/fish/functions/fish_prompt.fish
-# Fish functions are all stored in ~/.config/fish/functions/
-
-# }}}
-# Path {{{
-
-set PATH (brew --prefix)/bin (brew --prefix)/sbin /usr/bin /bin /usr/sbin /sbin
-set PATH $PATH /Library/TeX/texbin $HOME/Library/scripts $HOME/go/bin
-
-# }}}
 # Environment Variables {{{
 
 # Tmuxinator & many other tools need these set.
@@ -31,6 +15,25 @@ set --export BAT_THEME "Monokai Extended Light"
 set --export --universal GOPATH $HOME/go
 # For my Powerline prompt
 set --export powerline_symbols "$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
+# For n – node version manager
+set --export N_PREFIX $HOME/.n
+set --local BREW_PREFIX (brew --prefix)
+
+# }}}
+# Path {{{
+
+set PATH \
+  $HOME/.rbenv/shims \
+  $N_PREFIX/bin \
+  $BREW_PREFIX/bin \
+  $BREW_PREFIX/sbin \
+  $HOME/go/bin \
+  /usr/bin \
+  /bin \
+  /usr/sbin \
+  /sbin \
+  $HOME/Library/scripts \
+  /Library/TeX/texbin \
 
 # }}}
 # Files I need to source {{{

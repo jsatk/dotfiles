@@ -1,5 +1,3 @@
-# ~/.Brewfile
-
 # Taps --------------------------------------------------------------------- {{{
 
 tap "homebrew/cask-fonts"
@@ -63,12 +61,19 @@ brew "irssi"
 
 # node version manager.
 brew "n"
+# ruby version manager.
+# NOTE: I don't really need to switch versions of ruby often, but installing
+# ruby via homebrew directly is not advised.  And leveraging macOS's system
+# ruby requires sudo and can generally be a pain.  So I'm installing rbenv so I
+# can install my own user version of ruby and not deal with headaches.
+brew "rbenv"
 brew "go"
 brew "postgresql"
 brew "ruby-build"
 brew "rust"
 brew "sbt"
-# I install node with `n`, so lets install `yarn` w/o it.
+# I install node with `n`, so lets install `yarn` without it.
+# And no, I don't want to install yarn via npm.  That's too oroboros for me.
 brew "yarn", args: ["--without-node"]
 
 # }}}
