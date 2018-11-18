@@ -1,3 +1,3 @@
-function stfu --description Mute
-	osascript -e 'set volume output muted true'
+function stfu --description "Mute computer"
+	osascript -e "set volume output muted true"
 end

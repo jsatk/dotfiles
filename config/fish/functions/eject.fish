@@ -1,3 +1,3 @@
-function eject --description 'Eject drive from command line'
+function eject --description "Eject drive from command line"
 	diskutil unmount
 end

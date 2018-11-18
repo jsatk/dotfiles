@@ -1,3 +1,3 @@
-function eg --description 'Edit .gitconfig'
+function eg --description "Edit .gitconfig"
 	eval $EDITOR ~/.gitconfig
 end
