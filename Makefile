@@ -1,10 +1,3 @@
-$(info "📝 TODOs & Notes")
-$(info)
-$(info "1. Update `brew bundle` to be less noisey.  Maybe a combination of")
-$(info "   `brew bundle check --no-upgrade` & Make's conditional?")
-$(info "	- https://www.gnu.org/software/make/manual/make.html#Conditionals")
-$(info)
-
 # Core Targets ------------------------------------------------------------- {{{
 
 default: | update clean
@@ -21,7 +14,7 @@ install: | brew node ruby
 clean:
 	brew bundle --global cleanup --force
 	brew cleanup
-	gem clean --silent
+	gem clean
 	vim +PackClean +quitall
 
 # }}}
@@ -37,8 +30,28 @@ $(homebrew):
 	ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 brew: | $(homebrew)
-	# Install any not installed formulas, casks, & apps, but don't upgrade.
-	brew bundle --global --no-upgrade
+	# Currently `brew bundle check` without the `--verbose` flag appears to
+	# be bugged, which is why I'm using the `--verbose` flag.  I filed an
+	# issue.
+	#
+	# Also, e can't use Make's conditionals here because .SHELLSTATUS isn't
+	# available in the version of make that comes preinstalled on macOS
+	# (v3.81 as of 2018-11-17).
+	#
+	# Computers are hard.
+	#
+	# References:
+	# - https://github.com/Homebrew/homebrew-bundle/issues/401
+	# - https://www.gnu.org/software/make/manual/make.html#Conditionals
+	# - https://www.gnu.org/software/make/manual/html_node/Shell-Function.html
+	#
+	# Exits 1 if there are entries in our Brewfile that aren't installed.
+	brew bundle check --verbose ; \
+	# If last run command's status code does not equal 0...
+	if [ $$? -ne 0 ] ; then \
+		# Install not-yet-installed entries in Brewfile.
+		brew bundle --no-upgrade ; \
+	fi
 
 # }}}
 # Node --------------------------------------------------------------------- {{{
