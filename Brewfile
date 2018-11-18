@@ -154,6 +154,7 @@ cask_args appdir: "/Applications"
 
 cask "alfred"
 cask "backblaze"
+cask "battle-net"
 cask "dash"
 cask "discord"
 cask "docker"
@@ -168,7 +169,7 @@ cask "google-chrome-canary"
 cask "google-cloud-sdk"
 cask "google-drive-file-stream"
 cask "google-hangouts"
-cask "iTerm2" # I prefer Terminal.app, but always good to have this fallback.
+cask "iTerm2"
 cask "java8" # For work.
 cask "keybase"
 cask "keycastr"
