@@ -34,9 +34,11 @@ brew: | $(homebrew)
 	# be bugged, which is why I'm using the `--verbose` flag.  I filed an
 	# issue.
 	#
-	# Also, e can't use Make's conditionals here because .SHELLSTATUS isn't
+	# Also, I can't use Make's conditionals here because .SHELLSTATUS isn't
 	# available in the version of make that comes preinstalled on macOS
-	# (v3.81 as of 2018-11-17).
+	# (v3.81 as of 2018-11-17).  And we can't rely on a version of Make
+	# installed with homebrew as this might be the first time we've ever run
+	# homebrew.
 	#
 	# Computers are hard.
 	#
