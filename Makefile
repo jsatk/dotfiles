@@ -32,13 +32,13 @@ $(homebrew):
 brew: | $(homebrew)
 	# Currently `brew bundle check` without the `--verbose` flag appears to
 	# be bugged, which is why I'm using the `--verbose` flag.  I filed an
-	# issue.
+	# issue (see "References" below).
 	#
 	# Also, I can't use Make's conditionals here because .SHELLSTATUS isn't
-	# available in the version of make that comes preinstalled on macOS
-	# (v3.81 as of 2018-11-17).  And we can't rely on a version of Make
-	# installed with homebrew as this might be the first time we've ever run
-	# homebrew.
+	# available in the version of Make that comes preinstalled on macOS
+	# (macOS comes preinstalled with Make v3.81 as of 2018-11-17).  And we
+	# can't rely on a version of Make installed with homebrew as this might
+	# be the first time we've ever run homebrew.
 	#
 	# Computers are hard.
 	#
@@ -46,12 +46,8 @@ brew: | $(homebrew)
 	# - https://github.com/Homebrew/homebrew-bundle/issues/401
 	# - https://www.gnu.org/software/make/manual/make.html#Conditionals
 	# - https://www.gnu.org/software/make/manual/html_node/Shell-Function.html
-	#
-	# Exits 1 if there are entries in our Brewfile that aren't installed.
-	brew bundle check --verbose ; \
-	# If last run command's status code does not equal 0...
+	brew bundle check --verbose --no-upgrade ; \
 	if [ $$? -ne 0 ] ; then \
-		# Install not-yet-installed entries in Brewfile.
 		brew bundle --no-upgrade ; \
 	fi
 
