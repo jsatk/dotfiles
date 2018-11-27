@@ -1,17 +1,60 @@
+# Configuration Variables -------------------------------------------------- {{{
+
+# Versions
+ruby_version := 2.5.3
+node_version := 8.12.0
+
+# Gloabl Binaries
+global_node_modules := \
+	diff-so-fancy \
+	glow \
+	speed-test \
+	vtop \
+
+global_gems = \
+	tmuxinator \
+	bundler \
+
+# Paths to folders & binaries
+# Brew
+homebrew_root = /usr/local
+cellar := $(homebrew_root)/Cellar
+bin := $(homebrew_root)/bin
+lib := $(homebrew_root)/lib
+homebrew := $(bin)/brew
+
+# Node
+n_root := $(HOME)/.n
+node := $(n_root)/n/versions/node/$(node_version)
+node_modules_root = $(lib)/node_modules
+prefixed_node_modules = $(addprefix $(node_modules_root)/,$(global_node_modules))
+
+# Ruby
+rbenv_root := $(HOME)/.rbenv
+ruby := $(rbenv_root)/versions/$(ruby_version)
+ruby_bin = $(ruby)/bin
+gem := $(ruby_bin)/gem
+prefixed_gems = $(addprefix $(ruby_bin)/,$(global_gems))
+
+# }}}
 # Core Targets ------------------------------------------------------------- {{{
 
-default: | update clean
+.PHONY: default
+default: | update clean ## Runs everything.  Simply run `make` to run this.
 
-update: | install
+.PHONY: update
+update: | install ## Updates everything.  Does not install new stuff.
 	rcup
 	brew bundle --global
 	gem update
 	npm update --global
 	vim +PackUpdate +quitall
 
-install: | brew node ruby
+.PHONY: install
+install: | brew node ruby ## Installs everything.  Does not update anything.
 
-clean:
+.PHONY: clean
+clean: ## Removes all unnecessary files our package managers don't need.
 	brew bundle --global cleanup --force
 	brew cleanup
 	gem clean
@@ -20,83 +63,55 @@ clean:
 # }}}
 # Homebrew ----------------------------------------------------------------- {{{
 
-homebrew_root = /usr/local
-cellar := $(homebrew_root)/Cellar
-bin := $(homebrew_root)/bin
-lib := $(homebrew_root)/lib
-homebrew := $(bin)/brew
+# Currently `brew bundle check` without the `--verbose` flag appears to
+# be bugged, which is why I'm using the `--verbose` flag.  I filed an
+# issue (see "References" below).
+#
+# References:
+# - https://github.com/Homebrew/homebrew-bundle/issues/401
+status := $(shell brew bundle check --no-upgrade --verbose > /dev/null && echo 0 || echo 1)
 
 $(homebrew):
 	ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-brew: | $(homebrew)
-	# Currently `brew bundle check` without the `--verbose` flag appears to
-	# be bugged, which is why I'm using the `--verbose` flag.  I filed an
-	# issue (see "References" below).
-	#
-	# Also, I can't use Make's conditionals here because .SHELLSTATUS isn't
-	# available in the version of Make that comes preinstalled on macOS
-	# (macOS comes preinstalled with Make v3.81 as of 2018-11-17).  And we
-	# can't rely on a version of Make installed with homebrew as this might
-	# be the first time we've ever run homebrew.
-	#
-	# Computers are hard.
-	#
-	# References:
-	# - https://github.com/Homebrew/homebrew-bundle/issues/401
-	# - https://www.gnu.org/software/make/manual/make.html#Conditionals
-	# - https://www.gnu.org/software/make/manual/html_node/Shell-Function.html
-	brew bundle check --verbose --no-upgrade ; \
-	if [ $$? -ne 0 ] ; then \
-		brew bundle --no-upgrade ; \
-	fi
+.PHONY: brew
+brew: | $(homebrew) ## Installs Homebrew & Brewfile's formulae, casks, & apps.
+ifeq ($(status), 1)
+	brew bundle --no-upgrade
+endif
 
 # }}}
 # Node --------------------------------------------------------------------- {{{
-
-global_node_modules = \
-	diff-so-fancy \
-	glow \
-	speed-test \
-	vtop \
-
-node_version := 8.12.0
-n_root := $(HOME)/.n
-node := $(n_root)/n/versions/node/$(node_version)
-node_modules_root = $(lib)/node_modules
-prefixed_node_modules = $(addprefix $(node_modules_root)/,$(global_node_modules))
 
 $(node):
 	n $(node_version)
 $(prefixed_node_modules):
 	npm install --global $(notdir $@)
 
-node: | $(node) $(prefixed_node_modules)
+.PHONY: node
+node: | $(node) $(prefixed_node_modules) ## Install node & global npm modules.
 
 # }}}
 # Ruby --------------------------------------------------------------------- {{{
-
-global_gems = \
-	tmuxinator \
-	bundler \
-
-ruby_version := 2.5.3
-rbenv_root := $(HOME)/.rbenv
-ruby := $(rbenv_root)/versions/$(ruby_version)
-ruby_bin = $(ruby)/bin
-gem := $(ruby_bin)/gem
-prefixed_gems = $(addprefix $(ruby_bin)/,$(global_gems))
 
 $(ruby): | $(cellar)/rbenv $(cellar)/ruby-build
 	rbenv install $(ruby_version)
 
 $(prefixed_gems):
-	gem install $(notdir $@)
+	$(gem) install $(notdir $@)
 
-ruby: | $(ruby) $(prefixed_gems)
+.PHONY: ruby
+ruby: | $(ruby) $(prefixed_gems) ## Install ruby, rbenv, & global gems.
 
 # }}}
+# Help --------------------------------------------------------------------- {{{
 
-.PHONY: update clean
+.PHONY: help
+help: ## Prints this help text.
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+	sort | \
+	awk 'BEGIN {FS = ":.*?## "}; \
+	{printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+# }}}
 # vim: textwidth=80 noexpandtab shiftwidth=8 foldmethod=marker foldmarker={{{,}}}
