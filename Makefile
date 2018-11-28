@@ -101,6 +101,7 @@ ruby: | $(ruby) $(prefixed_gems) ## Install ruby, rbenv, & global gems.
 # }}}
 # Help --------------------------------------------------------------------- {{{
 
+# https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 .PHONY: help
 help: ## Prints this help text.
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
