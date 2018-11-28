@@ -22,13 +22,12 @@ global_gems = \
 homebrew_root = /usr/local
 cellar := $(homebrew_root)/Cellar
 bin := $(homebrew_root)/bin
-lib := $(homebrew_root)/lib
 homebrew := $(bin)/brew
 
 # Node
 n_root := $(HOME)/.n
 node := $(n_root)/n/versions/node/$(node_version)
-node_modules_root = $(lib)/node_modules
+node_modules_root = $(n_root)/lib/node_modules
 prefixed_node_modules = $(addprefix $(node_modules_root)/,$(global_node_modules))
 
 # Ruby
