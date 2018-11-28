@@ -64,13 +64,7 @@ clean: ## Removes all unnecessary files our package managers don't need.
 # }}}
 # Homebrew ----------------------------------------------------------------- {{{
 
-# Currently `brew bundle check` without the `--verbose` flag appears to
-# be bugged, which is why I'm using the `--verbose` flag.  I filed an
-# issue (see "References" below).
-#
-# References:
-# - https://github.com/Homebrew/homebrew-bundle/issues/401
-status := $(shell brew bundle check --no-upgrade --verbose > /dev/null && echo 0 || echo 1)
+status := $(shell brew bundle check --no-upgrade > /dev/null && echo 0 || echo 1)
 
 $(homebrew):
 	ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
