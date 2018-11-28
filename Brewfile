@@ -83,6 +83,7 @@ brew "openssl"
 # Useful for printing GPG stuff to paper for physical backup.
 brew "paperkey"
 # For personalizing & working with Yubikeys.
+brew "ykman"
 brew "ykpers"
 # For working with GPG stuff.
 brew "pinentry-mac"
