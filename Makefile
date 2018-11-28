@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := all
+
 # Configuration Variables -------------------------------------------------- {{{
 
 # Versions
@@ -39,8 +41,8 @@ prefixed_gems = $(addprefix $(ruby_bin)/,$(global_gems))
 # }}}
 # Core Targets ------------------------------------------------------------- {{{
 
-.PHONY: default
-default: | update clean ## Runs everything.  Simply run `make` to run this.
+.PHONY: all
+all: | update clean ## Runs everything.  Default target.
 
 .PHONY: update
 update: | install ## Updates everything.  Does not install new stuff.
