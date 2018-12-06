@@ -425,7 +425,8 @@ augroup END
 augroup ft_markdown
   autocmd!
 
-  autocmd BufNewFile,BufRead *.m*down,*.md setlocal spell filetype=markdown
+  autocmd BufNewFile,BufRead *.m*down,*.md setlocal filetype=markdown
+  autocmd FileType markdown setlocal spell
   autocmd FileType markdown setlocal textwidth=0
   autocmd FileType markdown setlocal foldlevelstart=-1
   autocmd BufRead,BufNewFile .plan setlocal filetype=markdown
