@@ -416,6 +416,7 @@ augroup ft_mail
   autocmd!
 
   autocmd FileType mail setlocal textwidth=0
+  autocmd FileType mail setlocal spell
 augroup END
 
 " }}}
