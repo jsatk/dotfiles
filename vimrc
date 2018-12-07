@@ -214,7 +214,7 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " Folding ----------------------------------------------------------------- {{{
 
 set foldenable
-set foldlevelstart=-1
+set foldlevelstart=99
 
 nnoremap <Space> za
 vnoremap <Space> za
@@ -405,7 +405,6 @@ augroup ft_gitcommit
   autocmd FileType gitcommit setlocal formatoptions+=q
   autocmd FileType gitcommit setlocal formatoptions+=2
   autocmd FileType gitcommit setlocal formatoptions+=n
-  autocmd FileType gitcommit setlocal foldlevelstart=-1
   autocmd FileType gitcommit setlocal spell
 augroup END
 
@@ -428,7 +427,6 @@ augroup ft_markdown
   autocmd BufNewFile,BufRead *.m*down,*.md setlocal filetype=markdown
   autocmd FileType markdown setlocal spell
   autocmd FileType markdown setlocal textwidth=0
-  autocmd FileType markdown setlocal foldlevelstart=-1
   autocmd BufRead,BufNewFile .plan setlocal filetype=markdown
 
   set formatoptions+=t
@@ -598,6 +596,12 @@ command! -nargs=0 Pulse call s:Pulse()
 
 " }}}
 " Arc/Phabricator --------------------------------------------------------- {{{
+
+augroup arcrc
+  autocmd!
+
+  autocmd BufRead,BufNewFile .arcrc setlocal filetype=json
+augroup END
 
 " Phabricator is the worst, but I have to deal with it so here I am.  This is
 " a tiny wrapper I made so that I can simply run arc commands from inside vim
