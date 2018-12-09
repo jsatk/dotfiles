@@ -1,5 +1,6 @@
 # Taps --------------------------------------------------------------------- {{{
 
+tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
@@ -184,6 +185,7 @@ cask "steam"
 cask "tor-browser"
 cask "twitch"
 cask "whatsapp"
+cask "yubico-yubikey-manager"
 cask "zeplin"
 cask "zoomus"
 
