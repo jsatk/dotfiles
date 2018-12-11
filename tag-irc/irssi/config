@@ -151,6 +151,7 @@ channels = (
   { name = "#fish"; chatnet = "oftc"; autojoin = "yes"; },
   { name = "#rust"; chatnet = "Mozilla"; autojoin = "yes"; },
   { name = "#rust-beginners"; chatnet = "Mozilla"; autojoin = "yes"; }
+  { name = "#alacritty"; chatnet = "Freenode"; autojoin = "yes"; }
 );
 
 aliases = {
