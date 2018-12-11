@@ -116,6 +116,8 @@ brew "fd"
 brew "fzf"
 # For when I need to mess with fonts.
 brew "fontforge"
+# CLI Jira
+brew "go-jira"
 # Add GitHub support to git on the command-line.
 brew "hub"
 # My blog CMS of choice.
