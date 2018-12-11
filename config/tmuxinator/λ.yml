@@ -60,8 +60,6 @@ windows:
           - "-" # Shows folders
   - "🍰":
       root: "~/khan/webapp"
-      panes:
-        - make serve
   - "🕵️‍♂️ ": # Intentional extra space because... unicode.
       root: "~/khan/webapp"
       panes:
