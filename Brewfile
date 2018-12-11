@@ -146,8 +146,9 @@ brew "tmux"
 # Alternative to `rm` that moves things to the trash rather than destroys them
 # forever.
 brew "trash"
-# Best text editor ever.
+# Best text editor ever & it's cousin.
 brew "vim"
+brew "nvim"
 
 # }}}
 # Casks -------------------------------------------------------------------- {{{
