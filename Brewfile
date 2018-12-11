@@ -90,7 +90,7 @@ brew "ykpers"
 brew "pinentry-mac"
 
 # }}}
-# Utilities, etc. ---------------------------------------------------------- {{{
+# Utilities, Games, etc. --------------------------------------------------- {{{
 
 # General unix tools that it's good to have
 brew "autoconf"
@@ -128,6 +128,8 @@ brew "jq"
 brew "mas"
 # Gives me `sponge`.
 brew "moreutils"
+# Single-player roguelike video game.
+brew "nethack"
 # CLI file navigator.
 brew "ranger"
 # Manages dotfiles.
