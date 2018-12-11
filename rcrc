@@ -1,3 +1,2 @@
 EXCLUDES="README.md scripts vim Makefile"
-SYMLINK_DIRS="config irssi terminfo mutt"
 TAGS="bash git gpg irc mail ruby tmux vim"
