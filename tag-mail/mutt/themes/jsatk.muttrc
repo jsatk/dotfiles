@@ -36,7 +36,7 @@ color attachment brightcolor211 default
 # color index color241 default ~A
 # color index color241 default ~Q
 # color index color243 default ~P
-color index brightcolor25 default ~N
+color index brightcolor39 default ~N
 color index brightcolor211 default ~F
 color index brightcolor39 default ~T
 color index color243 default ~Q
@@ -57,5 +57,5 @@ color body color211 default '^-([^-].*)?$'
 # color sidebar_flagged color2 color5    # Mailboxes containing flagged mail
 # color sidebar_highlight underline # Cursor to select a mailbox
 # color sidebar_indicator color2 color5   # The mailbox open in the Index panel
-color sidebar_new brightcolor25 default         # Mailboxes containing new mail
+color sidebar_new brightcolor39 default         # Mailboxes containing new mail
 # color sidebar_spoolfile color2 color2  # Mailbox that receives incoming mail
