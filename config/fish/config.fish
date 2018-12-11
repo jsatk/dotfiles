@@ -13,8 +13,6 @@ set --export RIPGREP_CONFIG_PATH ~/.ripgreprc
 set --export BAT_THEME "Monokai Extended Light"
 # For golang
 set --export --universal GOPATH $HOME/go
-# For my Powerline prompt
-set --export powerline_symbols "$HOME/Dropbox (Personal)/dotfiles/fontpatcher/fonts/powerline-symbols.sfd"
 # For n – node version manager
 set --export N_PREFIX $HOME/.n
 set --local BREW_PREFIX (brew --prefix)
