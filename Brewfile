@@ -154,6 +154,7 @@ brew "vim"
 
 cask_args appdir: "/Applications"
 
+cask "alacritty" # Giving this a test run 2018-10-12.
 cask "alfred"
 cask "backblaze"
 cask "battle-net"
