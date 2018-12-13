@@ -1,19 +1,21 @@
-# dotfiles.
+# dotfiles
 
-This is how I, Jesse Atkinson, do computers.  If you want to do computers like me this is the repository for you.  It assumes an macOS environment.  If you run Linux or Windows then this repo may not be for you.
+## Overview
+
+This is how I do computers.  If you want to do computers like me this is the repository for you.  It assumes an macOS environment.  If you run Linux or Windows then this repo may not be for you.
+
+There's a `Makefile` that sets everything up.  Run `make help` to see available commands.  Running `make` with no arguments kicks off the default target.
 
 It's important to note that I use [Fish Shell](https://fishshell.com).  If this scares you that's okay.  But you shouldn't be scared.  Fish Shell is amazing.
 
-Pretty much every file & folder in this directory gets symlinked into my `~` folder and prepended with a `.`.
-
-They assume you're using macOS.
+Pretty much every file & folder in this directory gets symlinked into my `~` folder and prepended with a `.` via [rcm](http://thoughtbot.github.io/rcm/rcm.7.html).
 
 Questions? Comments? Open an issue or tweet @jsatk.
 
 ## Installation
 
 ```
-$ git clone git@github.com:jsatk/dotfiles.git ~/.dotfiles
+$ git clone git@github.com:jsatk/dotfiles.git ~/.dotfiles # Installing in ~/.dotfiles is important.
 $ cd ~/.dotfiles
 $ make
 ```
@@ -28,7 +30,7 @@ Running `make` will set up all your dotfiles and install a ton of useful stuff l
 * Create symlinks for all the dotfiles via [rcm](http://thoughtbot.github.io/rcm/rcm.7.html).
 * Update everything!  This was design so that it can be ran repeatedly and be non-harmful.  It only installs stuff as needed.
 
-If you plan on using this yourself you'll need to make sure to change all the stuff that's specific to me (like my email address & name) in the dotfiles.
+If you plan on using this yourself you'll need to make sure to change all the stuff that's specific to me (like my email address & name) in the dotfiles.  Search for "Jesse" or "jsatk" and replace any mention of that with your own name, etc.
 
 ## Attribution
 
