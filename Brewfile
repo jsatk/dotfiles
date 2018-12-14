@@ -8,6 +8,8 @@ tap "homebrew/core"
 tap "keith/formulae"
 # For `rcm`.
 tap "thoughtbot/formulae"
+# For Nerd Fonts.
+tap "caskroom/fonts"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
