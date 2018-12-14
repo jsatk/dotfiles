@@ -27,6 +27,8 @@ root: ~/
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
 # tmux_options: -f ~/.tmux.mac.conf
 
+# tmuxinator starts *not* using your login shell, but rather /bin/sh or /bin/bash.
+# See: https://github.com/tmuxinator/tmuxinator/issues/300
 # Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
 tmux_command: env TERM=screen-256color tmux -2
 
