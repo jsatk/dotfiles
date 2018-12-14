@@ -81,19 +81,19 @@ tabspaces: 8
 font:
   # Normal (roman) font face
   normal:
-    family: "Operator Mono for Powerline"
+    family: Operator Mono for Powerline
     # The `style` can be specified to pick a specific face.
     style: Book
 
   # Bold font face
   bold:
-    family: "Operator Mono for Powerline"
+    family: Operator Mono for Powerline
     # The `style` can be specified to pick a specific face.
     style: Bold
 
   # Italic font face
   italic:
-    family: "Operator Mono for Powerline"
+    family: Operator Mono for Powerline
     # The `style` can be specified to pick a specific face.
     style: Italic
 
