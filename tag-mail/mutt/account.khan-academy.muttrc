@@ -1,4 +1,3 @@
-# vim: ft=muttrc
 # Paths {{{
 
 set header_cache        = ~/.mutt/khan-academy/cache/headers # where to store headers
@@ -37,3 +36,4 @@ mailboxes +"Inbox" \
           +"../temporary/search"
 
 # }}}
+# vim: ft=muttrc

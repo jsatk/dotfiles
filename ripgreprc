@@ -1,5 +1,3 @@
-# ~/.ripgreprc
-
 # Default is to use regular expressions for searching.
 # I rarely ever regular expressions.
 --fixed-strings

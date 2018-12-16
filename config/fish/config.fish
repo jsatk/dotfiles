@@ -50,4 +50,4 @@ and source (brew --prefix)/share/autojump/autojump.fish
 and source $HOME/.config/fish/extras.fish
 
 # }}}
-# vim: foldmethod=marker foldmarker={{{,}}}
+# vim: foldmethod=marker:foldmarker={{{,}}}

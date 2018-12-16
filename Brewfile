@@ -224,6 +224,5 @@ mas "Xcode", id: 497799835
 
 # }}}
 
-# vim: set syntax=ruby filetype=ruby
-# textwidth=80
-# foldmethod=marker foldmarker={{{,}}} foldlevelstart=0:
+# vim: filetype=ruby:textwidth=80:foldmethod=marker
+# vim: foldmarker={{{,}}}:foldlevelstart=0

@@ -8,7 +8,7 @@
 [alias]
 	s = status --short
 
-# Pretty git log
+        # Pretty git log
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 
 	# Undo a `git push`
@@ -229,4 +229,5 @@
 	email = jesse@khanacademy.org
 
 # }}}
-# vim: textwidth=80 noexpandtab shiftwidth=8 foldmethod=marker foldmarker={{{,}}}
+# vim: textwidth=80:noexpandtab:shiftwidth=8
+# vim: foldmethod=marker:foldmarker={{{,}}}:syntax=gitconfig

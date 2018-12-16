@@ -1,2 +1,2 @@
-EXCLUDES="README.md scripts Makefile fonts"
+EXCLUDES="README.markdown Brewfile scripts Makefile fonts"
 TAGS="bash git gpg irc mail ruby tmux vim"

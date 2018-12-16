@@ -134,24 +134,30 @@ chatnets = {
 };
 
 channels = (
-  { name = "#lobby"; chatnet = "EsperNet"; autojoin = "No"; },
-  { name = "#freenode"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#irssi"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#gamesurge"; chatnet = "GameSurge"; autojoin = "No"; },
-  { name = "#irssi"; chatnet = "IRCNet"; autojoin = "No"; },
-  { name = "#ircsource"; chatnet = "IRCSource"; autojoin = "No"; },
-  { name = "#netfuze"; chatnet = "NetFuze"; autojoin = "No"; },
-  { name = "#oftc"; chatnet = "OFTC"; autojoin = "No"; },
-  { name = "silc"; chatnet = "SILC"; autojoin = "No"; },
+  # Freenode
+  { name = "#bash"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "##crypto"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#docker"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#git"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#irssi"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#lesswrong"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "##math"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#mutt"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "##networking"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#nginx"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#Node.js"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#scala"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "##javascript"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "##crypto"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "##security"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#tmux"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#vim"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#web"; chatnet = "Freenode"; autojoin = "yes"; },
+
+  # OFTC
   { name = "#fish"; chatnet = "oftc"; autojoin = "yes"; },
+
+  # Mozilla
   { name = "#rust"; chatnet = "Mozilla"; autojoin = "yes"; },
   { name = "#rust-beginners"; chatnet = "Mozilla"; autojoin = "yes"; }
-  { name = "#alacritty"; chatnet = "Freenode"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -411,9 +417,10 @@ settings = {
     real_name = "Jesse Atkinson";
     user_name = "jesseatkinson";
     nick = "jsatk";
+    awaylog_file = "~/.irssi/away.log";
   };
   "fe-text" = { actlist_sort = "refnum"; };
-  "fe-common/core" = { theme = "doom"; };
+  "fe-common/core" = { theme = "solarized-universal"; autolog = "yes"; };
 };
 windows = {
   1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
@@ -503,14 +510,26 @@ ignores = (
   {
     level = "JOINS PARTS QUITS NICKS";
     channels = (
-      "#Node.js",
-      "#scala",
-      "##javascript",
+      "#bash",
       "##crypto",
+      "#docker",
       "#fish",
-      "#vim",
+      "#git",
+      "#irssi",
+      "##javascript",
+      "#lesswrong",
+      "##math",
+      "#mutt",
+      "##networking",
+      "#nginx",
+      "#Node.js",
       "#rust",
-      "#rest-beginners"
+      "#rust-beginners",
+      "#scala",
+      "##security",
+      "#tmux",
+      "#vim",
+      "#web"
     );
   },
   {
@@ -518,14 +537,27 @@ ignores = (
     pattern = "(away|gone|back|playin|weg|wech|returned)";
     regexp = "yes";
     channels = (
-      "#Node.js",
-      "#scala",
-      "##javascript",
+      "#bash",
       "##crypto",
+      "#docker",
       "#fish",
-      "#vim",
+      "#git",
+      "#irssi",
+      "##javascript",
+      "#lesswrong",
+      "##math",
+      "#mutt",
+      "##networking",
+      "#nginx",
+      "#Node.js",
       "#rust",
-      "#rest-beginners"
+      "#rust-beginners",
+      "#scala",
+      "##security",
+      "#tmux",
+      "#vim",
+      "#web"
     );
   }
 );
+# vim: ft=config

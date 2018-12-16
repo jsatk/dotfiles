@@ -110,4 +110,5 @@ help: ## Prints this help text.
 	{printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 # }}}
-# vim: textwidth=80 noexpandtab shiftwidth=8 foldmethod=marker foldmarker={{{,}}}
+# vim: textwidth=80:noexpandtab:shiftwidth=8
+# vim: foldmethod=marker:foldmarker={{{,}}}
