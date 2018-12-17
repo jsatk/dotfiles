@@ -1,13 +1,3 @@
-# Preamble {{{
-
-# Author:    Jesse Atkinson
-# Email:     jesse@jsatk.us
-# Source:    https://github.com/jsatk/dotfiles/blob/master/muttrc.symlink
-# Twitter:   @jsatk
-# Resources: A lot of this was shamelessly stolen from Steve Losh.
-#            https://stevelosh.com/blog/2012/10/the-homely-mutt/#sending-email
-
-# }}}
 # Editor {{{
 
 # Start vim and jump to the area where we want to type a message
@@ -50,7 +40,7 @@ unset record
 mailboxes $Mail
 
 # }}}
-# PGP / GPG {{{
+# PGP {{{
 
 set pgp_use_gpg_agent        = yes
 set pgp_sign_as              = DC5AC6E4
@@ -63,7 +53,7 @@ set crypt_replyencrypt       = yes
 set crypt_replysignencrypted = yes
 set crypt_verify_sig         = yes
 
-# https://dev.mutt.org/trac/wiki/MuttGuide/UseGPG
+# https://gitlab.com/muttmua/mutt/wikis/MuttGuide/UseGPG
 source ~/.mutt/gpg.rc
 
 # }}}
