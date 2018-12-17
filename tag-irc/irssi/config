@@ -24,14 +24,14 @@ servers = (
     port = "6667";
   },
   { address = "irc.netfuze.net"; chatnet = "NetFuze"; port = "6667"; },
-  { 
+  {
     address = "irc.quakenet.org";
     chatnet = "QuakeNet";
     port = "6667";
   },
   { address = "irc.rizon.net"; chatnet = "Rizon"; port = "6667"; },
   { address = "silc.silcnet.org"; chatnet = "SILC"; port = "706"; },
-  { 
+  {
     address = "irc.undernet.org";
     chatnet = "Undernet";
     port = "6667";
@@ -54,6 +54,15 @@ servers = (
     tls_verify = "yes";
     autoconnect = "yes";
   }
+  {
+    address = "iglooirc.com";
+    chatnet = "Igloo";
+    port = "6697";
+    use_tls = "yes";
+    tls_cert = "~/.irssi/certs/nick.pem";
+    tls_verify = "yes";
+    autoconnect = "yes";
+  }
 );
 
 chatnets = {
@@ -63,7 +72,7 @@ chatnets = {
     max_msgs = "20";
     max_whois = "30";
   };
-  EFNet = { 
+  EFNet = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "4";
@@ -87,7 +96,7 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
-  IRCnet = { 
+  IRCnet = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";
@@ -112,7 +121,7 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
-  Rizon = { 
+  Rizon = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";
@@ -126,6 +135,12 @@ chatnets = {
     max_whois = "1";
   };
   Mozilla = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
+  Igloo = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";
@@ -158,6 +173,9 @@ channels = (
   # Mozilla
   { name = "#rust"; chatnet = "Mozilla"; autojoin = "yes"; },
   { name = "#rust-beginners"; chatnet = "Mozilla"; autojoin = "yes"; }
+
+  # Igloo
+  { name = "#igloo"; chatnet = "Igloo"; autojoin = "yes"; },
 );
 
 aliases = {
