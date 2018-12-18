@@ -71,11 +71,12 @@ brew "n"
 # can install my own user version of ruby and not deal with headaches.
 brew "rbenv"
 brew "go"
+brew "nginx"
 brew "postgresql"
 brew "ruby-build"
 brew "rust"
 brew "sbt"
-# I install node with `n`, so lets install `yarn` without it.
+# I install node with `n`, so we should install `yarn` without node.
 # And no, I don't want to install yarn via npm.  That's too oroboros for me.
 brew "yarn", args: ["--without-node"]
 
@@ -161,10 +162,10 @@ brew "nvim"
 
 cask_args appdir: "/Applications"
 
-cask "alacritty" # Giving this a test run 2018-10-12.
 cask "alfred"
 cask "backblaze"
 cask "battle-net"
+cask "chromedriver"
 cask "dash"
 cask "discord"
 cask "docker"
@@ -181,10 +182,11 @@ cask "google-cloud-sdk"
 cask "google-drive-file-stream"
 cask "google-hangouts"
 cask "iTerm2"
-cask "java8" # For work.
+cask "java8" # For work 🤮.
 cask "keybase"
 cask "keycastr"
 cask "mactex"
+cask "monodraw"
 cask "rescuetime"
 cask "signal"
 cask "skype"
