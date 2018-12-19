@@ -57,7 +57,7 @@ brew "tig"
 # }}}
 # Chat --------------------------------------------------------------------- {{{
 
-brew "irssi"
+brew "weechat"
 
 # }}}
 # Programming Languages, DBs, & Language Tools ----------------------------- {{{
