@@ -14,7 +14,7 @@ Questions? Comments? Open an issue or tweet @jsatk.
 
 ## Installation
 
-```
+```sh
 $ git clone git@github.com:jsatk/dotfiles.git ~/.dotfiles # Installing in ~/.dotfiles is important.
 $ cd ~/.dotfiles
 $ make
