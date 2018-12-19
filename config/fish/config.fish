@@ -10,7 +10,7 @@ set --export GPG_TTY (tty)
 # https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
 set --export RIPGREP_CONFIG_PATH ~/.ripgreprc
 # For Bat.  See: https://github.com/sharkdp/bat
-set --export BAT_THEME "Monokai Extended Light"
+set --export BAT_THEME "TwoDark"
 # For golang
 set --export --universal GOPATH $HOME/go
 # For n – node version manager
