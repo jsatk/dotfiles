@@ -133,6 +133,8 @@ brew "jq"
 brew "mas"
 # Gives me `sponge`.
 brew "moreutils"
+# When I need to SSH.
+brew "mosh"
 # Single-player roguelike video game.
 brew "nethack"
 # CLI file navigator.
