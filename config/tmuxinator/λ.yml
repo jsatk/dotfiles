@@ -28,8 +28,11 @@ root: ~/
 # tmux_options: -f ~/.tmux.mac.conf
 
 # tmuxinator starts *not* using your login shell, but rather /bin/sh or /bin/bash.
+# For reasons I do not understand we must tell tmuxinator to start tmux with
+# $TERM set to `screen-256color`.  Then in ~/.tmux.conf we tell tmux to use the
+# default-terminal of `tmux-256color`.  Terminal emulators + terminal
+# multiplexers + terminfo = weird font stuff ¯\_(ツ)_/¯.
 # See: https://github.com/tmuxinator/tmuxinator/issues/300
-# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
 tmux_command: env TERM=screen-256color tmux -2
 
 # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
