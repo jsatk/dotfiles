@@ -188,6 +188,7 @@ cask "java8" # For work 🤮.
 cask "keybase"
 cask "keycastr"
 cask "mactex"
+cask "macvim" # For when I need a gui editor (I.E. tridactyl).
 cask "monodraw"
 cask "rescuetime"
 cask "signal"
