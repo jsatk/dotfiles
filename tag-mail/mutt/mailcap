@@ -15,7 +15,7 @@ application/pdf; ~/.mutt/view_attachment.sh %s pdf
 # Send HTML email to default browser
 text/html; ~/.mutt/view_attachment.sh %s html
 # Render HTML in email if you can
-text/html; lynx -dump '%s' | more; nametemplate=%s.html; copiousoutput;
+text/html; w3m -dump '%s' | more; nametemplate=%s.html; copiousoutput;
 
 # Unidentified files
 application/octet-stream; ~/.mutt/view_attachment.sh %s "-"

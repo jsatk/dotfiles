@@ -33,9 +33,6 @@ brew "contacts-cli"
 #   > interface. An isync executable still exists; it is a compatibility wrapper
 #   > around mbsync.
 brew "isync"
-# Lets me read HTML-only emails from senders who don't respect us cave dwellers
-# with plain text email clients.
-brew "lynx"
 # Lets me send email.
 brew "msmtp"
 # Lets me browse & read email.
@@ -44,6 +41,9 @@ brew "mutt"
 brew "notmuch"
 # Lets me go to URLs in emails.
 brew "urlview"
+# Lets me read HTML-only emails from senders who don't respect us cave dwellers
+# with plain text email clients.
+brew "w3m"
 
 # }}}
 # Version Control ---------------------------------------------------------- {{{
