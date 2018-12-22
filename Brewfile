@@ -144,7 +144,7 @@ brew "rcm"
 # Best `grep` replacement.
 brew "ripgrep"
 # Fancy ASCII print out of computer settings.
-brew "screenfetch"
+brew "neofetch"
 # Control spotify from commandline.  Mostly for adjusting volume when using
 # Spotify Connect.
 brew "shpotify"
