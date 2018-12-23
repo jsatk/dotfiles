@@ -1,0 +1,8 @@
+Host *
+ AddKeysToAgent yes
+ ChallengeResponseAuthentication no
+ HashKnownHosts yes
+ IdentityFile ~/.ssh/id_rsa
+ PasswordAuthentication no
+ UseKeychain yes
+ VisualHostKey yes

@@ -1,0 +1,2 @@
+EXCLUDES="fonts Makefile README.markdown scripts"
+TAGS="bash etc git irc mail ruby security terminfo tmux vim"

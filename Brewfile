@@ -99,6 +99,7 @@ brew "pinentry-mac"
 brew "autoconf"
 brew "automake"
 brew "coreutils"
+brew "curl", args: ["--with-openssl"]
 brew "libtool"
 brew "libxslt"
 brew "libyaml"
