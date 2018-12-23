@@ -47,7 +47,7 @@ all: | update clean ## Runs everything.  Default target.
 update: | install ## Updates everything.  Does not install new stuff.
 	rcup
 	brew bundle --global
-	gem update
+	gem update $(global_gems)
 	npm update --global
 	vim +PackUpdate +quitall
 
