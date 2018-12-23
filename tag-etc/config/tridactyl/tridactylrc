@@ -1,0 +1,8 @@
+" "vimrc-like" behaviour where removing a line from here makes the setting
+" disappear.
+sanitise tridactyllocal tridactylsync
+
+set searchengine duckduckgo
+set theme dark
+
+" vim: set filetype=vim:
