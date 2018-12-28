@@ -1,17 +1,7 @@
-# ~/.bash_profile
-
-# Preamble {{{
-
-# Author:     Jesse Atkinson
-# Email:      jesse@jsatk.us
-# Source:     https://github.com/jsatk/dotfiles/blob/master/bash_profile
-# Twitter:    @jsatk
-
-# }}}
 # Extras {{{
 
-# The extras file is for extra stuff that is generally work
-# specific that I don't want to check into github.
+# The extras file is for extra stuff that is generally work specific that I
+# don't want to check into github.  I need to source this first for work stuff.
 
 if [ -s ~/.bash_profile.khan ]; then
     source ~/.bash_profile.khan
@@ -19,6 +9,9 @@ fi
 
 # }}}
 # Basics, etc… {{{
+
+# Enables vi mode
+set -o vi
 
 # Set architecture flags
 export ARCHFLAGS="-arch x86_64"
@@ -36,8 +29,6 @@ complete -W "NSGlobalDomain" defaults
 
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
-
-# http://brettterpstra.com/2013/03/30/a-multi-purpose-editor-variable/
 export EDITOR="vim"
 
 # }}}
