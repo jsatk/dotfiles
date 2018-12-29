@@ -1,0 +1,98 @@
+# ! -----------------------------------------------------------------------------
+# ! File: gruvbox-dark.xresources
+# ! Description: Retro groove colorscheme generalized
+# ! Author: morhetz <morhetz@gmail.com>
+# ! Source: https://github.com/morhetz/gruvbox-generalized
+# ! Last Modified: 6 Sep 2014
+# ! -----------------------------------------------------------------------------
+# 
+# ! hard contrast: *background: #1d2021
+# *background: #282828
+# ! soft contrast: *background: #32302f
+# *foreground: #ebdbb2
+# ! Black + DarkGrey
+# *color0:  #282828
+# *color8:  #928374
+# ! DarkRed + Red
+# *color1:  #cc241d
+# *color9:  #fb4934
+# ! DarkGreen + Green
+# *color2:  #98971a
+# *color10: #b8bb26
+# ! DarkYellow + Yellow
+# *color3:  #d79921
+# *color11: #fabd2f
+# ! DarkBlue + Blue
+# *color4:  #458588
+# *color12: #83a598
+# ! DarkMagenta + Magenta
+# *color5:  #b16286
+# *color13: #d3869b
+# ! DarkCyan + Cyan
+# *color6:  #689d6a
+# *color14: #8ec07c
+# ! LightGrey + White
+# *color7:  #a89984
+# *color15: #ebdbb2
+
+# http://www.mutt.org/doc/manual/#color
+# Usage:
+#
+# color object foreground background
+# color { header | body } foreground background regexp
+# color index foreground background pattern
+# color compose composeobject foreground background
+# uncolor { index | header | body } { * | pattern ... }
+
+color normal color250 default
+color status color250 default
+color error brightcolor15 color196
+color indicator brightcolor235 color245
+color markers color142 default
+
+color hdrdefault color245 default
+color header brightcolor142 default "^(Subject): "
+color signature color243 default
+
+color body color137 default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
+color body color137 default ((https?|ftp)://|www)+[\-\.\;@,/%~_:?&=\#a-zA-Z0-9+]+
+color bold brightcolor15 default
+color search brightcolor16 color221
+
+color quoted color243 default
+color quoted1 color211 default
+color quoted2 color222 default
+color quoted3 color214 default
+color quoted4 color154 default
+
+color tilde color240 default
+color tree color240 default
+color attachment brightcolor208 default
+
+# http://www.mutt.org/doc/manual/manual-4.html#ss4.2
+# color index color241 default ~A
+# color index color241 default ~Q
+# color index color243 default ~P
+color index brightcolor223 default ~N
+color index brightcolor208 default ~F
+color index brightcolor223 default ~T
+color index color243 default ~Q
+color index color196 default ~D
+
+# Colorize inline diffs, really helpful for LKML or other mailing lists where
+# mails frequently include patches.
+color body brightcolor15 default '^diff .*'
+color body brightcolor15 default '^[Ii]{1}ndex .*'
+color body brightcolor15 default '^=+$'
+color body brightcolor15 default '^(---|\+\+\+) .*'
+color body brightcolor15 default '^@@ .*'
+color body color121 default '^\+([^\+].*)?$'
+color body color211 default '^-([^-].*)?$'
+
+# Sidebar
+# color sidebar_divider color2 color2    # The dividing line between the Sidebar and the Index/Pager panels
+# color sidebar_flagged color2 color5    # Mailboxes containing flagged mail
+# color sidebar_highlight underline      # Cursor to select a mailbox
+# color sidebar_indicator color2 color5  # The mailbox open in the Index panel
+color sidebar_new brightcolor223 default # Mailboxes containing new mail
+# color sidebar_spoolfile color2 color2  # Mailbox that receives incoming mail

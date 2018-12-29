@@ -36,12 +36,12 @@ call minpac#add('derekwyatt/vim-scala')
 call minpac#add('ervandew/supertab')
 call minpac#add('fatih/vim-go')
 call minpac#add('janko-m/vim-test')
-call minpac#add('jsatk/vim-colorschemes')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('junegunn/goyo.vim')
 call minpac#add('junegunn/gv.vim')
 call minpac#add('junegunn/vim-easy-align')
 call minpac#add('Konfekt/FastFold')
+call minpac#add('morhetz/gruvbox')
 call minpac#add('mxw/vim-jsx')
 call minpac#add('nicholaides/words-to-avoid.vim')
 call minpac#add('pangloss/vim-javascript')
@@ -65,7 +65,6 @@ call minpac#add('tpope/vim-surround')
 call minpac#add('tpope/vim-unimpaired')
 call minpac#add('tpope/vim-vinegar')
 call minpac#add('vim-airline/vim-airline')
-call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('vim-scripts/LargeFile')
 call minpac#add('w0rp/ale')
 packloadall
@@ -143,7 +142,7 @@ nnoremap zG 2zg
 " Look & Feel ------------------------------------------------------------- {{{
 
 set background=dark
-colorscheme lucius
+colorscheme gruvbox
 
 " Check out my blog post about this here:
 " https://jsatk.us/vim-tmux-italics-and-insanity-9a96b69eeca6#.q0ygz6too
