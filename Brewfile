@@ -65,6 +65,8 @@ brew "weechat"
 # }}}
 # Programming Languages, DBs, & Language Tools ----------------------------- {{{
 
+# terminal recording.
+brew "asciinema"
 # node version manager.
 brew "n"
 # ruby version manager.
