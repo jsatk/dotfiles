@@ -1,11 +1,3 @@
-" Preamble ---------------------------------------------------------------- {{{
-
-" Jesse Atkinson | jesse@jsatk.us | @jsatk
-
-" To see what any of the settings below do press `K` while your cursor is on
-" the setting in question and it will open the manual in a split.
-
-" }}}
 " Vim Plugins ------------------------------------------------------------- {{{
 
 " This check is done in vim-sensible, however as of this writing that check
@@ -340,143 +332,6 @@ if !isdirectory(expand(&directory))
 endif
 
 " }}}
-" Filetype Configurations ------------------------------------------------- {{{
-
-" bash {{{
-
-augroup ft_sh
-  autocmd!
-
-  autocmd FileType sh setlocal foldmethod=marker
-  autocmd Filetype sh setlocal foldmarker={,}
-augroup END
-
-" }}}
-" conf {{{
-
-augroup ft_conf
-  autocmd!
-
-  au BufNewFile,BufRead *.conf set filetype=conf
-  autocmd FileType conf setlocal foldmethod=marker
-augroup END
-
-" }}}
-" crontab {{{
-
-augroup ft_crontab
-  autocmd!
-
-  autocmd filetype crontab setlocal nobackup nowritebackup
-augroup END
-
-" }}}
-" css {{{
-
-augroup ft_css
-  autocmd!
-
-  autocmd Filetype css setlocal iskeyword+=-
-augroup END
-
-" }}}
-" fish {{{
-
-augroup ft_fish
-  autocmd!
-
-  autocmd BufNewFile,BufRead *.fish setlocal filetype=fish
-  " The line below sets up :make to use fish for syntax checking.
-  autocmd FileType fish compiler fish
-
-" }}}
-" gitcommit {{{
-
-" Add hanging indent auto-formatting for git commit messages.  Unfortunately
-" the gitcommit settings in Vim-Fugitive don't handle hanging indents for
-" bulleted lists.
-augroup ft_gitcommit
-  autocmd!
-
-  autocmd FileType gitcommit setlocal comments+=fb:-,fb:*
-  autocmd FileType gitcommit setlocal formatoptions+=q
-  autocmd FileType gitcommit setlocal formatoptions+=2
-  autocmd FileType gitcommit setlocal formatoptions+=n
-  autocmd FileType gitcommit setlocal spell
-augroup END
-
-" }}}
-" mail {{{
-
-augroup ft_mail
-  autocmd!
-
-  autocmd FileType mail setlocal textwidth=0
-  autocmd FileType mail setlocal spell
-augroup END
-
-" }}}
-" markdown {{{
-
-augroup ft_markdown
-  autocmd!
-
-  autocmd BufNewFile,BufRead *.m*down,*.md setlocal filetype=markdown
-  autocmd FileType markdown setlocal spell
-  autocmd FileType markdown setlocal textwidth=0
-  autocmd BufRead,BufNewFile .plan setlocal filetype=markdown
-
-  set formatoptions+=t
-augroup END
-
-" }}}
-" python {{{
-
-augroup ft_python
-  autocmd!
-
-  " Ignore compiled python
-  set wildignore=*.pyc
-  set foldmethod=indent
-  let g:netrw_list_hide= '.*\.pyc$'
-augroup END
-
-" }}}
-" ruby {{{
-
-augroup ft_ruby
-  autocmd!
-
-  autocmd FileType ruby setlocal foldmethod=syntax
-  autocmd BufRead,BufNewFile Capfile setlocal filetype=ruby
-augroup END
-
-" }}}
-" scala {{{
-
-augroup ft_scala
-  autocmd!
-
-  autocmd Filetype scala setlocal foldmethod=syntax
-augroup END
-
-" }}}
-" vim {{{
-
-augroup ft_vim
-  autocmd!
-
-  " Make vim resize on host window resize.  Great for increaseing/decreasing
-  " font or when you disconnect from your external monitor.
-  autocmd VimResized * wincmd =
-  autocmd FileType vim setlocal foldmethod=marker
-  autocmd FileType help setlocal textwidth=80
-  autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
-augroup END
-
-" }}}
-
-" }}}
 " Vim Plugin Configurations ----------------------------------------------- {{{
 
 " Airline {{{
@@ -505,6 +360,7 @@ let g:ale_echo_msg_format = '%linter% says: "%severity% %...code...% – %s'
 " }}}
 " Dash {{{
 
+" Note: Using |:*noremap| will not work with <Plug> mappings.
 nmap <silent> <leader>d <Plug>DashSearch
 
 " }}}
@@ -516,11 +372,12 @@ nnoremap <F9> :Dispatch<CR>
 " EasyAlign {{{
 
 " Start interactive EasyAlign in visual mode (e.g. vipga).
+" Note: Using |:*noremap| will not work with <Plug> mappings.
 xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 " Intentionally not using `nnoremap`.
-" Note: Using |:noremap| will not work with <Plug> mappings.
+" Note: Using |:*noremap| will not work with <Plug> mappings.
 nmap ga <Plug>(EasyAlign)
 
 " }}}
@@ -535,6 +392,7 @@ command! Glink silent! .Gbrowse! -
 
 " Allows us to use FZF in Vim.
 set rtp+=/usr/local/opt/fzf
+" My fingers are conditioned to Ctrl+P after years of using the Ctrl P plugin.
 nnoremap <C-p> :<C-u>FZF<CR>
 nnoremap <C-p><C-f> :<C-u>Buffers<CR>
 " Sets the search command for FZF.  `rg` follows `.gitignore`s rules if a
@@ -551,6 +409,34 @@ noremap <leader>g :Goyo<CR>
 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
+
+" }}}
+" Projectionist {{{
+
+let g:projectionist_heuristics = {
+      \ "*.markdown|*.md": {
+      \   "*.md": { "dispatch": "open -a 'Marked 2.app' {file}" },
+      \   "*.markdown": { "dispatch": "open -a 'Marked 2.app' {file}" }
+      \ },
+      \ "package.json": {
+      \   "*.js": { "make": "yarn" , "dispatch": "yarn test {file}" },
+      \   "package.json": { "type": "package" }
+      \ },
+      \ "Cargo.toml": {
+      \   "src/*.rs": {
+      \     "type": "src",
+      \     "alternate": "tests/{}.rs"
+      \   },
+      \   "tests/*.rs": {
+      \     "type": "test",
+      \     "alternate": "src/{}.rs",
+      \     "dispatch": "cargo test {}"
+      \   },
+      \   "benchmarks/*.rs": {
+      \     "type": "bench"
+      \   },
+      \   "Cargo.toml": { "type": "config" }
+      \ }}
 
 " }}}
 
