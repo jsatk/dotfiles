@@ -43,6 +43,10 @@ set PATH \
 [ -f (brew --prefix)/share/autojump/autojump.fish ]
 and source (brew --prefix)/share/autojump/autojump.fish
 
+# For iTerm
+[ -f {$HOME}/.iterm2_shell_integration.fish ]
+and source {$HOME}/.iterm2_shell_integration.fish
+
 # }}}
 # Extras {{{
 
