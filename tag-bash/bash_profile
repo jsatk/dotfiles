@@ -34,17 +34,18 @@ export EDITOR="vim"
 # }}}
 # Path {{{
 
-# Ensure user-installed binaries take precedence
-export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
+# For n – node version manager
+export N_PREFIX=$HOME/.n
+export BREW_PREFIX=$(brew --prefix)
 
-# Add Postgres to path
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+# Ensure user-installed binaries take precedence
+export PATH=$PATH:$HOME/.cargo/bin:$HOME/.rbenv/shims:$N_PREFIX/bin:$HOME/go/bin
+export PATH=$PATH:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH=$PATH:$HOME/Library/Scripts
+export PATH=$PATH:/Library/TeX/texbin
 
 # Load .bashrc if it exists
 test -f ~/.bashrc && source ~/.bashrc
-
-# Sets PATH for executable scripts
-export PATH=$PATH:$HOME/Library/Scripts
 
 # }}}
 # Bash Completion {{{

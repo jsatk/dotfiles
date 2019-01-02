@@ -24,6 +24,7 @@ set --local BREW_PREFIX (brew --prefix)
 # Path {{{
 
 set PATH \
+  $HOME/.cargo/bin \
   $HOME/.rbenv/shims \
   $N_PREFIX/bin \
   $BREW_PREFIX/bin \
