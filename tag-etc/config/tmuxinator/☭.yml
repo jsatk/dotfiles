@@ -60,6 +60,7 @@ windows:
           - tmux attach-session -t "★" || tmux new-session -s "★"
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/.dotfiles"
+  - "🤖": rtv
   - "📁": ranger
   - "📈": vtop --theme monokai
   - "📗":

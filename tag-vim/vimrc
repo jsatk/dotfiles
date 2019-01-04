@@ -411,6 +411,12 @@ let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
 
 " }}}
+" JSX {{{
+
+" Restrict JSX to only files with a .jsx extension.
+let g:jsx_ext_required = 1
+
+" }}}
 " Projectionist {{{
 
 let g:projectionist_heuristics = {
@@ -419,7 +425,6 @@ let g:projectionist_heuristics = {
       \   "*.markdown": { "dispatch": "open -a 'Marked 2.app' {file}" }
       \ },
       \ "package.json": {
-      \   "*.js": { "make": "yarn" , "dispatch": "yarn test {file}" },
       \   "package.json": { "type": "package" }
       \ },
       \ "Cargo.toml": {

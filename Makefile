@@ -15,7 +15,6 @@ global_node_modules := \
 
 global_gems = \
 	tmuxinator \
-	bundler \
 
 # Paths to folders & binaries
 # Brew
