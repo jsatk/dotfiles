@@ -136,7 +136,9 @@ nnoremap zG 2zg
 
 " We must set the lightline colorscheme *before* the vim colorscheme, because...
 " computers...
-let g:lightline = {'colorscheme': 'seoul256'}
+" The actual `gruvbox` colorscheme comes from the gruvbox plugin, not the
+" lightline plugin.
+let g:lightline = {'colorscheme': 'gruvbox'}
 
 set background=dark
 colorscheme gruvbox
