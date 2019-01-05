@@ -16,7 +16,7 @@ set -g status-left "#S » #I:#P »"
 # Right side of status bar
 set -g status-right-fg colour250
 set -g status-right-length 150
-set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} « %H:%M:%S « %d-%b-%y « #(osascript -l JavaScript ~/Library/scripts/now-playing.js)"
+set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} « #{battery_icon} #{battery_percentage} #{battery_remain} « %a %h-%d %H:%M "
 
 # Window status
 set -g window-status-format "  #I:#W#F  "
