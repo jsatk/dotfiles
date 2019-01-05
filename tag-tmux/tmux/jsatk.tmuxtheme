@@ -17,8 +17,7 @@ set -g status-left "#S » #I:#P »"
 # Right side of status bar
 set -g status-right-fg colour250
 set -g status-right-length 150
-set -g status-right '#{cpu_bg_color} CPU: #{cpu_icon} #{cpu_percentage} | %a %h-%d %H:%M '
-set -g status-right "#{?client_prefix,#[bold]⌨ #[nobold],} « #{battery_icon}#{battery_percentage} « %a %h-%d %H:%M « #(osascript -l JavaScript ~/Library/scripts/now-playing.js) « #[fg=colour16]#{cpu_bg_color} #{cpu_icon} #{cpu_percentage} "
+set -g status-right "#{prefix_highlight} « #{battery_icon}#{battery_percentage} « %a %h-%d %H:%M « #(osascript -l JavaScript ~/Library/scripts/now-playing.js) « #[fg=colour16]#{cpu_bg_color} #{cpu_icon} #{cpu_percentage} "
 
 # Window status
 set -g window-status-format "  #I:#W#F  "
