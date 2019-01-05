@@ -27,6 +27,7 @@ call minpac#add('derekwyatt/vim-sbt')
 call minpac#add('derekwyatt/vim-scala')
 call minpac#add('ervandew/supertab')
 call minpac#add('fatih/vim-go')
+call minpac#add('itchyny/lightline.vim')
 call minpac#add('janko-m/vim-test')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('junegunn/goyo.vim')
@@ -57,7 +58,6 @@ call minpac#add('tpope/vim-sleuth')
 call minpac#add('tpope/vim-surround')
 call minpac#add('tpope/vim-unimpaired')
 call minpac#add('tpope/vim-vinegar')
-call minpac#add('vim-airline/vim-airline')
 call minpac#add('vim-scripts/LargeFile')
 call minpac#add('w0rp/ale')
 packloadall
@@ -133,6 +133,10 @@ nnoremap zG 2zg
 
 " }}}
 " Look & Feel ------------------------------------------------------------- {{{
+
+" We must set the lightline colorscheme *before* the vim colorscheme, because...
+" computers...
+let g:lightline = {'colorscheme': 'seoul256'}
 
 set background=dark
 colorscheme gruvbox
@@ -335,18 +339,6 @@ endif
 " }}}
 " Vim Plugin Configurations ----------------------------------------------- {{{
 
-" Airline {{{
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = '☰'
-let g:airline_symbols.maxlinenr = ''
-
-" }}}
 " Asynchronous Lint Engine (ALE) {{{
 
 highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
