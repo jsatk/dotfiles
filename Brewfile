@@ -109,6 +109,7 @@ brew "libtool"
 brew "libxslt"
 brew "libyaml"
 brew "readline"
+brew "rlwrap"
 brew "unixodbc"
 
 # Allow me to use `j` to jump around my filesystem.
