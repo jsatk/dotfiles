@@ -319,7 +319,7 @@ augroup END
 
 set undofile                      " Maintain undo history between sessions
 set backup                        " enable backups
-set noswapfile                    " it's 2018, Vim.
+set noswapfile                    " it's 2019, Vim.
 " The extra slash on the end saves files under the name of their full path
 " with the / character replaced with a %.
 set undodir=~/.vim/tmp/undo//     " undo files
