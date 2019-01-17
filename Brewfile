@@ -128,6 +128,8 @@ brew "fzf"
 brew "fontforge"
 # CLI Jira
 brew "go-jira"
+# Better `top`.  Not as nice as `vtop` but that crashes a lot.
+brew "htop"
 # Add GitHub support to git on the command-line.
 brew "hub"
 # My blog CMS of choice.
@@ -172,6 +174,7 @@ brew "nvim"
 cask_args appdir: "/Applications"
 
 cask "alfred"
+cask "amethyst"
 cask "backblaze"
 cask "battle-net"
 cask "chromedriver"

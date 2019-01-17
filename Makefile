@@ -10,6 +10,7 @@ node_version := 8.12.0
 global_node_modules := \
 	diff-so-fancy \
 	glow \
+        mdx-deck \
 	speed-test \
 	vtop \
 
