@@ -57,12 +57,12 @@ windows:
       panes:
         - vps:
           - mosh jsatk@165.227.30.208
-          - tmux attach-session -t "★" || tmux new-session -s "★"
+          - tmux attach-session -d -t "★" || tmux new-session -s "★"
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/.dotfiles"
   - "🤖": rtv
   - "📁": ranger
-  - "📈": vtop --theme monokai
+  - "📈": htop
   - "📗":
       root: "~/Dropbox (Personal)/Notes"
       panes:
