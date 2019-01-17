@@ -10,7 +10,7 @@ node_version := 8.12.0
 global_node_modules := \
 	diff-so-fancy \
 	glow \
-        mdx-deck \
+	mdx-deck \
 	speed-test \
 	vtop \
 
@@ -91,6 +91,7 @@ node: | $(node) $(prefixed_node_modules) ## Install node & global npm modules.
 
 $(ruby): | $(cellar)/rbenv $(cellar)/ruby-build
 	rbenv install $(ruby_version)
+	rbenv global $(ruby_version)
 
 $(prefixed_gems):
 	$(gem) install $(notdir $@)
