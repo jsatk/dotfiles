@@ -80,6 +80,7 @@ brew "nginx"
 brew "postgresql"
 brew "ruby-build"
 brew "rustup-init"
+brew "sbcl"
 brew "sbt"
 # I install node with `n`, so we should install `yarn` without node.
 # And no, I don't want to install yarn via npm.  That's too oroboros for me.
