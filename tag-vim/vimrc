@@ -49,6 +49,7 @@ call minpac#add('tpope/vim-db')
 call minpac#add('tpope/vim-dispatch')
 call minpac#add('tpope/vim-endwise')
 call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-git')
 call minpac#add('tpope/vim-obsession')
 call minpac#add('tpope/vim-projectionist')
 call minpac#add('tpope/vim-repeat')
@@ -59,6 +60,7 @@ call minpac#add('tpope/vim-sleuth')
 call minpac#add('tpope/vim-surround')
 call minpac#add('tpope/vim-unimpaired')
 call minpac#add('tpope/vim-vinegar')
+call minpac#add('udalov/kotlin-vim')
 call minpac#add('vim-scripts/LargeFile')
 call minpac#add('w0rp/ale')
 packloadall
@@ -260,7 +262,7 @@ set foldtext=MyFoldText()
 " TAG JUMPING:
 
 " Create the `tags` file (may need to install ctags first)
-" Default ctags that comes with macOS is hot garbage.  `brew install ctags`
+" Default ctags that comes with macOS is 👎.  `brew install ctags`
 " There's probably a sexy regular expression to do what I'm doing with all the
 " multiple exclude statements, but I don't really care.  I'd rather have this be
 " verbose and stupidly readable and editable.
@@ -353,6 +355,9 @@ let g:ale_statusline_format = ['X %d', '? %d', '']
 " %s is the error or warning message
 let g:ale_echo_msg_format = '%linter% says: "%severity% %...code...% – %s'
 
+noremap <leader>t :ALEHover<CR>
+noremap <leader>[ :ALEGoToDefinition<CR>
+
 " }}}
 " Dash {{{
 
@@ -405,10 +410,6 @@ noremap <leader>g :Goyo<CR>
 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
-
-" }}}
-" JSX {{{
-
 " Restrict JSX to only files with a .jsx extension.
 let g:jsx_ext_required = 1
 
@@ -477,9 +478,7 @@ endfunction
 command! -nargs=0 Pulse call s:Pulse()
 
 " }}}
-
-" }}}
-" Arc/Phabricator --------------------------------------------------------- {{{
+" Arc/Phabricator {{{
 
 augroup arcrc
   autocmd!
@@ -501,6 +500,8 @@ function! s:Arc(cmd)
   execute "Dispatch arc " . a:cmd
 endfunction
 command! -nargs=1 Arc call s:Arc(<f-args>)
+
+" }}}
 
 " }}}
 

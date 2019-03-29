@@ -12,7 +12,6 @@ global_node_modules := \
 	glow \
 	mdx-deck \
 	speed-test \
-	vtop \
 
 global_gems = \
 	tmuxinator \

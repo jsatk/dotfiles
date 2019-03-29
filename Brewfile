@@ -10,6 +10,8 @@ tap "keith/formulae"
 tap "thoughtbot/formulae"
 # For Nerd Fonts.
 tap "caskroom/fonts"
+# For a better top, gotop.
+tap "cjbassi/gotop"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -127,10 +129,10 @@ brew "fd"
 brew "fzf"
 # For when I need to mess with fonts.
 brew "fontforge"
-# CLI Jira
+# CLI Jira.
 brew "go-jira"
-# Better `top`.  Not as nice as `vtop` but that crashes a lot.
-brew "htop"
+# Better top.
+brew "gotop"
 # Add GitHub support to git on the command-line.
 brew "hub"
 # My blog CMS of choice.
@@ -186,6 +188,7 @@ cask "dropbox"
 cask "droplr"
 cask "dwarf-fortress"
 cask "fantastical"
+cask "figma"
 cask "firefox"
 cask "firefox-developer-edition"
 cask "font-hack-nerd-font"
@@ -195,7 +198,7 @@ cask "google-cloud-sdk"
 cask "google-drive-file-stream"
 cask "google-hangouts"
 cask "iTerm2"
-cask "java8" # For work 🤮.
+cask "java8"
 cask "keybase"
 cask "keycastr"
 cask "mactex"
@@ -209,9 +212,7 @@ cask "spotify"
 cask "steam"
 cask "tor-browser"
 cask "twitch"
-cask "whatsapp"
 cask "yubico-yubikey-manager"
-cask "zeplin"
 cask "zoomus"
 
 # }}}

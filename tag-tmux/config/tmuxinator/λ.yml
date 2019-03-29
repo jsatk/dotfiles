@@ -58,7 +58,7 @@ windows:
       root: "~/.dotfiles"
   - "🤖": rtv
   - "📁": ranger
-  - "📈": htop
+  - "📈": gotop
   - "📗":
       root: "~/Dropbox (Personal)/Notes"
       panes:
