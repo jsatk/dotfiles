@@ -69,19 +69,11 @@ brew "weechat"
 
 # terminal recording.
 brew "asciinema"
-# node version manager.
-brew "n"
-# ruby version manager.
-# NOTE: I don't really need to switch versions of ruby often, but installing
-# ruby via homebrew directly is not advised.  And leveraging macOS's system
-# ruby requires sudo and can generally be a pain.  So I'm installing rbenv so I
-# can install my own user version of ruby and not deal with headaches.
-brew "rbenv"
-brew "go"
+# Program language version manager.  Manages all languages.
+brew "asdf"
 brew "nginx"
 brew "postgresql"
 brew "ruby-build"
-brew "rustup-init"
 brew "sbcl"
 brew "sbt"
 # I install node with `n`, so we should install `yarn` without node.
@@ -114,6 +106,7 @@ brew "libyaml"
 brew "readline"
 brew "rlwrap"
 brew "unixodbc"
+brew "unzip"
 
 # Allow me to use `j` to jump around my filesystem.
 brew "autojump"

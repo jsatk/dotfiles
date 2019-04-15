@@ -2,15 +2,10 @@
 
 # Configuration Variables -------------------------------------------------- {{{
 
-# Versions
-ruby_version := 2.5.3
-node_version := 8.12.0
-
 # Gloabl Binaries
 global_node_modules := \
 	diff-so-fancy \
 	glow \
-	mdx-deck \
 	speed-test \
 
 global_gems = \
@@ -23,27 +18,28 @@ cellar := $(homebrew_root)/Cellar
 bin := $(homebrew_root)/bin
 homebrew := $(bin)/brew
 
+# asdf
+asdf_root := $(HOME)/.asdf
+asdf_shims := $(asdf_root)/shims
+
 # Node
-n_root := $(HOME)/.n
-node := $(n_root)/n/versions/node/$(node_version)
-node_modules_root = $(n_root)/lib/node_modules
+npm := $(asdf_shims)/npm
+node_modules_root = $(asdf_shims)
 prefixed_node_modules = $(addprefix $(node_modules_root)/,$(global_node_modules))
 
 # Ruby
-rbenv_root := $(HOME)/.rbenv
-ruby := $(rbenv_root)/versions/$(ruby_version)
-ruby_bin = $(ruby)/bin
-gem := $(ruby_bin)/gem
-prefixed_gems = $(addprefix $(ruby_bin)/,$(global_gems))
+gem := $(asdf_shims)/gem
+gems_root = $(asdf_shims)
+prefixed_gems = $(addprefix $(gems_root)/,$(global_gems))
 
 # }}}
 # Core Targets ------------------------------------------------------------- {{{
 
 .PHONY: all
-all: | update clean ## Runs everything.  Default target.
+all: | update clean ## Run everything.  Default target.
 
 .PHONY: update
-update: | install ## Updates everything.  Does not install new stuff.
+update: | install ## Update everything.  (Does not install new stuff.)
 	rcup
 	brew bundle --global
 	gem update $(global_gems)
@@ -51,10 +47,10 @@ update: | install ## Updates everything.  Does not install new stuff.
 	vim +PackUpdate +quitall
 
 .PHONY: install
-install: | brew node ruby ## Installs everything.  Does not update anything.
+install: | brew asdf node_modules gems ## Install everything.  (Does not update anything.)
 
 .PHONY: clean
-clean: ## Removes all unnecessary files our package managers don't need.
+clean: ## Remove all unnecessary files our package managers don't need.
 	brew bundle --global cleanup --force
 	brew cleanup
 	gem clean
@@ -69,41 +65,42 @@ $(homebrew):
 	ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 .PHONY: brew
-brew: | $(homebrew) ## Installs Homebrew & Brewfile's formulae, casks, & apps.
+brew: | $(homebrew) ## Install Homebrew & Brewfile's formulae, casks, & apps.
 ifeq ($(status), 1)
 	brew bundle --no-upgrade
 endif
 
 # }}}
+# asdf --------------------------------------------------------------------- {{{
+
+.PHONY: asdf
+asdf: | ## Install specific verions of languages -- language versions specified in ~/.tool-versions.
+	asdf install
+
+# }}}
 # Node --------------------------------------------------------------------- {{{
 
-$(node):
-	n $(node_version)
 $(prefixed_node_modules):
-	npm install --global $(notdir $@)
+	$(npm) install --global $(notdir $@)
 
-.PHONY: node
-node: | $(node) $(prefixed_node_modules) ## Install node & global npm modules.
+.PHONY: node_modules
+node_modules: | $(prefixed_node_modules) ## Install global npm modules.
 
 # }}}
 # Ruby --------------------------------------------------------------------- {{{
 
-$(ruby): | $(cellar)/rbenv $(cellar)/ruby-build
-	rbenv install $(ruby_version)
-	rbenv global $(ruby_version)
-
 $(prefixed_gems):
 	$(gem) install $(notdir $@)
 
-.PHONY: ruby
-ruby: | $(ruby) $(prefixed_gems) ## Install ruby, rbenv, & global gems.
+.PHONY: gems
+gems: | $(prefixed_gems) ## Install global gems.
 
 # }}}
 # Help --------------------------------------------------------------------- {{{
 
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 .PHONY: help
-help: ## Prints this help text.
+help: ## Print this help text.
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 	sort | \
 	awk 'BEGIN {FS = ":.*?## "}; \
