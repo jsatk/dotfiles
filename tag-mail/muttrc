@@ -97,6 +97,7 @@ source ~/.mutt/account.khan-academy.muttrc
 macro index <f1> '<sync-mailbox><enter-command>source ~/.mutt/account.khan-academy.muttrc<enter><change-folder>!<enter>'
 macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/account.jsatk.muttrc<enter><change-folder>!<enter>'
 
+bind index g  noop
 bind index gg first-entry
 bind index G  last-entry
 
@@ -119,6 +120,7 @@ bind index,pager <right> sidebar-open
 # Pager Key Bindings
 bind pager k  previous-line
 bind pager j  next-line
+bind pager g  noop
 bind pager gg top
 bind pager G  bottom
 

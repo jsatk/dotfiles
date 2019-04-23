@@ -25,7 +25,6 @@ call minpac#add('ap/vim-css-color')
 call minpac#add('dag/vim-fish')
 call minpac#add('derekwyatt/vim-sbt')
 call minpac#add('derekwyatt/vim-scala')
-call minpac#add('ervandew/supertab')
 call minpac#add('fatih/vim-go')
 call minpac#add('itchyny/lightline.vim')
 call minpac#add('janko-m/vim-test')
@@ -389,16 +388,26 @@ nmap ga <Plug>(EasyAlign)
 command! Glink silent! .Gbrowse! -
 
 " }}}
-" FZF {{{
+" fzf {{{
 
-" Allows us to use FZF in Vim.
+" Allows us to use fzf in Vim.
 set rtp+=/usr/local/opt/fzf
-" My fingers are conditioned to Ctrl+P after years of using the Ctrl P plugin.
-nnoremap <C-p> :<C-u>FZF<CR>
-nnoremap <C-p><C-f> :<C-u>Buffers<CR>
-" Sets the search command for FZF.  `rg` follows `.gitignore`s rules if a
-" `.gitignore` is found.
-let $FZF_DEFAULT_COMMAND = 'rg --files'
+
+" Search in files.
+nnoremap <C-t> :<C-u>FZF<CR>
+" Search in vim buffers.
+nnoremap <C-t><C-f> :<C-u>Buffers<CR>
+
+" Mapping selecting mappings 
+nmap <leader><tab> <plug>(fzf-maps-n) 
+xmap <leader><tab> <plug>(fzf-maps-x) 
+omap <leader><tab> <plug>(fzf-maps-o) 
+
+" Insert mode completion 
+imap <c-x><c-k> <plug>(fzf-complete-word) 
+imap <c-x><c-f> <plug>(fzf-complete-path) 
+imap <c-x><c-j> <plug>(fzf-complete-file-ag) 
+imap <c-x><c-l> <plug>(fzf-complete-line) 
 
 " }}}
 " Goyo {{{

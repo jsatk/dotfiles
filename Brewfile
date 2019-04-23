@@ -126,6 +126,8 @@ brew "fontforge"
 brew "go-jira"
 # Better top.
 brew "gotop"
+# Alternative to `cat` & `bat`.
+brew "highlight"
 # Add GitHub support to git on the command-line.
 brew "hub"
 # My blog CMS of choice.
@@ -232,6 +234,7 @@ mas "TaskPaper", id: 1090940630
 mas "Tweetbot", id: 1384080005
 mas "VPN Unlimited", id: 727593140
 mas "Xcode", id: 497799835
+mas "xScope", id: 889428659
 
 # }}}
 

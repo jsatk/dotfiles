@@ -21,6 +21,20 @@ set --export --universal GOPATH $HOME/go
 set --export --global CPPFLAGS "-I(brew --prefix zlib)/include" pyenv install -v 3.7.0
 set --local BREW_PREFIX (brew --prefix)
 
+# For fzf
+# Try bat, then highlight, and finally cat for preview.
+# And don't print more than 500 lines.
+# This works in vim as well as command line.
+# TODO: Apparently it's bad for to throw `--preview` in the default options.
+# Figure out way to limit this to only commands where `--preview` actually works.
+set --export FZF_DEFAULT_OPTS "--preview 'bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {} 2> /dev/null | head -500'"
+# Use git to search files when in a git repo, otherwise use fd.
+set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type f'
+# Ctrl+t is the default keyboard shortcut for fuzzy find in TextMate & Sublime
+# Text and has propigated to various other editors and fzf has made it a
+# shortcut to activate it.
+set --export FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+
 # }}}
 # Path {{{
 
