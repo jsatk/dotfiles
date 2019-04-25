@@ -162,6 +162,8 @@ brew "tmux"
 # Alternative to `rm` that moves things to the trash rather than destroys them
 # forever.
 brew "trash"
+# Display directories as trees.
+brew "tree"
 # Best text editor ever & it's cousin.
 brew "vim"
 brew "nvim"

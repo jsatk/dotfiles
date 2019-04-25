@@ -51,8 +51,8 @@ windows:
   - "📧":
       panes:
         - mail:
+          - mbsync --all
           - mutt
-          - O # Syncs mail
   - "💬": weechat
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/.dotfiles"
@@ -66,11 +66,13 @@ windows:
           - vim
           - "-" # Shows folders
   - "🍰":
-      layout: even-horizontal
+      layout: even-horizontal # |  kake   | webpack |
       root: "~/khan/webapp"
       panes:
-        - make deps; and make serve
-        - tail -f genfiles/webpack-dev-server.log
+        - kake-log:
+          - make deps; and make serve
+        - webpack-log:
+          - tail -f genfiles/webpack-dev-server.log
   - "🔍":
       root: "~/khan/webapp"
       panes:
@@ -78,6 +80,7 @@ windows:
   - "📝":
       root: "~/khan/webapp"
       panes:
-        - vim
+        - coding:
+          - vim
   - "🐠":
       root: "~/khan/webapp"

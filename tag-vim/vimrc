@@ -31,8 +31,8 @@ call minpac#add('janko-m/vim-test')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('junegunn/goyo.vim')
 call minpac#add('junegunn/gv.vim')
-call minpac#add('junegunn/vim-peekaboo')
 call minpac#add('junegunn/vim-easy-align')
+call minpac#add('junegunn/vim-peekaboo')
 call minpac#add('Konfekt/FastFold')
 call minpac#add('morhetz/gruvbox')
 call minpac#add('mxw/vim-jsx')
@@ -381,20 +381,20 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
-" Fugitive {{{
-
-" Get a direct link to the current line (with specific commit included!) and
-" copy it to the system clipboard
-command! Glink silent! .Gbrowse! -
-
-" }}}
 " fzf {{{
+
+if has('nvim') || has('gui_running')
+  let $FZF_DEFAULT_OPTS .= ' --inline-info'
+endif
+
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " Allows us to use fzf in Vim.
 set rtp+=/usr/local/opt/fzf
 
 " Search in files.
-nnoremap <C-t> :<C-u>FZF<CR>
+nnoremap <C-t> :<C-u>Files<CR>
 " Search in vim buffers.
 nnoremap <C-t><C-f> :<C-u>Buffers<CR>
 
