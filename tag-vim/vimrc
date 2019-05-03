@@ -1,3 +1,5 @@
+" .vimrc of Jesse Atkinson
+
 " Vim Plugins ------------------------------------------------------------- {{{
 
 " This check is done in vim-sensible, however as of this writing that check
@@ -34,6 +36,8 @@ call minpac#add('junegunn/gv.vim')
 call minpac#add('junegunn/vim-easy-align')
 call minpac#add('junegunn/vim-peekaboo')
 call minpac#add('Konfekt/FastFold')
+call minpac#add('kovisoft/paredit')
+call minpac#add('l04m33/vlime')
 call minpac#add('morhetz/gruvbox')
 call minpac#add('mxw/vim-jsx')
 call minpac#add('nicholaides/words-to-avoid.vim')
@@ -156,19 +160,27 @@ set guifont=OperatorMonoForPowerline-Book:h18
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
+set fillchars=diff:⣿,vert:│
+
 " }}}
 " Convenience Mappings ---------------------------------------------------- {{{
 
 let mapleader = ","
-
-noremap q: :q " Do not show stupid q: window
-noremap Q <Nop> " I don't know how to use ex mode and it scares me.
-nnoremap S i<cr><esc><right> " Split line (sister to [J]oin lines)
-nnoremap <leader><leader> <c-^> " switch to last file
-nnoremap <leader>r :redraw!<cr> " redraw the buffer
-nnoremap <CR> :nohlsearch<cr> " Clear the search buffer when hitting return
+let maplocalleader = "\\"
+" Do not show stupid q: window
+noremap q: :q
+" I don't know how to use ex mode and it scares me.
+noremap Q <Nop>
+" Split line (sister to [J]oin lines)
+nnoremap S i<cr><esc><right>
+" switch to last file
+nnoremap <leader><leader> <c-^>
+" redraw the buffer
+nnoremap <leader>r :redraw!<cr>
 " Don't jump-to-next when I use * to search for what's under cursor.
 nnoremap * *<c-o>
+" <C-l> redraws the screen and removes any search highlighting.
+nnoremap <silent> <c-l> :nohlsearch<cr><c-l>
 
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
@@ -261,7 +273,7 @@ set foldtext=MyFoldText()
 " TAG JUMPING:
 
 " Create the `tags` file (may need to install ctags first)
-" Default ctags that comes with macOS is 👎.  `brew install ctags`
+" Default ctags that comes with macOS is 🚮.  `brew install ctags`
 " There's probably a sexy regular expression to do what I'm doing with all the
 " multiple exclude statements, but I don't really care.  I'd rather have this be
 " verbose and stupidly readable and editable.
@@ -294,7 +306,7 @@ command! MakeTags !ctags --recurse
 " }}}
 " Trailing Whitespace ----------------------------------------------------- {{{
 
-" Only shown when not in insert mode so I don't go insane.
+" Only show when not in insert mode.
 augroup trailing
   autocmd!
 
@@ -310,9 +322,9 @@ augroup line_return
   autocmd!
 
   autocmd BufReadPost *
-            \ if line("'\"") > 0 && line("'\"") <= line("$") |
-            \     execute 'normal! g`"zvzz' |
-            \ endif
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \     execute 'normal! g`"zvzz' |
+    \ endif
 augroup END
 
 " }}}
@@ -398,16 +410,16 @@ nnoremap <C-t> :<C-u>Files<CR>
 " Search in vim buffers.
 nnoremap <C-t><C-f> :<C-u>Buffers<CR>
 
-" Mapping selecting mappings 
-nmap <leader><tab> <plug>(fzf-maps-n) 
-xmap <leader><tab> <plug>(fzf-maps-x) 
-omap <leader><tab> <plug>(fzf-maps-o) 
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
 
-" Insert mode completion 
-imap <c-x><c-k> <plug>(fzf-complete-word) 
-imap <c-x><c-f> <plug>(fzf-complete-path) 
-imap <c-x><c-j> <plug>(fzf-complete-file-ag) 
-imap <c-x><c-l> <plug>(fzf-complete-line) 
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " }}}
 " Goyo {{{
@@ -448,6 +460,17 @@ let g:projectionist_heuristics = {
       \   },
       \   "Cargo.toml": { "type": "config" }
       \ }}
+
+" }}}
+" Vlime {{{
+
+set rtp+=~/.vim/pack/minpac/start/vlime/vim
+" We have to manually call this to update the helptags after manually updating
+" the runtime path.  See issue here:
+" https://github.com/k-takata/minpac/issues/33
+helptags ALL
+
+let g:vlime_compiler_policy = {"DEBUG": 3}
 
 " }}}
 
@@ -516,3 +539,5 @@ command! -nargs=1 Arc call s:Arc(<f-args>)
 
 set secure " Disables unsafe commands in project-specific .vimrc files.
 set exrc " Allows for project-specific vimrc files.
+
+" vim: set foldmethod=marker foldlevel=0:

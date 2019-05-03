@@ -191,4 +191,4 @@ set status_chars  = " *%A"
 set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
 
 # }}}
-# vim: filetype=muttrc:foldmethod=marker:foldmarker={{{,}}}
+# vim: set filetype=muttrc foldmethod=marker foldmarker={{{,}}} foldlevel=0:
