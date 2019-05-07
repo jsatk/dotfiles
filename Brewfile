@@ -144,8 +144,6 @@ brew "moreutils"
 brew "mosh"
 # Single-player roguelike video game.
 brew "nethack"
-# CLI file navigator.
-brew "ranger"
 # Manages dotfiles.
 brew "rcm"
 # Best `grep` replacement.
@@ -164,6 +162,8 @@ brew "tmux"
 brew "trash"
 # Display directories as trees.
 brew "tree"
+# CLI file navigator.
+brew "vifm"
 # Best text editor ever & it's cousin.
 brew "vim"
 brew "nvim"
