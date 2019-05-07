@@ -224,7 +224,7 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " Folding ----------------------------------------------------------------- {{{
 
 set foldenable
-set foldlevelstart=99
+set foldlevelstart=0
 
 nnoremap <Space> za
 vnoremap <Space> za
