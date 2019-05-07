@@ -24,8 +24,11 @@ set sendmail      = "/usr/local/bin/msmtp -a khan-academy" # Send email from thi
 
 unmailboxes * # When we switch accounts unset all folders added to sidebar by the previous account
 mailboxes +"Inbox" \
-          +"Phabricator" \
           +"Build" \
+          +"Confluence" \
+          +"Important People" \
+          +"Jira" \
+          +"Phabricator" \
           +"[Gmail]/All Mail" \
           +"[Gmail]/Drafts" \
           +"[Gmail]/Important" \
