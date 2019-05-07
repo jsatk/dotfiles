@@ -1,5 +1,3 @@
-setlocal foldmethod=indent
-
 " JSRequireToImport {{{
 
 " Turns this:
