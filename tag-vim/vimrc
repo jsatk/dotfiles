@@ -265,45 +265,6 @@ endfunction " }}}
 set foldtext=MyFoldText()
 
 " }}}
-" Tags -------------------------------------------------------------------- {{{
-
-" Stolen from:
-" https://github.com/mcantor/no_plugins/blob/master/no_plugins.vim#L86
-
-" TAG JUMPING:
-
-" Create the `tags` file (may need to install ctags first)
-" Default ctags that comes with macOS is 🚮.  `brew install ctags`
-" There's probably a sexy regular expression to do what I'm doing with all the
-" multiple exclude statements, but I don't really care.  I'd rather have this be
-" verbose and stupidly readable and editable.
-command! MakeTags !ctags --recurse
-  \ --exclude=".build"
-  \ --exclude=".bundle"
-  \ --exclude=".git"
-  \ --exclude=".tmp"
-  \ --exclude="bower_components"
-  \ --exclude="coverage"
-  \ --exclude="dist"
-  \ --exclude="docs"
-  \ --exclude="genfiles"
-  \ --exclude="log"
-  \ --exclude="node_modules"
-  \ --exclude="project"
-  \ --exclude="target"
-  \ --exclude="third_party"
-  \ --exclude="vendor"
-  \ .
-
-" NOW WE CAN:
-" - Use ^] to jump to tag under cursor
-" - Use g^] for ambiguous tags
-" - Use ^t to jump back up the tag stack
-
-" THINGS TO CONSIDER:
-" - This doesn't help if you want a visual list of tags
-
-" }}}
 " Trailing Whitespace ----------------------------------------------------- {{{
 
 " Only show when not in insert mode.
@@ -367,13 +328,17 @@ let g:ale_statusline_format = ['X %d', '? %d', '']
 let g:ale_echo_msg_format = '%linter% says: "%severity% %...code...% – %s'
 
 noremap <leader>t :ALEHover<CR>
-noremap <leader>[ :ALEGoToDefinition<CR>
 
-" }}}
-" Dash {{{
-
-" Note: Using |:*noremap| will not work with <Plug> mappings.
-nmap <silent> <leader>d <Plug>DashSearch
+" This overwrites the default behavior of <C-]>, which deals with tag jumping.
+" I'm sure this is sacralidge to some, but I so rarely use ctags (or similar)
+" and find often what I want these tools to do is to do *exactly* what
+" `:ALEGoToDefinition` already does.  So mapping it here.  The inverse of the
+" default behavior of <C-]> is <C-t>, which I've mapped to `:Files<CR>` because
+" <C-t> is the default fuzzy finder shortcut in many text editors.  The default
+" behavior of <C-t> is so rarely used, and I find <C-o> to do what <C-t> would
+" do 90% of the time that losing these default mappings in favor of better ones
+" (at least for me) is worth it to me.
+nnoremap <C-]> :ALEGoToDefinition<CR>
 
 " }}}
 " Dispatch {{{
@@ -420,11 +385,6 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
-
-" }}}
-" Goyo {{{
-
-noremap <leader>g :Goyo<CR>
 
 " }}}
 " Javascript {{{
