@@ -39,7 +39,7 @@ prefixed_gems = $(addprefix $(gems_root)/,$(global_gems))
 all: | update clean ## Run everything.  Default target.
 
 .PHONY: update
-update: | install ## Update everything.  (Does not install new stuff.)
+update: | install ## Update everything.
 	rcup
 	brew bundle --global
 	gem update $(global_gems)
