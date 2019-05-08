@@ -70,7 +70,9 @@ windows:
       panes:
         - kake-log:
           - make deps; and make serve
-        - webpack-log:
+        - react-render-server-log:
+          - tail -f genfiles/react-render-server.log
+        - webpack-dev-server-log:
           - tail -f genfiles/webpack-dev-server.log
   - "🔍":
       root: "~/khan/webapp"
