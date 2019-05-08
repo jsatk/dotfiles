@@ -8,8 +8,6 @@ tap "homebrew/core"
 tap "keith/formulae"
 # For `rcm`.
 tap "thoughtbot/formulae"
-# For Nerd Fonts.
-tap "caskroom/fonts"
 # For a better top, gotop.
 tap "cjbassi/gotop"
 
@@ -188,7 +186,6 @@ cask "fantastical"
 cask "figma"
 cask "firefox"
 cask "firefox-developer-edition"
-cask "font-hack-nerd-font"
 cask "google-chrome"
 cask "google-chrome-canary"
 cask "google-cloud-sdk"
