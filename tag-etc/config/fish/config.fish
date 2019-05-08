@@ -16,9 +16,11 @@ set --export RIPGREP_CONFIG_PATH ~/.ripgreprc
 set --export BAT_THEME "TwoDark"
 # For golang
 set --export --universal GOPATH $HOME/go
-# For asdf + python.
+# For anything that needs to use the homebrew install of zlib.
 # See: https://github.com/pyenv/pyenv/wiki/Common-build-problems#build-failed-error-the-python-zlib-extension-was-not-compiled-missing-the-zlib
-set --export --global CPPFLAGS "-I(brew --prefix zlib)/include" pyenv install -v 3.7.0
+set --export --global LDFLAGS "-L(brew --prefix zlib)/lib"
+set --export --global CPPFLAGS "-I(brew --prefix zlib)/include"
+
 set --local BREW_PREFIX (brew --prefix)
 
 # fzf {{{
