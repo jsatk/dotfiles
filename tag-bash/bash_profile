@@ -1,7 +1,18 @@
-# Basics, etc… {{{
+# Basics {{{
 
-# Enables vi mode
-set -o vi
+# Load .bashrc if it exists
+test -f ~/.bashrc && source ~/.bashrc
+
+# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring
+# wildcards.
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
+
+# Add tab completion for `defaults read|write NSGlobalDomain`.
+# You could just use `-g` instead, but I like being explicit.
+complete -W "NSGlobalDomain" defaults
+
+# }}}
+# Environment Variables {{{
 
 # Set architecture flags
 export ARCHFLAGS="-arch x86_64"
@@ -10,12 +21,21 @@ export ARCHFLAGS="-arch x86_64"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
 
-# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
-[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
+# Required for gpg... sometimes... gpg is fickle and frustrating.
+export GPG_TTY=$(tty)
 
-# Add tab completion for `defaults read|write NSGlobalDomain`
-# You could just use `-g` instead, but I like being explicit
-complete -W "NSGlobalDomain" defaults
+# Config file for ripgrep.
+# See: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+# For Bat.  See: https://github.com/sharkdp/bat
+export BAT_THEME="TwoDark"
+# For golang
+export GOPATH="$HOME/go"
+# For anything that needs to use the homebrew install of zlib.
+# See: https://github.com/pyenv/pyenv/wiki/Common-build-problems#build-failed-error-the-python-zlib-extension-was-not-compiled-missing-the-zlib
+export CPPFLAGS="-I$(brew --prefix zlib)/include"
+export CPPFLAGS="-I$(brew --prefix zlib)/include"
+export LDFLAGS="-L(brew --prefix zlib)/lib"
 
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
@@ -23,38 +43,46 @@ export EDITOR="vim"
 export BROWSER="open safari"
 export DEVELOPER="$HOME/Developer"
 
+export BREW_PREFIX=$(brew --prefix)
+
+# fzf {{{
+
+# Use git to search files when in a git repo, otherwise use fd.
+export FZF_DEFAULT_COMMAND='git ls-tree -r --name-only HEAD | fd --type file --hidden --follow'
+# If a command is really long press `?` to see the full command in a preview
+# window.  And press <C-y> to copy a command to the clipboard rather than run it.
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
+# Attempt to preview with bat or highlight or coderay or rougify before finally
+# using cat.  Only preview 100 lines.
+export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {} 2> /dev/null | head -100'"
+# Use the default command for <C-t>.
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+# Preview directories using tree.  Only preview 100 lines.
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
+
+# }}}
+
 # }}}
 # Path {{{
 
-export BREW_PREFIX=$(brew --prefix)
-
-# Ensure user-installed binaries take precedence
 export PATH=$PATH:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/Library/scripts
 export PATH=$PATH:/Library/TeX/texbin
 
-# Load .bashrc if it exists
-test -f ~/.bashrc && source ~/.bashrc
-
 # }}}
-# Bash Completion {{{
+# Files I need to source {{{
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
-# TODO: Make this more resiliant.
-source $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
+if [ -f $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash ]; then
+  . $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
+fi
 
 # }}}
 # Aliases {{{
-
-# Be nice
-alias please=sudo
-
-# Because I'm an idiot
-alias yolo=sudo
 
 # List all files colorized in long format, including dot files
 alias ll="ls -la ${colorflag}"
@@ -72,35 +100,14 @@ alias whois="whois -h whois-servers.net"
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
-# Lazy vim
-alias v="vim"
-
 # Empty the Trash on all mounted volumes and the main HDD
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
-
-# Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-
-# If you use Gist and the command line, you probably have “jist” installed. If not, run gem install jist and make
-# your life easier. This extremely short alias is great for popping a clipboard straight to a public gist and opening
-# the link in your browser.
-# http://brettterpstra.com/2013/03/14/more-command-line-handiness/
-alias pbgist="jist -Ppo"
-
-# Open Chrome
-alias chrome="open -a \"Google Chrome\""
-
-# Open Safari
-alias safari="open -a \"Safari\""
 
 # http://brettterpstra.com/2013/03/31/a-few-more-of-my-favorite-shell-aliases/
 # make executable
 alias ax="chmod a+x"
 
 # Quick edits
-# edit whatever in your $EDITOR
-alias e="$EDITOR"
 # edit .bash_profile
 alias eb="$EDITOR ~/.bash_profile"
 # edit config.fish
@@ -119,9 +126,6 @@ alias kb="$EDITOR ~/Library/KeyBindings/DefaultKeyBinding.dict"
 # reload your bash config
 alias src="source ~/.bash_profile"
 
-# list TODO/FIX lines from the current project
-alias todos="ack -n --nogroup '(TODO|FIX(ME)?):'"
-
 # Open path in Finder
 # http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
 alias f='open -a Finder ./'
@@ -135,91 +139,7 @@ alias pumpitup="osascript -e 'set volume 10'"
 alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
 
 # So tmux can handle italics
-alias tmux="env TERM=myterm-it tmux -2"
-
-# }}}
-# Functions {{{
-
-# Custom functions here.
-
-# cd to the path of the front Finder window
-cdf() {
-  target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
-  if [ "$target" != "" ]; then
-    cd "$target"; pwd
-  else
-    echo 'No Finder window found' >&2
-  fi
-}
-
-# Create a new directory and enter it
-function md() {
-  mkdir -p "$@" && cd "$@"
-}
-
-# find shorthand
-function f() {
-  find . -name "$1"
-}
-
-# Syntax-highlight JSON strings or files
-function json() {
-  if [ -p /dev/stdin ]; then
-    # piping, e.g. `echo '{"foo":42}' | json`
-    python -mjson.tool | pygmentize -l javascript
-  else
-    # e.g. `json '{"foo":42}'`
-    python -mjson.tool <<< "$*" | pygmentize -l javascript
-  fi
-}
-
-# Tail system log
-function console () {
-  if [[ $# > 0 ]]; then
-    query=$(echo "$*"|tr -s ' ' '|')
-    tail -f /var/log/system.log|grep -i --color=auto -E "$query"
-  else
-    tail -f /var/log/system.log
-  fi
-}
-
-# batch change extension
-function chgext() {
-  for file in *.$1 ; do mv $file `echo $file | sed "s/\(.*\.\)$1/\1$2/"` ; done
-}
-
-# Open find or dir in Alfred
-# Select the current directory in launchbar, optionally a file
-alf () {
-  if [[ $# = 1 ]]; then
-    [[ -e "$(pwd)/$1" ]] && open "x-alfred:select?file=$(pwd)/$1" || open "x-alfred:select?file=$1"
-  else
-    open "x-alfred:select?file=$(pwd)"
-  fi
-}
-
-# Rename Tabs
-# Reference: http://thelucid.com/2012/01/04/naming-your-terminal-tabs-in-osx-lion/
-function tabname {
-  printf "\e]1;$1\a"
-}
-
-function winname {
-  printf "\e]2;$1\a"
-}
-
-# For when you get angry
-function fuck () { echo "Calm down"; }
-function FUCK () { echo "Calm down"; }
-function FUCKFUCK () { echo "Calm down"; }
-
-# Fix the shitty OS X Open With menu duplicates
-function fixopenwith() {
-  /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user
-  killall Finder
-  echo 'Open With has been rebuilt, Finder will relaunch'
-}
-
+alias tmux="env TERM=screen-256color tmux -2"
 # }}}
 # Bash Prompt {{{
 
@@ -272,27 +192,10 @@ PS1="\n\[$RESET\]┌─▪\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD"
 # }}}
 # Stuff for tools, etc... {{{
 
-# TODO: Make this more resiliant.
-source $(brew --prefix asdf)/asdf.sh
-# Config file for ripgrep.
-# See: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
-export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
-# For Bat.  See: https://github.com/sharkdp/bat
-export BAT_THEME="TwoDark"
-# For golang
-export GOPATH="$HOME/go"
-# For asdf + python.
-# See: https://github.com/pyenv/pyenv/wiki/Common-build-problems#build-failed-error-the-python-zlib-extension-was-not-compiled-missing-the-zlib
-# export CPPFLAGS="-I$(brew --prefix zlib)/include" pyenv install -v 3.7.0
-
 # For autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
-# The next line updates PATH for the Google Cloud SDK.
-source "$HOME/google-cloud-sdk/path.bash.inc"
-
-# The next line enables shell command completion for gcloud.
-source "$HOME/google-cloud-sdk/completion.bash.inc"
+[[ -s $(brew --prefix asdf)/asdf.sh ]] && . $(brew --prefix asdf)/asdf.sh
 
 # }}}
-# vim: foldmethod=marker:foldmarker={{{,}}}
+# vim: set foldmethod=marker foldmarker={{{,}}} syntax=sh:
