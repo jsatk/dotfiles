@@ -1,6 +1,7 @@
 # Editor {{{
 
-# Start vim and jump to the area where we want to type a message
+# Start vim, start Goyo plugin, and jump to the area where we want to type a
+# message.
 set editor = "/usr/local/bin/vim -c 'Goyo' -c 'normal! }' -c 'redraw'"
 
 # }}}
@@ -19,20 +20,20 @@ source ~/.mutt/themes/gruvbox.muttrc
 # }}}
 # Basic Options {{{
 
-set   wait_key      = no      # shut up, mutt
-set   mbox_type     = Maildir # mailbox type
-set   timeout       = 3       # idle time before scanning
-set   mail_check    = 0       # minimum time between scans
-set   send_charset  = "us-ascii:utf-8:iso-8859-1"
-set   mail_check    = 0       # How often to check for new mail (time in seconds).
-set   sendmail_wait = 0       # No please don't silently fail, email is important
-set   text_flowed             # No weird line breaks in emails I send, please & thank you.
-set   smart_wrap              # Wrap emails sent to me so I can sanely read them
-set   delete                  # don't ask, just do
 set   beep_new                # bell on new mails
+set   delete                  # don't ask, just do
+set   mail_check    = 0       # How often to check for new mail (time in seconds).
+set   mail_check    = 0       # minimum time between scans
+set   mbox_type     = Maildir # mailbox type
 set   pipe_decode             # strip headers and eval mimes when piping
+set   send_charset  = "us-ascii:utf-8:iso-8859-1"
+set   sendmail_wait = 0       # No please don't silently fail, email is important
+set   smart_wrap              # Wrap emails sent to me so I can sanely read them
+set   text_flowed             # No weird line breaks in emails I send, please & thank you.
 set   thorough_search         # strip headers and eval mimes before searching
+set   timeout       = 3       # idle time before scanning
 set   use_from                # respect the From: address the editor sends back
+set   wait_key      = no      # shut up, mutt
 unset confirmappend           # don't ask, just do!
 unset mark_old                # read/new is good enough for me
 unset record
@@ -59,18 +60,18 @@ source ~/.mutt/gpg.rc
 # }}}
 # Compose View Options {{{
 
-set envelope_from                       # which from?
-set edit_headers                        # show headers when composing
-set fast_reply                          # skip to compose when replying
 set askcc                               # ask for CC:
-set fcc_attach                          # save attachments with the body
-set forward_format = "Fwd: %s"          # format of subject when forwarding
-set forward_decode                      # decode when forwarding
 set attribution    = "On %d, %n wrote:" # format of quoting header
+set edit_headers                        # show headers when composing
+set envelope_from                       # which from?
+set fast_reply                          # skip to compose when replying
+set fcc_attach                          # save attachments with the body
+set forward_decode                      # decode when forwarding
+set forward_format = "Fwd: %s"          # format of subject when forwarding
+set forward_quote                       # include message in forwards
+set include                             # include message in replies
 set reply_to                            # reply to Reply to: field
 set reverse_name                        # reply as whomever it was to
-set include                             # include message in replies
-set forward_quote                       # include message in forwards
 unset mime_forward                      # forward attachments as part of body
 
 # }}}
@@ -110,7 +111,7 @@ bind index u toggle-new
 bind index R        group-reply
 bind index <tab>    sync-mailbox
 bind index <space>  collapse-thread
-bind index _        collapse-all
+bind index _        collapse-all # Toggles showing threads.
 
 # Sidebar Navigation
 bind index,pager <down>  sidebar-next
@@ -151,23 +152,23 @@ macro attach s <save-entry><bol>~/Downloads/<eol>
 
 set date_format  = "%m/%d"
 set index_format = "[%Z]  %D  %-20.20F  %s"
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 set sort         = threads                     # like gmail
 set sort_aux     = reverse-last-date-received  # like gmail
-set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
-set uncollapse_jump                            # don't collapse on an unread message
 set sort_re                                    # thread based on regex
+set uncollapse_jump                            # don't collapse on an unread message
 
 # }}}
 # Pager View Options {{{
 
-set pager_index_lines = 10 # number of index lines to show
-set pager_context     = 3  # number of context lines to show
-set pager_stop             # don't go to next message automatically
 set menu_scroll            # scroll in menus
+set pager_context     = 3  # number of context lines to show
+set pager_index_lines = 10 # number of index lines to show
+set pager_stop             # don't go to next message automatically
+set quote_regexp      = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 set tilde                  # show tildes like in vim
 unset markers              # no ugly plus signs
 
-set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 alternative_order text/plain text/enriched text/html
 
 # }}}

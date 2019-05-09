@@ -1,11 +1,3 @@
-# Preamble {{{
-
-# Author:   Jesse Atkinson
-# Email:    jesse@jsatk.us
-# Source:   https://github.com/jsatk/dotfiles/blob/master/mbsyncrc.symlink
-# Twitter:  @jsatk
-
-# }}}
 # Khan Academy {{{
 
 IMAPAccount khan-academy

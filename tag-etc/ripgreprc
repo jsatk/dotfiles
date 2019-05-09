@@ -1,5 +1,5 @@
 # Default is to use regular expressions for searching.
-# I rarely ever regular expressions.
+# I rarely ever regular expressions for searching.
 --fixed-strings
 
 # vim: ft=config

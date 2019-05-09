@@ -1,7 +1,7 @@
 /**
  * Returns a string containing the currently playing song and artist for use in
  * tmux prompt * If you wish to use this outside of tmux update the
- * `pinkMusicNote` const, otherwise you'll get a text string of the color
+ * `rainbowTitle` const, otherwise you'll get a text string of the color
  * settings.
  */
 (() => {
@@ -43,11 +43,10 @@
   } 
 
   if (isPlaying) {
-    const track = getTrack(); 
-    // Not used currently but leaving here for easy future use if I change my mind.
-    const artist = track.artist()
+    const track = getTrack()
     const title = track.name()
     const rainbowTitle = makeRainbow(title)
+
     return (`${music} ${rainbowTitle}`).substr(0, trim)
   } else {
     return noMusic
