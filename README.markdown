@@ -6,7 +6,7 @@ This is how I do computers.  If you want to do computers like me this is the rep
 
 There's a `Makefile` that sets everything up.  Run `make help` to see available commands.  Running `make` with no arguments kicks off the default target.
 
-It's important to note that I use [Fish Shell](https://fishshell.com).  If this scares you that's okay.  But you shouldn't be scared.  Fish Shell is amazing.
+It's important to note that I use [Fish Shell](https://fishshell.com).  If this scares you that's okay.  But you shouldn't be scared.  Fish Shell is amazing.  Bash is also fully supported but I don't spend my day-to-day in it so it's possible I might miss keeping it as up-to-date as my fish stuffs.
 
 Pretty much every file & folder in this directory gets symlinked into my `~` folder and prepended with a `.` via [rcm](http://thoughtbot.github.io/rcm/rcm.7.html).
 
@@ -25,6 +25,7 @@ Running `make` will set up all your dotfiles and install a ton of useful stuff l
 * Installs [homebrew](http://brew.sh).
 * Installs all the formulas, casks, and apps (from the macOS App Store) I want.
     * To see what's installed via homebrew checkout the `Brewfile`.
+* Installs various versions of languages via [asdf](https://github.com/asdf-vm/asdf) (no nvm, rvm, etc.).
 * Installs some global npm packages and gems.
     * To see what gems & npm packages are installed checkout the `Makefile`.
 * Create symlinks for all the dotfiles via [rcm](http://thoughtbot.github.io/rcm/rcm.7.html).
