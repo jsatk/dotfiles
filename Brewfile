@@ -6,7 +6,7 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 # For contacts in Mutt.
 tap "keith/formulae"
-# For `rcm`.
+# For rcm.
 tap "thoughtbot/formulae"
 # For a better top, gotop.
 tap "cjbassi/gotop"
@@ -74,6 +74,7 @@ brew "postgresql"
 brew "ruby-build"
 brew "sbcl"
 brew "sbt"
+brew "watchman"
 # I install node with `asdf`, so we should install `yarn` without node.
 # And no, I don't want to install yarn via npm.  That's too oroboros for me.
 brew "yarn", args: ["--without-node"]
@@ -195,7 +196,6 @@ cask "iTerm2"
 cask "java8"
 cask "keybase"
 cask "keycastr"
-cask "mactex"
 cask "macvim" # For when I need a gui editor (I.E. tridactyl).
 cask "monodraw"
 cask "rescuetime"
