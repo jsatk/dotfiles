@@ -7,8 +7,7 @@
 " `/bin/bash` because vim-dispatch apparently has trouble inferring the PID of
 " the task when `shell` is set to `/bin/bash`.  Computers are hard.
 "
-" See here:
-" https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim#L66-L68
+" See: https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim#L66-L68
 if &shell =~# 'fish$'
   set shell=sh
 endif
@@ -344,6 +343,14 @@ nnoremap <C-]> :ALEGoToDefinition<CR>
 " }}}
 " Dispatch {{{
 
+" For reasons beyond my understanding the single space between the `|` and `tee`
+" where `shellpipe` is set in the Dispatch plugin causes my Javascript test
+" output to have a bunch of ugly ^[[1A characters when it's displayed in the
+" quickfix window.  Dropping that space fixes it.  I've no idea why.
+"
+" See: https://github.com/tpope/vim-dispatch/issues/222#issuecomment-493273080
+set shellpipe=2>&1\|tee
+
 nnoremap <F9> :Dispatch<CR>
 
 " }}}
@@ -392,8 +399,6 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
-" Restrict JSX to only files with a .jsx extension.
-let g:jsx_ext_required = 1
 
 " }}}
 " Projectionist {{{
@@ -427,8 +432,9 @@ let g:projectionist_heuristics = {
 
 set rtp+=~/.vim/pack/minpac/start/vlime/vim
 " We have to manually call this to update the helptags after manually updating
-" the runtime path.  See issue here:
-" https://github.com/k-takata/minpac/issues/33
+" the runtime path.
+"
+" See: https://github.com/k-takata/minpac/issues/33
 helptags ALL
 
 let g:vlime_compiler_policy = {"DEBUG": 3}
