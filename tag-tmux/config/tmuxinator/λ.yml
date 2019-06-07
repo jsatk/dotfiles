@@ -58,12 +58,6 @@ windows:
       root: "~/.dotfiles"
   - "🤖": rtv
   - "📈": gotop
-  - "📗":
-      root: "~/Dropbox (Personal)/Notes"
-      panes:
-        - notes:
-          - vim
-          - "-" # Shows folders
   - "🍰":
       layout: even-horizontal # |  kake   | webpack |
       root: "~/khan/webapp"

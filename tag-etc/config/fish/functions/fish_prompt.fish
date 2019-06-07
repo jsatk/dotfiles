@@ -13,13 +13,13 @@ function fish_prompt
 		end
 
 		function _is_git_dirty
-			echo (git status -s --ignore-submodules ^/dev/null)
+			echo (git status -s -uno --ignore-submodules ^/dev/null)
 		end
 
 		function _is_git_repo
 			type -q git
 			or return 1
-			git status -s --ignore-submodules >/dev/null ^/dev/null
+			git status -s -uno --ignore-submodules >/dev/null ^/dev/null
 		end
 
 		function _hg_branch_name

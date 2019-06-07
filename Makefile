@@ -6,9 +6,11 @@
 global_node_modules := \
 	diff-so-fancy \
 	glow \
+	neovim \
 	speed-test \
 
 global_gems = \
+	neovim \
 	tmuxinator \
 
 # Paths to folders & binaries

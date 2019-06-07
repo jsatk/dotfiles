@@ -12,61 +12,54 @@ if &shell =~# 'fish$'
   set shell=sh
 endif
 
-packadd minpac " https://github.com/k-takata/minpac
-
-call minpac#init()
-
-" minpac must have {'type': 'opt'} so that it can be loaded with `packadd`.
-call minpac#add('k-takata/minpac', {'type': 'opt'})
+call plug#begin()
 
 " Add other plugins here.
-call minpac#add('ap/vim-css-color')
-call minpac#add('dag/vim-fish')
-call minpac#add('derekwyatt/vim-sbt')
-call minpac#add('derekwyatt/vim-scala')
-call minpac#add('fatih/vim-go')
-call minpac#add('itchyny/lightline.vim')
-call minpac#add('janko/vim-test')
-call minpac#add('junegunn/fzf.vim')
-call minpac#add('junegunn/goyo.vim')
-call minpac#add('junegunn/gv.vim')
-call minpac#add('junegunn/vim-easy-align')
-call minpac#add('junegunn/vim-peekaboo')
-call minpac#add('Konfekt/FastFold')
-call minpac#add('kovisoft/paredit')
-call minpac#add('l04m33/vlime')
-call minpac#add('morhetz/gruvbox')
-call minpac#add('mxw/vim-jsx')
-call minpac#add('nicholaides/words-to-avoid.vim')
-call minpac#add('pangloss/vim-javascript')
-call minpac#add('rizzatti/dash.vim')
-call minpac#add('rust-lang/rust.vim')
-call minpac#add('sgur/vim-editorconfig')
-call minpac#add('tmux-plugins/vim-tmux')
-call minpac#add('tpope/vim-abolish')
-call minpac#add('tpope/vim-commentary')
-call minpac#add('tpope/vim-db')
-call minpac#add('tpope/vim-dispatch')
-call minpac#add('tpope/vim-endwise')
-call minpac#add('tpope/vim-fugitive')
-call minpac#add('tpope/vim-git')
-call minpac#add('tpope/vim-obsession')
-call minpac#add('tpope/vim-projectionist')
-call minpac#add('tpope/vim-repeat')
-call minpac#add('tpope/vim-rhubarb')
-call minpac#add('tpope/vim-scriptease')
-call minpac#add('tpope/vim-sensible')
-call minpac#add('tpope/vim-sleuth')
-call minpac#add('tpope/vim-surround')
-call minpac#add('tpope/vim-unimpaired')
-call minpac#add('tpope/vim-vinegar')
-call minpac#add('udalov/kotlin-vim')
-call minpac#add('vim-scripts/LargeFile')
-call minpac#add('w0rp/ale')
-packloadall
+Plug 'ap/vim-css-color'
+Plug 'dag/vim-fish'
+Plug 'derekwyatt/vim-sbt'
+Plug 'derekwyatt/vim-scala'
+Plug 'fatih/vim-go'
+Plug 'itchyny/lightline.vim'
+Plug 'janko/vim-test'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/gv.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-peekaboo'
+Plug 'Konfekt/FastFold'
+Plug 'kovisoft/paredit'
+Plug 'l04m33/vlime'
+Plug 'morhetz/gruvbox'
+Plug 'mxw/vim-jsx'
+Plug 'nicholaides/words-to-avoid.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'rizzatti/dash.vim'
+Plug 'rust-lang/rust.vim'
+Plug 'sgur/vim-editorconfig'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-db'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-scriptease'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vinegar'
+Plug 'udalov/kotlin-vim'
+Plug 'vim-scripts/LargeFile'
+Plug 'w0rp/ale'
 
-command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update()
-command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
+call plug#end()
 
 " }}}
 " Basic Options ----------------------------------------------------------- {{{
@@ -327,7 +320,8 @@ let g:ale_statusline_format = ['X %d', '? %d', '']
 " %s is the error or warning message
 let g:ale_echo_msg_format = '%linter% says: "%severity% %...code...% – %s'
 
-noremap <leader>t :ALEHover<CR>
+" Note: Using |:*noremap| will not work with <Plug> mappings.
+nmap <leader>t <Plug>(ale_hover)
 
 " This overwrites the default behavior of <C-]>, which deals with tag jumping.
 " I'm sure this is sacralidge to some, but I so rarely use ctags (or similar)
@@ -338,7 +332,8 @@ noremap <leader>t :ALEHover<CR>
 " behavior of <C-t> is so rarely used, and I find <C-o> to do what <C-t> would
 " do 90% of the time that losing these default mappings in favor of better ones
 " (at least for me) is worth it to me.
-nnoremap <C-]> :ALEGoToDefinition<CR>
+" Note: Using |:*noremap| will not work with <Plug> mappings.
+nmap <C-]> <Plug>(ale_go_to_definition)
 
 " }}}
 " Dispatch {{{

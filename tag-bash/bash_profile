@@ -31,16 +31,15 @@ export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 export BAT_THEME="TwoDark"
 # For golang
 export GOPATH="$HOME/go"
-# For anything that needs to use the homebrew install of zlib.
+# For anything that needs to use the homebrew install of zlib or openssl.
 # See: https://github.com/pyenv/pyenv/wiki/Common-build-problems#build-failed-error-the-python-zlib-extension-was-not-compiled-missing-the-zlib
-export CPPFLAGS="-I$(brew --prefix zlib)/include"
-export CPPFLAGS="-I$(brew --prefix zlib)/include"
-export LDFLAGS="-L(brew --prefix zlib)/lib"
+export CPPFLAGS="-L(brew --prefix zlib)/include -L(brew --prefix openssl)/include"
+export LDFLAGS="-L(brew --prefix zlib)/lib -L(brew --prefix openssl)/lib"
 
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 export EDITOR="vim"
-export BROWSER="open safari"
+export BROWSER="open /Applications/Firefox.app"
 export DEVELOPER="$HOME/Developer"
 
 export BREW_PREFIX=$(brew --prefix)

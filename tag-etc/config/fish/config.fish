@@ -4,7 +4,7 @@
 # See: https://fishshell.com/docs/current/index.html#editor
 set --global fish_key_bindings fish_vi_key_bindings
 # Tmuxinator & many other tools need these set.
-set --export BROWSER open safari
+set --export BROWSER open /Applications/Firefox.app
 set --export EDITOR vim
 set --export DEVELOPER ~/Developer
 # Required for gpg... sometimes... gpg is fickle and frustrating.
@@ -14,12 +14,6 @@ set --export GPG_TTY (tty)
 set --export RIPGREP_CONFIG_PATH ~/.ripgreprc
 # For Bat.  See: https://github.com/sharkdp/bat
 set --export BAT_THEME "TwoDark"
-# For golang
-set --export --universal GOPATH $HOME/go
-# For anything that needs to use the homebrew install of zlib.
-# See: https://github.com/pyenv/pyenv/wiki/Common-build-problems#build-failed-error-the-python-zlib-extension-was-not-compiled-missing-the-zlib
-set --export --universal LDFLAGS "-L(brew --prefix zlib)/lib"
-set --export --universal CPPFLAGS "-I(brew --prefix zlib)/include"
 
 set --local BREW_PREFIX (brew --prefix)
 

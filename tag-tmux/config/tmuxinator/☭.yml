@@ -58,9 +58,5 @@ windows:
       root: "~/.dotfiles"
   - "🤖": rtv
   - "📈": gotop
-  - "📗":
-      root: "~/Dropbox (Personal)/Notes"
-      panes:
-        - notes:
-          - vim
-          - "-" # Shows folders
+  - "🐠":
+      root: "~"
