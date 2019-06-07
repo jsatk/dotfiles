@@ -1,16 +1,22 @@
 # dotfiles
 
+## Table of Contents
+
+* [🌐 Overview](#overview)
+* [💻 Installation](#installation)
+* [🙇 Atribution](#attribution)
+
 ## Overview
 
 This is how I do computers.  If you want to do computers like me this is the repository for you.  It assumes an macOS environment.  If you run Linux or Windows then this repo may not be for you.
 
-There's a `Makefile` that sets everything up.  Run `make help` to see available commands.  Running `make` with no arguments kicks off the default target.
+There's a `Makefile` that sets everything up.  Run `make help` to see available commands.  Running `make` with no arguments kicks off the default target.  It should *just work* ✨.  If it doesn't please open an [issue](https://github.com/jsatk/dotfiles/issues) [email me](mailto:jesse@jsatk.us).
 
 It's important to note that I use [Fish Shell](https://fishshell.com).  If this scares you that's okay.  But you shouldn't be scared.  Fish Shell is amazing.  Bash is also fully supported but I don't spend my day-to-day in it so it's possible I might miss keeping it as up-to-date as my fish stuffs.
 
 Pretty much every file & folder in this directory gets symlinked into my `~` folder and prepended with a `.` via [rcm](http://thoughtbot.github.io/rcm/rcm.7.html).
 
-Questions? Comments? Open an issue or tweet @jsatk.
+Questions?  Comments?  Open an issue or tweet @jsatk.
 
 ## Installation
 
