@@ -1,4 +1,4 @@
-setlocal foldmethod=indent
+setlocal foldmethod=syntax
 
 " JSRequireToImport {{{
 

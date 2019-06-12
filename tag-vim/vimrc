@@ -22,6 +22,7 @@ Plug 'derekwyatt/vim-scala'
 Plug 'fatih/vim-go'
 Plug 'itchyny/lightline.vim'
 Plug 'janko/vim-test'
+Plug '/usr/local/opt/fzf' " Tells vim-fzf where fzf install is.
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
@@ -69,45 +70,46 @@ call plug#end()
 " setting and press `K`.  This will open the help for that item in a split.
 " This works for many languages in vim.
 
-set wildmode=list:longest
-set ttyfast
-set t_Co=256
-set expandtab
-set shiftround
-set shiftwidth=2
-set softtabstop=2
-set cursorline
-set list " Show select “invisible” characters
-set lazyredraw
-set showbreak=↪
-set hlsearch
-set splitbelow
-set splitright
 set autoread
 set autowrite
-set synmaxcol=800
-set ignorecase " Ignore the case, unless...
-set smartcase  " ...there's caps in it.
-set mousehide
-set laststatus=2
-set nostartofline
-set showmode
-set showcmd
-set title
-set linebreak
 set breakindent
-set textwidth=0
-set wrapmargin=0
-set scrolloff=3
-set showmatch
-set matchtime=3
-set gdefault
-set timeoutlen=500
-set nf=octal,hex,alpha " Increment alpha strings with vim
-set hidden
 " A |sentence| has to be followed by two spaces after the '.', '!' or '?'.
 " See: http://stevelosh.com/blog/2012/10/why-i-two-space/#power
 set cpo+=J
+set cursorline
+set expandtab
+set gdefault
+set hidden
+set hlsearch
+set ignorecase " Ignore the case, unless...
+set laststatus=2
+set lazyredraw
+set linebreak
+set list " Show select “invisible” characters
+set matchtime=3
+set mousehide
+set nf=octal,hex,alpha " Increment alpha strings with vim
+set nostartofline
+set scrolloff=3
+set shiftround
+set shiftwidth=2
+set showbreak=↪
+set showcmd
+set showmatch
+set showmode
+set smartcase  " ...there's caps in it.
+set softtabstop=2
+set splitbelow
+set splitright
+set synmaxcol=800
+set t_Co=256
+set textwidth=0
+set timeoutlen=500
+set title
+set ttyfast
+set updatetime=300
+set wildmode=list:longest
+set wrapmargin=0
 
 if has('mouse')
   set mouse=a
@@ -368,11 +370,9 @@ if has('nvim') || has('gui_running')
   let $FZF_DEFAULT_OPTS .= ' --inline-info'
 endif
 
+" Alias for searching all files and showing preview of file contents.
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-" Allows us to use fzf in Vim.
-set rtp+=/usr/local/opt/fzf
 
 " Search in files.
 nnoremap <C-t> :<C-u>Files<CR>
