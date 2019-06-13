@@ -16,7 +16,7 @@ It's important to note that I use [Fish Shell](https://fishshell.com).  If this 
 
 Pretty much every file & folder in this directory gets symlinked into my `~` folder and prepended with a `.` via [rcm](http://thoughtbot.github.io/rcm/rcm.7.html).
 
-Questions?  Comments?  Open an issue or tweet @jsatk.
+Questions?  Comments?  Open an issue or tweet [@jsatk](https://twitter.com/jsatk).
 
 ## Installation
 
