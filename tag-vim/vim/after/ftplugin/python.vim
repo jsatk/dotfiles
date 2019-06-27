@@ -1,3 +1,6 @@
+" PEP-8 wants this
+setlocal textwidth=79
+
 " Ignore compiled python
 setlocal wildignore=*.pyc
 setlocal foldmethod=indent

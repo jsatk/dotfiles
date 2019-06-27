@@ -4,7 +4,9 @@
 
 # Gloabl Binaries
 global_node_modules := \
+	bash-language-server \
 	diff-so-fancy \
+	dockerfile-language-server-nodejs \
 	glow \
 	neovim \
 	speed-test \
@@ -46,17 +48,18 @@ update: | install ## Update everything.
 	brew bundle --global
 	gem update $(global_gems)
 	npm update --global
-	vim +PackUpdate +quitall
+	vim +PlugUpdate +quitall
 
 .PHONY: install
 install: | brew asdf node_modules gems ## Install everything.  (Does not update anything.)
+	vim +PlugInstall +quitall
 
 .PHONY: clean
 clean: ## Remove all unnecessary files our package managers don't need.
 	brew bundle --global cleanup --force
 	brew cleanup
 	gem clean
-	vim +PackClean +quitall
+	vim +PlugClean +quitall
 
 # }}}
 # Homebrew ----------------------------------------------------------------- {{{
