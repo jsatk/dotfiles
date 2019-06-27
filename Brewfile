@@ -73,7 +73,6 @@ brew "nginx"
 brew "postgresql"
 brew "ruby-build"
 brew "sbcl"
-brew "sbt"
 brew "watchman"
 # I install node with `asdf`, so we should install `yarn` without node.
 # And no, I don't want to install yarn via npm.  That's too oroboros for me.
@@ -192,7 +191,6 @@ cask "google-cloud-sdk"
 cask "google-drive-file-stream"
 cask "google-hangouts"
 cask "iTerm2"
-cask "java8"
 cask "keybase"
 cask "keycastr"
 cask "macvim" # For when I need a gui editor (I.E. tridactyl).
