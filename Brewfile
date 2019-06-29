@@ -74,9 +74,7 @@ brew "postgresql"
 brew "ruby-build"
 brew "sbcl"
 brew "watchman"
-# I install node with `asdf`, so we should install `yarn` without node.
-# And no, I don't want to install yarn via npm.  That's too oroboros for me.
-brew "yarn", args: ["--without-node"]
+brew "yarn"
 
 # }}}
 # Security ----------------------------------------------------------------- {{{
@@ -97,7 +95,6 @@ brew "pinentry-mac"
 brew "autoconf"
 brew "automake"
 brew "coreutils"
-brew "curl", args: ["--with-openssl"]
 brew "libtool"
 brew "libxslt"
 brew "libyaml"
@@ -171,8 +168,8 @@ brew "nvim"
 
 cask_args appdir: "/Applications"
 
+cask "adoptopenjdk8" # Needed for work.
 cask "alfred"
-cask "amethyst"
 cask "backblaze"
 cask "battle-net"
 cask "dash"
@@ -187,7 +184,6 @@ cask "firefox"
 cask "firefox-developer-edition"
 cask "google-chrome"
 cask "google-chrome-canary"
-cask "google-cloud-sdk"
 cask "google-drive-file-stream"
 cask "google-hangouts"
 cask "iTerm2"

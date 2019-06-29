@@ -12,6 +12,12 @@ if &shell =~# 'fish$'
   set shell=sh
 endif
 
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin()
 
 " Add other plugins here.
@@ -286,6 +292,8 @@ augroup END
 
 " }}}
 " Backups ----------------------------------------------------------------- {{{
+
+" TODO: Figure out how to do this so that they aren't created as root.
 
 set undofile                      " Maintain undo history between sessions
 set backup                        " enable backups

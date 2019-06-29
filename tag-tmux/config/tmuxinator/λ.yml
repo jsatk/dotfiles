@@ -57,9 +57,9 @@ windows:
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/.dotfiles"
   - "🤖": rtv
-  - "📈": gotop
+  - "📈": gotop --color=monokai
   - "🍰":
-      layout: even-horizontal # |  kake   | webpack |
+      layout: even-horizontal # | dev-server log | react-render-server log | webpack log |
       root: "~/khan/webapp"
       panes:
         - kake-log:
