@@ -4,7 +4,7 @@
 
 * [🌐 Overview](#overview)
 * [💻 Installation](#installation)
-* [🙇 Atribution](#attribution)
+* [🙇 Attribution](#attribution)
 
 ## Overview
 
