@@ -39,7 +39,7 @@ Plug 'kovisoft/paredit'
 Plug 'l04m33/vlime'
 Plug 'morhetz/gruvbox'
 Plug 'mxw/vim-jsx'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nicholaides/words-to-avoid.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'rizzatti/dash.vim'

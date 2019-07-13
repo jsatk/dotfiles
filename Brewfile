@@ -69,8 +69,10 @@ brew "weechat"
 brew "asciinema"
 # Program language version manager.  Manages all languages.
 brew "asdf"
+brew "go" # Strictly for work.
 brew "nginx"
 brew "postgresql"
+brew "pyenv" # Strictly for work.
 brew "ruby-build"
 brew "sbcl"
 brew "watchman"
@@ -168,7 +170,7 @@ brew "nvim"
 
 cask_args appdir: "/Applications"
 
-cask "adoptopenjdk8" # Needed for work.
+cask "adoptopenjdk/openjdk/adoptopenjdk8" # Strictly for work.
 cask "alfred"
 cask "backblaze"
 cask "battle-net"

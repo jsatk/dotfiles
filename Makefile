@@ -8,7 +8,6 @@ global_node_modules := \
 	diff-so-fancy \
 	dockerfile-language-server-nodejs \
 	glow \
-	neovim \
 	speed-test \
 
 global_gems = \
@@ -65,7 +64,6 @@ clean: ## Remove all unnecessary files our package managers don't need.
 # Homebrew ----------------------------------------------------------------- {{{
 
 brew_status := $(shell brew bundle check --no-upgrade > /dev/null && echo 0 || echo 1)
-
 $(homebrew):
 	ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -78,31 +76,12 @@ endif
 # }}}
 # asdf --------------------------------------------------------------------- {{{
 
-# TODO: This is horrible.  Do this in a loop and stash the rsults of `asdf
-#       plugin-list` so you only have to call it once.
-node_installed   := $(shell [[ "$(shell asdf plugin-list)" == *nodejs* ]] && echo 0 || echo 1)
-ruby_installed   := $(shell [[ "$(shell asdf plugin-list)" == *ruby*   ]] && echo 0 || echo 1)
-golang_installed := $(shell [[ "$(shell asdf plugin-list)" == *golang* ]] && echo 0 || echo 1)
-rust_installed   := $(shell [[ "$(shell asdf plugin-list)" == *rust*   ]] && echo 0 || echo 1)
-python_installed := $(shell [[ "$(shell asdf plugin-list)" == *python* ]] && echo 0 || echo 1)
+asdf_plugins=nodejs ruby golang rust python
+$(asdf_plugins):
+	-asdf plugin-add $@
 
 .PHONY: asdf
-asdf: | ## Install specific verions of languages -- language versions specified in ~/.tool-versions.
-ifeq ($(node_installed), 1)
-	asdf plugin-add nodejs
-endif
-ifeq ($(ruby_installed), 1)
-	asdf plugin-add ruby
-endif
-ifeq ($(golang_installed), 1)
-	asdf plugin-add golang
-endif
-ifeq ($(rust_installed), 1)
-	asdf plugin-add rust
-endif
-ifeq ($(python_installed), 1)
-	asdf plugin-add python
-endif
+asdf: | $(asdf_plugins) ## Install specific verions of languages -- language versions specified in ~/.tool-versions.
 	asdf install
 
 # }}}
