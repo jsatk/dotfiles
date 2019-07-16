@@ -56,7 +56,6 @@ windows:
   - "💬": weechat
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/.dotfiles"
-  - "🤖": rtv
   - "📈": gotop --color=monokai
   - "🍰":
       layout: even-horizontal # | dev-server log | react-render-server log | webpack log |
