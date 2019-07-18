@@ -9,6 +9,3 @@ setlocal shiftwidth=4
 setlocal softtabstop=4
 
 let g:netrw_list_hide= '.*\.pyc$'
-
-" For ALE plugin.
-let b:ale_linters = ['pyls', 'flake8']

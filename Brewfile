@@ -2,7 +2,6 @@
 
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
-tap "homebrew/cask-versions"
 tap "homebrew/core"
 # For contacts in Mutt.
 tap "keith/formulae"
@@ -174,6 +173,7 @@ cask "adoptopenjdk/openjdk/adoptopenjdk8" # Strictly for work.
 cask "alfred"
 cask "backblaze"
 cask "battle-net"
+cask "chromedriver"
 cask "dash"
 cask "discord"
 cask "docker"
