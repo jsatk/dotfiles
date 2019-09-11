@@ -5,15 +5,6 @@
         "filetypes": ["dockerfile"],
         "args": ["--stdio"]
       },
-      "flow": {
-        "command": "node_modules/.bin/flow",
-        "args": ["lsp"],
-        "filetypes": ["javascript", "javascriptreact"],
-        "initializationOptions": {},
-        "requireRootPattern": true,
-        "settings": {},
-        "rootPatterns": [".flowconfig"]
-      },
       "golang": {
         "command": "gopls",
         "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],

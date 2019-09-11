@@ -90,13 +90,12 @@ hdr_order from: to: cc: date: subject:  # and in this order
 folder-hook . 'exec collapse-all' # By default, collapse all threads
 
 # Default account
-source ~/.mutt/account.khan-academy.muttrc
+source ~/.mutt/account.jsatk.muttrc
 
 # }}}
 # Key Bindings & Macros {{{
 
-macro index <f1> '<sync-mailbox><enter-command>source ~/.mutt/account.khan-academy.muttrc<enter><change-folder>!<enter>'
-macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/account.jsatk.muttrc<enter><change-folder>!<enter>'
+macro index <f1> '<sync-mailbox><enter-command>source ~/.mutt/account.jsatk.muttrc<enter><change-folder>!<enter>'
 
 bind index g  noop
 bind index gg first-entry

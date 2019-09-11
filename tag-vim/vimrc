@@ -7,7 +7,7 @@
 " `/bin/bash` because vim-dispatch apparently has trouble inferring the PID of
 " the task when `shell` is set to `/bin/bash`.  Computers are hard.
 "
-" See: https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim#L66-L68
+" See: https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim#L71-L73
 if &shell =~# 'fish$'
   set shell=sh
 endif
@@ -34,7 +34,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-peekaboo'
-Plug 'Konfekt/FastFold'
 Plug 'kovisoft/paredit'
 Plug 'l04m33/vlime'
 Plug 'morhetz/gruvbox'
@@ -342,18 +341,15 @@ nmap <leader>t <Plug>(ale_hover)
 " <C-t> is the default fuzzy finder shortcut in many text editors.  The default
 " behavior of <C-t> is so rarely used, and I find <C-o> to do what <C-t> would
 " do 90% of the time that losing these default mappings in favor of better ones
-" (at least for me) is worth it to me.
+" is worth it to me.
+"
 " Note: Using |:*noremap| will not work with <Plug> mappings.
 nmap <C-]> <Plug>(ale_go_to_definition)
 
 " }}}
 " Dispatch {{{
 
-" For reasons beyond my understanding the single space between the `|` and `tee`
-" where `shellpipe` is set in the Dispatch plugin causes my Javascript test
-" output to have a bunch of ugly ^[[1A characters when it's displayed in the
-" quickfix window.  Dropping that space fixes it.  I've no idea why.
-"
+" Why am I doing this?  See link below.
 " See: https://github.com/tpope/vim-dispatch/issues/222#issuecomment-493273080
 set shellpipe=2>&1\|tee
 
@@ -402,7 +398,6 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " Javascript {{{
 
 let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_flow = 1
 
 " }}}
 " Projectionist {{{
@@ -429,7 +424,8 @@ let g:projectionist_heuristics = {
       \     "type": "bench"
       \   },
       \   "Cargo.toml": { "type": "config" }
-      \ }}
+      \ },
+      \ "README.md|README.markdown": { "type": "doc" }}
 
 " }}}
 " Vlime {{{
@@ -479,30 +475,6 @@ function! s:Pulse()
     execute 'hi ' . old_hi
 endfunction
 command! -nargs=0 Pulse call s:Pulse()
-
-" }}}
-" Arc/Phabricator {{{
-
-augroup arcrc
-  autocmd!
-
-  autocmd BufRead,BufNewFile .arcrc setlocal filetype=json
-augroup END
-
-" Phabricator is the worst, but I have to deal with it so here I am.  This is
-" a tiny wrapper I made so that I can simply run arc commands from inside vim
-" without having to type `:Dispatch` first.  Maybe someday I'll expand on this
-" and make it a proper plugin.
-"
-" Examples:
-" :Arc diff --verbatim --browse
-" :Arc upload ~/Desktop/screenshot.png
-" :Arc amend
-" :Arc land --onto master
-function! s:Arc(cmd)
-  execute "Dispatch arc " . a:cmd
-endfunction
-command! -nargs=1 Arc call s:Arc(<f-args>)
 
 " }}}
 

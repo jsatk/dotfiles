@@ -222,11 +222,5 @@
 	enabled = true
 
 # }}}
-# work stuff -------------------------------------------------------------- {{{
-
-[kaclone]
-	email = jesse@khanacademy.org
-
-# }}}
 # vim: textwidth=80:noexpandtab:shiftwidth=8
 # vim: foldmethod=marker:foldmarker={{{,}}}:syntax=gitconfig

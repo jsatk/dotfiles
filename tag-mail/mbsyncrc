@@ -1,38 +1,3 @@
-# Khan Academy {{{
-
-IMAPAccount khan-academy
-# Address to connect to
-Host imap.gmail.com
-User jesse@khanacademy.org
-# To store the password in an encrypted file use PassCmd instead of Pass
-PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.mutt/account.khan-academy.password.gpg"
-CertificateFile /etc/ssl/cert.pem
-# Fixes weird auth issue
-# See: https://sourceforge.net/p/isync/mailman/message/35516737/
-AuthMechs LOGIN
-# Use SSL
-SSLType IMAPS
-
-IMAPStore khan-academy-remote
-Account khan-academy
-
-MaildirStore khan-academy-local
-# The trailing "/" is important
-Path ~/.mail/khan-academy/
-Inbox ~/.mail/khan-academy/Inbox
-SubFolders Verbatim
-
-Channel khan-academy
-Master :khan-academy-remote:
-Slave :khan-academy-local:
-# Don't sync drafts since they are stored unencrypted
-Patterns * !Drafts
-# Automatically create missing mailboxes, both locally and on the server
-Create Both
-# Save the synchronization state files in the relevant directory
-SyncState *
-
-# }}}
 # jsatk.us {{{
 
 IMAPAccount jsatk

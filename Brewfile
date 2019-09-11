@@ -68,10 +68,8 @@ brew "weechat"
 brew "asciinema"
 # Program language version manager.  Manages all languages.
 brew "asdf"
-brew "go" # Strictly for work.
 brew "nginx"
 brew "postgresql"
-brew "pyenv" # Strictly for work.
 brew "ruby-build"
 brew "sbcl"
 brew "watchman"
@@ -169,11 +167,9 @@ brew "nvim"
 
 cask_args appdir: "/Applications"
 
-cask "adoptopenjdk/openjdk/adoptopenjdk8" # Strictly for work.
 cask "alfred"
 cask "backblaze"
 cask "battle-net"
-cask "chromedriver"
 cask "dash"
 cask "discord"
 cask "docker"
@@ -181,11 +177,9 @@ cask "dropbox"
 cask "droplr"
 cask "dwarf-fortress"
 cask "fantastical"
-cask "figma"
 cask "firefox"
 cask "firefox-developer-edition"
 cask "google-chrome"
-cask "google-chrome-canary"
 cask "google-drive-file-stream"
 cask "google-hangouts"
 cask "iTerm2"
@@ -193,16 +187,13 @@ cask "keybase"
 cask "keycastr"
 cask "macvim" # For when I need a gui editor (I.E. tridactyl).
 cask "monodraw"
-cask "rescuetime"
 cask "signal"
-cask "skype"
 cask "slack-beta"
 cask "spotify"
 cask "steam"
 cask "tor-browser"
 cask "twitch"
 cask "yubico-yubikey-manager"
-cask "zoomus"
 
 # }}}
 # macOS App Store ---------------------------------------------------------- {{{
