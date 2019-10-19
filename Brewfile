@@ -9,6 +9,8 @@ tap "keith/formulae"
 tap "thoughtbot/formulae"
 # For a better top, gotop.
 tap "cjbassi/gotop"
+# For work.
+tap "AdoptOpenJDK/openjdk"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -73,7 +75,6 @@ brew "postgresql"
 brew "ruby-build"
 brew "sbcl"
 brew "watchman"
-brew "yarn"
 
 # }}}
 # Security ----------------------------------------------------------------- {{{
@@ -101,6 +102,7 @@ brew "readline"
 brew "rlwrap"
 brew "unixodbc"
 brew "unzip"
+brew "wget"
 
 # Allow me to use `j` to jump around my filesystem.
 brew "autojump"
@@ -167,15 +169,15 @@ brew "nvim"
 
 cask_args appdir: "/Applications"
 
+# For work.
+cask "adoptopenjdk8"
 cask "alfred"
 cask "backblaze"
-cask "battle-net"
 cask "dash"
 cask "discord"
 cask "docker"
 cask "dropbox"
 cask "droplr"
-cask "dwarf-fortress"
 cask "fantastical"
 cask "firefox"
 cask "firefox-developer-edition"
@@ -190,16 +192,12 @@ cask "monodraw"
 cask "signal"
 cask "slack-beta"
 cask "spotify"
-cask "steam"
-cask "tor-browser"
-cask "twitch"
 cask "yubico-yubikey-manager"
 
 # }}}
 # macOS App Store ---------------------------------------------------------- {{{
 
 mas "1Password 7", id: 1333542190
-mas "Byword", id: 420212497
 mas "Cardhop", id: 1290358394
 mas "DaisyDisk", id: 411643860
 mas "Deliveries", id: 924726344
@@ -209,15 +207,10 @@ mas "Keynote", id: 409183694
 mas "Marked 2", id: 890031187
 mas "Monit", id: 1014850245
 mas "Numbers", id: 409203825
-mas "OmniFocus", id: 1346203938
 mas "Pages", id: 409201541
 mas "Pixelmator", id: 407963104
-mas "Reeder", id: 880001334
 mas "Soulver", id: 413965349
 mas "Speedtest", id: 1153157709
-mas "TaskPaper", id: 1090940630
-mas "Tweetbot", id: 1384080005
-mas "VPN Unlimited", id: 727593140
 mas "Xcode", id: 497799835
 mas "xScope", id: 889428659
 

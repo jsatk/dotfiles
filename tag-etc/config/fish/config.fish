@@ -14,6 +14,7 @@ set --export GPG_TTY (tty)
 set --export RIPGREP_CONFIG_PATH ~/.ripgreprc
 # For Bat.  See: https://github.com/sharkdp/bat
 set --export BAT_THEME "TwoDark"
+set --export JAVA_HOME (/usr/libexec/java_home -v 1.8)
 
 set --local BREW_PREFIX (brew --prefix)
 

@@ -164,7 +164,7 @@
 	insteadOf = "git://github.com/jsatk/"
 
 [user]
-	email = jesse@jsatk.us
+	email = jesse.atkinson@creditkarma.com
 	name = Jesse Atkinson
 	signingkey = "DC5AC6E4"
 

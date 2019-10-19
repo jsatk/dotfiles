@@ -33,4 +33,39 @@ Create Both
 SyncState *
 
 # }}}
+# Credit Karma {{{
+
+IMAPAccount credit-karma
+# Address to connect to
+Host imap.gmail.com
+User jesse.atkinson@creditkarma.com
+# To store the password in an encrypted file use PassCmd instead of Pass
+PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.mutt/account.credit-karma.password.gpg"
+CertificateFile /etc/ssl/cert.pem
+# Fixes weird auth issue
+# See: https://sourceforge.net/p/isync/mailman/message/35516737/
+AuthMechs LOGIN
+# Use SSL
+SSLType IMAPS
+
+IMAPStore credit-karma-remote
+Account credit-karma
+
+MaildirStore credit-karma-local
+# The trailing "/" is important
+Path ~/.mail/credit-karma/
+Inbox ~/.mail/credit-karma/Inbox
+SubFolders Verbatim
+
+Channel credit-karma
+Master :credit-karma-remote:
+Slave :credit-karma-local:
+# Don't sync drafts since they are stored unencrypted
+Patterns * !Drafts
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Save the synchronization state files in the relevant directory
+SyncState *
+
+# }}}
 # vim: ft=config
