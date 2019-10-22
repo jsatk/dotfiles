@@ -9,8 +9,6 @@ tap "keith/formulae"
 tap "thoughtbot/formulae"
 # For a better top, gotop.
 tap "cjbassi/gotop"
-# For work.
-tap "AdoptOpenJDK/openjdk"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -66,6 +64,8 @@ brew "weechat"
 # }}}
 # Programming Languages, DBs, & Language Tools ----------------------------- {{{
 
+# Better Scala REPL.
+brew "ammonite-repl"
 # terminal recording.
 brew "asciinema"
 # Program language version manager.  Manages all languages.
@@ -126,8 +126,6 @@ brew "gotop"
 brew "highlight"
 # Add GitHub support to git on the command-line.
 brew "hub"
-# My blog CMS of choice.
-brew "hugo"
 # Utility for doing stuff – mostly compression – to images.
 brew "imagemagick"
 # For easy parsing and rendering of JSON.
@@ -138,8 +136,6 @@ brew "mas"
 brew "moreutils"
 # When I need to SSH.
 brew "mosh"
-# Single-player roguelike video game.
-brew "nethack"
 # Manages dotfiles.
 brew "rcm"
 # Best `grep` replacement.
@@ -169,8 +165,7 @@ brew "nvim"
 
 cask_args appdir: "/Applications"
 
-# For work.
-cask "adoptopenjdk8"
+cask "adoptopenjdk/openjdk/adoptopenjdk8" # Strictly for work.
 cask "alfred"
 cask "backblaze"
 cask "dash"
