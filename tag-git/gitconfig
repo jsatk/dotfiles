@@ -170,6 +170,7 @@
 
 [hub]
 	protocol = https
+	host = code.corp.creditkarma.com
 
 # }}}
 # gpg --------------------------------------------------------------------- {{{
@@ -220,6 +221,12 @@
 
 [rerere]
 	enabled = true
+
+# }}}
+# web --------------------------------------------------------------------- {{{
+
+[web]
+	browser = chrome
 
 # }}}
 # vim: textwidth=80:noexpandtab:shiftwidth=8

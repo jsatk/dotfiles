@@ -25,10 +25,9 @@ Plug 'ap/vim-css-color'
 Plug 'dag/vim-fish'
 Plug 'derekwyatt/vim-sbt'
 Plug 'derekwyatt/vim-scala'
-Plug 'fatih/vim-go'
+Plug '/usr/local/opt/fzf' " Tells vim-fzf where fzf install is.
 Plug 'itchyny/lightline.vim'
 Plug 'janko/vim-test'
-Plug '/usr/local/opt/fzf' " Tells vim-fzf where fzf install is.
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
@@ -62,8 +61,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
-Plug 'udalov/kotlin-vim'
-Plug 'vim-scripts/LargeFile'
 Plug 'w0rp/ale'
 
 call plug#end()
@@ -426,6 +423,11 @@ let g:projectionist_heuristics = {
       \   "Cargo.toml": { "type": "config" }
       \ },
       \ "README.md|README.markdown": { "type": "doc" }}
+
+" }}}
+" Rhubarb {{{
+
+let g:github_enterprise_urls = ["https://code.corp.creditkarma.com"]
 
 " }}}
 " Vlime {{{
