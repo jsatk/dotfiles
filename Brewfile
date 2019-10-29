@@ -182,7 +182,6 @@ cask "google-hangouts"
 cask "iTerm2"
 cask "keybase"
 cask "keycastr"
-cask "macvim" # For when I need a gui editor (I.E. tridactyl).
 cask "monodraw"
 cask "signal"
 cask "slack-beta"
@@ -199,6 +198,7 @@ mas "Deliveries", id: 924726344
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
+mas "LINE", id: 539883307
 mas "Marked 2", id: 890031187
 mas "Monit", id: 1014850245
 mas "Numbers", id: 409203825
