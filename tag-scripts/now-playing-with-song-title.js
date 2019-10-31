@@ -5,13 +5,13 @@
  * settings.
  */
 (() => {
-  const noMusic = "🔇 "
-  const music = "🔊"
-  const itunes = Application('iTunes')
+  const notPlaying = "🔇 "
+  const nowPlaying = "🔊"
+  const music = Application('Music')
   const spotify = Application('Spotify')
-  const itunesIsPlaying = itunes.running() && itunes.playerState() === 'playing'
+  const musicIsPlaying = music.running() && music.playerState() === 'playing'
   const spotifyIsPlaying = spotify.running() && spotify.playerState() === 'playing'
-  const isPlaying = itunesIsPlaying || spotifyIsPlaying
+  const isPlaying = musicIsPlaying || spotifyIsPlaying
   const violet = "colour165"
   const indigo = "colour69"
   const blue = "colour39"
@@ -37,8 +37,8 @@
   const getTrack = () => {
     if (spotifyIsPlaying) {
       return spotify.currentTrack
-    } else if (itunesIsPlaying) {
-      return itunes.currentTrack
+    } else if (musicIsPlaying) {
+      return music.currentTrack
     }
   } 
 
@@ -47,8 +47,8 @@
     const title = track.name()
     const rainbowTitle = makeRainbow(title)
 
-    return (`${music} ${rainbowTitle}`).substr(0, trim)
+    return (`${nowPlaying} ${rainbowTitle}`).substr(0, trim)
   } else {
-    return noMusic
+    return notPlaying
   }
 })()

@@ -405,9 +405,25 @@ let g:projectionist_heuristics = {
       \   "*.markdown": { "dispatch": "open -a 'Marked 2.app' {file}" }
       \ },
       \ "package.json": {
+      \   "README.md": { "type": "doc" },
+      \   "*": {
+      \     "console": "node",
+      \     "make": "npm",
+      \     "start": "npm start"
+      \   },
+      \   "lib/*.js": {
+      \     "type": "src",
+      \     "alternate": "test/{}.js"
+      \   },
+      \   "test/*.js": {
+      \     "type": "test",
+      \     "alternate": "lib/{}.js",
+      \     "dispatch": "yarn test {}"
+      \   },
       \   "package.json": { "type": "package" }
       \ },
       \ "Cargo.toml": {
+      \   "README.md": { "type": "doc" },
       \   "src/*.rs": {
       \     "type": "src",
       \     "alternate": "tests/{}.rs"
@@ -422,7 +438,25 @@ let g:projectionist_heuristics = {
       \   },
       \   "Cargo.toml": { "type": "config" }
       \ },
-      \ "README.md|README.markdown": { "type": "doc" }}
+      \ "build.sbt": {
+      \   "README.md": { "type": "doc" },
+      \   "*": {
+      \     "console": "sbt",
+      \     "make": "sbt",
+      \     "start": "sbt run"
+      \   },
+      \   "src/main/scala/*.scala": {
+      \     "alternate": "src/test/scala/{}Spec.scala",
+      \     "type": "src"
+      \   },
+      \   "src/test/scala/*Spec.scala": {
+      \     "alternate": "src/main/scala/{}.scala",
+      \     "type": "test",
+      \     "dispatch": "sbt \"testOnly {dot}Spec\""
+      \   },
+      \   "build.sbt": { "type": "config" },
+      \   "*.sbt": { "type": "config" },
+      \ }}
 
 " }}}
 " Rhubarb {{{
