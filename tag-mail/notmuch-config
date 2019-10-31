@@ -32,8 +32,7 @@ path=/Users/jsatk/.mail
 
 [user]
 name=Jesse Atkinson
-primary_email=jesse.atkinson@creditkarma.com;
-other_email=jesse@jsatk.us;
+primary_email=jesse@jsatk.us;
 
 # Configuration for "notmuch new"
 #

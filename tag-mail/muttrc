@@ -95,8 +95,7 @@ source ~/.mutt/account.jsatk.muttrc
 # }}}
 # Key Bindings & Macros {{{
 
-macro index <f1> '<sync-mailbox><enter-command>source ~/.mutt/account.credit-karma.muttrc<enter><change-folder>!<enter>'
-macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/account.jsatk.muttrc<enter><change-folder>!<enter>'
+macro index <f1> '<sync-mailbox><enter-command>source ~/.mutt/account.jsatk.muttrc<enter><change-folder>!<enter>'
 
 bind index g  noop
 bind index gg first-entry
