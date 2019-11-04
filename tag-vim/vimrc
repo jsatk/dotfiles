@@ -442,7 +442,7 @@ let g:projectionist_heuristics = {
       \   "README.md": { "type": "doc" },
       \   "*": {
       \     "console": "sbt",
-      \     "make": "sbt",
+      \     "make": "sbt compile",
       \     "start": "sbt run"
       \   },
       \   "src/main/scala/*.scala": {
