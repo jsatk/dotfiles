@@ -37,7 +37,7 @@ Plug 'kovisoft/paredit'
 Plug 'l04m33/vlime'
 Plug 'morhetz/gruvbox'
 Plug 'mxw/vim-jsx'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nicholaides/words-to-avoid.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'rizzatti/dash.vim'
@@ -293,7 +293,10 @@ augroup END
 " TODO: Figure out how to do this so that they aren't created as root.
 
 set undofile                      " Maintain undo history between sessions
-set backup                        " enable backups
+" Some server have issues with backup files.
+" See: https://github.com/neoclide/coc.nvim/issues/649
+set nobackup                      " disable backups
+set nowritebackup
 set noswapfile                    " it's 2019, Vim.
 " The extra slash on the end saves files under the name of their full path
 " with the / character replaced with a %.
@@ -331,18 +334,57 @@ let g:ale_echo_msg_format = '%linter% says: "%severity% %...code...% – %s'
 " Note: Using |:*noremap| will not work with <Plug> mappings.
 nmap <leader>t <Plug>(ale_hover)
 
-" This overwrites the default behavior of <C-]>, which deals with tag jumping.
-" I'm sure this is sacralidge to some, but I so rarely use ctags (or similar)
-" and find often what I want these tools to do is to do *exactly* what
-" `:ALEGoToDefinition` already does.  So mapping it here.  The inverse of the
-" default behavior of <C-]> is <C-t>, which I've mapped to `:Files<CR>` because
-" <C-t> is the default fuzzy finder shortcut in many text editors.  The default
-" behavior of <C-t> is so rarely used, and I find <C-o> to do what <C-t> would
-" do 90% of the time that losing these default mappings in favor of better ones
-" is worth it to me.
-"
-" Note: Using |:*noremap| will not work with <Plug> mappings.
-nmap <C-]> <Plug>(ale_go_to_definition)
+" }}}
+" Coc {{{
+
+" Most of the following was taken from:
+" https://github.com/neoclide/coc.nvim#example-vim-configuration.
+
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Remap for do codeAction of current line
+nmap <leader>ac <Plug>(coc-codeaction)
+
+" Remap for do action format
+nnoremap <silent> F :call CocAction('format')<CR>
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Show all diagnostics
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+" Find symbol of current document
+nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
 " }}}
 " Dispatch {{{
@@ -442,7 +484,7 @@ let g:projectionist_heuristics = {
       \ "build.sbt": {
       \   "README.md": { "type": "doc" },
       \   "*": {
-      \     "console": "sbt",
+      \     "console": "sbt console",
       \     "make": "sbt compile",
       \     "start": "sbt run"
       \   },
@@ -453,7 +495,7 @@ let g:projectionist_heuristics = {
       \   "src/test/scala/*Spec.scala": {
       \     "alternate": "src/main/scala/{}.scala",
       \     "type": "test",
-      \     "dispatch": "sbt \"testOnly {dot}Spec\""
+      \     "dispatch": "sbt -Dsbt.log.noformat=true \"testOnly {dot}Spec\""
       \   },
       \   "build.sbt": { "type": "config" },
       \   "*.sbt": { "type": "config" },

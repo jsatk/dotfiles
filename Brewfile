@@ -112,6 +112,8 @@ brew "bat"
 brew "blueutil"
 # Source code tag files.
 brew "ctags"
+# `ls` but written in Rust with better defaults.
+brew "exa"
 # Better `find`.
 brew "fd"
 # Fuzzy-finder.
@@ -179,6 +181,7 @@ cask "firefox-developer-edition"
 cask "google-chrome"
 cask "google-drive-file-stream"
 cask "google-hangouts"
+cask "intellij-idea-ce"
 cask "iTerm2"
 cask "keybase"
 cask "keycastr"
