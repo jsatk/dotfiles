@@ -1,11 +1,11 @@
 (() => {
-  const noMusic = "🔇 "
-  const music = "🔊 "
-  const itunes = Application('iTunes')
+  const notPlaying = "🔇 "
+  const nowPlaying = "🔊"
+  const music = Application('Music')
   const spotify = Application('Spotify')
-  const itunesIsPlaying = itunes.running() && itunes.playerState() === 'playing'
+  const musicIsPlaying = music.running() && music.playerState() === 'playing'
   const spotifyIsPlaying = spotify.running() && spotify.playerState() === 'playing'
-  const musicIsPlaying = itunesIsPlaying || spotifyIsPlaying
+  const isPlaying = musicIsPlaying || spotifyIsPlaying
 
-  return musicIsPlaying ? music : noMusic
+  return isPlaying ? nowPlaying : notPlaying
 })()
