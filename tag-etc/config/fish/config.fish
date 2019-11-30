@@ -6,12 +6,12 @@ set --global fish_key_bindings fish_vi_key_bindings
 # Tmuxinator & many other tools need these set.
 set --export BROWSER open /Applications/Firefox.app
 set --export EDITOR vim
-set --export DEVELOPER ~/Developer
+set --export DEVELOPER $HOME/Developer
 # Required for gpg... sometimes... gpg is fickle and frustrating.
 set --export GPG_TTY (tty)
 # Config file for ripgrep.
 # See: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
-set --export RIPGREP_CONFIG_PATH ~/.ripgreprc
+set --export RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 # For Bat.  See: https://github.com/sharkdp/bat
 set --export BAT_THEME "TwoDark"
 
@@ -20,7 +20,7 @@ set --local BREW_PREFIX (brew --prefix)
 # fzf {{{
 
 # Use git to search files when in a git repo, otherwise use fd.
-set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type file --hidden --follow'
+set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type file --follow'
 # If a command is really long press `?` to see the full command in a preview
 # window.  And press <C-y> to copy a command to the clipboard rather than run it.
 set --export FZF_CTRL_R_OPTS "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"

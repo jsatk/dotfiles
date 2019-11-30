@@ -1,5 +1,10 @@
 # Taps --------------------------------------------------------------------- {{{
 
+# For a better top, gotop.
+tap "cjbassi/gotop"
+# For instlaling Coursier.
+# See: https://get-coursier.io/docs/cli-overview.html#brew
+tap "coursier/formulas"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
@@ -7,8 +12,6 @@ tap "homebrew/core"
 tap "keith/formulae"
 # For rcm.
 tap "thoughtbot/formulae"
-# For a better top, gotop.
-tap "cjbassi/gotop"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -73,6 +76,7 @@ brew "postgresql"
 brew "ruby-build"
 brew "sbcl"
 brew "watchman"
+brew "coursier/formulas/coursier"
 brew "yarn"
 
 # }}}
@@ -167,6 +171,7 @@ brew "nvim"
 
 cask_args appdir: "/Applications"
 
+cask "adoptopenjdk/openjdk/adoptopenjdk8"
 cask "alfred"
 cask "backblaze"
 cask "battle-net"
@@ -206,6 +211,7 @@ mas "Deliveries", id: 924726344
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
+mas "LINE", id: 539883307
 mas "Marked 2", id: 890031187
 mas "Monit", id: 1014850245
 mas "Numbers", id: 409203825

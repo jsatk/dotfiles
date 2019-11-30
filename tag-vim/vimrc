@@ -23,6 +23,7 @@ call plug#begin()
 " Add other plugins here.
 Plug 'ap/vim-css-color'
 Plug 'dag/vim-fish'
+Plug 'dense-analysis/ale'
 Plug 'derekwyatt/vim-sbt'
 Plug 'derekwyatt/vim-scala'
 Plug 'fatih/vim-go'
@@ -64,7 +65,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'udalov/kotlin-vim'
 Plug 'vim-scripts/LargeFile'
-Plug 'w0rp/ale'
 
 call plug#end()
 
