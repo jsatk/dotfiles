@@ -26,7 +26,7 @@ asdf_root := $(HOME)/.asdf
 asdf_shims := $(asdf_root)/shims
 
 # Node
-npm := $(asdf_shims)/npm
+yarn := $(asdf_shims)/yarn
 node_modules_root = $(asdf_shims)
 prefixed_node_modules = $(addprefix $(node_modules_root)/,$(global_node_modules))
 
@@ -46,7 +46,7 @@ update: | install ## Update everything.
 	rcup
 	brew bundle --global
 	gem update $(global_gems)
-	npm update --global
+	yarn global upgrade
 	vim +PlugUpdate +quitall
 
 .PHONY: install
@@ -76,7 +76,7 @@ endif
 # }}}
 # asdf --------------------------------------------------------------------- {{{
 
-asdf_plugins=nodejs ruby golang rust python
+asdf_plugins=nodejs ruby rust yarn
 $(asdf_plugins):
 	-asdf plugin-add $@
 
@@ -88,10 +88,10 @@ asdf: | $(asdf_plugins) ## Install specific verions of languages -- language ver
 # Node --------------------------------------------------------------------- {{{
 
 $(prefixed_node_modules):
-	$(npm) install --global $(notdir $@)
+	$(yarn) global add $(notdir $@)
 
 .PHONY: node_modules
-node_modules: | $(prefixed_node_modules) ## Install global npm modules.
+node_modules: | $(prefixed_node_modules) ## Install global yarn modules.
 
 # }}}
 # Ruby --------------------------------------------------------------------- {{{

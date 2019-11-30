@@ -67,6 +67,8 @@ brew "weechat"
 # }}}
 # Programming Languages, DBs, & Language Tools ----------------------------- {{{
 
+# Better Scala REPL.
+brew "ammonite-repl"
 # terminal recording.
 brew "asciinema"
 # Program language version manager.  Manages all languages.
@@ -82,12 +84,14 @@ brew "yarn"
 # }}}
 # Security ----------------------------------------------------------------- {{{
 
+brew "hopenpgp-tools"
 brew "openssl"
 # Useful for printing GPG stuff to paper for physical backup.
 brew "paperkey"
 # For personalizing & working with Yubikeys.
 brew "ykman"
 brew "ykpers"
+brew "yubikey-personalization"
 # For working with GPG stuff.
 brew "pinentry-mac"
 
@@ -105,6 +109,7 @@ brew "readline"
 brew "rlwrap"
 brew "unixodbc"
 brew "unzip"
+brew "wget"
 
 # Allow me to use `j` to jump around my filesystem.
 brew "autojump"
@@ -114,6 +119,8 @@ brew "bat"
 brew "blueutil"
 # Source code tag files.
 brew "ctags"
+# `ls` but written in Rust with better defaults.
+brew "exa"
 # Better `find`.
 brew "fd"
 # Fuzzy-finder.

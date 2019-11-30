@@ -4,7 +4,7 @@
 # See: https://fishshell.com/docs/current/index.html#editor
 set --global fish_key_bindings fish_vi_key_bindings
 # Tmuxinator & many other tools need these set.
-set --export BROWSER open /Applications/Firefox.app
+set --global --export BROWSER open /Applications/Firefox.app
 set --export EDITOR vim
 set --export DEVELOPER $HOME/Developer
 # Required for gpg... sometimes... gpg is fickle and frustrating.
@@ -14,13 +14,14 @@ set --export GPG_TTY (tty)
 set --export RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 # For Bat.  See: https://github.com/sharkdp/bat
 set --export BAT_THEME "TwoDark"
+set --export JAVA_HOME (/usr/libexec/java_home -v 1.8)
 
 set --local BREW_PREFIX (brew --prefix)
 
 # fzf {{{
 
 # Use git to search files when in a git repo, otherwise use fd.
-set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type file --follow'
+set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type file --hidden --follow --exclude .git'
 # If a command is really long press `?` to see the full command in a preview
 # window.  And press <C-y> to copy a command to the clipboard rather than run it.
 set --export FZF_CTRL_R_OPTS "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
