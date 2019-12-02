@@ -1,4 +1,5 @@
 {
+  "coc.preferences.formatOnType": true,
   "languageserver": {
     "dockerfile": {
       "command": "docker-langserver",
