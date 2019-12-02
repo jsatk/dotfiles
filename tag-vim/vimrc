@@ -25,10 +25,10 @@ Plug 'ap/vim-css-color'
 Plug 'dag/vim-fish'
 Plug 'derekwyatt/vim-sbt'
 Plug 'derekwyatt/vim-scala'
-Plug '/usr/local/opt/fzf' " Tells vim-fzf where fzf install is.
 Plug 'itchyny/lightline.vim'
 Plug 'janko/vim-test'
 Plug 'junegunn/fzf.vim'
+Plug '/usr/local/opt/fzf' " Tells vim-fzf where fzf install is.
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/vim-easy-align'
@@ -62,7 +62,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
-Plug 'w0rp/ale'
 
 call plug#end()
 
@@ -320,21 +319,6 @@ endif
 " }}}
 " Vim Plugin Configurations ----------------------------------------------- {{{
 
-" Asynchronous Lint Engine (ALE) {{{
-
-highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
-highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
-
-let g:ale_statusline_format = ['X %d', '? %d', '']
-
-" %linter% is the name of the linter that provided the message
-" %s is the error or warning message
-let g:ale_echo_msg_format = '%linter% says: "%severity% %...code...% – %s'
-
-" Note: Using |:*noremap| will not work with <Plug> mappings.
-nmap <leader>t <Plug>(ale_hover)
-
-" }}}
 " Coc {{{
 
 " Most of the following was taken from:
@@ -352,9 +336,6 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Remap for do codeAction of current line
 nmap <leader>ac <Plug>(coc-codeaction)
-
-" Remap for do action format
-nnoremap <silent> F :call CocAction('format')<CR>
 
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>

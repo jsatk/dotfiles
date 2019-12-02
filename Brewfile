@@ -79,14 +79,16 @@ brew "watchman"
 # }}}
 # Security ----------------------------------------------------------------- {{{
 
+brew "hopenpgp-tools"
 brew "openssl"
 # Useful for printing GPG stuff to paper for physical backup.
 brew "paperkey"
+# For working with GPG stuff.
+brew "pinentry-mac"
 # For personalizing & working with Yubikeys.
 brew "ykman"
 brew "ykpers"
-# For working with GPG stuff.
-brew "pinentry-mac"
+brew "yubikey-personalization"
 
 # }}}
 # Utilities, Games, etc. --------------------------------------------------- {{{

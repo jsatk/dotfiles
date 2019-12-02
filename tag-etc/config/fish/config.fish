@@ -6,12 +6,12 @@ set --global fish_key_bindings fish_vi_key_bindings
 # Tmuxinator & many other tools need these set.
 set --global --export BROWSER open "/Applications/Google\ Chrome.app"
 set --export EDITOR vim
-set --export DEVELOPER ~/Developer
+set --export DEVELOPER $HOME/Developer
 # Required for gpg... sometimes... gpg is fickle and frustrating.
 set --export GPG_TTY (tty)
 # Config file for ripgrep.
 # See: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
-set --export RIPGREP_CONFIG_PATH ~/.ripgreprc
+set --export RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 # For Bat.  See: https://github.com/sharkdp/bat
 set --export BAT_THEME "TwoDark"
 set --export JAVA_HOME (/usr/libexec/java_home -v 1.8)
