@@ -367,6 +367,15 @@ nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
+" :Fold [buffer] | fold buffer using coc.nvim {{{
+function! s:coc_fold_kinds(...) abort
+  return ['imports', 'comment', 'region']
+endfunction
+
+command! -nargs=? -complete=customlist,s:coc_fold_kinds
+\   Fold :call CocAction('fold', <f-args>)
+" }}}
+
 " }}}
 " Dispatch {{{
 
