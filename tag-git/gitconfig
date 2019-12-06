@@ -114,6 +114,7 @@
 [commit]
 	cleanup = scissors
 	gpgsign = true
+	template = ~/.gitmessage
 
 # }}}
 # core -------------------------------------------------------------------- {{{
