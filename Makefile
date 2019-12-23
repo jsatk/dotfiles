@@ -7,7 +7,6 @@ global_node_modules := \
 	bash-language-server \
 	diff-so-fancy \
 	dockerfile-language-server-nodejs \
-	glow \
 	speed-test \
 
 global_gems = \

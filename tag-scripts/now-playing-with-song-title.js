@@ -40,12 +40,12 @@
     } else if (musicIsPlaying) {
       return music.currentTrack
     }
-  } 
+  }
 
   if (isPlaying) {
     const track = getTrack()
     const title = track.name()
-    const rainbowTitle = makeRainbow(title)
+    const rainbowTitle = makeRainbow(`${artist}: ${title}`)
 
     return (`${nowPlaying} ${rainbowTitle}`).substr(0, trim)
   } else {

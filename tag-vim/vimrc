@@ -367,6 +367,15 @@ nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
+" :Fold [buffer] | fold buffer using coc.nvim {{{
+function! s:coc_fold_kinds(...) abort
+  return ['imports', 'comment', 'region']
+endfunction
+
+command! -nargs=? -complete=customlist,s:coc_fold_kinds
+\   Fold :call CocAction('fold', <f-args>)
+" }}}
+
 " }}}
 " Dispatch {{{
 
@@ -503,7 +512,7 @@ let g:vlime_compiler_policy = {"DEBUG": 3}
 
 " TODO: Replace this with a proper plugin when you can.
 " Stolen from Steve Losh.
-function! s:Pulse()
+function! <SID>Pulse()
     redir => old_hi
         silent execute 'hi CursorLine'
     redir END
