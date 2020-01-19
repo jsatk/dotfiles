@@ -10,7 +10,7 @@
 	undopush = push --force origin HEAD^:master
 
 	# Log Me
-	logme = log --color --name-only --decorate=full --author="Jesse"
+	logme = log --color --name-only --decorate=full --author="jesse.atkinson@creditkarma.com"
 
 	# Get Incoming Changes
 	incoming = log ..@{u}

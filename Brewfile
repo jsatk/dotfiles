@@ -112,6 +112,8 @@ brew "autojump"
 brew "bat"
 # For when I need to turn bluetooth back on & my trackpad is bluetooth.
 brew "blueutil"
+# A better way to navigate directories.
+brew "broot"
 # Source code tag files.
 brew "ctags"
 # `ls` but written in Rust with better defaults.
