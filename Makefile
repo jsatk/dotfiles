@@ -75,7 +75,7 @@ endif
 # }}}
 # asdf --------------------------------------------------------------------- {{{
 
-asdf_plugins=nodejs ruby rust yarn
+asdf_plugins=nodejs ruby rust sbt yarn
 $(asdf_plugins):
 	-asdf plugin-add $@
 

@@ -2,9 +2,6 @@
 
 # For a better top, gotop.
 tap "cjbassi/gotop"
-# For instlaling Coursier.
-# See: https://get-coursier.io/docs/cli-overview.html#brew
-tap "coursier/formulas"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
@@ -78,8 +75,6 @@ brew "postgresql"
 brew "ruby-build"
 brew "sbcl"
 brew "watchman"
-brew "coursier/formulas/coursier"
-brew "yarn"
 
 # }}}
 # Security ----------------------------------------------------------------- {{{
@@ -211,14 +206,12 @@ cask "yubico-yubikey-manager"
 # macOS App Store ---------------------------------------------------------- {{{
 
 mas "1Password 7", id: 1333542190
-mas "Byword", id: 420212497
 mas "Cardhop", id: 1290358394
 mas "DaisyDisk", id: 411643860
 mas "Deliveries", id: 924726344
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
-mas "LINE", id: 539883307
 mas "Marked 2", id: 890031187
 mas "Monit", id: 1014850245
 mas "Numbers", id: 409203825
@@ -228,7 +221,6 @@ mas "Pixelmator", id: 407963104
 mas "Reeder", id: 880001334
 mas "Soulver", id: 413965349
 mas "Speedtest", id: 1153157709
-mas "TaskPaper", id: 1090940630
 mas "Tweetbot", id: 1384080005
 mas "VPN Unlimited", id: 727593140
 mas "Xcode", id: 497799835

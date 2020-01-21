@@ -123,7 +123,7 @@
 	autocrlf = input
 	ignorecase = false
 	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
-	editor = vim
+	editor = $EDITOR
 	pager = diff-so-fancy | less --tabs=4 -RFX
 	excludesfile = ~/.gitignore
 

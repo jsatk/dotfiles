@@ -59,6 +59,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
@@ -538,7 +539,7 @@ function! <SID>Pulse()
 
     execute 'hi ' . old_hi
 endfunction
-command! -nargs=0 Pulse call s:Pulse()
+command! -nargs=0 Pulse call <SID>:Pulse()
 
 " }}}
 

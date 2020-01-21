@@ -137,7 +137,7 @@
         }
       },
       "msmtp": {
-        "version": "1.8.5",
+        "version": "1.8.6",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
@@ -183,7 +183,7 @@
         }
       },
       "notmuch": {
-        "version": "0.29.1",
+        "version": "0.29.2",
         "bottle": {
           "cellar": ":any",
           "prefix": "/usr/local",
@@ -258,7 +258,7 @@
         }
       },
       "git": {
-        "version": "2.23.0_1",
+        "version": "2.24.0_2",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
@@ -308,7 +308,7 @@
         }
       },
       "mercurial": {
-        "version": "5.1.1_2",
+        "version": "5.2_1",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
@@ -329,7 +329,7 @@
         }
       },
       "tig": {
-        "version": "2.4.1_1",
+        "version": "2.5.0",
         "bottle": {
           "cellar": ":any",
           "prefix": "/usr/local",
@@ -400,7 +400,7 @@
         }
       },
       "ammonite-repl": {
-        "version": "1.7.1",
+        "version": "1.8.2",
         "bottle": false
       },
       "asciinema": {
@@ -429,7 +429,7 @@
         }
       },
       "asdf": {
-        "version": "0.7.4",
+        "version": "0.7.5",
         "bottle": false
       },
       "nginx": {
@@ -458,7 +458,7 @@
         }
       },
       "postgresql": {
-        "version": "11.5_1",
+        "version": "12.1",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
@@ -479,11 +479,11 @@
         }
       },
       "ruby-build": {
-        "version": "20190828",
+        "version": "20191124",
         "bottle": false
       },
       "sbcl": {
-        "version": "1.5.6",
+        "version": "1.5.9",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
@@ -584,7 +584,7 @@
         }
       },
       "ykman": {
-        "version": "3.1.0_1",
+        "version": "3.1.0_2",
         "bottle": {
           "cellar": ":any",
           "prefix": "/usr/local",
@@ -792,7 +792,7 @@
         }
       },
       "libxslt": {
-        "version": "1.1.33_1",
+        "version": "1.1.34",
         "bottle": {
           "cellar": ":any",
           "prefix": "/usr/local",
@@ -938,7 +938,7 @@
         }
       },
       "wget": {
-        "version": "1.20.3_1",
+        "version": "1.20.3_2",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
@@ -1097,7 +1097,7 @@
         }
       },
       "fzf": {
-        "version": "0.18.0",
+        "version": "0.19.0",
         "bottle": {
           "cellar": ":any_skip_relocation",
           "prefix": "/usr/local",
@@ -1118,7 +1118,7 @@
         }
       },
       "fontforge": {
-        "version": "20190801",
+        "version": "20190801_1",
         "bottle": {
           "cellar": ":any",
           "prefix": "/usr/local",
@@ -1139,7 +1139,7 @@
         }
       },
       "go-jira": {
-        "version": "1.0.21",
+        "version": "1.0.22",
         "bottle": {
           "cellar": ":any_skip_relocation",
           "prefix": "/usr/local",
@@ -1164,7 +1164,7 @@
         "bottle": false
       },
       "highlight": {
-        "version": "3.53",
+        "version": "3.54",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
@@ -1185,7 +1185,7 @@
         }
       },
       "hub": {
-        "version": "2.12.7",
+        "version": "2.13.0",
         "bottle": {
           "cellar": ":any_skip_relocation",
           "prefix": "/usr/local",
@@ -1206,7 +1206,7 @@
         }
       },
       "hugo": {
-        "version": "0.58.3",
+        "version": "0.60.1",
         "bottle": {
           "cellar": ":any_skip_relocation",
           "prefix": "/usr/local",
@@ -1227,7 +1227,7 @@
         }
       },
       "imagemagick": {
-        "version": "7.0.8-66",
+        "version": "7.0.9-6",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
@@ -1319,7 +1319,7 @@
         }
       },
       "mosh": {
-        "version": "1.3.2_8",
+        "version": "1.3.2_10",
         "bottle": {
           "cellar": ":any",
           "prefix": "/usr/local",
@@ -1448,7 +1448,7 @@
         }
       },
       "tmux": {
-        "version": "2.9a_1",
+        "version": "3.0",
         "bottle": {
           "cellar": ":any",
           "prefix": "/usr/local",
@@ -1544,7 +1544,7 @@
         }
       },
       "vim": {
-        "version": "8.1.2050",
+        "version": "8.1.2350",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
@@ -1584,7 +1584,7 @@
         }
       },
       "backblaze": {
-        "version": "latest",
+        "version": "7.0.0.392",
         "options": {
           "args": {
             "appdir": "/Applications"
@@ -1795,7 +1795,7 @@
     "mas": {
       "1Password 7": {
         "id": "1333542190",
-        "version": "7.3.2"
+        "version": "7.4.1"
       },
       "Byword": {
         "id": "420212497",
@@ -1843,7 +1843,7 @@
       },
       "OmniFocus": {
         "id": "1346203938",
-        "version": "3.4.4"
+        "version": "3.4.6"
       },
       "Pages": {
         "id": "409201541",
@@ -1855,7 +1855,7 @@
       },
       "Reeder": {
         "id": "880001334",
-        "version": "3.2.2"
+        "version": "3.2.3"
       },
       "Soulver": {
         "id": "413965349",
@@ -1863,7 +1863,7 @@
       },
       "Speedtest": {
         "id": "1153157709",
-        "version": "1.8"
+        "version": "1.9"
       },
       "TaskPaper": {
         "id": "1090940630",
@@ -1875,11 +1875,11 @@
       },
       "VPN Unlimited": {
         "id": "727593140",
-        "version": "6.8"
+        "version": "6.12"
       },
       "Xcode": {
         "id": "497799835",
-        "version": "11.3"
+        "version": "11.3.1"
       },
       "xScope": {
         "id": "889428659",
@@ -1894,8 +1894,8 @@
         "HOMEBREW_PREFIX": "/usr/local",
         "Homebrew/homebrew-core": "0fe8c08b3b2965326c369b9d6e0fb15a51f275d2",
         "CLT": "",
-        "Xcode": "11.3",
-        "macOS": "10.15.1"
+        "Xcode": "11.3.1",
+        "macOS": "10.15.2"
       }
     }
   }
