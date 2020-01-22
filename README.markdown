@@ -12,7 +12,7 @@ This is how I do computers.  If you want to do computers like me this is the rep
 
 There's two main branches: `master` and `ck`.  `ck` is for my work.  If you're not me I'd recommend just using `master`.
 
-There's a `Makefile` that sets everything up.  Run `make help` to see available commands.  Running `make` with no arguments kicks off the default target.  It should *just work* ✨.  If it doesn't please open an [issue](https://github.com/jsatk/dotfiles/issues) [email me](mailto:jesse@jsatk.us).
+There's a `Makefile` that sets everything up.  Run `make help` to see available commands.  Running `make` with no arguments kicks off the default target.  It should *just work* ✨.  If it doesn't please open an [issue](https://github.com/jsatk/dotfiles/issues) or [email me](mailto:jesse@jsatk.us).
 
 It's important to note that I use [Fish Shell](https://fishshell.com).  If this scares you that's okay.  But you shouldn't be scared.  Fish Shell is amazing.  Bash is also fully supported but I don't spend my day-to-day in it so it's possible I might miss keeping it as up-to-date as my fish stuffs.
 
