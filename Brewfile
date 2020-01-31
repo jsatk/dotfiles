@@ -171,9 +171,8 @@ brew "nvim"
 
 cask_args appdir: "/Applications"
 
-cask "adoptopenjdk/openjdk/adoptopenjdk8" # Strictly for work.
+cask "adoptopenjdk8" # Strictly for work.
 cask "alfred"
-cask "backblaze"
 cask "dash"
 cask "discord"
 cask "docker"
