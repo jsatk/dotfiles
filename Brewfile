@@ -9,6 +9,7 @@ tap "keith/formulae"
 tap "thoughtbot/formulae"
 # For a better top, gotop.
 tap "cjbassi/gotop"
+tap "github/gh"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -124,13 +125,17 @@ brew "fd"
 brew "fzf"
 # For when I need to mess with fonts.
 brew "fontforge"
+# GitHub CLI tool.  As of this writing (20200218) is in beta and thus I still
+# need hub (see below).
+brew "gh" # Will replace hub.
 # CLI Jira.
 brew "go-jira"
 # Better top.
 brew "gotop"
 # Alternative to `cat` & `bat`.
 brew "highlight"
-# Add GitHub support to git on the command-line.
+# Older GitHub support to git on the command-line.  This essentially wraps git
+# and adds on some GitHub-specific nicities.
 brew "hub"
 # Utility for doing stuff – mostly compression – to images.
 brew "imagemagick"
