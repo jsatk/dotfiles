@@ -186,7 +186,7 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Clean trailing whitespace.
-nnoremap <leader>w mz:%s/\s\+$//<cr>:let @/=''<cr>`z
+nnoremap <leader><space> mz:%s/\s\+$//<cr>:let @/=''<cr>`z
 
 " My garbage brain can't ever remember digraph codes
 inoremap <c-k><c-k> <esc>:help digraph-table<cr>
@@ -323,11 +323,11 @@ endif
 " Coc {{{
 
 " Most of the following was taken from:
-" https://github.com/neoclide/coc.nvim#example-vim-configuration.
+" https://github.com/scalameta/coc-metals/blob/master/coc-mappings.vim
 
-" Use `[c` and `]c` for navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" Use `[g` and `]g` for navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -337,6 +337,9 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Remap for do codeAction of current line
 nmap <leader>ac <Plug>(coc-codeaction)
+
+" Used to expand decorations in worksheets
+nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
 
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -367,6 +370,19 @@ nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
 nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
+
+" For Scala + Metals specifically {{{
+
+" Toggle panel with Tree Views
+nnoremap <silent> <leader>t :<C-u>CocCommand metals.tvp<CR>
+" Toggle Tree View 'metalsBuild'
+nnoremap <silent> <leader>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+" Toggle Tree View 'metalsCompile'
+nnoremap <silent> <leader>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+" Reveal current current class (trait or object) in Tree View 'metalsBuild'
+nnoremap <silent> <leader>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+
+" }}}
 
 " :Fold [buffer] | fold buffer using coc.nvim {{{
 function! s:coc_fold_kinds(...) abort
