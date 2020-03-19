@@ -1,3 +1,5 @@
+#!/usr/bin/env osascript -l JavaScript
+
 (() => {
   const notPlaying = "🔇 "
   const nowPlaying = "🔊"

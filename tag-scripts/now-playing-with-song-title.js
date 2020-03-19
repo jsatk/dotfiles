@@ -1,3 +1,5 @@
+#!/usr/bin/env osascript -l JavaScript
+
 /**
  * Returns a string containing the currently playing song and artist for use in
  * tmux prompt * If you wish to use this outside of tmux update the

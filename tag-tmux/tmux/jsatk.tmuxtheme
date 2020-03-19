@@ -10,7 +10,7 @@ set -g status-left "#S #I:#P"
 
 # Right side of status bar
 WEATHER='#(curl -s wttr.in\?format\="%%c%%20+%%t")'
-NOW_PLAYING='#(osascript -l JavaScript ~/Library/scripts/now-playing-with-song-title.js)'
+NOW_PLAYING='#(~/Library/scripts/now-playing-with-song-title.js)'
 set -g status-right-style fg=colour250
 set -g status-right-length 150
 set -g status-right "#{prefix_highlight} #{battery_icon} #{battery_percentage} #[fg=colour16]#{cpu_bg_color} #{cpu_icon} #{cpu_percentage} #[fg=colour250,bg=colour16,nobold] %a %h-%d %H:%M $WEATHER $NOW_PLAYING"
