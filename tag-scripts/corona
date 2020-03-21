@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# If ~/.tmp/corona.json was not created today fetch updated stats and overwrite the file.
+[ "$(stat -q -f "%Sc" -t "%Y%m%d" ~/.tmp/corona.json)" != "$(date '+%Y%m%d')" ] &&
+  curl --silent "https://corona-stats.online?format=json" -o ~/.tmp/corona.json
+
+# Read ~/.tmp.corona.json, get only the California stats, and display it in a string with emoji.
+jq '.[] | select(.province=="California") | "😷\(.confirmed) 💀\(.deaths) 📊\(.mortalityPer)"' ~/.tmp/corona.json
