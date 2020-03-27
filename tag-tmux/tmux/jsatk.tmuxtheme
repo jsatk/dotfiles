@@ -9,7 +9,7 @@ set -g status-left-length 40
 set -g status-left "#S #I:#P"
 
 # Right side of status bar
-WEATHER='#(curl -s wttr.in\?format\="%%c%%20+%%t")'
+WEATHER='#(curl -s wttr.in\?format\="%%c+%%t")'
 NOW_PLAYING='#(~/Library/scripts/now-playing-with-song-title.js)'
 set -g status-right-style fg=colour250
 set -g status-right-length 150

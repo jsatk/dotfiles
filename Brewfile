@@ -9,7 +9,10 @@ tap "keith/formulae"
 tap "thoughtbot/formulae"
 # For a better top, gotop.
 tap "cjbassi/gotop"
+# For gh.
 tap "github/gh"
+# For Bloop.
+tap "scalacenter/bloop"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -71,6 +74,7 @@ brew "ammonite-repl"
 brew "asciinema"
 # Program language version manager.  Manages all languages.
 brew "asdf"
+brew "bloop"
 brew "nginx"
 brew "postgresql"
 brew "ruby-build"

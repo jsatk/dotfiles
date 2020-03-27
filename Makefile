@@ -6,6 +6,7 @@
 global_node_modules := \
 	bash-language-server \
 	diff-so-fancy \
+	neovim \
 	dockerfile-language-server-nodejs \
 	snyk \
 	speed-test \

@@ -50,7 +50,14 @@
     const title = track.name()
     const rainbowTitle = makeRainbow(`${artist}: ${title}`)
 
-    return (`${nowPlaying} ${rainbowTitle}`).substr(0, trim)
+    // The API for interacting with Spotify via JXA is flakey.  It returns an
+    // empty string a lot.  In the case that it does just return the speaker
+    // icon.  Otherwise it's just a single `:`.
+    if (artist === "" || title === "") {
+      return nowPlaying
+    } else {
+      return (`${nowPlaying} ${rainbowTitle}`).substr(0, trim)
+    }
   } else {
     return notPlaying
   }
