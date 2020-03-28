@@ -1,6 +1,6 @@
 function ep --description "Edit .plan"
-    git -C ~/Dropbox\ \(Personal\)/plan/ pull
+    git -C ~/.plan pull
     vim +Goyo ~/.plan
-    git -C ~/Dropbox\ \(Personal\)/plan/ commit -am "Update"
-    git -C ~/Dropbox\ \(Personal\)/plan/ push
+    git -C ~/.plan commit -am "Update"
+    git -C ~/.plan push
 end
