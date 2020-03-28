@@ -5,6 +5,8 @@ tap "cjbassi/gotop"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
+# For gh tool for GitHub.
+tap "github/gh"
 # For contacts in Mutt.
 tap "keith/formulae"
 # For rcm.
@@ -126,9 +128,13 @@ brew "fontforge"
 brew "go-jira"
 # Better top.
 brew "gotop"
+# GitHub CLI tool.  As of this writing (20200218) is in beta and thus I still
+# need hub (see below).
+brew "gh" # Will replace hub.
 # Alternative to `cat` & `bat`.
 brew "highlight"
-# Add GitHub support to git on the command-line.
+# Older GitHub support to git on the command-line.  This essentially wraps git
+# and adds on some GitHub-specific nicities.
 brew "hub"
 # My blog CMS of choice.
 brew "hugo"
