@@ -11,6 +11,8 @@ tap "github/gh"
 tap "keith/formulae"
 # For rcm.
 tap "thoughtbot/formulae"
+# For Bloop.
+tap "scalacenter/bloop"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -66,12 +68,11 @@ brew "weechat"
 # }}}
 # Programming Languages, DBs, & Language Tools ----------------------------- {{{
 
-# Better Scala REPL.
-brew "ammonite-repl"
 # terminal recording.
 brew "asciinema"
 # Program language version manager.  Manages all languages.
 brew "asdf"
+brew "bloop"
 brew "nginx"
 brew "postgresql"
 brew "ruby-build"
@@ -85,12 +86,12 @@ brew "hopenpgp-tools"
 brew "openssl"
 # Useful for printing GPG stuff to paper for physical backup.
 brew "paperkey"
+# For working with GPG stuff.
+brew "pinentry-mac"
 # For personalizing & working with Yubikeys.
 brew "ykman"
 brew "ykpers"
 brew "yubikey-personalization"
-# For working with GPG stuff.
-brew "pinentry-mac"
 
 # }}}
 # Utilities, Games, etc. --------------------------------------------------- {{{
@@ -179,7 +180,7 @@ brew "nvim"
 
 cask_args appdir: "/Applications"
 
-cask "adoptopenjdk/openjdk/adoptopenjdk8"
+cask "adoptopenjdk8"
 cask "alfred"
 cask "backblaze"
 cask "battle-net"

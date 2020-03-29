@@ -64,7 +64,7 @@
 
 	# Great for generating release notes.  Blindly assumets `master` is your
 	# production branch that you want to generate release notes for.
-	release-notes = "!git log master..HEAD --pretty=format:'%H' --no-merges | xargs -n1 -I'{}' sh -c 'git log -1 --pretty=format:\"%B\" {} | sed -n \"1p;/Differential/p;\" && echo \"\"'"
+	release-notes = "!git log master..HEAD --pretty=format:'%H' --no-merges | xargs -n1 -I'{}' sh -c 'git log -1 --pretty=format:\"%B\" {} && echo \"\"'"
 
 # }}}
 # apply ------------------------------------------------------------------- {{{
@@ -220,6 +220,12 @@
 
 [rerere]
 	enabled = true
+
+# }}}
+# web --------------------------------------------------------------------- {{{
+
+[web]
+	browser = firefox
 
 # }}}
 # vim: textwidth=80:noexpandtab:shiftwidth=8
