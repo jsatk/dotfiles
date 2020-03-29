@@ -6,3 +6,6 @@ setlocal cmdheight=2
 let g:scala_sort_across_groups=1
 
 set colorcolumn=120 " Width of Github diffs
+set textwidth=120 " Width of Github diffs
+
+setlocal foldmethod=syntax

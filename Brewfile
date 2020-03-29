@@ -180,6 +180,9 @@ brew "nvim"
 
 cask_args appdir: "/Applications"
 
+# Better Scala REPL.  This comes with Bloop by default but is inaccessible if
+# you're using it outside of a project.
+brew "ammonite-repl"
 cask "adoptopenjdk8"
 cask "alfred"
 cask "backblaze"

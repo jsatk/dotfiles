@@ -7,7 +7,7 @@
 " `/bin/bash` because vim-dispatch apparently has trouble inferring the PID of
 " the task when `shell` is set to `/bin/bash`.  Computers are hard.
 "
-" See: https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim#L71-L73
+" See: https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim#L66-L68
 if &shell =~# 'fish$'
   set shell=sh
 endif
@@ -73,7 +73,6 @@ call plug#end()
 " setting and press `K`.  This will open the help for that item in a split.
 " This works for many languages in vim.
 
-set autoread
 set autowrite
 set breakindent
 " A |sentence| has to be followed by two spaces after the '.', '!' or '?'.
@@ -85,11 +84,9 @@ set gdefault
 set hidden
 set hlsearch
 set ignorecase " Ignore the case, unless...
-set laststatus=2
 set lazyredraw
 set linebreak
 set list " Show select “invisible” characters
-set matchtime=3
 set mousehide
 set nf=octal,hex,alpha " Increment alpha strings with vim
 set nostartofline
@@ -159,8 +156,6 @@ set guifont=OperatorMonoForPowerline-Book:h18
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-set fillchars=diff:⣿,vert:│
-
 " }}}
 " Convenience Mappings ---------------------------------------------------- {{{
 
@@ -175,7 +170,7 @@ nnoremap S i<cr><esc><right>
 " switch to last file
 nnoremap <leader><leader> <c-^>
 " redraw the buffer
-nnoremap <leader>r :redraw!<cr>
+nnoremap <leader>r :syntax sync fromstart<cr>:redraw!<cr>
 " Don't jump-to-next when I use * to search for what's under cursor.
 nnoremap * *<c-o>
 " <C-l> redraws the screen and removes any search highlighting.
@@ -561,7 +556,7 @@ command! -nargs=0 Pulse call <SID>Pulse()
 
 " }}}
 
-set secure " Disables unsafe commands in project-specific .vimrc files.
+set secure " disables unsafe commands in project-specific .vimrc files.
 set exrc " Allows for project-specific vimrc files.
 
 " vim: set foldmethod=marker foldlevel=0:
