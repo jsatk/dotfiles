@@ -7,12 +7,14 @@ tap "homebrew/core"
 tap "keith/formulae"
 # For rcm.
 tap "thoughtbot/formulae"
-# For a better top, gotop.
-tap "cjbassi/gotop"
+# For a better top, ytop.
+tap "cjbassi/ytop"
 # For gh.
 tap "github/gh"
 # For Bloop.
 tap "scalacenter/bloop"
+# For Coursier
+tap "coursier/formulas"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -75,6 +77,7 @@ brew "asciinema"
 # Program language version manager.  Manages all languages.
 brew "asdf"
 brew "bloop"
+brew "coursier"
 brew "nginx"
 brew "postgresql"
 brew "ruby-build"
@@ -134,10 +137,13 @@ brew "fontforge"
 brew "gh" # Will replace hub.
 # CLI Jira.
 brew "go-jira"
-# Better top.
-brew "gotop"
+# Better top – written in Rust, because we have to rewrite everything in Rust or
+# Go now.
+brew "ytop"
 # Alternative to `cat` & `bat`.
 brew "highlight"
+# Better top.
+brew "htop"
 # Older GitHub support to git on the command-line.  This essentially wraps git
 # and adds on some GitHub-specific nicities.
 brew "hub"
@@ -157,9 +163,8 @@ brew "rcm"
 brew "ripgrep"
 # Fancy ASCII print out of computer settings.
 brew "neofetch"
-# Control spotify from commandline.  Mostly for adjusting volume when using
-# Spotify Connect.
-brew "shpotify"
+# Terminal Spotify player.
+brew "spotify-tui"
 # Simple & better `man`.
 brew "tldr"
 # The terminal multiplexer.
@@ -198,6 +203,7 @@ cask "iTerm2"
 cask "keybase"
 cask "keycastr"
 cask "monodraw"
+cask "postman"
 cask "signal"
 cask "slack-beta"
 cask "spotify"

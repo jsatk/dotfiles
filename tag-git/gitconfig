@@ -62,9 +62,22 @@
 	# Great for when you forget to add something.
 	append = commit --amend --no-edit
 
-	# Great for generating release notes.  Blindly assumets `master` is your
-	# production branch that you want to generate release notes for.
-	release-notes = "!git log master..HEAD --pretty=format:'%H' --no-merges | xargs -n1 -I'{}' sh -c 'git log -1 --pretty=format:\"%B\" {} && echo \"\"'"
+	# Great for generating release notes.
+	#
+	# Example usage:
+	#
+	# Print it to stdout.
+	# $ git release-notes v0.27.3 v0.27.9
+	#
+	# To send it to the Clipboard on macOS.
+	# $ git release-notes v0.27.3 v0.27.9 | pbcopy
+	#
+	# Send it to vim for editing.
+	# $ git release-notes v0.27.3 v0.27.9 | vim -
+	release-notes = "!f() { \
+		git log $1..$2 --no-merges --oneline --pretty=format:'%s' | \
+		sed '/Setting version/d'; \
+	}; f"
 
 # }}}
 # apply ------------------------------------------------------------------- {{{
@@ -227,7 +240,7 @@
 # web --------------------------------------------------------------------- {{{
 
 [web]
-	browser = firefox
+	browser = chrome
 
 # }}}
 # vim: textwidth=80:noexpandtab:shiftwidth=8

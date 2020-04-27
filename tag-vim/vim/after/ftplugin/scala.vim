@@ -1,11 +1,5 @@
-" Metals prints some wordy messages that get cut off when cmdheight is set to
-" the default of 1.
-setlocal cmdheight=2
-
 " See: `:h :SortScalaImports`
 let g:scala_sort_across_groups=1
 
 set colorcolumn=120 " Width of Github diffs
-set textwidth=120 " Width of Github diffs
-
-setlocal foldmethod=syntax
+set textwidth=80 " Width of Github diffs
