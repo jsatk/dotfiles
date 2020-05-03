@@ -33,7 +33,7 @@
   const makeRainbow = text =>
     text
       .split('')
-      .map(getRainbowChar)
+      // .map(getRainbowChar)
       .join('')
 
   const getTrack = () => {
@@ -48,7 +48,7 @@
     const track = getTrack()
     const artist = track.artist()
     const title = track.name()
-    const rainbowTitle = makeRainbow(`${artist}: ${title}`)
+    const rainbowTitle = makeRainbow(`${title}`)
 
     // The API for interacting with Spotify via JXA is flakey.  It returns an
     // empty string a lot.  In the case that it does just return the speaker
@@ -56,7 +56,7 @@
     if (artist === "" || title === "") {
       return nowPlaying
     } else {
-      return (`${nowPlaying} ${rainbowTitle}`).substr(0, trim)
+      return (`${nowPlaying} ${rainbowTitle}`).substr(0, 20)
     }
   } else {
     return notPlaying
