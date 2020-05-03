@@ -1,5 +1,9 @@
 {
   "coc.preferences.formatOnType": true,
+  "codeLens.enable": true,
+  "diagnostic.errorSign": "✗",
+  "diagnostic.warningSign": "⚠",
+  "metals.statusBarEnabled": true,
   "languageserver": {
     "dockerfile": {
       "command": "docker-langserver",

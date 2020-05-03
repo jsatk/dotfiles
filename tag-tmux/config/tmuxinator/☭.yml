@@ -56,7 +56,6 @@ windows:
   - "💬": weechat
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/.dotfiles"
-  - "📈": gotop
   - "🤖": rtv
   - "🐠":
       root: "~"

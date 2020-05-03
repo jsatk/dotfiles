@@ -26,7 +26,6 @@ Plug 'dag/vim-fish'
 Plug 'derekwyatt/vim-sbt'
 Plug 'derekwyatt/vim-scala'
 Plug 'fatih/vim-go'
-Plug 'itchyny/lightline.vim'
 Plug 'janko/vim-test'
 Plug 'junegunn/fzf.vim'
 Plug '/usr/local/opt/fzf' " Tells vim-fzf where fzf install is.
@@ -63,6 +62,9 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -139,12 +141,6 @@ nnoremap zG 2zg
 
 " }}}
 " Look & Feel ------------------------------------------------------------- {{{
-
-" We must set the lightline colorscheme *before* the vim colorscheme, because...
-" computers...
-" The actual `gruvbox` colorscheme comes from the gruvbox plugin, not the
-" lightline plugin.
-let g:lightline = {'colorscheme': 'gruvbox'}
 
 set background=dark
 colorscheme gruvbox
@@ -315,6 +311,12 @@ endif
 " }}}
 " Vim Plugin Configurations ----------------------------------------------- {{{
 
+" Airline {{{
+
+let g:airline_powerline_fonts=1
+let g:airline_theme='gruvbox'
+
+" }}}
 " Coc {{{
 
 " Most of the following was taken from:
@@ -486,9 +488,9 @@ let g:projectionist_heuristics = {
       \ "build.sbt": {
       \   "README.md": { "type": "doc" },
       \   "*": {
-      \     "console": "sbt console",
-      \     "make": "sbt compile",
-      \     "start": "sbt run"
+      \     "console": "bloop console",
+      \     "make": "bloop compile",
+      \     "start": "bloop run"
       \   },
       \   "src/main/scala/*.scala": {
       \     "alternate": "src/test/scala/{}Spec.scala",
@@ -497,7 +499,7 @@ let g:projectionist_heuristics = {
       \   "src/test/scala/*Spec.scala": {
       \     "alternate": "src/main/scala/{}.scala",
       \     "type": "test",
-      \     "dispatch": "sbt -Dsbt.log.noformat=true \"testOnly {dot}Spec\""
+      \     "dispatch": "bloop test --no-color -o {dot}Spec"
       \   },
       \   "build.sbt": { "type": "config" },
       \   "*.sbt": { "type": "config" },
@@ -556,7 +558,7 @@ command! -nargs=0 Pulse call <SID>Pulse()
 
 " }}}
 
-set secure " disables unsafe commands in project-specific .vimrc files.
+set secure " Disables unsafe commands in project-specific .vimrc files.
 set exrc " Allows for project-specific vimrc files.
 
 " vim: set foldmethod=marker foldlevel=0:

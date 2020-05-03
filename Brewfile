@@ -1,7 +1,7 @@
 # Taps --------------------------------------------------------------------- {{{
 
-# For a better top, gotop.
-tap "cjbassi/gotop"
+# For a better top, ytop.
+tap "cjbassi/ytop"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
@@ -13,6 +13,8 @@ tap "keith/formulae"
 tap "thoughtbot/formulae"
 # For Bloop.
 tap "scalacenter/bloop"
+# For Coursier.
+tap "coursier/formulas"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -68,11 +70,14 @@ brew "weechat"
 # }}}
 # Programming Languages, DBs, & Language Tools ----------------------------- {{{
 
+# Better Scala REPL.
+brew "ammonite-repl"
 # terminal recording.
 brew "asciinema"
 # Program language version manager.  Manages all languages.
 brew "asdf"
 brew "bloop"
+brew "coursier"
 brew "nginx"
 brew "postgresql"
 brew "ruby-build"
@@ -125,10 +130,6 @@ brew "fd"
 brew "fzf"
 # For when I need to mess with fonts.
 brew "fontforge"
-# CLI Jira.
-brew "go-jira"
-# Better top.
-brew "gotop"
 # GitHub CLI tool.  As of this writing (20200218) is in beta and thus I still
 # need hub (see below).
 brew "gh" # Will replace hub.
@@ -174,15 +175,14 @@ brew "vifm"
 # Best text editor ever & it's cousin.
 brew "vim"
 brew "nvim"
+# Better top.
+brew "ytop"
 
 # }}}
 # Casks -------------------------------------------------------------------- {{{
 
 cask_args appdir: "/Applications"
 
-# Better Scala REPL.  This comes with Bloop by default but is inaccessible if
-# you're using it outside of a project.
-brew "ammonite-repl"
 cask "adoptopenjdk8"
 cask "alfred"
 cask "backblaze"
@@ -204,6 +204,7 @@ cask "keybase"
 cask "keycastr"
 cask "macvim" # For when I need a gui editor (I.E. tridactyl).
 cask "monodraw"
+cask "postman"
 cask "signal"
 cask "slack-beta"
 cask "spotify"
