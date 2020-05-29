@@ -208,6 +208,7 @@ cask "postman"
 cask "signal"
 cask "slack-beta"
 cask "spotify"
+cask "twitch"
 cask "yubico-yubikey-manager"
 
 # }}}
