@@ -15,6 +15,8 @@ tap "thoughtbot/formulae"
 tap "scalacenter/bloop"
 # For Coursier.
 tap "coursier/formulas"
+# For AdoptopenJDK.
+tap "adoptopenjdk/openjdk"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
