@@ -163,8 +163,6 @@ brew "rcm"
 brew "ripgrep"
 # Fancy ASCII print out of computer settings.
 brew "neofetch"
-# Terminal Spotify player.
-brew "spotify-tui"
 # Simple & better `man`.
 brew "tldr"
 # The terminal multiplexer.
