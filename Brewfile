@@ -1,22 +1,22 @@
 # Taps --------------------------------------------------------------------- {{{
 
+# For AdoptopenJDK.
+tap "adoptopenjdk/openjdk"
 # For a better top, ytop.
 tap "cjbassi/ytop"
+# For Coursier.
+tap "coursier/formulas"
+# For gh tool for GitHub.
+tap "github/gh"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
-# For gh tool for GitHub.
-tap "github/gh"
 # For contacts in Mutt.
 tap "keith/formulae"
-# For rcm.
-tap "thoughtbot/formulae"
 # For Bloop.
 tap "scalacenter/bloop"
-# For Coursier.
-tap "coursier/formulas"
-# For AdoptopenJDK.
-tap "adoptopenjdk/openjdk"
+# For rcm.
+tap "thoughtbot/formulae"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -43,7 +43,7 @@ brew "isync"
 # Lets me send email.
 brew "msmtp"
 # Lets me browse & read email.
-brew "mutt"
+brew "neomutt"
 # For email searching.
 brew "notmuch"
 # Lets me go to URLs in emails.
@@ -122,6 +122,8 @@ brew "autojump"
 brew "bat"
 # For when I need to turn bluetooth back on & my trackpad is bluetooth.
 brew "blueutil"
+# A better way to navigate directories.
+brew "broot"
 # Source code tag files.
 brew "ctags"
 # `ls` but written in Rust with better defaults.
@@ -135,6 +137,8 @@ brew "fontforge"
 # GitHub CLI tool.  As of this writing (20200218) is in beta and thus I still
 # need hub (see below).
 brew "gh" # Will replace hub.
+# Make pretty graphs.
+brew "graphviz"
 # Alternative to `cat` & `bat`.
 brew "highlight"
 # Older GitHub support to git on the command-line.  This essentially wraps git
@@ -152,6 +156,8 @@ brew "mas"
 brew "moreutils"
 # When I need to SSH.
 brew "mosh"
+# Media player.
+brew "mpv"
 # Single-player roguelike video game.
 brew "nethack"
 # Manages dotfiles.
@@ -177,7 +183,8 @@ brew "vifm"
 # Best text editor ever & it's cousin.
 brew "vim"
 brew "nvim"
-# Better top.
+# Better top – written in Rust, because we have to rewrite everything in Rust or
+# Go now.
 brew "ytop"
 
 # }}}

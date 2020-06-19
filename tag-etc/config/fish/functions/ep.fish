@@ -1,6 +1,6 @@
 function ep --description "Edit .plan"
-    git -C ~/.plan pull
-    vim +Goyo ~/.plan
-    git -C ~/.plan commit -am "Update"
-    git -C ~/.plan push
+    git -C ~/Developer/jsatk.us pull
+    vim +Goyo ~/Developer/jsatk.us/content/dotplan.md
+    git -C ~/Developer/jsatk.us commit -am "Update .plan"
+    git -C ~/Developer/jsatk.us push
 end

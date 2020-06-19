@@ -26,7 +26,7 @@ Channel jsatk
 Master :jsatk-remote:
 Slave :jsatk-local:
 # Don't sync drafts since they are stored unencrypted
-Patterns * !Drafts
+Patterns *
 # Automatically create missing mailboxes, both locally and on the server
 Create Both
 # Save the synchronization state files in the relevant directory

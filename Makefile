@@ -111,7 +111,7 @@ shellcheck: ## Runs the shellcheck tests on the scripts.
 		--name df-shellcheck \
 		-v $(CURDIR):/usr/src:ro \
 		--workdir /usr/src \
-		r.j3ss.co/shellcheck ./test.sh
+		r.j3ss.co/shellcheck ./tag-scripts/test.sh
 
 # }}}
 # Help --------------------------------------------------------------------- {{{

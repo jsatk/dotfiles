@@ -25,7 +25,6 @@ Plug 'ap/vim-css-color'
 Plug 'dag/vim-fish'
 Plug 'derekwyatt/vim-sbt'
 Plug 'derekwyatt/vim-scala'
-Plug 'fatih/vim-go'
 Plug 'janko/vim-test'
 Plug 'junegunn/fzf.vim'
 Plug '/usr/local/opt/fzf' " Tells vim-fzf where fzf install is.
@@ -42,7 +41,9 @@ Plug 'nicholaides/words-to-avoid.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'rizzatti/dash.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'ryanoasis/vim-devicons'
 Plug 'sgur/vim-editorconfig'
+Plug 'sjl/gundo.vim'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -64,7 +65,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -313,7 +313,7 @@ endif
 
 " Airline {{{
 
-let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts = 1
 let g:airline_theme='gruvbox'
 
 " }}}
@@ -437,6 +437,11 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" }}}
+" Gundo {{{
+
+nnoremap <F5> :GundoToggle<CR>
 
 " }}}
 " Javascript {{{
