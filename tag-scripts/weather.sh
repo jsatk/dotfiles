@@ -9,5 +9,5 @@ WEATHER=$(curl -s wttr.in?format="%c+%t")
 if [[ $WEATHER == *Unknown* ]] || [[ $WEATHER == *Sorry* ]]; then
   echo ""
 else
-  echo $WEATHER
+  echo "$WEATHER"
 fi

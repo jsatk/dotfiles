@@ -13,7 +13,7 @@ tap "cjbassi/ytop"
 tap "github/gh"
 # For Bloop.
 tap "scalacenter/bloop"
-# For Coursier
+# For Coursier.
 tap "coursier/formulas"
 
 # }}}
@@ -41,7 +41,7 @@ brew "isync"
 # Lets me send email.
 brew "msmtp"
 # Lets me browse & read email.
-brew "mutt"
+brew "neomutt"
 # For email searching.
 brew "notmuch"
 # Lets me go to URLs in emails.
@@ -135,11 +135,10 @@ brew "fontforge"
 # GitHub CLI tool.  As of this writing (20200218) is in beta and thus I still
 # need hub (see below).
 brew "gh" # Will replace hub.
+# Make pretty graphs.
+brew "graphviz"
 # CLI Jira.
 brew "go-jira"
-# Better top – written in Rust, because we have to rewrite everything in Rust or
-# Go now.
-brew "ytop"
 # Alternative to `cat` & `bat`.
 brew "highlight"
 # Better top.
@@ -157,6 +156,8 @@ brew "mas"
 brew "moreutils"
 # When I need to SSH.
 brew "mosh"
+# Media player.
+brew "mpv"
 # Manages dotfiles.
 brew "rcm"
 # Best `grep` replacement.
@@ -177,6 +178,9 @@ brew "vifm"
 # Best text editor ever & it's cousin.
 brew "vim"
 brew "nvim"
+# Better top – written in Rust, because we have to rewrite everything in Rust or
+# Go now.
+brew "ytop"
 
 # }}}
 # Casks -------------------------------------------------------------------- {{{

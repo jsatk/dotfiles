@@ -12,29 +12,29 @@ global_node_modules := \
 	speed-test \
 
 global_gems = \
-	neovim \
 	tmuxinator \
 
 # Paths to folders & binaries
 # Brew
-homebrew_root = /usr/local
+homebrew_root := /usr/local
 cellar := $(homebrew_root)/Cellar
 bin := $(homebrew_root)/bin
 homebrew := $(bin)/brew
 
 # asdf
+asdf_plugins := nodejs ruby sbt yarn
 asdf_root := $(HOME)/.asdf
 asdf_shims := $(asdf_root)/shims
 
 # Node
 yarn := $(asdf_shims)/yarn
-node_modules_root = $(asdf_shims)
-prefixed_node_modules = $(addprefix $(node_modules_root)/,$(global_node_modules))
+node_modules_root := $(asdf_shims)
+prefixed_node_modules := $(addprefix $(node_modules_root)/,$(global_node_modules))
 
 # Ruby
 gem := $(asdf_shims)/gem
-gems_root = $(asdf_shims)
-prefixed_gems = $(addprefix $(gems_root)/,$(global_gems))
+gems_root := $(asdf_shims)
+prefixed_gems := $(addprefix $(gems_root)/,$(global_gems))
 
 # }}}
 # Core Targets ------------------------------------------------------------- {{{
@@ -77,7 +77,6 @@ endif
 # }}}
 # asdf --------------------------------------------------------------------- {{{
 
-asdf_plugins=nodejs ruby sbt yarn
 $(asdf_plugins):
 	-asdf plugin-add $@
 
@@ -102,6 +101,17 @@ $(prefixed_gems):
 
 .PHONY: gems
 gems: | $(prefixed_gems) ## Install global gems.
+
+# }}}
+# Shellcheck --------------------------------------------------------------- {{{
+
+.PHONY: shellcheck
+shellcheck: ## Runs the shellcheck tests on the scripts.
+    docker run --rm -i -t \
+        --name df-shellcheck \
+        -v $(CURDIR):/usr/src:ro \
+        --workdir /usr/src \
+        r.j3ss.co/shellcheck ./tag-scripts/test.sh
 
 # }}}
 # Help --------------------------------------------------------------------- {{{

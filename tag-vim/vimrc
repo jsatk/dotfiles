@@ -41,8 +41,11 @@ Plug 'nicholaides/words-to-avoid.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'rizzatti/dash.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'ryanoasis/vim-devicons'
 Plug 'sgur/vim-editorconfig'
+Plug 'sjl/gundo.vim'
 Plug 'solarnz/thrift.vim'
+Plug 'soywod/iris.vim'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -64,7 +67,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -437,6 +439,32 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" }}}
+" Gundo {{{
+
+nnoremap <F5> :GundoToggle<CR>
+
+" }}}
+" Iris {{{
+
+let g:iris_name  = "Jesse Atkinson"
+let g:iris_mail = "jesse@jsatk.us"
+
+let g:iris_imap_host  = "imap.fastmail.com"
+let g:iris_imap_port  = 993
+
+let g:iris_smtp_host  = "smtp.fastmail.com"
+let g:iris_smtp_port  = 465
+
+" Absolute path is required.
+let g:iris_imap_passwd_filepath = "/Users/jesse.atkinson/.mutt/account.jsatk.password.gpg"
+let g:iris_smtp_passwd_filepath = "/Users/jesse.atkinson/.mutt/account.jsatk.password.gpg"
+
+let g:iris_imap_passwd_show_cmd = "gpg --quiet --for-your-eyes-only --no-tty --decrypt"
+let g:iris_smtp_passwd_show_cmd = "gpg --quiet --for-your-eyes-only --no-tty --decrypt"
+
+let g:iris_download_dir = "~/Downloads"
 
 " }}}
 " Javascript {{{
