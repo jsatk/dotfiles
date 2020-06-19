@@ -172,7 +172,11 @@ alternative_order text/plain text/enriched text/html
 # }}}
 # URLs {{{
 
-macro pager b "|urlview<enter>" "call urlview to open links"
+# Alternative, `urlview` is installed via Homebrew.
+# macro pager b "|urlview<enter>" "call urlview to open links"
+
+# Install via pip: `sudo pip3 install -I urlscan`
+macro pager b "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
 # }}}
 # HTML Emails {{{
