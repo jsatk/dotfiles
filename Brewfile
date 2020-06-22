@@ -160,6 +160,8 @@ brew "mosh"
 brew "mpv"
 # Single-player roguelike video game.
 brew "nethack"
+# RSS Reader
+brew "newsboat"
 # Manages dotfiles.
 brew "rcm"
 # Best `grep` replacement.
