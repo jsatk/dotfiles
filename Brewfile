@@ -158,6 +158,8 @@ brew "moreutils"
 brew "mosh"
 # Media player.
 brew "mpv"
+# RSS Reader
+brew "newsboat"
 # Manages dotfiles.
 brew "rcm"
 # Best `grep` replacement.

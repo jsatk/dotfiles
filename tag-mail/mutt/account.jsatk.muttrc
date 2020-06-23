@@ -23,15 +23,15 @@ set sendmail  = "/usr/local/bin/msmtp -a jsatk" # Send email from this account u
 # Mailboxes to show in the sidebar {{{
 
 unmailboxes * # When we switch accounts unset all folders added to sidebar by the previous account
-named-mailboxes "📨 Inbox" =Inbox
-named-mailboxes "📰 Newsletters" =Newsletters"
-named-mailboxes "  Sent" =Sent
-named-mailboxes "📝 Drafts" =Drafts
-named-mailboxes "🗣  Spam" =Spam
-named-mailboxes "🟊 Starred" =Starred
-named-mailboxes "🗂  Archive" =Archive
-named-mailboxes "🗑  Trash" =Trash
-named-mailboxes "🔎 Search" =../temporary/search
+named-mailboxes "ﯬ Inbox"       =Inbox
+named-mailboxes " Newsletters" =Newsletters
+named-mailboxes " Sent"        =Sent
+named-mailboxes " Drafts"      =Drafts
+named-mailboxes " Spam"        =Spam
+named-mailboxes "🟊 Starred"     =Starred
+named-mailboxes " Archive"     =Archive
+named-mailboxes " Trash"       =Trash
+named-mailboxes " Search"      =../temporary/search
 
 # }}}
 # vim: ft=muttrc

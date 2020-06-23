@@ -11,7 +11,7 @@ global_node_modules := \
 	snyk \
 	speed-test \
 
-global_gems = \
+global_gems := \
 	tmuxinator \
 
 # Paths to folders & binaries
@@ -107,11 +107,11 @@ gems: | $(prefixed_gems) ## Install global gems.
 
 .PHONY: shellcheck
 shellcheck: ## Runs the shellcheck tests on the scripts.
-    docker run --rm -i -t \
-        --name df-shellcheck \
-        -v $(CURDIR):/usr/src:ro \
-        --workdir /usr/src \
-        r.j3ss.co/shellcheck ./tag-scripts/test.sh
+	docker run --rm -i -t \
+		--name df-shellcheck \
+		-v $(CURDIR):/usr/src:ro \
+		--workdir /usr/src \
+		r.j3ss.co/shellcheck ./tag-scripts/test.sh
 
 # }}}
 # Help --------------------------------------------------------------------- {{{
