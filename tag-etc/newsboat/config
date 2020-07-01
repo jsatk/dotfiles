@@ -5,8 +5,6 @@ external-url-viewer "urlscan -dc -r 'linkhandler {}'"
 
 bind-key j down
 bind-key k up
-bind-key j next articlelist
-bind-key k prev articlelist
 bind-key J next-feed articlelist
 bind-key K prev-feed articlelist
 bind-key G end
@@ -39,3 +37,5 @@ highlight article "https?://[^ ]+" color208 default underline
 highlight article "\\[[0-9]+\\]" color102 default bold
 highlight article "\\[image\\ [0-9]+\\]" color63 default bold
 highlight feedlist "^─.*$" color61 color235 bold
+
+# vim: ft=config

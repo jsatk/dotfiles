@@ -1,11 +1,13 @@
-https://jsatk.us/posts/index.xml tech
-https://daringfireball.net/feeds/main tech
-https://randsinrepose.com/feed/ tech
-http://brett.trpstra.net/brettterpstra tech
-https://stevelosh.com/blog/index.xml tech
-https://feeds.feedburner.com/codinghorror tech
+https://jsatk.us/posts/index.xml                      tech
+https://daringfireball.net/feeds/main                 tech
+https://randsinrepose.com/feed/                       tech
+http://brett.trpstra.net/brettterpstra                tech
+https://stevelosh.com/blog/index.xml                  tech
+https://feeds.feedburner.com/codinghorror             tech
 https://blog.patternsinthevoid.net/feeds/all.atom.xml tech
-https://signalvnoise.com/posts.rss tech
-https://pitchfork.com/rss/news/ music "~Pitchfork News"
-https://blog.jessfraz.com/index.xml tech
-https://hypercritical.co/feeds/main tech
+https://signalvnoise.com/posts.rss                    tech
+https://pitchfork.com/rss/news/                       music "~Pitchfork News"
+https://blog.jessfraz.com/index.xml                   tech
+https://hypercritical.co/feeds/main                   tech
+https://www.lesswrong.com/feed.xml?view=curated-rss   tech
+https://hg.stevelosh.com/.plan/log                    tech

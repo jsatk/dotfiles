@@ -25,6 +25,7 @@ Plug 'ap/vim-css-color'
 Plug 'dag/vim-fish'
 Plug 'derekwyatt/vim-sbt'
 Plug 'derekwyatt/vim-scala'
+Plug 'flazz/vim-colorschemes'
 Plug 'janko/vim-test'
 Plug 'junegunn/fzf.vim'
 Plug '/usr/local/opt/fzf' " Tells vim-fzf where fzf install is.

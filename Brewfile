@@ -213,6 +213,7 @@ cask "signal"
 cask "slack-beta"
 cask "spotify"
 cask "twitch"
+cask "vlc"
 cask "yubico-yubikey-manager"
 
 # }}}
