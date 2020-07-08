@@ -222,6 +222,7 @@ cask "spotify"
 cask "steam"
 cask "tor-browser"
 cask "twitch"
+cask "vlc"
 cask "yubico-yubikey-manager"
 
 # }}}
