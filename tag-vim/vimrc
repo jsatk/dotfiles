@@ -458,6 +458,10 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
+" Puts FZF inside of a nice pop-up window rather than a split.
+" https://github.com/junegunn/fzf/blob/master/README-VIM.md#starting-fzf-in-a-popup-window
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+
 " }}}
 " Gundo {{{
 
