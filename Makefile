@@ -1,5 +1,21 @@
 .DEFAULT_GOAL := all
 
+# TODO: Install/manage pip plugins for both python2 & python3
+#
+#     - gpg
+#     - greenlet
+#     - mercurial
+#     - msgpack
+#     - notmuch
+#     - pip
+#     - protobuf
+#     - pynvim
+#     - setuptools
+#     - six
+#     - urlscan
+#     - urwid
+#     - wheel
+
 # Configuration Variables -------------------------------------------------- {{{
 
 # Gloabl Binaries

@@ -27,8 +27,8 @@ Plug 'derekwyatt/vim-sbt'
 Plug 'derekwyatt/vim-scala'
 Plug 'flazz/vim-colorschemes'
 Plug 'janko/vim-test'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug '/usr/local/opt/fzf' " Tells vim-fzf where fzf install is.
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/vim-easy-align'
@@ -37,7 +37,7 @@ Plug 'kovisoft/paredit'
 Plug 'l04m33/vlime'
 Plug 'morhetz/gruvbox'
 Plug 'mxw/vim-jsx'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'nicholaides/words-to-avoid.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'rizzatti/dash.vim'
@@ -46,7 +46,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'sgur/vim-editorconfig'
 Plug 'sjl/gundo.vim'
 Plug 'solarnz/thrift.vim'
-Plug 'soywod/iris.vim'
+Plug 'stsewd/fzf-checkout.vim'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -210,8 +210,9 @@ nnoremap <leader>ed :vsplit ~/.vim/custom-dictionary.utf-8.add<cr>
 nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
 nnoremap <leader>eg :vsplit ~/.gitconfig<cr>
 nnoremap <leader>em :vsplit ~/.muttrc<cr>
+nnoremap <leader>ep :vsplit ~/Developer/jsatk.us/content/dotplan.md<cr>
 nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 
 " }}}
 " Folding ----------------------------------------------------------------- {{{
@@ -426,6 +427,22 @@ command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " Search in files.
+"
+" A note about why I'm using `Files` rather than `GFiles.
+"
+" From the help file for FZF:
+"
+"     `:Files [PATH]`    | Files (runs  `$FZF_DEFAULT_COMMAND`  if defined)
+"     `:GFiles [OPTS]`   | Git files ( `git ls-files` )
+"
+" I have `$FZF_DEFAULT_COMMAND` set to the following:
+"
+"     # Use git to search files when in a git repo, otherwise use fd.
+"     set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type file --hidden --follow --exclude .git'
+"
+" This is more performant on ridiculously large repos which I unfortunately have
+" to work with from time to time.  So essentially `:Files` is a more performant
+" `:Gfiles` if we're in a git repo.  Otherwise it falls back to `fd`.
 nnoremap <C-t> :<C-u>Files<CR>
 " Search in vim buffers.
 nnoremap <C-t><C-f> :<C-u>Buffers<CR>

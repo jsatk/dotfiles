@@ -178,6 +178,8 @@ brew "vifm"
 # Best text editor ever & it's cousin.
 brew "vim"
 brew "nvim"
+# For easy parsing and rendering of Yaml.
+brew "yq"
 # Better top – written in Rust, because we have to rewrite everything in Rust or
 # Go now.
 brew "ytop"
@@ -189,6 +191,7 @@ cask_args appdir: "/Applications"
 
 cask "adoptopenjdk8" # Strictly for work.
 cask "alfred"
+cask "blue-sherpa"
 cask "dash"
 cask "discord"
 cask "docker"
