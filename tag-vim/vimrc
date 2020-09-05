@@ -1,4 +1,6 @@
-" Vim Plugins ------------------------------------------------------------- {{{
+" Author: Jesse Atkinson <jesse@jsatk.us>
+
+" Preamble ---------------------------------------------------------------- {{{
 
 " The following check is done in vim-sensible, however as of this writing that
 " check doesn't apply to Vim 8.  Until vim-dispatch works nicely with Fish shell
@@ -11,6 +13,9 @@
 if &shell =~# 'fish$'
   set shell=sh
 endif
+
+" }}}
+" Vim Plugins ------------------------------------------------------------- {{{
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -35,7 +40,6 @@ Plug 'junegunn/gv.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kovisoft/paredit'
-Plug 'l04m33/vlime'
 Plug 'morhetz/gruvbox'
 Plug 'mxw/vim-jsx'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -65,8 +69,10 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
+Plug 'tridactyl/vim-tridactyl'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'vlime/vlime', {'rtp': 'vim/'}
 
 call plug#end()
 
@@ -181,7 +187,7 @@ nnoremap N Nzzzv
 " Clean trailing whitespace.
 nnoremap <leader><space> mz:%s/\s\+$//<cr>:let @/=''<cr>`z
 
-" My garbage brain can't ever remember digraph codes
+" My garbage brain can't ever remember digraph codes.
 inoremap <c-k><c-k> <esc>:help digraph-table<cr>
 
 " Only show cursorline in the current window and in normal mode.
@@ -201,6 +207,9 @@ function! QuickFixIsOpen()
   return !empty(l:result)
 endfunction
 nnoremap yoq :<C-R>=QuickFixIsOpen() ? "cclose" : "copen"<CR><CR>
+
+" Always uppercase so it's picked up by tools that look for TODOs in code.
+iabbrev todo TODO
 
 " }}}
 " Quick Editing ----------------------------------------------------------- {{{
@@ -288,9 +297,9 @@ augroup END
 set undofile                      " Maintain undo history between sessions
 " Some server have issues with backup files.
 " See: https://github.com/neoclide/coc.nvim/issues/649
-set nobackup                      " disable backups
+set nobackup
 set nowritebackup
-set noswapfile                    " it's 2019, Vim.
+set noswapfile
 " The extra slash on the end saves files under the name of their full path
 " with the / character replaced with a %.
 set undodir=~/.vim/tmp/undo//     " undo files
@@ -429,7 +438,7 @@ endif
 "     `:Files [PATH]`    | Files (runs  `$FZF_DEFAULT_COMMAND`  if defined)
 "     `:GFiles [OPTS]`   | Git files ( `git ls-files` )
 "
-" I have `$FZF_DEFAULT_COMMAND` set to the following:
+" I have `$FZF_DEFAULT_COMMAND` set to the following in my Fish shell config:
 "
 "     # Use git to search files when in a git repo, otherwise use fd.
 "     set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type file --hidden --follow --exclude .git'
@@ -530,13 +539,6 @@ let g:projectionist_heuristics = {
 
 " }}}
 " Vlime {{{
-
-set rtp+=~/.vim/pack/minpac/start/vlime/vim
-" We have to manually call this to update the helptags after manually updating
-" the runtime path.
-"
-" See: https://github.com/k-takata/minpac/issues/33
-helptags ALL
 
 let g:vlime_compiler_policy = {"DEBUG": 3}
 
