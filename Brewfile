@@ -150,6 +150,8 @@ brew "imagemagick"
 brew "jq"
 # CLI macOS app store.
 brew "mas"
+# Slide decks in plain-text Markdown rendered in the Terminal. 😍
+brew "mdp"
 # Gives me `sponge`.
 brew "moreutils"
 # When I need to SSH.
