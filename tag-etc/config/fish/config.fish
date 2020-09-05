@@ -48,6 +48,8 @@ set PATH \
   /sbin \
   $HOME/Library/scripts \
   /Library/TeX/texbin \
+  # Puts Python 2's pip (which macOS still ships with as default) in $PATH.
+  $HOME/Library/Python/2.7/bin \
 
 # }}}
 # Files I need to source {{{
@@ -65,7 +67,7 @@ and source $BREW_PREFIX/opt/asdf/asdf.fish
 # Extras {{{
 
 # The extras file is for extra stuff that is generally work
-# specific that I don't want to check into github.
+# specific that I don't want to check into git.
 
 [ -f $HOME/.config/fish/extras.fish ]
 and source $HOME/.config/fish/extras.fish

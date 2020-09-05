@@ -21,14 +21,15 @@ endif
 call plug#begin()
 
 " Add other plugins here.
+
 Plug 'ap/vim-css-color'
 Plug 'dag/vim-fish'
 Plug 'derekwyatt/vim-sbt'
 Plug 'derekwyatt/vim-scala'
 Plug 'flazz/vim-colorschemes'
 Plug 'janko/vim-test'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug '/usr/local/opt/fzf' " Tells vim-fzf where fzf install is.
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/vim-easy-align'
@@ -209,7 +210,7 @@ nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
 nnoremap <leader>eg :vsplit ~/.gitconfig<cr>
 nnoremap <leader>em :vsplit ~/.muttrc<cr>
 nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 
 " }}}
 " Folding ----------------------------------------------------------------- {{{
@@ -419,11 +420,23 @@ if has('nvim') || has('gui_running')
   let $FZF_DEFAULT_OPTS .= ' --inline-info'
 endif
 
-" Alias for searching all files and showing preview of file contents.
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
 " Search in files.
+"
+" A note about why I'm using `Files` rather than `GFiles.
+"
+" From the help file for FZF:
+"
+"     `:Files [PATH]`    | Files (runs  `$FZF_DEFAULT_COMMAND`  if defined)
+"     `:GFiles [OPTS]`   | Git files ( `git ls-files` )
+"
+" I have `$FZF_DEFAULT_COMMAND` set to the following:
+"
+"     # Use git to search files when in a git repo, otherwise use fd.
+"     set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type file --hidden --follow --exclude .git'
+"
+" This is more performant on ridiculously large repos which I unfortunately have
+" to work with from time to time.  So essentially `:Files` is a more performant
+" `:Gfiles` if we're in a git repo.  Otherwise it falls back to `fd`.
 nnoremap <C-t> :<C-u>Files<CR>
 " Search in vim buffers.
 nnoremap <C-t><C-f> :<C-u>Buffers<CR>
@@ -438,6 +451,10 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Puts FZF inside of a nice pop-up window rather than a split.
+" https://github.com/junegunn/fzf/blob/master/README-VIM.md#starting-fzf-in-a-popup-window
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
 " }}}
 " Gundo {{{

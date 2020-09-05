@@ -21,23 +21,22 @@ source ~/.mutt/themes/gruvbox-shuber-extended.muttrc
 # }}}
 # Basic Options {{{
 
-set beep_new # bell on new mails
-set delete # don't ask, just do
-set header_cache_backend = tokyocabinet # Caching DB.  Tokyocabinet seems to work fine.  No idea if it's better than others.
-set mail_check           = 0 # How often to check for new mail (time in seconds).
-set mail_check           = 0 # minimum time between scans
-set mbox_type            = Maildir # mailbox type
-set pipe_decode # strip headers and eval mimes when piping
-set send_charset         = "us-ascii:utf-8:iso-8859-1"
-set sendmail_wait        = 0 # No please don't silently fail, email is important
-set smart_wrap # Wrap emails sent to me so I can sanely read them
-set text_flowed # No weird line breaks in emails I send, please & thank you.
-set thorough_search # strip headers and eval mimes before searching
-set timeout              = 3 # idle time before scanning
-set use_from # respect the From: address the editor sends back
-set wait_key             = no # shut up, mutt
-unset confirmappend # don't ask, just do!
-unset mark_old # read/new is good enough for me
+set   beep_new                            # bell on new mails
+set   delete                              # don't ask, just do
+set   header_cache_backend = tokyocabinet # Caching DB.  Tokyocabinet seems to work fine.  No idea if it's better than others.  Neomutt only.
+set   mail_check           = 0            # How often to check for new mail (time in seconds).
+set   mbox_type            = Maildir      # mailbox type
+set   pipe_decode                         # strip headers and eval mimes when piping
+set   send_charset         = "us-ascii:utf-8:iso-8859-1"
+set   sendmail_wait        = 0            # No please don't silently fail, email is important
+set   smart_wrap                          # Wrap emails sent to me so I can sanely read them
+set   text_flowed                         # No weird line breaks in emails I send, please & thank you.
+set   thorough_search                     # strip headers and eval mimes before searching
+set   timeout              = 3            # idle time before scanning
+set   use_from                            # respect the From: address the editor sends back
+set   wait_key             = no           # shut up, mutt
+unset confirmappend                       # don't ask, just do!
+unset mark_old                            # read/new is good enough for me
 unset record
 
 # }}}
