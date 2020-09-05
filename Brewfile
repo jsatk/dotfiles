@@ -64,8 +64,6 @@ brew "tig"
 # }}}
 # Chat --------------------------------------------------------------------- {{{
 
-# Reddit
-brew "rtv"
 # IRC
 brew "weechat"
 
@@ -224,6 +222,7 @@ cask "tor-browser"
 cask "twitch"
 cask "vlc"
 cask "yubico-yubikey-manager"
+cask "zoomus"
 
 # }}}
 # macOS App Store ---------------------------------------------------------- {{{
