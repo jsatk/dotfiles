@@ -144,12 +144,16 @@ brew "htop"
 # Older GitHub support to git on the command-line.  This essentially wraps git
 # and adds on some GitHub-specific nicities.
 brew "hub"
+# My blog CMS of choice.
+brew "hugo"
 # Utility for doing stuff – mostly compression – to images.
 brew "imagemagick"
 # For easy parsing and rendering of JSON.
 brew "jq"
 # CLI macOS app store.
 brew "mas"
+# Slide decks in plain-text Markdown rendered in the Terminal. 😍
+brew "mdp"
 # Gives me `sponge`.
 brew "moreutils"
 # When I need to SSH.
@@ -227,7 +231,6 @@ mas "Deliveries", id: 924726344
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
-mas "LINE", id: 539883307
 mas "Marked 2", id: 890031187
 mas "Monit", id: 1014850245
 mas "Numbers", id: 409203825

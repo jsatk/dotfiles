@@ -1,6 +1,7 @@
 nodejs 12.16.1
 ruby 2.6.5
 rust stable
-scala 2.13.1
+sbcl 2.0.8
 sbt 1.3.8
+scala 2.13.1
 yarn 1.22.4

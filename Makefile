@@ -2,19 +2,9 @@
 
 # TODO: Install/manage pip plugins for both python2 & python3
 #
-#     - gpg
-#     - greenlet
-#     - mercurial
-#     - msgpack
-#     - notmuch
-#     - pip
-#     - protobuf
-#     - pynvim
-#     - setuptools
-#     - six
-#     - urlscan
-#     - urwid
-#     - wheel
+# notmuch
+# pynvim
+# urlscan
 
 # Configuration Variables -------------------------------------------------- {{{
 
@@ -28,6 +18,7 @@ global_node_modules := \
 	speed-test \
 
 global_gems := \
+	neovim \
 	tmuxinator \
 
 # Paths to folders & binaries
@@ -38,7 +29,8 @@ bin := $(homebrew_root)/bin
 homebrew := $(bin)/brew
 
 # asdf
-asdf_plugins := nodejs ruby sbt yarn
+# All `asdf_plugins` should all have a coresponding entry in ~/.tool-versions.
+asdf_plugins := nodejs ruby rust sbcl sbt scala yarn
 asdf_root := $(HOME)/.asdf
 asdf_shims := $(asdf_root)/shims
 
