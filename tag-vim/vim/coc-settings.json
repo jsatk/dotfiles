@@ -4,6 +4,7 @@
   "diagnostic.errorSign": "✗",
   "diagnostic.warningSign": "⚠",
   "metals.statusBarEnabled": true,
+  "metals.treeviews.executeCommand": "<CR>",
   "languageserver": {
     "dockerfile": {
       "command": "docker-langserver",
