@@ -231,6 +231,7 @@ mas "Deliveries", id: 924726344
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
+mas "Magnet", id: 41258766
 mas "Marked 2", id: 890031187
 mas "Monit", id: 1014850245
 mas "Numbers", id: 409203825
