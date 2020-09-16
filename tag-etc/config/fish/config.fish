@@ -21,7 +21,7 @@ set --local BREW_PREFIX (brew --prefix)
 # fzf {{{
 
 # Use git to search files when in a git repo, otherwise use fd.
-set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type file --hidden --follow --exclude .git'
+set --export FZF_DEFAULT_COMMAND 'fd --type file --hidden --follow --exclude .git'
 # If a command is really long press `?` to see the full command in a preview
 # window.  And press <C-y> to copy a command to the clipboard rather than run it.
 set --export FZF_CTRL_R_OPTS "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
@@ -46,7 +46,7 @@ set PATH \
   /bin \
   /usr/sbin \
   /sbin \
-  $HOME/Library/scripts \
+  $HOME/.config/scripts \
   /Library/TeX/texbin \
   # Puts Python 2's pip (which macOS still ships with as default) in $PATH.
   $HOME/Library/Python/2.7/bin \

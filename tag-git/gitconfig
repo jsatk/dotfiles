@@ -183,7 +183,7 @@
 	signingkey = "DC5AC6E4"
 
 [hub]
-	protocol = https
+	protocol = ssh
 	host = code.corp.creditkarma.com
 
 # }}}

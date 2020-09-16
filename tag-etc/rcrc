@@ -1,2 +1,2 @@
 EXCLUDES="Makefile README.markdown"
-TAGS="bash etc git irc lisp mail ruby security tmux vim"
+TAGS="bash etc git irc lisp mail ruby scripts security tmux vim"

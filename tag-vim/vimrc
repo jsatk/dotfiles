@@ -73,7 +73,7 @@ Plug 'tpope/vim-vinegar'
 Plug 'tridactyl/vim-tridactyl'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'vlime/vlime', {'rtp': 'vim/'}
+Plug 'vlime/vlime', { 'rtp': 'vim/' }
 
 call plug#end()
 
