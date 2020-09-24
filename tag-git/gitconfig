@@ -1,44 +1,30 @@
 # alias ------------------------------------------------------------------- {{{
 
 [alias]
-	s = status --short
-
-	# Pretty git log
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-
-	# Undo a `git push`
-	undopush = push --force origin HEAD^:master
-
-	# Log Me
-	logme = log --color --name-only --decorate=full --author="jesse.atkinson@creditkarma.com"
-
-	# Get Incoming Changes
-	incoming = log ..@{u}
-
-	# Get Outgoing Changes
-	outgoing = log @{u}..
-
-	# list branch dates
-	branchdate = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
-
-	# Delete all branches that have already been merged into the current
-	# branch.
-	deletemerged = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+	# These aliases are (or should be) in alphabetical order.
 
 	# List all aliases.
 	# Stolen from here:
 	# https://twitter.com/TrevorBramble/status/774292970681937920
 	aliases = "!git config -l | grep ^alias | cut -c 7- | sort"
 
+	# Append staged changes to head commit.
+	# Great for when you forget to add something.
+	append = commit --amend --no-edit
+
+	# list branch dates
+	branchdate = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
+
 	# Reset previous commit, but keep all the associated changes. Useful for
 	# avoiding nasty git merge commits.
 	damnit = reset --soft HEAD^
 
+	# Delete all branches that have already been merged into the current
+	# branch.
+	deletemerged = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+
 	# Destroy all local changes and reset to HEAD.
 	fuckit = reset --hard HEAD
-
-	# A slightly-less-destructive and risky git push --force
-	please = push --force-with-lease
 
 	# Prints the SHA of the head commit.  I find myself needing to do this
 	# often enough for hot-fixes where I cherry-pick a commit over.  I'm
@@ -55,12 +41,27 @@
 	# this all in one line.
 	headsha = !git log -1 --pretty=format:'%H'
 
-	# Show all changes that are currently staged for commit.
-	staged = diff --cached
+	# Create a pull-request using hub, which – as of this writing – is
+	# deprecated in favor of github's new CLI tool.
+	#
+	# See: https://mislav.net/2020/01/github-cli/
+	# See: https://github.com/cli/cli
+	hub-pr = !hub pull-request --browse
 
-	# Append staged changes to head commit.
-	# Great for when you forget to add something.
-	append = commit --amend --no-edit
+	# Pretty git log
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+
+	# Log Me
+	logme = log --color --name-only --decorate=full --author="jesse.atkinson@creditkarma.com"
+
+	# Get Incoming Changes
+	incoming = log ..@{u}
+
+	# Get Outgoing Changes
+	outgoing = log @{u}..
+
+	# A slightly-less-destructive and risky git push --force
+	please = push --force-with-lease
 
 	# Great for generating release notes.
 	#
@@ -79,6 +80,16 @@
 		sed '/Setting version/d'; \
 	}; f"
 
+	# Show all changes that are currently staged for commit.
+	staged = diff --cached
+
+	# Prints a one-liner of all commits I made last week.
+	# Nice for Monday morning stand-up/sprint planning.
+	summary = log --abbrev-commit --pretty=oneline --author="Jesse Atkinson" --since=last.mon --reverse
+
+	# Undo a `git push`
+	undopush = push --force origin HEAD^:master
+
 # }}}
 # apply ------------------------------------------------------------------- {{{
 
@@ -92,7 +103,7 @@
 	autosetuprebase = always
 
 # }}}
-# colors ------------------------------------------------------------------ {{{
+# color ------------------------------------------------------------------- {{{
 
 [color]
 	ui = true
@@ -229,6 +240,7 @@
 
 [rebase]
 	autoStash = true
+	autoSquash = true
 
 # }}}
 # rerere ------------------------------------------------------------------ {{{

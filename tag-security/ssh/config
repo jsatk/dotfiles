@@ -6,3 +6,5 @@ Host *
  PasswordAuthentication no
  UseKeychain yes
  VisualHostKey yes
+
+# vim: set syntax=sshconfig:
