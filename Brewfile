@@ -239,6 +239,7 @@ mas "Pages", id: 409201541
 mas "Pixelmator", id: 407963104
 mas "Soulver", id: 413965349
 mas "Speedtest", id: 1153157709
+mas "Things", id: 904280696
 mas "Xcode", id: 497799835
 mas "xScope", id: 889428659
 
