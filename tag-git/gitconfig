@@ -61,6 +61,10 @@
 	outgoing = log @{u}..
 
 	# A slightly-less-destructive and risky git push --force
+	# --force-with-lease ensures you won't overwrite any work on the remote
+	# branch if more commits were added to the remote branch (by another
+	# team-member or coworker, etc.). It ensures you do not overwrite
+	# someone elses work by --force pushing.
 	please = push --force-with-lease
 
 	# Great for generating release notes.
