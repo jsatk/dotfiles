@@ -17,6 +17,9 @@ endif
 " }}}
 " Vim Plugins ------------------------------------------------------------- {{{
 
+" I use vim-plug to manage plugins.  It's extremely nice.
+" See: https://github.com/junegunn/vim-plug
+
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -25,59 +28,104 @@ endif
 
 call plug#begin()
 
-" Add other plugins here.
+" A very fast, multi-syntax context-sensitive color name highlighter.
 Plug 'ap/vim-css-color'
+" Provides support for editing fish scripts.
 Plug 'dag/vim-fish'
+" Basic support for SBT.  Mildy abandoned.
 Plug 'derekwyatt/vim-sbt'
+" Basic support for Scala.  Mildy abandoned.
 Plug 'derekwyatt/vim-scala'
+" All the colorschemes.
 Plug 'flazz/vim-colorschemes'
+" For running tests on different granularities.
 Plug 'janko/vim-test'
+" fzf is a general-purpose command-line fuzzy finder.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Adds some features to fzf that are specific to vim.
 Plug 'junegunn/fzf.vim'
+" Distraction-free writing in Vim.
 Plug 'junegunn/goyo.vim'
+" A git commit browser.
 Plug 'junegunn/gv.vim'
+" A simple, easy-to-use Vim alignment plugin.
 Plug 'junegunn/vim-easy-align'
+" Extends " and @ in normal mode and <CTRL-R> in insert mode so
+" you can see the contents of the registers.
 Plug 'junegunn/vim-peekaboo'
+" Structured Editing of Lisp S-expressions.
 Plug 'kovisoft/paredit'
+" Best colorscheme that unfortunately doesn't come with
+" flazz/vim-colorschemes.
 Plug 'morhetz/gruvbox'
-Plug 'mxw/vim-jsx'
+" Make your Vim/Neovim as smart as VSCode.
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Highlight words to avoid in tech writing.
 Plug 'nicholaides/words-to-avoid.vim'
+" Provides syntax highlighting and improved indentation for javascript.
 Plug 'pangloss/vim-javascript'
+" Search for terms using Dash.app, making API lookups simple.
 Plug 'rizzatti/dash.vim'
+" Rust niceities.
 Plug 'rust-lang/rust.vim'
+" Cute font-icons.
 Plug 'ryanoasis/vim-devicons'
+" Support for editorconfig.
 Plug 'sgur/vim-editorconfig'
+" Gundo.vim is Vim plugin to visualize your Vim undo tree.
 Plug 'sjl/gundo.vim'
+" Thrift syntax support.
 Plug 'solarnz/thrift.vim'
+" Manage branches and tags with fzf.
 Plug 'stsewd/fzf-checkout.vim'
+" .tmux.conf support.
 Plug 'tmux-plugins/vim-tmux'
+" Word & spelling correction support.  It's very hard to explain, just
+" see the README of this plugin.
 Plug 'tpope/vim-abolish'
+" Comment/uncomment stuff with ease.
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-db'
+" Interact with DBs.
+Plug 'tpope/vim-dadbod'
+" Just see http://vimeo.com/tpope/vim-dispatch-teaser.
 Plug 'tpope/vim-dispatch'
+" Inserts closing `end` statements in languages like Ruby.
 Plug 'tpope/vim-endwise'
+" Incredible git support.
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
 " For working with JSON.
 Plug 'tpope/vim-jdaddy'
-Plug 'tpope/vim-obsession'
+" Projectionist provides granular project configuration using 'projections'.
 Plug 'tpope/vim-projectionist'
+" Adds repeat support for plugins.
 Plug 'tpope/vim-repeat'
+" 'hub' support.
 Plug 'tpope/vim-rhubarb'
+" Makes working with vimscript easier.
 Plug 'tpope/vim-scriptease'
+" A universal set of defaults that (hopefully) everyone can agree on.
 Plug 'tpope/vim-sensible'
-" Automatically adjusts 'shiftwidth' and 'expandtab' heuristically based on the current file.
+" Automatically adjusts 'shiftwidth' and 'expandtab' heuristically based
+" on the current file.
 Plug 'tpope/vim-sleuth'
+" Makes incrementers and decrementers behave with stuff like dates.
 Plug 'tpope/vim-speeddating'
+" Easily change, delete, etc., pairs (parens, brackets, quotes, etc.).
 Plug 'tpope/vim-surround'
 " Basic tmux support for Vim.
 Plug 'tpope/vim-tbone'
+" Kind of the other half of vim-sensible, nice sane mappings that should
+" come with vim by default, but don't.
 Plug 'tpope/vim-unimpaired'
+" Enhances netrw, which is built into vim.
 Plug 'tpope/vim-vinegar'
+" Syntax plugin for Tridactyl configuration files.
 Plug 'tridactyl/vim-tridactyl'
+" Lean & mean status/tabline for vim that's light as air.
 Plug 'vim-airline/vim-airline'
+" This is the official theme repository for vim-airline
 Plug 'vim-airline/vim-airline-themes'
+" Common Lisp dev environment, similar to SLIME for Emacs.
 Plug 'vlime/vlime', { 'rtp': 'vim/' }
 
 call plug#end()
@@ -598,4 +646,4 @@ command! -nargs=0 Pulse call <SID>Pulse()
 set secure " Disables unsafe commands in project-specific .vimrc files.
 set exrc " Allows for project-specific vimrc files.
 
-" vim: set foldmethod=marker foldlevel=0:
+" vim: set foldmethod=marker foldlevel=0 textwidth=72:
