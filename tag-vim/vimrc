@@ -1,23 +1,51 @@
-" Author: Jesse Atkinson <jesse@jsatk.us>
+" Author: Jesse Atkinson
+" Email: jesse@jsatk.us
+" Twitter: @jsatk
+" Github: @jsatk
+" Website: https://jsatk.us
 
-" Preamble ---------------------------------------------------------------- {{{
+" 0 preamble ------------------------------------------------------- {{{
+"
+" The following was stolen from @emilyst.  I thought this was clever and
+" educational so I wanted to do the same in my own .vimrc.
+"
+" Original text written by her here:
+" https://github.com/emilyst/home/blob/master/.vimrc#L3-L9
+"
+"     My ".vimrc" contains configures options which are core to Vim and
+"     are enumerated by the `:options` command. It groups the options
+"     into the same sections given by that command and in the same order
+"     for reference.
+"
+"     Occasionally, each section contains other mappings or variable
+"     settings relevant to the options adjacent to them.
+"
+" It's also worth noting that a lot of options you might expect to be
+" set aren't.  The reason for that is many of the most common and
+" sensible options are set in tpope's vim-sensible, which I use.  So if
+" you're wondering why I don't have `set wildmenu`, etc., in here it's
+" because it's set in vim-sensible.
+"
+" Lastly, if you want to more information about a setting here put your
+" cursor on the setting and press `K`.  This will open the help for that
+" item in a split.  This works for many languages in vim.
 
-" The following check is done in vim-sensible, however as of this writing that
-" check doesn't apply to Vim 8.  Until vim-dispatch works nicely with Fish shell
-" or until vim-sensible's Fish shell check applies to Vim 8 and above I need to
-" manually force my shell here.  Also setting it to simply `sh` instead of
-" `/bin/bash` because vim-dispatch apparently has trouble inferring the PID of
-" the task when `shell` is set to `/bin/bash`.  Computers are hard.
+" The following check is done in vim-sensible, however as of this
+" writing that check doesn't apply to Vim 8.  Until vim-dispatch works
+" nicely with Fish shell or until vim-sensible's Fish shell check
+" applies to Vim 8 and above I need to manually force my shell here.
+" Also setting it to simply `sh` instead of `/bin/bash` because
+" vim-dispatch apparently has trouble inferring the PID of the task when
+" `shell` is set to `/bin/bash`.  Computers are hard.
 "
 " See: https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim#L66-L68
 if &shell =~# 'fish$'
   set shell=sh
 endif
 
-" }}}
-" Vim Plugins ------------------------------------------------------------- {{{
+" Vim Plugins {{{
 
-" I use vim-plug to manage plugins.  It's extremely nice.
+" I use vim-plug to manage plugins.  It's quite nice.
 " See: https://github.com/junegunn/vim-plug
 
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -91,6 +119,8 @@ Plug 'tpope/vim-dadbod'
 Plug 'tpope/vim-dispatch'
 " Inserts closing `end` statements in languages like Ruby.
 Plug 'tpope/vim-endwise'
+" Vim sugar for the UNIX shell commands that need it the most.
+Plug 'tpope/vim-eunuch'
 " Incredible git support.
 Plug 'tpope/vim-fugitive'
 " For working with JSON.
@@ -131,56 +161,42 @@ Plug 'vlime/vlime', { 'rtp': 'vim/' }
 call plug#end()
 
 " }}}
-" Basic Options ----------------------------------------------------------- {{{
-
-" If you want to more information about a setting here put your cursor on the
-" setting and press `K`.  This will open the help for that item in a split.
-" This works for many languages in vim.
-
-set autowrite
-set breakindent
-" A |sentence| has to be followed by two spaces after the '.', '!' or '?'.
-" See: http://stevelosh.com/blog/2012/10/why-i-two-space/#power
-set cpo+=J
-set cursorline
-set expandtab
-set gdefault
-set hidden
-set hlsearch
-set ignorecase " Ignore the case, unless...
-set lazyredraw
-set linebreak
-set list " Show select “invisible” characters
-set mousehide
-set nf=octal,hex,alpha " Increment alpha strings with vim
-set nostartofline
-set scrolloff=3
-set shiftround
-set shiftwidth=2
-set showbreak=↪
-set showcmd
-set showmatch
-set showmode
-set smartcase  " ...there's caps in it.
-set softtabstop=2
-set splitbelow
-set splitright
-set synmaxcol=800
-set t_Co=256
-set textwidth=0
-set timeoutlen=500
-set title
-set ttyfast
-set updatetime=300
-set wildmode=list:longest
-set wrapmargin=0
-
-if has('mouse')
-  set mouse=a
-endif
 
 " }}}
-" Spelling ---------------------------------------------------------------- {{{
+" 1 important ------------------------------------------------------ {{{
+
+" A |sentence| has to be followed by two spaces after the '.', '!' or '?'.
+" See: https://stevelosh.com/blog/2012/10/why-i-two-space/#s6-power
+set cpo+=J
+
+" }}}
+" 2 moving around, searching and patterns -------------------------- {{{
+
+set ignorecase " Ignore the case, unless...
+set smartcase  " ...there's caps in it.
+
+" }}}
+" 3 tags ----------------------------------------------------------- {{{
+
+" }}}
+" 4 displaying text ------------------------------------------------ {{{
+
+set scrolloff=3
+set linebreak
+set breakindent
+set showbreak=↪
+set lazyredraw
+set list
+
+" }}}
+" 5 syntax, highlighting and spelling ------------------------------ {{{
+
+set background=dark
+colorscheme gruvbox
+set synmaxcol=800
+set hlsearch
+set cursorline
+set guifont=OperatorMonoForPowerline-Book:h18
 
 " Stolen from Steve Losh
 "
@@ -197,25 +213,115 @@ endif
 "   work stuff in here without leaking internal names and shit.
 "
 " I also remap zG to add to the local dict (vanilla zG is useless anyway).
-set dictionary=/usr/share/dict/words
 set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add
 nnoremap zG 2zg
 
-" }}}
-" Look & Feel ------------------------------------------------------------- {{{
-
-set background=dark
-colorscheme gruvbox
-
 highlight Comment cterm=italic
-
-set guifont=OperatorMonoForPowerline-Book:h18
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " }}}
-" Convenience Mappings ---------------------------------------------------- {{{
+" 6 multiple windows ----------------------------------------------- {{{
+
+set hidden
+set splitbelow
+set splitright
+
+" }}}
+" 7 multiple tab pages --------------------------------------------- {{{
+
+" }}}
+" 8 terminal ------------------------------------------------------- {{{
+
+set title
+
+" }}}
+" 9 using the mouse ------------------------------------------------ {{{
+
+if has('mouse')
+  set mouse=a
+endif
+
+" }}}
+" 10 printing ------------------------------------------------------ {{{
+
+" }}}
+" 11 messages and info --------------------------------------------- {{{
+
+set showcmd
+set showmode
+
+" }}}
+" 12 selecting text ------------------------------------------------ {{{
+
+" }}}
+" 13 editing text -------------------------------------------------- {{{
+
+set undofile " Maintain undo history between sessions.
+" The extra slash on the end saves files under the name of their full path
+" with the / character replaced with a %.
+set undodir=~/.vim/tmp/undo// " undo files live here.
+set textwidth=0
+set wrapmargin=0
+set dictionary=/usr/share/dict/words
+set showmatch
+set nrformats=octal,hex,alpha " Increment alpha strings with vim.
+
+" Make the undo directory automatically if it doesn't already exist.
+if !isdirectory(expand(&undodir))
+  call mkdir(expand(&undodir), "p")
+endif
+
+" }}}
+" 14 tabs and indenting -------------------------------------------- {{{
+
+set shiftwidth=2
+set softtabstop=2
+set shiftround
+set expandtab
+
+" }}}
+" 15 folding ------------------------------------------------------- {{{
+
+set foldenable
+set foldlevelstart=0
+
+nnoremap <Space> za
+vnoremap <Space> za
+nnoremap zO zczO
+
+" This function defines what folded text looks like.
+function! MyFoldText() " {{{
+  let line = getline(v:foldstart)
+
+  let nucolwidth = &fdc + &number * &numberwidth
+  let windowwidth = winwidth(0) - nucolwidth - 3
+  let foldedlinecount = v:foldend - v:foldstart
+
+  " expand tabs into spaces
+  let onetab = strpart(' ', 0, &tabstop)
+  let line = substitute(line, '\t', onetab, 'g')
+
+  let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+  let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+  return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+endfunction " }}}
+set foldtext=MyFoldText()
+
+" }}}
+" 16 diff mode ----------------------------------------------------- {{{
+
+" }}}
+" 17 mapping ------------------------------------------------------- {{{
+
+" This section contains the few options that are under `17 mapping` in
+" `:options` as well as all of my custom remappings that don't sensibily
+" fit in another section.  For example, the folding remappings I have
+" live  under `15 folding` but my `S` mapping for splitting lines lives
+" here.
+
+set timeoutlen=500
 
 let mapleader = ","
 let maplocalleader = "\\"
@@ -241,6 +347,14 @@ nnoremap N Nzzzv
 " Clean trailing whitespace.
 nnoremap <leader><space> mz:%s/\s\+$//<cr>:let @/=''<cr>`z
 
+" Only show when not in insert mode.
+augroup trailing
+  autocmd!
+
+  autocmd InsertEnter * :set listchars-=trail:⌴
+  autocmd InsertLeave * :set listchars+=trail:⌴
+augroup END
+
 " My garbage brain can't ever remember digraph codes.
 inoremap <c-k><c-k> <esc>:help digraph-table<cr>
 
@@ -265,9 +379,7 @@ nnoremap yoq :<C-R>=QuickFixIsOpen() ? "cclose" : "copen"<CR><CR>
 " Always uppercase so it's picked up by tools that look for TODOs in code.
 iabbrev todo TODO
 
-" }}}
-" Quick Editing ----------------------------------------------------------- {{{
-
+" Quick editing some common dotfiles.
 nnoremap <leader>ed :vsplit ~/.vim/custom-dictionary.utf-8.add<cr>
 nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
 nnoremap <leader>eg :vsplit ~/.gitconfig<cr>
@@ -277,62 +389,59 @@ nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 
 " }}}
-" Folding ----------------------------------------------------------------- {{{
+" 18 reading and writing files ------------------------------------- {{{
 
-set foldenable
-set foldlevelstart=0
+set autowrite
+set backupdir=~/.vim/tmp/backup// " backups
 
-nnoremap <Space> za
-vnoremap <Space> za
-nnoremap zO zczO
-
-" "Focus" the current line.  Basically:
-"
-" 1. Close all folds.
-" 2. Open just the folds containing the current line.
-" 3. Move the line to a bit (25 lines) down from the top of the screen.
-" 4. Pulse the cursor line.  My eyes are bad.
-"
-" This mapping wipes out the z mark, which I never use.
-function! FocusLine()
-    let oldscrolloff = &scrolloff
-    set scrolloff=0
-    execute "keepjumps normal! mzzMzvzt25\<c-y>`z:Pulse\<cr>"
-    let &scrolloff = oldscrolloff
-endfunction
-nnoremap <leader>z :call FocusLine()<cr>
-
-" This function defines what folded text looks like.
-function! MyFoldText() " {{{
-    let line = getline(v:foldstart)
-
-    let nucolwidth = &fdc + &number * &numberwidth
-    let windowwidth = winwidth(0) - nucolwidth - 3
-    let foldedlinecount = v:foldend - v:foldstart
-
-    " expand tabs into spaces
-    let onetab = strpart('          ', 0, &tabstop)
-    let line = substitute(line, '\t', onetab, 'g')
-
-    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
-endfunction " }}}
-set foldtext=MyFoldText()
+" Create directory if it doesn't already exist.
+if !isdirectory(expand(&backupdir))
+  call mkdir(expand(&backupdir), "p")
+endif
 
 " }}}
-" Trailing Whitespace ----------------------------------------------------- {{{
+" 19 the swap file ------------------------------------------------- {{{
 
-" Only show when not in insert mode.
-augroup trailing
-  autocmd!
+set directory=~/.vim/tmp/swap//
+" Some server have issues with backup files.
+" See: https://github.com/neoclide/coc.nvim/issues/649
+set nobackup
+set nowritebackup
+set noswapfile
 
-  autocmd InsertEnter * :set listchars-=trail:⌴
-  autocmd InsertLeave * :set listchars+=trail:⌴
-augroup END
+" Create directory if it doesn't already exist.
+if !isdirectory(expand(&directory))
+  call mkdir(expand(&directory), "p")
+endif
 
 " }}}
-" Line Return ------------------------------------------------------------- {{{
+" 20 command line editing ------------------------------------------ {{{
+
+set wildmode=list:longest
+
+" }}}
+" 21 executing external commands ----------------------------------- {{{
+
+" }}}
+" 22 running make and jumping to errors ---------------------------- {{{
+
+" }}}
+" 23 language specific --------------------------------------------- {{{
+
+" }}}
+" 24 multi-byte characters ----------------------------------------- {{{
+
+" }}}
+" 25 various ------------------------------------------------------- {{{
+
+set gdefault
+
+" The following settings aren't under `:options` at all, so it made the
+" most sense to throw them in the `25 various` junk-drawer.
+set ttyfast
+set mousehide
+set nostartofline
+set t_Co=256
 
 " Make sure Vim returns to the same line when you reopen a file.
 augroup line_return
@@ -345,37 +454,12 @@ augroup line_return
 augroup END
 
 " }}}
-" Backups ----------------------------------------------------------------- {{{
-
-" TODO: Figure out how to do this so that they aren't created as root.
-
-set undofile                      " Maintain undo history between sessions
-" Some server have issues with backup files.
-" See: https://github.com/neoclide/coc.nvim/issues/649
-set nobackup
-set nowritebackup
-set noswapfile
-" The extra slash on the end saves files under the name of their full path
-" with the / character replaced with a %.
-set undodir=~/.vim/tmp/undo//     " undo files
-set backupdir=~/.vim/tmp/backup// " backups
-set directory=~/.vim/tmp/swap//   " swap files
-
-" Make those folders automatically if they don't already exist.
-if !isdirectory(expand(&undodir))
-  call mkdir(expand(&undodir), "p")
-endif
-
-if !isdirectory(expand(&backupdir))
-  call mkdir(expand(&backupdir), "p")
-endif
-
-if !isdirectory(expand(&directory))
-  call mkdir(expand(&directory), "p")
-endif
-
-" }}}
-" Vim Plugin Configurations ----------------------------------------------- {{{
+" 99 plugin configurations ----------------------------------------- {{{
+"
+" This section contains all plugin-specific settings.  There are ways to
+" put these into plugin-specific files under the ~/.vim dir similarly to
+" how I have my filetype specific settings under ~/.vim/after/ftplugin/,
+" however – in my opinion – it's simply too fiddly to be worth it.
 
 " Airline {{{
 
@@ -601,43 +685,6 @@ let g:github_enterprise_urls = ["https://code.corp.creditkarma.com"]
 " Vlime {{{
 
 let g:vlime_compiler_policy = {"DEBUG": 3}
-
-" }}}
-
-" }}}
-" Mini-plugins ------------------------------------------------------------ {{{
-
-" Pulse Line {{{
-
-" TODO: Replace this with a proper plugin when you can.
-" Stolen from Steve Losh.
-function! <SID>Pulse()
-    redir => old_hi
-        silent execute 'hi CursorLine'
-    redir END
-    let old_hi = split(old_hi, '\n')[0]
-    let old_hi = substitute(old_hi, 'xxx', '', '')
-
-    let steps = 8
-    let width = 1
-    let start = width
-    let end = steps * width
-    let color = 233
-
-    for i in range(start, end, width)
-        execute "hi CursorLine ctermbg=" . (color + i)
-        redraw
-        sleep 6m
-    endfor
-    for i in range(end, start, -1 * width)
-        execute "hi CursorLine ctermbg=" . (color + i)
-        redraw
-        sleep 6m
-    endfor
-
-    execute 'hi ' . old_hi
-endfunction
-command! -nargs=0 Pulse call <SID>Pulse()
 
 " }}}
 
