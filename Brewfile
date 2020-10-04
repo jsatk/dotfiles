@@ -160,6 +160,8 @@ brew "moreutils"
 brew "mosh"
 # Media player.
 brew "mpv"
+# Disk usage analysis tool.  Like DaisyDisk but CLI.
+brew "ncdu"
 # RSS Reader
 brew "newsboat"
 # Manages dotfiles.
