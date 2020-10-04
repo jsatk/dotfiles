@@ -139,6 +139,8 @@ brew "gh" # Will replace hub.
 brew "graphviz"
 # Alternative to `cat` & `bat`.
 brew "highlight"
+# Better top.
+brew "htop"
 # Older GitHub support to git on the command-line.  This essentially wraps git
 # and adds on some GitHub-specific nicities.
 brew "hub"
@@ -158,6 +160,8 @@ brew "moreutils"
 brew "mosh"
 # Media player.
 brew "mpv"
+# Disk usage analysis tool.  Like DaisyDisk but CLI.
+brew "ncdu"
 # Single-player roguelike video game.
 brew "nethack"
 # RSS Reader
@@ -185,6 +189,8 @@ brew "vifm"
 # Best text editor ever & it's cousin.
 brew "vim"
 brew "nvim"
+# For easy parsing and rendering of Yaml.
+brew "yq"
 # Better top – written in Rust, because we have to rewrite everything in Rust or
 # Go now.
 brew "ytop"
@@ -196,6 +202,7 @@ cask_args appdir: "/Applications"
 
 cask "adoptopenjdk8"
 cask "alfred"
+cask "blue-sherpa"
 cask "backblaze"
 cask "battle-net"
 cask "dash"
@@ -236,6 +243,7 @@ mas "Deliveries", id: 924726344
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
+mas "Magnet", id: 441258766
 mas "Marked 2", id: 890031187
 mas "Monit", id: 1014850245
 mas "Numbers", id: 409203825
@@ -245,6 +253,7 @@ mas "Pixelmator", id: 407963104
 mas "Reeder", id: 880001334
 mas "Soulver", id: 413965349
 mas "Speedtest", id: 1153157709
+mas "Things", id: 904280696
 mas "Tweetbot", id: 1384080005
 mas "VPN Unlimited", id: 727593140
 mas "Xcode", id: 497799835

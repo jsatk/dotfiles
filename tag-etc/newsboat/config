@@ -39,3 +39,5 @@ highlight article "https?://[^ ]+" color208 default underline
 highlight article "\\[[0-9]+\\]" color102 default bold
 highlight article "\\[image\\ [0-9]+\\]" color63 default bold
 highlight feedlist "^─.*$" color61 color235 bold
+
+# vim: ft=config
