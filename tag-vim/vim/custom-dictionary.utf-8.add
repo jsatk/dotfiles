@@ -26,6 +26,7 @@ Github
 Google's
 Homebrew
 IRC
+JAMF
 JSON
 Javascript
 Jesse
@@ -86,6 +87,7 @@ changelog
 changeset
 checkbox
 codebase
+colonoscopy
 commandline
 conf
 config
@@ -104,9 +106,11 @@ etc
 ethernet
 filetype
 filetypes
+flatMap
 frontend
 hardcoded
 hostname
+https
 iPhone
 iPhones
 inbox
@@ -116,6 +120,7 @@ janky
 javascript
 jsatk
 keychain
+macOS
 macOS
 metadata
 monospaced
@@ -153,5 +158,4 @@ username
 voicemail
 wiki
 zsh
-macOS
-JAMF
+flatMap
