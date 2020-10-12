@@ -1,0 +1,3 @@
+Make folders if they don't exist
+Update tmux plugins as part of makefile
+login to weechat
