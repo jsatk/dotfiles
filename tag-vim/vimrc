@@ -518,7 +518,9 @@ nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
-" For Scala + Metals specifically {{{
+" Coc Extensions {{{
+
+" coc-metals {{{
 
 " Toggle panel with Tree Views
 nnoremap <silent> <leader>t :<C-u>CocCommand metals.tvp<CR>
@@ -528,6 +530,13 @@ nnoremap <silent> <leader>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
 nnoremap <silent> <leader>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
 " Reveal current current class (trait or object) in Tree View 'metalsBuild'
 nnoremap <silent> <leader>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+
+" }}}
+" coc-yank {{{
+
+nnoremap <silent> <leader>y  :<C-u>CocList -A --normal yank<cr>
+
+" }}}
 
 " }}}
 
