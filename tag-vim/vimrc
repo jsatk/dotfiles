@@ -376,9 +376,6 @@ function! QuickFixIsOpen()
 endfunction
 nnoremap yoq :<C-R>=QuickFixIsOpen() ? "cclose" : "copen"<CR><CR>
 
-" Always uppercase so it's picked up by tools that look for TODOs in code.
-iabbrev todo TODO
-
 " Quick editing some common dotfiles.
 nnoremap <leader>ed :vsplit ~/.vim/custom-dictionary.utf-8.add<cr>
 nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
