@@ -11,6 +11,7 @@ set theme dark
 autocmd DocStart mail.google.com/mail mode ignore
 autocmd DocStart calendar.google.com/calendar mode ignore
 autocmd DocStart fastmail.com mode ignore
+autocmd DocStart youneedabudget.com mode ignore
 
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl

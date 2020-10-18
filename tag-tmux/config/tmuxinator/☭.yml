@@ -56,5 +56,6 @@ windows:
   - "💬": weechat
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/.dotfiles"
+  - "📰": newsboat
   - "🐠":
       root: "~"
