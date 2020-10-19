@@ -1,2 +1,2 @@
-EXCLUDES="Makefile README.markdown"
+EXCLUDES="Makefile README.markdown TODO Brewfile.lock.json"
 TAGS="bash etc git irc lisp mail ruby scripts security tmux vim"

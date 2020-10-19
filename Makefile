@@ -52,7 +52,7 @@ all: | update clean ## Run everything.  Default target.
 
 .PHONY: update
 update: | install ## Update everything.
-	rcup --verbose
+	rcup -v
 	brew bundle --global
 	gem update $(global_gems)
 	yarn global upgrade
