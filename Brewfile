@@ -1,20 +1,21 @@
 # Taps --------------------------------------------------------------------- {{{
 
+# For a better top, ytop.
+tap "cjbassi/ytop"
+# For Coursier.
+tap "coursier/formulas"
+# For gh.
+tap "github/gh"
+# For Homebrew's own cask, etc.
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
 # For contacts in Mutt.
 tap "keith/formulae"
-# For rcm.
-tap "thoughtbot/formulae"
-# For a better top, ytop.
-tap "cjbassi/ytop"
-# For gh.
-tap "github/gh"
 # For Bloop.
 tap "scalacenter/bloop"
-# For Coursier.
-tap "coursier/formulas"
+# For rcm.
+tap "thoughtbot/formulae"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -162,6 +163,8 @@ brew "mosh"
 brew "mpv"
 # Disk usage analysis tool.  Like DaisyDisk but CLI.
 brew "ncdu"
+# Single-player roguelike video game.
+brew "nethack"
 # RSS Reader
 brew "newsboat"
 # Manages dotfiles.
@@ -195,9 +198,11 @@ brew "ytop"
 
 cask_args appdir: "/Applications"
 
-cask "adoptopenjdk8" # Strictly for work.
+cask "adoptopenjdk8"
 cask "alfred"
 cask "blue-sherpa"
+cask "backblaze"
+cask "chrysalis"
 cask "dash"
 cask "discord"
 cask "docker"

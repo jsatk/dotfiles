@@ -52,7 +52,7 @@ all: | update clean ## Run everything.  Default target.
 
 .PHONY: update
 update: | install ## Update everything.
-	rcup
+	rcup --verbose
 	brew bundle --global
 	gem update $(global_gems)
 	yarn global upgrade
@@ -95,20 +95,26 @@ asdf: | $(asdf_plugins) ## Install specific verions of languages -- language ver
 # }}}
 # Node --------------------------------------------------------------------- {{{
 
-$(prefixed_node_modules):
+# If we don't prefix the $prefixed_node_modules we get a warning from Make as
+# the targets end up being the same because we install a package called "neovim"
+# from both npm and gem.
+node_modules_$(prefixed_node_modules):
 	$(yarn) global add $(notdir $@)
 
 .PHONY: node_modules
-node_modules: | $(prefixed_node_modules) ## Install global yarn modules.
+node_modules: | node_modules_$(prefixed_node_modules) ## Install global yarn modules.
 
 # }}}
 # Ruby --------------------------------------------------------------------- {{{
 
-$(prefixed_gems):
+# If we don't prefix the $prefixed_gems we get a warning from Make as
+# the targets end up being the same because we install a package called "neovim"
+# from both npm and gem.
+gems_$(prefixed_gems):
 	$(gem) install $(notdir $@)
 
 .PHONY: gems
-gems: | $(prefixed_gems) ## Install global gems.
+gems: | gems_$(prefixed_gems) ## Install global gems.
 
 # }}}
 # Shellcheck --------------------------------------------------------------- {{{

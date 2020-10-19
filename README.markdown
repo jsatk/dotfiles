@@ -10,7 +10,7 @@
 
 This is how I do computers.  If you want to do computers like me this is the repository for you.  It assumes an macOS environment.  If you run Linux or Windows then this repo may not be for you.
 
-There's two main branches: `master` and `ck`.  `ck` is for my work.  If you're not me I'd recommend just using `master`.
+There's two main branches: `master` and `ck`.  `ck` is for my work.  If you're not me I'd recommend using `master`.
 
 There's a `Makefile` that sets everything up.  Run `make help` to see available commands.  Running `make` with no arguments kicks off the default target.  It should *just work* ✨.  If it doesn't please open an [issue](https://github.com/jsatk/dotfiles/issues) or [email me](mailto:jesse@jsatk.us).
 
@@ -49,5 +49,3 @@ Big thanks to these people for publishing their own dotfiles and allowing me to 
 * [https://github.com/nicknisi/dotfiles](https://github.com/nicknisi/dotfiles)
 * [https://bitbucket.org/sjl/dotfiles](https://bitbucket.org/sjl/dotfiles)
 * [https://github.com/gabebw/dotfiles](https://github.com/gabebw/dotfiles)
-
-This is a test

@@ -529,11 +529,6 @@ nnoremap <silent> <leader>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
 nnoremap <silent> <leader>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
 
 " }}}
-" coc-yank {{{
-
-nnoremap <silent> <leader>y  :<C-u>CocList -A --normal yank<cr>
-
-" }}}
 
 " }}}
 

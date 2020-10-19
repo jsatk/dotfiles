@@ -198,5 +198,3 @@ PS1="\n\[$RESET\]┌─▪\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD"
 
 # }}}
 # vim: set foldmethod=marker foldmarker={{{,}}} syntax=sh:
-
-source /Users/jesse.atkinson/Library/Preferences/org.dystroy.broot/launcher/bash/br
