@@ -195,6 +195,7 @@ set background=dark
 colorscheme gruvbox
 set synmaxcol=800
 set hlsearch
+set termguicolors
 set cursorline
 set guifont=OperatorMonoForPowerline-Book:h18
 
