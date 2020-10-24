@@ -94,6 +94,9 @@ asdf: | $(asdf_plugins) ## Install specific verions of languages -- language ver
 # }}}
 # Node --------------------------------------------------------------------- {{{
 
+# If we don't prefix the $prefixed_node_modules we get a warning from Make as
+# the targets end up being the same because we install a package called "neovim"
+# from both npm and gem.
 node_modules_$(prefixed_node_modules):
 	$(yarn) global add $(notdir $@)
 
@@ -103,6 +106,9 @@ node_modules: | node_modules_$(prefixed_node_modules) ## Install global yarn mod
 # }}}
 # Ruby --------------------------------------------------------------------- {{{
 
+# If we don't prefix the $prefixed_gems we get a warning from Make as
+# the targets end up being the same because we install a package called "neovim"
+# from both npm and gem.
 gems_$(prefixed_gems):
 	$(gem) install $(notdir $@)
 
