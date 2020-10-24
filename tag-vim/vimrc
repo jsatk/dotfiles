@@ -195,6 +195,13 @@ set background=dark
 colorscheme gruvbox
 set synmaxcol=800
 set hlsearch
+set termguicolors
+" In regular vim `set termguicolors` doesn't work in some situations.
+" See: https://github.com/vim/vim/issues/3608#issuecomment-438487463
+if !has('nvim') || !has('gui_running')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
 set cursorline
 set guifont=OperatorMonoForPowerline-Book:h18
 
@@ -376,9 +383,6 @@ function! QuickFixIsOpen()
 endfunction
 nnoremap yoq :<C-R>=QuickFixIsOpen() ? "cclose" : "copen"<CR><CR>
 
-" Always uppercase so it's picked up by tools that look for TODOs in code.
-iabbrev todo TODO
-
 " Quick editing some common dotfiles.
 nnoremap <leader>ed :vsplit ~/.vim/custom-dictionary.utf-8.add<cr>
 nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
@@ -518,7 +522,9 @@ nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
-" For Scala + Metals specifically {{{
+" Coc Extensions {{{
+
+" coc-metals {{{
 
 " Toggle panel with Tree Views
 nnoremap <silent> <leader>t :<C-u>CocCommand metals.tvp<CR>
@@ -528,6 +534,8 @@ nnoremap <silent> <leader>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
 nnoremap <silent> <leader>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
 " Reveal current current class (trait or object) in Tree View 'metalsBuild'
 nnoremap <silent> <leader>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+
+" }}}
 
 " }}}
 
