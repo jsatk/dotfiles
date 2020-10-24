@@ -1,3 +1,3 @@
 setlocal spell
-setlocal textwidth=0
+setlocal textwidth=80
 setlocal formatoptions+=t
