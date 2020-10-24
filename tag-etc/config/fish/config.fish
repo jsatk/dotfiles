@@ -46,10 +46,11 @@ set PATH \
   /bin \
   /usr/sbin \
   /sbin \
-  $HOME/Library/scripts \
+  $HOME/.config/scripts \
   /Library/TeX/texbin \
   # Puts Python 2's pip (which macOS still ships with as default) in $PATH.
   $HOME/Library/Python/2.7/bin \
+  $HOME/Library/Application\ Support/Coursier/bin \
 
 # }}}
 # Files I need to source {{{
