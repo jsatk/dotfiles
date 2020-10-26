@@ -5,7 +5,7 @@
 set --global fish_key_bindings fish_vi_key_bindings
 # Tmuxinator & many other tools need these set.
 set --global --export BROWSER open /Applications/Firefox.app
-set --export EDITOR vim
+set --export EDITOR nvim
 set --export DEVELOPER $HOME/Developer
 # Required for gpg... sometimes... gpg is fickle and frustrating.
 set --export GPG_TTY (tty)
