@@ -196,6 +196,12 @@ colorscheme gruvbox
 set synmaxcol=800
 set hlsearch
 set termguicolors
+" In regular vim `set termguicolors` doesn't work in some situations.
+" See: https://github.com/vim/vim/issues/3608#issuecomment-438487463
+if !has('nvim') || !has('gui_running')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
 set cursorline
 set guifont=OperatorMonoForPowerline-Book:h18
 
