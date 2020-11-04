@@ -33,7 +33,7 @@ root: ~/
 # default-terminal of `tmux-256color`.  Terminal emulators + terminal
 # multiplexers + terminfo = weird font stuff ¯\_(ツ)_/¯.
 # See: https://github.com/tmuxinator/tmuxinator/issues/300
-tmux_command: env TERM=screen-256color tmux -2
+# tmux_command: env TERM=screen-256color tmux -2
 
 # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
 # startup_window: editor
