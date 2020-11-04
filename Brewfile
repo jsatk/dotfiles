@@ -1,22 +1,15 @@
 # Taps --------------------------------------------------------------------- {{{
 
-# For AdoptopenJDK.
 tap "adoptopenjdk/openjdk"
-# For a better top, ytop.
 tap "cjbassi/ytop"
-# For Coursier.
 tap "coursier/formulas"
-# For gh tool for GitHub.
 tap "github/gh"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
-# For contacts in Mutt.
-tap "keith/formulae"
-# For Bloop.
+tap "keith/formulae" # For contacts in Mutt.
 tap "scalacenter/bloop"
-# For rcm.
-tap "thoughtbot/formulae"
+tap "thoughtbot/formulae" # For rcm.
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
