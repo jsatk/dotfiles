@@ -1,17 +1,13 @@
 " General Settings
-set update.lastchecktime 1597077395996
-set update.nag true
-set update.nagwait 7
-set update.lastnaggedversion 1.14.0
-set update.checkintervalsecs 86400
+set update.lastchecktime 1604945456415
 set configversion 2.0
 set theme dark
 
 " Autocmds
-autocmd DocStart mail.google.com/mail mode ignore
-autocmd DocStart calendar.google.com/calendar mode ignore
-autocmd DocStart fastmail.com mode ignore
-autocmd DocStart youneedabudget.com mode ignore
+autocmd DocStart mail.google.com mode ignore
+autocmd DocStart calendar.google.com mode ignore
+autocmd DocStart docs.google.com mode ignore
+autocmd DocStart roamresearch.com mode ignore
 
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl

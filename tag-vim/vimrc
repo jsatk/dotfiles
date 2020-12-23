@@ -28,7 +28,7 @@
 "
 " Lastly, if you want to more information about a setting here put your
 " cursor on the setting and press `K`.  This will open the help for that
-" item in a split.  This works for many languages in vim.
+" item in a split.  This works for many languages in Vim.
 
 " The following check is done in vim-sensible, however as of this
 " writing that check doesn't apply to Vim 8.  Until vim-dispatch works
@@ -60,10 +60,6 @@ call plug#begin()
 Plug 'ap/vim-css-color'
 " Provides support for editing fish scripts.
 Plug 'dag/vim-fish'
-" Basic support for SBT.  Mildy abandoned.
-Plug 'derekwyatt/vim-sbt'
-" Basic support for Scala.  Mildy abandoned.
-Plug 'derekwyatt/vim-scala'
 " All the colorschemes.
 Plug 'flazz/vim-colorschemes'
 " For running tests on different granularities.
@@ -145,16 +141,18 @@ Plug 'tpope/vim-surround'
 " Basic tmux support for Vim.
 Plug 'tpope/vim-tbone'
 " Kind of the other half of vim-sensible, nice sane mappings that should
-" come with vim by default, but don't.
+" come with Vim by default, but don't.
 Plug 'tpope/vim-unimpaired'
-" Enhances netrw, which is built into vim.
+" Enhances netrw, which is built into Vim.
 Plug 'tpope/vim-vinegar'
 " Syntax plugin for Tridactyl configuration files.
 Plug 'tridactyl/vim-tridactyl'
-" Lean & mean status/tabline for vim that's light as air.
+" Lean & mean status/tabline for Vim that's light as air.
 Plug 'vim-airline/vim-airline'
 " This is the official theme repository for vim-airline
 Plug 'vim-airline/vim-airline-themes'
+" For navigating personal wikis.
+Plug 'vimwiki/vimwiki'
 " Common Lisp dev environment, similar to SLIME for Emacs.
 Plug 'vlime/vlime', { 'rtp': 'vim/' }
 
@@ -196,7 +194,7 @@ colorscheme gruvbox
 set synmaxcol=800
 set hlsearch
 set termguicolors
-" In regular vim `set termguicolors` doesn't work in some situations.
+" In regular Vim `set termguicolors` doesn't work in some situations.
 " See: https://github.com/vim/vim/issues/3608#issuecomment-438487463
 if !has('nvim') || !has('gui_running')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -223,12 +221,12 @@ set guifont=OperatorMonoForPowerline-Book:h18
 set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add
 nnoremap zG 2zg
 
-" See the difference between the entires for `termguicolors` in vim &
-" neovim.  They differ.
+" See the difference between the entires for `termguicolors` in Vim &
+" Neovim.  They differ.
 " See: https://github.com/neovim/neovim/issues/13188
-" For neovim
+" For Neovim
 highlight Comment gui=italic
-" For vim
+" For Vim
 highlight Comment cterm=italic
 
 " Highlight VCS conflict markers
@@ -279,7 +277,7 @@ set textwidth=0
 set wrapmargin=0
 set dictionary=/usr/share/dict/words
 set showmatch
-set nrformats=octal,hex,alpha " Increment alpha strings with vim.
+set nrformats=octal,hex,alpha " Increment alpha strings with Vim.
 
 " Make the undo directory automatically if it doesn't already exist.
 if !isdirectory(expand(&undodir))
@@ -441,6 +439,13 @@ set wildmode=list:longest
 " }}}
 " 24 multi-byte characters ----------------------------------------- {{{
 
+" > When on all Unicode emoji characters are considered to be full
+" > width.
+"
+" Emoji of different byte lengths render funky in Vim w/o this
+" turned off.
+set noemo
+
 " }}}
 " 25 various ------------------------------------------------------- {{{
 
@@ -600,7 +605,7 @@ endif
 " to work with from time to time.  So essentially `:Files` is a more performant
 " `:Gfiles` if we're in a git repo.  Otherwise it falls back to `fd`.
 nnoremap <C-t> :<C-u>Files<CR>
-" Search in vim buffers.
+" Search in Vim buffers.
 nnoremap <C-t><C-f> :<C-u>Buffers<CR>
 
 " Mapping selecting mappings
@@ -694,6 +699,21 @@ let g:projectionist_heuristics = {
 " Rhubarb {{{
 
 let g:github_enterprise_urls = ["https://code.corp.creditkarma.com"]
+
+" }}}
+" Vimwiki {{{
+
+let g:vimwiki_list = [
+\   {
+\           'path': '~/Desktop/vimwikiwiki/wiki',
+\           'path_html': '~/Desktop/vimwikiwiki/docs',
+\           'auto_toc': 1
+\   },
+\   {
+\           'path': '~/Desktop/wiki',
+\           'auto_toc': 1
+\   }
+\ ]
 
 " }}}
 " Vlime {{{
