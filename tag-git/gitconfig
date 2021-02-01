@@ -256,7 +256,7 @@
 # web --------------------------------------------------------------------- {{{
 
 [web]
-	browser = firefox
+	browser = safari
 
 # }}}
 # vim: textwidth=80:noexpandtab:shiftwidth=8

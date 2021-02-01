@@ -151,8 +151,6 @@ Plug 'tridactyl/vim-tridactyl'
 Plug 'vim-airline/vim-airline'
 " This is the official theme repository for vim-airline
 Plug 'vim-airline/vim-airline-themes'
-" For navigating personal wikis.
-Plug 'vimwiki/vimwiki'
 " Common Lisp dev environment, similar to SLIME for Emacs.
 Plug 'vlime/vlime', { 'rtp': 'vim/' }
 
