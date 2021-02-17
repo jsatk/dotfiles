@@ -11,7 +11,7 @@ return require('packer').startup(function()
   use {'ap/vim-css-color', ft = {'css', 'scss', 'sass', 'less'}}
   use {'dag/vim-fish', ft = 'fish'}
   use 'glepnir/galaxyline.nvim'
-  use {'hrsh7th/nvim-compe', requires = {{'hrsh7th/vim-vsnip'}, {'hrsh7th/vim-vsnip-integ'}}}
+  use {'hrsh7th/nvim-compe', requires = {{'hrsh7th/vim-vsnip'}}}
   use 'joshdick/onedark.vim'
   -- TODO: Figure out how to do `fzf#install()` as a `run` hook.
   use 'junegunn/fzf'

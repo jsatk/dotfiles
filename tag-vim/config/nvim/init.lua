@@ -139,7 +139,7 @@ opt('o', 'guifont', 'OperatorMonoForPowerline-Book:h18')
 --   work stuff in here without leaking internal names and shit.
 -- 
 -- I also remap zG to add to the local dict (vanilla zG is useless anyway).
-opt('o', 'spellfile', '~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add')
+opt('o', 'spellfile', vim.fn.expand('~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add'))
 map('n', 'zG', '2zg')
 
 g['highlight Comment gui'] = 'italic'
@@ -248,6 +248,7 @@ set foldtext=MyFoldText()
 ]],
 false
 )
+
 cmd('set foldmethod=expr')
 cmd('set foldexpr=nvim_treesitter#foldexpr()')
 
@@ -323,7 +324,7 @@ map('n', '<leader>eg', ':vsplit ~/.gitconfig<cr>')
 map('n', '<leader>em', ':vsplit ~/.muttrc<cr>')
 map('n', '<leader>ep', ':vsplit ~/Developer/jsatk.us/content/dotplan.md<cr>')
 map('n', '<leader>et', ':vsplit ~/.tmux.conf<cr>')
-map('n', '<leader>ev', ':vsplit ~/.vimrc<cr>')
+map('n', '<leader>ev', ':vsplit ~/.config/nvim/init.lua<cr>')
 
 -- }}}
 -- 18 reading and writing files ------------------------------------ {{{
@@ -331,7 +332,7 @@ map('n', '<leader>ev', ':vsplit ~/.vimrc<cr>')
 opt('o', 'backup', false)
 opt('o', 'writebackup', false)
 opt('o', 'autowrite', true)
-opt('o', 'backupdir', '~/.config/nvim/tmp/backup//')
+opt('o', 'backupdir', vim.fn.expand('~/.config/nvim/tmp/backup//'))
 
 -- Make the backup directory automatically if it doesn't already exist.
 if vim.fn.isdirectory(vim.o.backupdir) == 0 then vim.fn.mkdir(vim.o.backupdir, "p") end
@@ -339,7 +340,7 @@ if vim.fn.isdirectory(vim.o.backupdir) == 0 then vim.fn.mkdir(vim.o.backupdir, "
 -- }}}
 -- 19 the swap file ------------------------------------------------ {{{
 
-opt('o', 'directory', '~/.vim/tmp/swap//')
+opt('o', 'directory', vim.fn.expand('~/.vim/tmp/swap//'))
 -- As of this writing (2021-02-13) for reasons unknown vim.o.noswapfile
 -- isn't a thing in Lua + Neovim so we can't set it.
 cmd('set noswapfile')
@@ -572,7 +573,7 @@ g.projectionist_heuristics = {
 -- }}}
 -- Rhubarb {{{
 
-g['github_enterprise_urls'] = '["https://code.corp.creditkarma.com"]'
+g['github_enterprise_urls'] = {"https://code.corp.creditkarma.com"}
 
 -- }}}
 -- Treesitter {{{
