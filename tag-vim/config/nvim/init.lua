@@ -200,7 +200,7 @@ opt('o', 'nrformats', 'octal,hex,alpha') -- Increment alpha strings with Vim.
 cmd('set undofile')
 -- The extra slash on the end saves files under the name of their full path
 -- with the / character replaced with a %.
-opt('o', 'undodir', '~/.config/nvim/tmp/undo//')
+opt('o', 'undodir', vim.fn.expand('~/.config/nvim/tmp/undo//'))
 -- Make the undo directory automatically if it doesn't already exist.
 if vim.fn.isdirectory(vim.o.undodir) == 0 then vim.fn.mkdir(vim.o.undodir, "p") end
 
@@ -340,7 +340,7 @@ if vim.fn.isdirectory(vim.o.backupdir) == 0 then vim.fn.mkdir(vim.o.backupdir, "
 -- }}}
 -- 19 the swap file ------------------------------------------------ {{{
 
-opt('o', 'directory', vim.fn.expand('~/.vim/tmp/swap//'))
+opt('o', 'directory', vim.fn.expand('~/.config/nvim/tmp/swap//'))
 -- As of this writing (2021-02-13) for reasons unknown vim.o.noswapfile
 -- isn't a thing in Lua + Neovim so we can't set it.
 cmd('set noswapfile')
