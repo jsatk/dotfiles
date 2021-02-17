@@ -186,7 +186,8 @@ brew "tree"
 brew "vifm"
 # Best text editor ever & it's cousin.
 brew "vim"
-brew "nvim"
+brew "luajit", args: ["HEAD"] # This is only needed for nightly neovim (2/9/2021).
+brew "neovim", args: ["HEAD"]
 # For easy parsing and rendering of Yaml.
 brew "yq"
 # Better top – written in Rust, because we have to rewrite everything in Rust or

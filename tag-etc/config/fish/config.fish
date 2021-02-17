@@ -1,8 +1,5 @@
 # Environment Variables {{{
 
-# Vi key bindings in Fish shell.
-# See: https://fishshell.com/docs/current/index.html#editor
-set --global fish_key_bindings fish_vi_key_bindings
 # Tmuxinator & many other tools need these set.
 set --global --export BROWSER open /Applications/Safari.app
 set --export EDITOR nvim

@@ -60,10 +60,10 @@ call plug#begin()
 Plug 'ap/vim-css-color'
 " Provides support for editing fish scripts.
 Plug 'dag/vim-fish'
-" All the colorschemes.
-Plug 'flazz/vim-colorschemes'
 " For running tests on different granularities.
 Plug 'janko/vim-test'
+" Lovely colorscheme.
+Plug 'joshdick/onedark.vim'
 " fzf is a general-purpose command-line fuzzy finder.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 " Adds some features to fzf that are specific to vim.
@@ -77,33 +77,18 @@ Plug 'junegunn/vim-easy-align'
 " Extends " and @ in normal mode and <CTRL-R> in insert mode so
 " you can see the contents of the registers.
 Plug 'junegunn/vim-peekaboo'
-" Structured Editing of Lisp S-expressions.
-Plug 'kovisoft/paredit'
-" Best colorscheme that unfortunately doesn't come with
-" flazz/vim-colorschemes.
-Plug 'morhetz/gruvbox'
-" Make your Vim/Neovim as smart as VSCode.
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 " Highlight words to avoid in tech writing.
 Plug 'nicholaides/words-to-avoid.vim'
-" Provides syntax highlighting and improved indentation for javascript.
-Plug 'pangloss/vim-javascript'
-" Search for terms using Dash.app, making API lookups simple.
-Plug 'rizzatti/dash.vim'
-" Rust niceities.
-Plug 'rust-lang/rust.vim'
 " Cute font-icons.
 Plug 'ryanoasis/vim-devicons'
 " Support for editorconfig.
 Plug 'sgur/vim-editorconfig'
+" A collection of language packs for Vim.
+Plug 'sheerun/vim-polyglot'
 " Gundo.vim is Vim plugin to visualize your Vim undo tree.
 Plug 'sjl/gundo.vim'
-" Thrift syntax support.
-Plug 'solarnz/thrift.vim'
 " Manage branches and tags with fzf.
 Plug 'stsewd/fzf-checkout.vim'
-" .tmux.conf support.
-Plug 'tmux-plugins/vim-tmux'
 " Word & spelling correction support.  It's very hard to explain, just
 " see the README of this plugin.
 Plug 'tpope/vim-abolish'
@@ -113,8 +98,6 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dadbod'
 " Just see http://vimeo.com/tpope/vim-dispatch-teaser.
 Plug 'tpope/vim-dispatch'
-" Inserts closing `end` statements in languages like Ruby.
-Plug 'tpope/vim-endwise'
 " Vim sugar for the UNIX shell commands that need it the most.
 Plug 'tpope/vim-eunuch'
 " Incredible git support.
@@ -145,14 +128,10 @@ Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-unimpaired'
 " Enhances netrw, which is built into Vim.
 Plug 'tpope/vim-vinegar'
-" Syntax plugin for Tridactyl configuration files.
-Plug 'tridactyl/vim-tridactyl'
 " Lean & mean status/tabline for Vim that's light as air.
 Plug 'vim-airline/vim-airline'
 " This is the official theme repository for vim-airline
 Plug 'vim-airline/vim-airline-themes'
-" Common Lisp dev environment, similar to SLIME for Emacs.
-Plug 'vlime/vlime', { 'rtp': 'vim/' }
 
 call plug#end()
 
@@ -188,10 +167,35 @@ set list
 " 5 syntax, highlighting and spelling ------------------------------ {{{
 
 set background=dark
-colorscheme gruvbox
+
+" Needed to esnure float background doesn't get odd highlighting
+" https://github.com/joshdick/onedark.vim#onedarkset_highlight
+" https://github.com/scalameta/coc-metals/wiki/Commonly-Asked-Questions
+augroup colorset
+  autocmd!
+  autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" } })
+augroup END
+
+" For onedark colorscheme.
+" Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+" If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+" (see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
+" For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+" Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+colorscheme onedark
+
 set synmaxcol=800
 set hlsearch
-set termguicolors
 " In regular Vim `set termguicolors` doesn't work in some situations.
 " See: https://github.com/vim/vim/issues/3608#issuecomment-438487463
 if !has('nvim') || !has('gui_running')
@@ -261,6 +265,12 @@ endif
 set showcmd
 set showmode
 
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+" Ensure autocmd works for Filetype
+set shortmess-=F
+
 " }}}
 " 12 selecting text ------------------------------------------------ {{{
 
@@ -281,6 +291,9 @@ set nrformats=octal,hex,alpha " Increment alpha strings with Vim.
 if !isdirectory(expand(&undodir))
   call mkdir(expand(&undodir), "p")
 endif
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
 
 " }}}
 " 14 tabs and indenting -------------------------------------------- {{{
@@ -409,8 +422,6 @@ endif
 " 19 the swap file ------------------------------------------------- {{{
 
 set directory=~/.vim/tmp/swap//
-" Some server have issues with backup files.
-" See: https://github.com/neoclide/coc.nvim/issues/649
 set nobackup
 set nowritebackup
 set noswapfile
@@ -477,85 +488,7 @@ augroup END
 " Airline {{{
 
 let g:airline_powerline_fonts = 1
-let g:airline_theme='gruvbox'
-
-" }}}
-" Coc {{{
-
-" Most of the following was taken from:
-" https://github.com/scalameta/coc-metals/blob/master/coc-mappings.vim
-
-" Use `[g` and `]g` for navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Remap for do codeAction of current line
-nmap <leader>ac <Plug>(coc-codeaction)
-
-" Used to expand decorations in worksheets
-nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
-
-" Use K for show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Show all diagnostics
-nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
-" Find symbol of current document
-nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
-
-" Coc Extensions {{{
-
-" coc-metals {{{
-
-" Toggle panel with Tree Views
-nnoremap <silent> <leader>t :<C-u>CocCommand metals.tvp<CR>
-" Toggle Tree View 'metalsBuild'
-nnoremap <silent> <leader>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
-" Toggle Tree View 'metalsCompile'
-nnoremap <silent> <leader>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
-" Reveal current current class (trait or object) in Tree View 'metalsBuild'
-nnoremap <silent> <leader>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
-
-" }}}
-
-" }}}
-
-" :Fold [buffer] | fold buffer using coc.nvim {{{
-function! s:coc_fold_kinds(...) abort
-  return ['imports', 'comment', 'region']
-endfunction
-
-command! -nargs=? -complete=customlist,s:coc_fold_kinds
-\   Fold :call CocAction('fold', <f-args>)
-" }}}
+let g:airline_theme='onedark'
 
 " }}}
 " Dispatch {{{
@@ -697,26 +630,6 @@ let g:projectionist_heuristics = {
 " Rhubarb {{{
 
 let g:github_enterprise_urls = ["https://code.corp.creditkarma.com"]
-
-" }}}
-" Vimwiki {{{
-
-let g:vimwiki_list = [
-\   {
-\           'path': '~/Desktop/vimwikiwiki/wiki',
-\           'path_html': '~/Desktop/vimwikiwiki/docs',
-\           'auto_toc': 1
-\   },
-\   {
-\           'path': '~/Desktop/wiki',
-\           'auto_toc': 1
-\   }
-\ ]
-
-" }}}
-" Vlime {{{
-
-let g:vlime_compiler_policy = {"DEBUG": 3}
 
 " }}}
 
