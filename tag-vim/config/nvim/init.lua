@@ -452,7 +452,8 @@ map('n', '<F5>', ':GundoToggle<CR>')
 -- }}}
 -- Metals {{{
 
--- TODO: Go over this section better.  Mostly stolen from ckipp.
+-- Mostly stolen from Chris Kipp.
+-- See: https://github.com/scalameta/nvim-metals/discussions/39#discussion-82302
 
 -- LSP
 map('n', '<leader>g', '<cmd>lua vim.lsp.buf.definition()<CR>', {nowait = true})
@@ -507,6 +508,11 @@ metals_config.handlers['textDocument/publishDiagnostics'] =
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+metals_config.capabilities = capabilities
+
+-- Exhaustive match support, etc.
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 metals_config.capabilities = capabilities
 
 -- }}}
@@ -582,6 +588,13 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = 'all',
   highlight = {enable = true}
 }
+-- }}}
+-- Vista {{{
+
+g['vista_icon_indent'] = {"╰─▸ ", "├─▸ "}
+g['vista_default_executive'] = 'nvim_lsp'
+g['vista#renderer#enable_icon'] = 1
+
 -- }}}
 
 -- }}}

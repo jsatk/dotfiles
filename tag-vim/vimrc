@@ -1,8 +1,4 @@
-" Author: Jesse Atkinson
-" Email: jesse@jsatk.us
-" Twitter: @jsatk
-" Github: @jsatk
-" Website: https://jsatk.us
+" Jesse Atkinson | jesse@jsatk.us | @jsatk | https://jsatk.us
 
 " 0 preamble ------------------------------------------------------- {{{
 "
@@ -77,6 +73,8 @@ Plug 'junegunn/vim-easy-align'
 " Extends " and @ in normal mode and <CTRL-R> in insert mode so
 " you can see the contents of the registers.
 Plug 'junegunn/vim-peekaboo'
+" Make your Vim/Neovim as smart as VSCode.
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Highlight words to avoid in tech writing.
 Plug 'nicholaides/words-to-avoid.vim'
 " Cute font-icons.
@@ -489,6 +487,84 @@ augroup END
 
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
+
+" }}}
+" Coc {{{
+
+" Most of the following was taken from:
+" https://github.com/scalameta/coc-metals/blob/master/coc-mappings.vim
+
+" Use `[g` and `]g` for navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Remap for do codeAction of current line
+nmap <leader>ac <Plug>(coc-codeaction)
+
+" Used to expand decorations in worksheets
+nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Show all diagnostics
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+" Find symbol of current document
+nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
+
+" Coc Extensions {{{
+
+" coc-metals {{{
+
+" Toggle panel with Tree Views
+nnoremap <silent> <leader>t :<C-u>CocCommand metals.tvp<CR>
+" Toggle Tree View 'metalsBuild'
+nnoremap <silent> <leader>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+" Toggle Tree View 'metalsCompile'
+nnoremap <silent> <leader>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+" Reveal current current class (trait or object) in Tree View 'metalsBuild'
+nnoremap <silent> <leader>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+
+" }}}
+
+" }}}
+
+" :Fold [buffer] | fold buffer using coc.nvim {{{
+function! s:coc_fold_kinds(...) abort
+  return ['imports', 'comment', 'region']
+endfunction
+
+command! -nargs=? -complete=customlist,s:coc_fold_kinds
+\   Fold :call CocAction('fold', <f-args>)
+" }}}
 
 " }}}
 " Dispatch {{{

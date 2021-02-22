@@ -8,13 +8,12 @@ return require('packer').startup(function()
   use {'wbthomason/packer.nvim', opt = true}
 
   -- The plugins, alphabetically sorted
-  use {'ap/vim-css-color', ft = {'css', 'scss', 'sass', 'less'}}
-  use {'dag/vim-fish', ft = 'fish'}
+  use {'ap/vim-css-color', opt = true, ft = {'css', 'scss', 'sass', 'less'}}
+  use {'dag/vim-fish', opt = true, ft = 'fish'}
   use 'glepnir/galaxyline.nvim'
   use {'hrsh7th/nvim-compe', requires = {{'hrsh7th/vim-vsnip'}}}
   use 'joshdick/onedark.vim'
-  -- TODO: Figure out how to do `fzf#install()` as a `run` hook.
-  use 'junegunn/fzf'
+  use 'junegunn/fzf' -- TODO: Figure out how to do `fzf#install()` as a `run` hook.
   use 'junegunn/fzf.vim'
   use {'junegunn/goyo.vim', opt = true, ft = {'markdown', 'tex'}}
   use 'junegunn/gv.vim'
@@ -23,7 +22,7 @@ return require('packer').startup(function()
   use 'kyazdani42/nvim-web-devicons'
   use 'liuchengxu/vista.vim'
   use 'nvim-treesitter/nvim-treesitter'
-  use 'scalameta/nvim-metals'
+  use {'scalameta/nvim-metals', opt = true, ft = {'sbt', 'scala'}}
   use 'sheerun/vim-polyglot'
   use 'sjl/gundo.vim'
   use 'stsewd/fzf-checkout.vim'
