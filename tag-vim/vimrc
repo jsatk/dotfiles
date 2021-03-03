@@ -221,12 +221,7 @@ set guifont=OperatorMonoForPowerline-Book:h18
 set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add
 nnoremap zG 2zg
 
-" See the difference between the entires for `termguicolors` in Vim &
-" Neovim.  They differ.
-" See: https://github.com/neovim/neovim/issues/13188
-" For Neovim
-highlight Comment gui=italic
-" For Vim
+" Comments in italics
 highlight Comment cterm=italic
 
 " Highlight VCS conflict markers
@@ -556,7 +551,6 @@ nnoremap <silent> <leader>tf :<C-u>CocCommand metals.revealInTreeView metalsBuil
 " }}}
 
 " }}}
-
 " :Fold [buffer] | fold buffer using coc.nvim {{{
 function! s:coc_fold_kinds(...) abort
   return ['imports', 'comment', 'region']

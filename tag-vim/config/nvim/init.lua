@@ -63,7 +63,6 @@ opt('o', 'shell', 'fish')
 -- All individual plugin settings are in
 -- ~/.config/nvim/lua/settings/$PLUGIN_NAME.
 
-cmd [[packadd packer.nvim]]
 require 'plugins'
 
 require('settings.galaxyline').setup()
@@ -117,6 +116,7 @@ if fn.has('termguicolors') == 1 then
   opt('o', 'termguicolors', true)
 end
 
+g['onedark_terminal_italics'] = 1
 cmd 'colorscheme onedark'
 
 opt('o', 'synmaxcol', 800)
@@ -139,10 +139,10 @@ opt('o', 'guifont', 'OperatorMonoForPowerline-Book:h18')
 --   work stuff in here without leaking internal names and shit.
 -- 
 -- I also remap zG to add to the local dict (vanilla zG is useless anyway).
-opt('o', 'spellfile', vim.fn.expand('~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add'))
+opt('o', 'spellfile', fn.expand('~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add'))
 map('n', 'zG', '2zg')
 
-g['highlight Comment gui'] = 'italic'
+cmd [[hi! Comment gui=italic]]
 
 -- Highlight VCS conflict markers
 fn.matchadd('ErrorMsg', '^\\(<\\|=\\|>\\)\\{7\\}\\([^=].\\+\\)\\?$')
@@ -196,13 +196,12 @@ opt('o', 'nrformats', 'octal,hex,alpha') -- Increment alpha strings with Vim.
 
 -- As of this writing (2021-02-13) for reasons unknown vim.o.undofile
 -- isn't a thing so we can't set it
--- vim.api.nvim_set_option('undofile', true).
 cmd('set undofile')
 -- The extra slash on the end saves files under the name of their full path
 -- with the / character replaced with a %.
-opt('o', 'undodir', vim.fn.expand('~/.config/nvim/tmp/undo//'))
+opt('o', 'undodir', fn.expand('~/.config/nvim/tmp/undo//'))
 -- Make the undo directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.undodir) == 0 then vim.fn.mkdir(vim.o.undodir, "p") end
+if fn.isdirectory(vim.o.undodir) == 0 then fn.mkdir(vim.o.undodir, "p") end
 
 -- Set completeopt to have a better completion experience
 opt('o', 'completeopt', 'menuone,noinsert,noselect')
@@ -332,21 +331,21 @@ map('n', '<leader>ev', ':vsplit ~/.config/nvim/init.lua<cr>')
 opt('o', 'backup', false)
 opt('o', 'writebackup', false)
 opt('o', 'autowrite', true)
-opt('o', 'backupdir', vim.fn.expand('~/.config/nvim/tmp/backup//'))
+opt('o', 'backupdir', fn.expand('~/.config/nvim/tmp/backup//'))
 
 -- Make the backup directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.backupdir) == 0 then vim.fn.mkdir(vim.o.backupdir, "p") end
+if fn.isdirectory(vim.o.backupdir) == 0 then fn.mkdir(vim.o.backupdir, "p") end
 
 -- }}}
 -- 19 the swap file ------------------------------------------------ {{{
 
-opt('o', 'directory', vim.fn.expand('~/.config/nvim/tmp/swap//'))
+opt('o', 'directory', fn.expand('~/.config/nvim/tmp/swap//'))
 -- As of this writing (2021-02-13) for reasons unknown vim.o.noswapfile
 -- isn't a thing in Lua + Neovim so we can't set it.
 cmd('set noswapfile')
 
 -- Make the swap directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.directory) == 0 then vim.fn.mkdir(vim.o.directory, "p") end
+if fn.isdirectory(vim.o.directory) == 0 then fn.mkdir(vim.o.directory, "p") end
 
 -- }}}
 -- 20 command line editing ----------------------------------------- {{{
@@ -392,6 +391,19 @@ cmd [[augroup END]]
 -- }}}
 -- 99 plugin configurations ---------------------------------------- {{{
 
+-- Dashboard {{{
+
+g['dashboard_default_executive'] = 'telescope'
+g['dashboard_custom_header'] = {
+  ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+  ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+  ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+  ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+  ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+  ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+}
+
+-- }}}
 -- Dispatch {{{
 
 -- Why am I doing this?  See link below.
@@ -399,50 +411,6 @@ cmd [[augroup END]]
 opt('o', 'shellpipe', '2>&1|tee')
 
 map('n', '<F9>', ':Dispatch<CR>')
-
--- }}}
--- fzf {{{
-
--- TODO: Look into TJ's telescope.
-
-cmd("let $FZF_DEFAULT_OPTS .= ' --inline-info'")
-
--- Search in files.
--- 
--- A note about why I'm using `Files` rather than `GFiles.
--- 
--- From the help file for FZF:
--- 
---     `:Files [PATH]`    | Files (runs  `$FZF_DEFAULT_COMMAND`  if defined)
---     `:GFiles [OPTS]`   | Git files ( `git ls-files` )
--- 
--- I have `$FZF_DEFAULT_COMMAND` set to the following in my Fish shell config:
--- 
---     # Use git to search files when in a git repo, otherwise use fd.
---     set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type file --hidden --follow --exclude .git'
--- 
--- This is more performant on ridiculously large repos which I unfortunately have
--- to work with from time to time.  So essentially `:Files` is a more performant
--- `:Gfiles` if we're in a git repo.  Otherwise it falls back to `fd`.
-map('n', '<C-t>', ':<C-u>Files<CR>')
--- Search in Vim buffers.
-map('n', '<C-t><C-f>', ':<C-u>Buffers<CR>')
-
--- Mapping selecting mappings
-map('n', '<leader><tab>', '<plug>(fzf-maps-n)', {noremap = false, silent = false})
-map('x', '<leader><tab>', '<plug>(fzf-maps-x)', {noremap = false, silent = false})
-map('o', '<leader><tab>', '<plug>(fzf-maps-o)', {noremap = false, silent = false})
-
--- TODO: Figure out Lua way to do this.
--- Insert mode completion
-cmd('map <c-x><c-k> <plug>(fzf-complete-word)')
-cmd('map <c-x><c-f> <plug>(fzf-complete-path)')
-cmd('map <c-x><c-j> <plug>(fzf-complete-file-ag)')
-cmd('map <c-x><c-l> <plug>(fzf-complete-line)')
-
--- Puts FZF inside of a nice pop-up window rather than a split.
--- https://github.com/junegunn/fzf/blob/master/README-VIM.md#starting-fzf-in-a-popup-window
-g.fzf_layout = { window = { width = 0.9, height = 0.6 } }
 
 -- }}}
 -- Gundo {{{
@@ -456,23 +424,45 @@ map('n', '<F5>', ':GundoToggle<CR>')
 -- See: https://github.com/scalameta/nvim-metals/discussions/39#discussion-82302
 
 -- LSP
-map('n', '<leader>g', '<cmd>lua vim.lsp.buf.definition()<CR>', {nowait = true})
+
+-- Default in vim for K is to open the man/help of what your cursor is
+-- on.  This keeps that muscle memory alive but instead leans on the LSP
+-- to provide the info.
+-- TODO: Rewrite this so if LSP is active it uses hover otherwise does
+--       the default action.
 map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+
+-- Remap keys for gotos
+map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', {nowait = true})
+map('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', {nowait = true})
 map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
 map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
 map('n', 'gds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 map('n', 'gws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
-map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-map('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-map('n', '<leader>ws', '<cmd>lua require"metals".worksheet_hover()<CR>')
-map('n', '<leader>a', '<cmd>lua require"metals".open_all_diagnostics()<CR>')
-map('n', '<leader>d', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>') -- buffer diagnostics only
-map('n', '[c', '<cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>')
-map('n', ']c', '<cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>')
 
-map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
-map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
+-- Remap for do codeAction of current line
+map('n', '<leader>ac', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+
+-- Used to expand decorations in worksheets
+map('n', '<leader>ws', '<cmd>lua require"metals".worksheet_hover()<CR>')
+
+map('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+
+-- Use `[g` and `]g` for navigate diagnostics
+map('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>')
+map('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>')
+
+-- Remap for rename current word
+map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+
+-- Show all diagnostics
+map('n', '<leader>a', '<cmd>lua require"metals".open_all_diagnostics()<CR>')
+-- Show only buffer diagnostics
+map('n', '<leader>d', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
+
+-- I use ^n & ^p to navigate up-and-down menus.
+-- Using <Tab> to navigate menus is for zoomers.
+-- In a menu when I press <CR> autocomplete it for me.
 map('i', '<CR>', 'compe#confirm("\\<CR>")', {expr = true})
 
 ----------------------------------
@@ -582,6 +572,14 @@ g.projectionist_heuristics = {
 g['github_enterprise_urls'] = {"https://code.corp.creditkarma.com"}
 
 -- }}}
+-- Telescope {{{
+
+map('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files()<cr>')
+map('n', '<leader>fg', '<cmd>lua require("telescope.builtin").live_grep()<cr>')
+map('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>')
+map('n', '<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<cr>')
+
+-- }}}
 -- Treesitter {{{
 
 require('nvim-treesitter.configs').setup {
@@ -594,6 +592,8 @@ require('nvim-treesitter.configs').setup {
 g['vista_icon_indent'] = {"╰─▸ ", "├─▸ "}
 g['vista_default_executive'] = 'nvim_lsp'
 g['vista#renderer#enable_icon'] = 1
+
+map('n', '<leader>t', ':<C-u>Vista<CR>')
 
 -- }}}
 
