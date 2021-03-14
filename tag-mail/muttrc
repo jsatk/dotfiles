@@ -15,8 +15,7 @@ bind editor ^T    complete
 # }}}
 # Color Theme {{{
 
-source ~/.mutt/themes/gruvbox-shuber.muttrc
-source ~/.mutt/themes/gruvbox-shuber-extended.muttrc
+source ~/.mutt/themes/jsatk.muttrc
 
 # }}}
 # Basic Options {{{
