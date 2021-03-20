@@ -413,6 +413,18 @@ opt('o', 'shellpipe', '2>&1|tee')
 map('n', '<F9>', ':Dispatch<CR>')
 
 -- }}}
+-- EasyAlign {{{
+
+-- Start interactive EasyAlign in visual mode (e.g. vipga).
+-- Note: Using |:*noremap| will not work with <Plug> mappings.
+cmd [[xmap ga <Plug>(EasyAlign)]]
+
+-- Start interactive EasyAlign for a motion/text object (e.g. gaip)
+-- Intentionally not using `nnoremap`.
+-- Note: Using |:*noremap| will not work with <Plug> mappings.
+cmd [[nmap ga <Plug>(EasyAlign)]]
+
+-- }}}
 -- Gundo {{{
 
 map('n', '<F5>', ':GundoToggle<CR>')
@@ -504,6 +516,8 @@ metals_config.capabilities = capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 metals_config.capabilities = capabilities
+
+metals_config.init_options.statusBarProvider = 'on'
 
 -- }}}
 -- Projectionist {{{
