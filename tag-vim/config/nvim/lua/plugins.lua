@@ -21,7 +21,7 @@ return require('packer').startup(function()
   use {'liuchengxu/vista.vim'}
   use {'neovim/nvim-lspconfig', requires = {{'nvim-lua/lsp_extensions.nvim'}}}
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
-  use {'nvim-treesitter/nvim-treesitter'}
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'scalameta/nvim-metals'} -- TODO: Figure out how to make metals stuff only run in scala repos.
   use {'sheerun/vim-polyglot'}
   use {'sjl/gundo.vim'}
