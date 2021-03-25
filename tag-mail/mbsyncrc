@@ -23,8 +23,8 @@ Inbox ~/.mail/jsatk/Inbox
 SubFolders Verbatim
 
 Channel jsatk
-Master :jsatk-remote:
-Slave :jsatk-local:
+Far :jsatk-remote:
+Near :jsatk-local:
 # Don't sync drafts since they are stored unencrypted
 Patterns *
 # Automatically create missing mailboxes, both locally and on the server

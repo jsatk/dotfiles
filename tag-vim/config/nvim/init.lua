@@ -471,6 +471,8 @@ map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
 map('n', '<leader>a', '<cmd>lua require"metals".open_all_diagnostics()<CR>')
 -- Show only buffer diagnostics
 map('n', '<leader>d', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
+-- Show only that line's diagnostics.
+map('n', '<leader>ln', '<cmd>lua vim.lsp.diagnostic.get_line_diagnostics()<CR>')
 
 -- I use ^n & ^p to navigate up-and-down menus.
 -- Using <Tab> to navigate menus is for zoomers.
