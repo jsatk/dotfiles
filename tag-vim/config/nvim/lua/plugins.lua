@@ -10,7 +10,6 @@ return require('packer').startup(function()
   -- The plugins, alphabetically sorted
   use {'ap/vim-css-color', opt = true, ft = {'css', 'scss', 'sass', 'less'}}
   use {'dag/vim-fish', opt = true, ft = 'fish'}
-  use {'glepnir/dashboard-nvim'}
   use {'glepnir/galaxyline.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}}
   use {'hrsh7th/nvim-compe', requires = {{'hrsh7th/vim-vsnip'}}}
   use {'joshdick/onedark.vim'}
