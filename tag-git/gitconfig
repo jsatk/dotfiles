@@ -89,10 +89,13 @@
 
 	# Prints a one-liner of all commits I made last week.
 	# Nice for Monday morning stand-up/sprint planning.
-	summary = log --abbrev-commit --pretty=oneline --author="Jesse Atkinson" --since=last.mon --reverse
+	summary = log --abbrev-commit --pretty=oneline --author='Jesse Atkinson' --since=last.mon --reverse
 
 	# Undo a `git push`
 	undopush = push --force origin HEAD^:master
+
+	# Create & push branches all in one go.
+	work = !sh -c 'git fetch && git checkout @{upstream} -tb \"$@\"' _
 
 # }}}
 # apply ------------------------------------------------------------------- {{{
@@ -237,7 +240,7 @@
 # push -------------------------------------------------------------------- {{{
 
 [push]
-	default = tracking
+	default = current
 
 # }}}
 # rebase ------------------------------------------------------------------ {{{
