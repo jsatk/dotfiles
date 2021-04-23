@@ -1,4 +1,4 @@
--- 0 preamble ------------------------------------------------------ {{{
+-- 0  preamble ----------------------------------------------------- {{{
 
 -- Jesse Atkinson | jesse@jsatk.us | @jsatk | https://jsatk.us
 --
@@ -68,23 +68,23 @@ require "plugins"
 -- }}}
 
 -- }}}
--- 1 important ----------------------------------------------------- {{{
+-- 1  important ---------------------------------------------------- {{{
 
 -- A |sentence| has to be followed by two spaces after the '.', '!' or '?'.
 -- See: https://stevelosh.com/blog/2012/10/why-i-two-space/#s6-power
 vim.o.cpo = vim.o.cpo .. "J"
 
 -- }}}
--- 2 moving around, searching and patterns ------------------------- {{{
+-- 2  moving around, searching and patterns ------------------------ {{{
 
 opt("o", "ignorecase", true) -- Ignore the case, unless...
 opt("o", "smartcase", true)  -- ...there's caps in it.
 
 -- }}}
--- 3 tags ---------------------------------------------------------- {{{
+-- 3  tags --------------------------------------------------------- {{{
 
 -- }}}
--- 4 displaying text ----------------------------------------------- {{{
+-- 4  displaying text ---------------------------------------------- {{{
 
 opt("o", "scrolloff", 3)
 opt("o", "linebreak", true)
@@ -94,7 +94,7 @@ opt("o", "lazyredraw", true)
 opt("o", "list", true)
 
 -- }}}
--- 5 syntax, highlighting and spelling ----------------------------- {{{
+-- 5  syntax, highlighting and spelling ---------------------------- {{{
 
 opt("o", "background", "dark")
 
@@ -114,7 +114,7 @@ if fn.has("termguicolors") == 1 then
 end
 
 g["onedark_terminal_italics"] = 1
-cmd "colorscheme onedark"
+cmd("colorscheme onedark")
 
 opt("o", "synmaxcol", 800)
 opt("o", "hlsearch", true)
@@ -136,7 +136,10 @@ opt("o", "guifont", "OperatorMonoForPowerline-Book:h18")
 --   work stuff in here without leaking internal names and shit.
 --
 -- I also remap zG to add to the local dict (vanilla zG is useless anyway).
-opt("o", "spellfile", fn.expand("~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add"))
+--
+-- Also for some reason lua doesn't set the spellfile correctly when I
+-- do it the "lua" way so `cmd` it is.
+cmd("set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add")
 map("n", "zG", "2zg")
 
 cmd([[hi! Comment gui=italic]])
@@ -145,22 +148,22 @@ cmd([[hi! Comment gui=italic]])
 fn.matchadd("ErrorMsg", "^\\(<\\|=\\|>\\)\\{7\\}\\([^=].\\+\\)\\?$")
 
 -- }}}
--- 6 multiple windows ---------------------------------------------- {{{
+-- 6  multiple windows --------------------------------------------- {{{
 
 opt("o", "hidden", true)
 opt("o", "splitbelow", true)
 opt("o", "splitright", true)
 
 -- }}}
--- 7 multiple tab pages -------------------------------------------- {{{
+-- 7  multiple tab pages ------------------------------------------- {{{
 
 -- }}}
--- 8 terminal ------------------------------------------------------ {{{
+-- 8  terminal ----------------------------------------------------- {{{
 
 opt("o", "title", true)
 
 -- }}}
--- 9 using the mouse ----------------------------------------------- {{{
+-- 9  using the mouse ---------------------------------------------- {{{
 
 if fn.has("mouse") == 1 then
   opt("o", "mouse", "a")
@@ -411,14 +414,29 @@ map("i", "<C-d>",     [[compe#scroll({ 'delta': -4 })]], { expr = true })
 -- }}}
 -- DAP (Debug Adapter Protocol) {{{
 
+-- Mnemonic to remember these:
+-- <leader>d - "d" for DAP
+-- "c" for "continue".
 map("n", "<leader>dc", [[<cmd>lua require"dap".continue()<CR>]])
+-- "r" for "REPL".
 map("n", "<leader>dr", [[<cmd>lua require"dap".repl.toggle()<CR>]])
+-- "tb" for "toggle breakpoint".
 map("n", "<leader>dtb", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]])
+-- "so" for "step over".
 map("n", "<leader>dso", [[<cmd>lua require"dap".step_over()<CR>]])
+-- "si" for "step into".
 map("n", "<leader>dsi", [[<cmd>lua require"dap".step_into()<CR>]])
-map("n", "<leader>ddd", [[<cmd>lua require"dap".list_breakpoints()<CR>]])
+-- "s" for "scopes".  I realize this can be confused with `so` and `si`
+-- but there's little to no harm in acidentally triggering `.scopes()`
+-- so at worst if I don't press the `so` or `si` fast enough I'll just
+-- see the scopes. ¯\_(ツ)_/¯
+map("n", "<leader>ds", [[<cmd>lua require"dap.ui.variables".scopes()<CR>]])
 
 local dap = require("dap")
+
+fn.sign_define('DapBreakpoint', { text="🛑", texthl="", linehl="", numhl="" })
+fn.sign_define('DapStopped', { text="✋", texthl="", linehl="", numhl="" })
+fn.sign_define('DapLogPoint', { text="📝", texthl="", linehl="", numhl="" })
 
 dap.configurations.scala = {
   {
