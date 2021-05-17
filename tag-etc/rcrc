@@ -1,2 +1,2 @@
 EXCLUDES="Makefile README.markdown TODO Brewfile.lock.json LICENSE"
-TAGS="bash etc git irc lisp mail ruby scripts security tmux vim"
+TAGS="bash etc git irc lisp mail ruby scala scripts security tmux vim"

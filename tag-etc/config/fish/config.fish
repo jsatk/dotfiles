@@ -4,11 +4,14 @@
 set --global --export BROWSER open /Applications/Safari.app
 set --export EDITOR nvim
 set --export DEVELOPER $HOME/Developer
+
 # Required for gpg... sometimes... gpg is fickle and frustrating.
 set --export GPG_TTY (tty)
+
 # Config file for ripgrep.
 # See: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
 set --export RIPGREP_CONFIG_PATH $HOME/.ripgreprc
+
 # For Bat.  See: https://github.com/sharkdp/bat
 set --export BAT_THEME "TwoDark"
 set --export JAVA_HOME (/usr/libexec/java_home -v 1.8)
@@ -38,7 +41,6 @@ set --export FZF_ALT_C_OPTS "--preview 'tree -C {} | head -100'"
 set PATH \
   $BREW_PREFIX/bin \
   $BREW_PREFIX/sbin \
-  $HOME/go/bin \
   /usr/bin \
   /bin \
   /usr/sbin \

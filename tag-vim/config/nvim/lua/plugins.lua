@@ -7,14 +7,14 @@ return require("packer").startup(function()
   -- Packer can manage itself as an optional plugin.
   use({ "wbthomason/packer.nvim", opt = true})
 
-  -- The plugins, alphabetically sorted.
+  -- The plugins, sorted alphabetically.
   use({ "ap/vim-css-color", opt = true, ft = { "css", "scss", "sass", "less" }})
   use({ "dag/vim-fish", opt = true, ft = "fish" })
   use({ "glepnir/galaxyline.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true }})
   use({ "glepnir/lspsaga.nvim" })
   use({ "hrsh7th/nvim-compe", requires = {{ "hrsh7th/vim-vsnip" }}})
   use({ "joshdick/onedark.vim" })
-  use({ "junegunn/goyo.vim", opt = true, ft = { "markdown", "tex" }})
+  use({ "junegunn/goyo.vim", opt = true, ft = { "markdown", "tex", "mail" }})
   use({ "junegunn/gv.vim" })
   use({ "junegunn/vim-easy-align" })
   use({ "junegunn/vim-peekaboo" })

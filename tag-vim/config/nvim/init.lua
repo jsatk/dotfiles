@@ -443,19 +443,25 @@ dap.configurations.scala = {
     type = "scala",
     request = "launch",
     name = "Run",
-    metalsRunType = "run",
+    metals = {
+      runType = "run"
+    }
   },
   {
     type = "scala",
     request = "launch",
     name = "Test File",
-    metalsRunType = "testFile",
+    metals = {
+      runType = "testFile"
+    }
   },
   {
     type = "scala",
     request = "launch",
     name = "Test Target",
-    metalsRunType = "testTarget",
+    metals = {
+      runType = "testTarget"
+    }
   },
 }
 
@@ -673,6 +679,7 @@ map("n", "<leader>ff", [[<cmd>lua require('telescope.builtin').find_files()<cr>]
 map("n", "<leader>fg", [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
 map("n", "<leader>fb", [[<cmd>lua require('telescope.builtin').buffers()<cr>]])
 map("n", "<leader>fh", [[<cmd>lua require('telescope.builtin').help_tags()<cr>]])
+map("n", "<leader>gb", [[<cmd>lua require('telescope.builtin').git_branches()<cr>]])
 
 -- }}}
 -- Treesitter {{{

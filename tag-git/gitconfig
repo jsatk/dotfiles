@@ -12,12 +12,16 @@
 	# Great for when you forget to add something.
 	append = commit --amend --no-edit
 
-	# list branch dates
+	# List all branches.
+	branches = branch -a
+
+	# List branch dates
 	branchdate = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
 
 	# Reset previous commit, but keep all the associated changes. Useful for
 	# avoiding nasty git merge commits.
 	damnit = reset --soft HEAD^
+	dammit = reset --soft HEAD^
 
 	# Delete all branches that have already been merged into the current
 	# branch.
@@ -84,6 +88,12 @@
 		sed '/Setting version/d'; \
 	}; f"
 
+	# List all remotes.
+	remotes = remote -v
+
+	# Prints the top level dir of the git repo.
+	root = rev-parse --show-toplevel
+
 	# Show all changes that are currently staged for commit.
 	staged = diff --cached
 
@@ -91,10 +101,25 @@
 	# Nice for Monday morning stand-up/sprint planning.
 	summary = log --abbrev-commit --pretty=oneline --author='Jesse Atkinson' --since=last.mon --reverse
 
+	# List all tags.
+	tags = tag -l
+
 	# Undo a `git push`
 	undopush = push --force origin HEAD^:master
 
-	# Create & push branches all in one go.
+	# - Cuts a new branch.
+	# - Sets the default destination of `pull` to whatever branch we're cutting from
+	#   (typically `master`).
+	# - Sets the default destination of `push` to the branch we're creating.
+	#
+	# Since we have `pull.rebase = true` this means that every `pull` will rebase
+	# this branche's commits on top of the branch we cut from.  Meaning that after
+	# we do a `git pull` in order to push we have to do a force push which is
+	# dangerous when collaborating.  In order to avoid awful situations use `git
+	# push --force-with-lease` which I have aliased to `git please`.  (The
+	# --force-with-lease flag prevents you from force pushing over the top of a
+	# colleagues commits if they commited on top of you and you haven't pulled
+	# those commits.)
 	work = !sh -c 'git fetch && git checkout @{upstream} -tb \"$@\"' _
 
 # }}}
@@ -262,5 +287,5 @@
 	browser = safari
 
 # }}}
-# vim: textwidth=80:noexpandtab:shiftwidth=8
+# vim: textwidth=80:noexpandtab:shiftwidth=2
 # vim: foldmethod=marker:foldmarker={{{,}}}:syntax=gitconfig
