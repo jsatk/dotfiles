@@ -278,8 +278,6 @@ map("n", "S", "i<cr><esc><right>")
 map("n", "<leader><leader>", "<c-^>")
 -- redraw the buffer
 map("n", "<leader>r", ":syntax sync fromstart<cr>:redraw!<cr>")
--- Don't jump-to-next when I use * to search for what's under cursor.
-map("n", "*", "*<c-o>")
 -- <C-l> redraws the screen and removes any search highlighting.
 map("n", "<c-l>", ":nohlsearch<cr><c-l>")
 
