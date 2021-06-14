@@ -379,7 +379,6 @@ opt("o", "gdefault", true)
 -- most sense to throw them in the `25 various` junk-drawer.
 opt("o", "ttyfast", true)
 opt("o", "startofline", false)
-opt("o", "t_Co", "256")
 
 -- Make sure Vim returns to the same line when you reopen a file.
 cmd([[augroup line_return]])
