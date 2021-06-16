@@ -230,7 +230,6 @@ cask "steam"
 cask "twitch"
 cask "vlc"
 cask "yubico-yubikey-manager"
-cask "zoom"
 
 # }}}
 # macOS App Store ---------------------------------------------------------- {{{

@@ -1,11 +1,5 @@
 .DEFAULT_GOAL := all
 
-# TODO: Install/manage pip plugins for both python2 & python3
-#
-# notmuch
-# pynvim
-# urlscan
-
 # Configuration Variables -------------------------------------------------- {{{
 
 # Gloabl Binaries
