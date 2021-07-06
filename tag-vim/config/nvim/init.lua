@@ -539,6 +539,9 @@ map("n", "<leader>rn", [[<cmd>lua require"lspsaga.rename".rename()<CR>]])
 map("n", "<leader>d", [[<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>]])
 -- Show only that line"s diagnostics.
 map("n", "<leader>ln", [[<cmd>lua vim.lsp.diagnostic.get_line_diagnostics()<CR>]])
+-- Trigger code lens.
+-- See: https://github.com/scalameta/nvim-metals/discussions/160
+map("n", "<leader>cl", [[<cmd>lua vim.lsp.codelens.run()<CR>]])
 
 -- Need for symbol highlights to work correctly
 cmd([[hi! link LspReferenceText CursorColumn]])
@@ -566,12 +569,16 @@ cmd([[autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
 cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach(metals_config)]])
 cmd([[augroup END]])
 
+-- Make the CodeLens color not the same color as the regular code.
+cmd([[autocmd ColorScheme * highlight link LspCodeLens Conceal]])
+
 metals_config = require"metals".bare_config
 
 -- Example of settings
 metals_config.settings = {
   showImplicitArguments = true,
-  excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" }
+  excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+  superMethodLensesEnabled = true
 }
 
 -- Example of how to ovewrite a handler
