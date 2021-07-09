@@ -32,20 +32,6 @@
 
 -- Setup {{{
 
--- Shamelessly stolen from Chris Kipp
--- https://github.com/ckipp01/dots/blob/629debe5c2b319765052e1797b197288d4d6ba63/nvim/.config/nvim/init.lua#L1-L19
-local cmd = vim.cmd
-local fn = vim.fn
-local g = vim.g
-
-local function opt(scope, key, value)
-  local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
-  scopes[scope][key] = value
-  if scope ~= "o" then
-    scopes["o"][key] = value
-  end
-end
-
 local function map(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true }
   if opts then
@@ -54,7 +40,7 @@ local function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-opt("o", "shell", "fish")
+vim.opt_global.shell = "fish"
 
 -- }}}
 -- Plugins {{{
@@ -77,8 +63,8 @@ vim.o.cpo = vim.o.cpo .. "J"
 -- }}}
 -- 2  moving around, searching and patterns ------------------------ {{{
 
-opt("o", "ignorecase", true) -- Ignore the case, unless...
-opt("o", "smartcase", true)  -- ...there's caps in it.
+vim.opt_global.ignorecase = true -- Ignore the case, unless...
+vim.opt_global.smartcase = true  -- ...there's caps in it.
 
 -- }}}
 -- 3  tags --------------------------------------------------------- {{{
@@ -86,40 +72,40 @@ opt("o", "smartcase", true)  -- ...there's caps in it.
 -- }}}
 -- 4  displaying text ---------------------------------------------- {{{
 
-opt("o", "scrolloff", 3)
-opt("o", "linebreak", true)
-opt("o", "breakindent", true)
-opt("o", "showbreak", "↪")
-opt("o", "lazyredraw", true)
-opt("o", "list", true)
+vim.opt_global.scrolloff = 3
+vim.opt_global.linebreak = true
+vim.opt_global.breakindent = true
+vim.opt_global.showbreak = "↪"
+vim.opt_global.lazyredraw = true
+vim.opt_global.list = true
 
 -- }}}
 -- 5  syntax, highlighting and spelling ---------------------------- {{{
 
-opt("o", "background", "dark")
+vim.opt_global.background = "dark"
 
 -- Needed to esnure float background doesn't get odd highlighting
 -- https://github.com/joshdick/onedark.vim#onedarkset_highlight
 -- https://github.com/scalameta/coc-metals/wiki/Commonly-Asked-Questions
-cmd([[augroup colorset]])
-cmd([[autocmd!]])
-cmd([[autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" } })]])
-cmd([[augroup END]])
+vim.cmd([[augroup colorset]])
+vim.cmd([[autocmd!]])
+vim.cmd([[autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" } })]])
+vim.cmd([[augroup END]])
 
 -- For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
 -- Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
 -- < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-if fn.has("termguicolors") == 1 then
-  opt("o", "termguicolors", true)
+if vim.fn.has("termguicolors") == 1 then
+  vim.opt_global.termguicolors = true
 end
 
-g["onedark_terminal_italics"] = 1
-cmd("colorscheme onedark")
+vim.g["onedark_terminal_italics"] = 1
+vim.cmd("colorscheme onedark")
 
-opt("o", "synmaxcol", 800)
-opt("o", "hlsearch", true)
-opt("o", "cursorline", true)
-opt("o", "guifont", "OperatorMonoForPowerline-Book:h18")
+vim.opt_global.synmaxcol = 800
+vim.opt_global.hlsearch = true
+vim.opt_global.cursorline = true
+vim.opt_global.guifont = "OperatorMonoForPowerline-Book:h18"
 
 -- Stolen from Steve Losh
 --
@@ -139,20 +125,20 @@ opt("o", "guifont", "OperatorMonoForPowerline-Book:h18")
 --
 -- Also for some reason lua doesn't set the spellfile correctly when I
 -- do it the "lua" way so `cmd` it is.
-cmd("set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add")
+vim.cmd("set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add")
 map("n", "zG", "2zg")
 
-cmd([[hi! Comment gui=italic]])
+vim.cmd([[hi! Comment gui=italic]])
 
 -- Highlight VCS conflict markers
-fn.matchadd("ErrorMsg", "^\\(<\\|=\\|>\\)\\{7\\}\\([^=].\\+\\)\\?$")
+vim.fn.matchadd("ErrorMsg", "^\\(<\\|=\\|>\\)\\{7\\}\\([^=].\\+\\)\\?$")
 
 -- }}}
 -- 6  multiple windows --------------------------------------------- {{{
 
-opt("o", "hidden", true)
-opt("o", "splitbelow", true)
-opt("o", "splitright", true)
+vim.opt_global.hidden = true
+vim.opt_global.splitbelow = true
+vim.opt_global.splitright = true
 
 -- }}}
 -- 7  multiple tab pages ------------------------------------------- {{{
@@ -160,13 +146,13 @@ opt("o", "splitright", true)
 -- }}}
 -- 8  terminal ----------------------------------------------------- {{{
 
-opt("o", "title", true)
+vim.opt_global.title = true
 
 -- }}}
 -- 9  using the mouse ---------------------------------------------- {{{
 
-if fn.has("mouse") == 1 then
-  opt("o", "mouse", "a")
+if vim.fn.has("mouse") == 1 then
+  vim.opt_global.mouse = "a"
 end
 
 -- }}}
@@ -175,8 +161,8 @@ end
 -- }}}
 -- 11 messages and info -------------------------------------------- {{{
 
-opt("o", "showcmd", true)
-opt("o", "showmode", true)
+vim.opt_global.showcmd = true
+vim.opt_global.showmode = true
 
 -- Avoid showing message extra message when using completion
 -- Ensure autocmd works for Filetype
@@ -188,37 +174,37 @@ vim.o.shortmess = string.gsub(vim.o.shortmess, "F", "") .. "c"
 -- }}}
 -- 13 editing text ------------------------------------------------- {{{
 
-opt("o", "textwidth", 0)
-opt("o", "wrapmargin", 0)
-opt("o", "dictionary", "/usr/share/dict/words")
-opt("o", "showmatch", true)
-opt("o", "nrformats", "octal,hex,alpha") -- Increment alpha strings with Vim.
+vim.opt_global.textwidth = 0
+vim.opt_global.wrapmargin = 0
+vim.opt_global.dictionary = "/usr/share/dict/words"
+vim.opt_global.showmatch = true
+vim.opt_global.nrformats = "octal,hex,alpha" -- Increment alpha strings with Vim.
 
 -- As of this writing (2021-02-13) for reasons unknown vim.o.undofile
 -- isn't a thing so we can't set it
-cmd("set undofile")
+vim.cmd("set undofile")
 -- The extra slash on the end saves files under the name of their full path
 -- with the / character replaced with a %.
-opt("o", "undodir", fn.expand("~/.config/nvim/tmp/undo//"))
+vim.opt_global.undodir = vim.fn.expand("~/.config/nvim/tmp/undo//")
 -- Make the undo directory automatically if it doesn't already exist.
-if fn.isdirectory(vim.o.undodir) == 0 then fn.mkdir(vim.o.undodir, "p") end
+if vim.fn.isdirectory(vim.o.undodir) == 0 then fn.mkdir(vim.o.undodir, "p") end
 
 -- Set completeopt to have a better completion experience
-opt("o", "completeopt", "menuone,noinsert,noselect")
+vim.opt_global.completeopt = "menuone,noinsert,noselect"
 
 -- }}}
 -- 14 tabs and indenting ------------------------------------------- {{{
 
-opt("o", "shiftwidth", 2)
-opt("o", "softtabstop", 2)
-opt("o", "shiftround", true)
-opt("o", "expandtab", true)
+vim.opt_global.shiftwidth = 2
+vim.opt_global.softtabstop = 2
+vim.opt_global.shiftround = true
+vim.opt_global.expandtab = true
 
 -- }}}
 -- 15 folding ------------------------------------------------------ {{{
 
-opt("o", "foldenable", true)
-opt("o", "foldlevelstart", 0)
+vim.opt_global.foldenable = true
+vim.opt_global.foldlevelstart = 0
 
 map("n", "<Space>", "za")
 map("v", "<Space>", "za")
@@ -249,8 +235,8 @@ false
 )
 
 -- TODO: Convert to lua when we can.
-cmd("set foldmethod=expr")
-cmd("set foldexpr=nvim_treesitter#foldexpr()")
+vim.cmd("set foldmethod=expr")
+vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
 
 -- }}}
 -- 16 diff mode ---------------------------------------------------- {{{
@@ -264,10 +250,10 @@ cmd("set foldexpr=nvim_treesitter#foldexpr()")
 -- live  under `15 folding` but my `S` mapping for splitting lines lives
 -- here.
 
-opt("o", "timeoutlen", 500)
+vim.opt_global.timeoutlen = 500
 
-g["mapleader"] = ","
-g["maplocalleader"] = ","
+vim.g["mapleader"] = ","
+vim.g["maplocalleader"] = ","
 -- Do not show stupid q: window
 map("", "q:", ":q")
 -- I don't know how to use ex mode and it scares me.
@@ -289,21 +275,21 @@ map("n", "N", "Nzzzv")
 map("n", "<leader><space>", [[mz:%s/\s\+$//<cr>:let @/=''<cr>`z]])
 
 -- Only show when not in insert mode.
-cmd([[augroup trailing]])
-cmd([[autocmd!]])
-cmd([[autocmd InsertEnter * :set listchars-=trail:⌴]])
-cmd([[autocmd InsertLeave * :set listchars+=trail:⌴]])
-cmd([[augroup END]])
+vim.cmd([[augroup trailing]])
+vim.cmd([[autocmd!]])
+vim.cmd([[autocmd InsertEnter * :set listchars-=trail:⌴]])
+vim.cmd([[autocmd InsertLeave * :set listchars+=trail:⌴]])
+vim.cmd([[augroup END]])
 
 -- My garbage brain can't ever remember digraph codes.
 map("i", "<c-k><c-k>", [[<esc>:help digraph-table<cr>]])
 
 -- Only show cursorline in the current window and in normal mode.
-cmd([[augroup cline]])
-cmd([[autocmd!]])
-cmd([[autocmd WinLeave,InsertEnter * set nocursorline]])
-cmd([[autocmd WinEnter,InsertLeave * set cursorline]])
-cmd([[augroup END]])
+vim.cmd([[augroup cline]])
+vim.cmd([[autocmd!]])
+vim.cmd([[autocmd WinLeave,InsertEnter * set nocursorline]])
+vim.cmd([[autocmd WinEnter,InsertLeave * set cursorline]])
+vim.cmd([[augroup END]])
 
 -- Keep the cursor in place while joining lines
 map("n", "J", "mzJ`z")
@@ -327,29 +313,29 @@ map("n", "<leader>ev", ":vsplit ~/.config/nvim/init.lua<cr>")
 -- }}}
 -- 18 reading and writing files ------------------------------------ {{{
 
-opt("o", "backup", false)
-opt("o", "writebackup", false)
-opt("o", "autowrite", true)
-opt("o", "backupdir", fn.expand("~/.config/nvim/tmp/backup//"))
+vim.opt_global.backup = false
+vim.opt_global.writebackup = false
+vim.opt_global.autowrite = true
+vim.opt_global.backupdir = vim.fn.expand("~/.config/nvim/tmp/backup//")
 
 -- Make the backup directory automatically if it doesn't already exist.
-if fn.isdirectory(vim.o.backupdir) == 0 then fn.mkdir(vim.o.backupdir, "p") end
+if vim.fn.isdirectory(vim.o.backupdir) == 0 then fn.mkdir(vim.o.backupdir, "p") end
 
 -- }}}
 -- 19 the swap file ------------------------------------------------ {{{
 
-opt("o", "directory", fn.expand("~/.config/nvim/tmp/swap//"))
+vim.opt_global.directory = vim.fn.expand("~/.config/nvim/tmp/swap//")
 -- As of this writing (2021-02-13) for reasons unknown vim.o.noswapfile
 -- isn't a thing in Lua + Neovim so we can't set it.
-cmd("set noswapfile")
+vim.cmd("set noswapfile")
 
 -- Make the swap directory automatically if it doesn't already exist.
-if fn.isdirectory(vim.o.directory) == 0 then fn.mkdir(vim.o.directory, "p") end
+if vim.fn.isdirectory(vim.o.directory) == 0 then fn.mkdir(vim.o.directory, "p") end
 
 -- }}}
 -- 20 command line editing ----------------------------------------- {{{
 
-opt("o", "wildmode", "list:longest")
+vim.opt_global.wildmode = "list:longest"
 
 -- }}}
 -- 21 executing external commands ---------------------------------- {{{
@@ -368,28 +354,28 @@ opt("o", "wildmode", "list:longest")
 --
 -- Emoji of different byte lengths render funky in Vim without this
 -- turned off.
-opt("o", "emo", false)
+vim.opt_global.emo = false
 
 -- }}}
 -- 25 various ------------------------------------------------------ {{{
 
-opt("o", "gdefault", true)
+vim.opt_global.gdefault = true
 
 -- The following settings aren't under `:options` at all, so it made the
 -- most sense to throw them in the `25 various` junk-drawer.
-opt("o", "ttyfast", true)
-opt("o", "startofline", false)
+vim.opt_global.ttyfast = true
+vim.opt_global.startofline = false
 
 -- Make sure Vim returns to the same line when you reopen a file.
-cmd([[augroup line_return]])
-cmd([[autocmd!]])
-cmd([[autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute 'normal! g`"zvzz' | endif]])
-cmd([[augroup END]])
+vim.cmd([[augroup line_return]])
+vim.cmd([[autocmd!]])
+vim.cmd([[autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute 'normal! g`"zvzz' | endif]])
+vim.cmd([[augroup END]])
 
 -- Always show the sign column so errors or other LSP features that use
 -- the gutter don't continually pop in and out pushing everything over
 -- by one column.
-opt("w", "signcolumn", "yes")
+vim.opt.signcolumn = "yes"
 
 -- }}}
 -- 99 plugin configurations ---------------------------------------- {{{
@@ -431,9 +417,9 @@ map("n", "<leader>ds", [[<cmd>lua require"dap.ui.variables".scopes()<CR>]])
 
 local dap = require("dap")
 
-fn.sign_define('DapBreakpoint', { text="🛑", texthl="", linehl="", numhl="" })
-fn.sign_define('DapStopped', { text="✋", texthl="", linehl="", numhl="" })
-fn.sign_define('DapLogPoint', { text="📝", texthl="", linehl="", numhl="" })
+vim.fn.sign_define('DapBreakpoint', { text="🛑", texthl="", linehl="", numhl="" })
+vim.fn.sign_define('DapStopped', { text="✋", texthl="", linehl="", numhl="" })
+vim.fn.sign_define('DapLogPoint', { text="📝", texthl="", linehl="", numhl="" })
 
 dap.configurations.scala = {
   {
@@ -467,7 +453,7 @@ dap.configurations.scala = {
 
 -- Why am I doing this?  See link below.
 -- See: https://github.com/tpope/vim-dispatch/issues/222#issuecomment-493273080
-opt("o", "shellpipe", "2>&1|tee")
+vim.opt_global.shellpipe = "2>&1|tee"
 
 map("n", "<F9>", ":Dispatch<CR>")
 
@@ -476,12 +462,12 @@ map("n", "<F9>", ":Dispatch<CR>")
 
 -- Start interactive EasyAlign in visual mode (e.g. vipga).
 -- Note: Using |:*noremap| will not work with <Plug> mappings.
-cmd([[xmap ga <Plug>(EasyAlign)]])
+vim.cmd([[xmap ga <Plug>(EasyAlign)]])
 
 -- Start interactive EasyAlign for a motion/text object (e.g. gaip)
 -- Intentionally not using `nnoremap`.
 -- Note: Using |:*noremap| will not work with <Plug> mappings.
-cmd([[nmap ga <Plug>(EasyAlign)]])
+vim.cmd([[nmap ga <Plug>(EasyAlign)]])
 
 -- }}}
 -- Galaxyline {{{
@@ -544,12 +530,12 @@ map("n", "<leader>ln", [[<cmd>lua vim.lsp.diagnostic.get_line_diagnostics()<CR>]
 map("n", "<leader>cl", [[<cmd>lua vim.lsp.codelens.run()<CR>]])
 
 -- Need for symbol highlights to work correctly
-cmd([[hi! link LspReferenceText CursorColumn]])
-cmd([[hi! link LspReferenceRead CursorColumn]])
-cmd([[hi! link LspReferenceWrite CursorColumn]])
+vim.cmd([[hi! link LspReferenceText CursorColumn]])
+vim.cmd([[hi! link LspReferenceRead CursorColumn]])
+vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
 
-cmd([[hi! link LspSagaFinderSelection CursorColumn]])
-cmd([[hi! link LspSagaDocTruncateLine LspSagaHoverBorder]])
+vim.cmd([[hi! link LspSagaFinderSelection CursorColumn]])
+vim.cmd([[hi! link LspSagaDocTruncateLine LspSagaHoverBorder]])
 
 -- }}}
 -- Metals {{{
@@ -563,14 +549,14 @@ map("n", "<leader>ws", [[<cmd>lua require'metals'.worksheet_hover()<CR>]])
 -- Show all diagnostics
 map("n", "<leader>a", [[<cmd>lua require'metals'.open_all_diagnostics()<CR>]])
 
-cmd([[augroup lsp]])
-cmd([[autocmd!]])
-cmd([[autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
-cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach(metals_config)]])
-cmd([[augroup END]])
+vim.cmd([[augroup lsp]])
+vim.cmd([[autocmd!]])
+vim.cmd([[autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
+vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach(metals_config)]])
+vim.cmd([[augroup END]])
 
 -- Make the CodeLens color not the same color as the regular code.
-cmd([[autocmd ColorScheme * highlight link LspCodeLens Conceal]])
+vim.cmd([[autocmd ColorScheme * highlight link LspCodeLens Conceal]])
 
 metals_config = require"metals".bare_config
 
@@ -608,12 +594,12 @@ end
 
 -- For some reason the lua plugin that Polyglot includes does some
 -- asinine indenting.
-g["polyglot_disabled"] = { "lua" }
+vim.g["polyglot_disabled"] = { "lua" }
 
 -- }}}
 -- Projectionist {{{
 
-g.projectionist_heuristics = {
+vim.g.projectionist_heuristics = {
   ["*.markdown|*.md"] = {
     ["*.md"] = { dispatch = "open -a 'Marked 2.app' {file}" },
     ["*.markdown"] = { dispatch = "open -a 'Marked 2.app' {file}" }
@@ -674,7 +660,7 @@ g.projectionist_heuristics = {
 -- }}}
 -- Rhubarb {{{
 
-g["github_enterprise_urls"] = { "https://code.corp.creditkarma.com" }
+vim.g["github_enterprise_urls"] = { "https://code.corp.creditkarma.com" }
 
 -- }}}
 -- Telescope {{{
@@ -703,9 +689,9 @@ require("nvim-treesitter.configs").setup {
 -- }}}
 -- Vista {{{
 
-g["vista_icon_indent"] = { "╰─▸ ", "├─▸ " }
-g["vista_default_executive"] = "nvim_lsp"
-g["vista#renderer#enable_icon"] = 1
+vim.g["vista_icon_indent"] = { "╰─▸ ", "├─▸ " }
+vim.g["vista_default_executive"] = "nvim_lsp"
+vim.g["vista#renderer#enable_icon"] = 1
 
 map("n", "<leader>t", ":<C-u>Vista!!<CR>")
 
