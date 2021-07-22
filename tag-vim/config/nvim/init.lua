@@ -480,24 +480,20 @@ require("settings.galaxyline").setup()
 map("n", "<F5>", ":GundoToggle<CR>")
 
 -- }}}
--- LspSaga {{{
+-- Lsp {{{
 
-require("lspsaga").init_lsp_saga({
-  server_filetype_map = { metals = { "sbt", "scala" } },
-  code_action_prompt = { virtual_text = false },
-})
-
--- This section contains both vanilla Neovim LSP settings as well as
--- enhancements to it provided by the LspSaga plugin.  I know it's not
--- "pure" in an organizational sense, but this felt correct and logical;
--- especially since LspSaga & Neovim's LSP are so tightly coupled.
+-- This section contains Neovim LSP settings.  I know it's not "pure" in
+-- an organizational sense, but this felt correct and logical;
+-- especially since Neovim's LSP is not listed in :options and, as
+-- stated in my giant preamble, I've chosen to organize the settings in
+-- this file to mirror the order they are in in :options.
 
 -- Default in vim for K is to open the man/help of what your cursor is
 -- on.  This keeps that muscle memory alive but instead leans on the LSP
 -- to provide the info.
 -- TODO: Rewrite this so if LSP is active it uses hover otherwise does
 --       the default action.
-map("n", "K", [[<cmd>lua require"lspsaga.hover".render_hover_doc()<CR>]])
+map("n", "K", [[<cmd>lua vim.lsp.buf.hover()<CR>]])
 
 -- Remap keys for gotos
 map("n", "gd",  [[<cmd>lua vim.lsp.buf.definition()<CR>]], { nowait = true })
@@ -507,19 +503,18 @@ map("n", "gr",  [[<cmd>lua vim.lsp.buf.references()<CR>]])
 map("n", "gds", [[<cmd>lua vim.lsp.buf.document_symbol()<CR>]])
 map("n", "gws", [[<cmd>lua vim.lsp.buf.workspace_symbol()<CR>]])
 
--- Remap for do codeAction of current line or range of lines.
-map("n", "<leader>ca", [[<cmd>lua require"lspsaga.codeaction".code_action()<CR>]])
-map("v", "<leader>ca", [[<cmd>lua require"lspsaga.codeaction".range_code_action()<CR>]])
+-- Remap for do codeAction of current line.
+map("n", "<leader>ca", [[<cmd>lua vim.lsp.buf.code_action()<CR>]])
 
 -- Remap for auto-formatting code.
 map("n", "<leader>f", [[<cmd>lua vim.lsp.buf.formatting()<CR>]])
 
 -- Use `[g` and `]g` for navigate diagnostics.
-map("n", "]g", [[<cmd>lua require"lspsaga.diagnostic".lsp_jump_diagnostic_next()<CR>]])
-map("n", "[g", [[<cmd>lua require"lspsaga.diagnostic".lsp_jump_diagnostic_prev()<CR>]])
+map("n", "]g", [[<cmd>lua vim.lsp.diagnostic.goto_next()<CR>]])
+map("n", "[g", [[<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>]])
 
 -- Remap for rename current word
-map("n", "<leader>rn", [[<cmd>lua require"lspsaga.rename".rename()<CR>]])
+map("n", "<leader>rn", [[<cmd>lua vim.lsp.buf.rename()<CR>]])
 
 -- Show only buffer diagnostics
 map("n", "<leader>d", [[<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>]])
@@ -533,9 +528,7 @@ map("n", "<leader>cl", [[<cmd>lua vim.lsp.codelens.run()<CR>]])
 vim.cmd([[hi! link LspReferenceText CursorColumn]])
 vim.cmd([[hi! link LspReferenceRead CursorColumn]])
 vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
-
-vim.cmd([[hi! link LspSagaFinderSelection CursorColumn]])
-vim.cmd([[hi! link LspSagaDocTruncateLine LspSagaHoverBorder]])
+vim.cmd([[hi! link LspCodeLens CursorColumn]])
 
 -- }}}
 -- Metals {{{
@@ -563,6 +556,7 @@ metals_config = require"metals".bare_config
 -- Example of settings
 metals_config.settings = {
   showImplicitArguments = true,
+  showInferredType = true,
   excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
   superMethodLensesEnabled = true
 }
