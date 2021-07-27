@@ -180,7 +180,6 @@
 	autocrlf = input
 	ignorecase = false
 	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
-	editor = $EDITOR
 	pager = diff-so-fancy | less --tabs=4 -RFX
 	excludesfile = ~/.gitignore
 
@@ -285,6 +284,12 @@
 
 [web]
 	browser = safari
+
+# }}}
+# diff-so-fancy ----------------------------------------------------------- {{{
+
+[diff-so-fancy]
+	first-run = false
 
 # }}}
 # vim: textwidth=80:noexpandtab:shiftwidth=2

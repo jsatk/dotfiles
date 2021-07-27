@@ -692,4 +692,5 @@ map("n", "<leader>t", ":<C-u>Vista!!<CR>")
 -- }}}
 
 -- }}}
+
 -- vim: set foldmethod=marker foldlevel=0 textwidth=72:
