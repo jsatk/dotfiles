@@ -1,7 +1,7 @@
-" Jesse Atkinson | jesse@jsatk.us | @jsatk | https://jsatk.us
-
 " 0 preamble ------------------------------------------------------- {{{
 "
+" Jesse Atkinson | jesse@jsatk.us | @jsatk | https://jsatk.us
+
 " The following was stolen from @emilyst.  I thought this was clever and
 " educational so I wanted to do the same in my own .vimrc.
 "
@@ -75,6 +75,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-peekaboo'
 " Make your Vim/Neovim as smart as VSCode.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug '/Users/jesse.atkinson/Developer/coc-metals', {'do': 'yarn install --frozen-lockfile'}
 " Highlight words to avoid in tech writing.
 Plug 'nicholaides/words-to-avoid.vim'
 " Cute font-icons.
@@ -98,6 +99,8 @@ Plug 'tpope/vim-dadbod'
 Plug 'tpope/vim-dispatch'
 " Vim sugar for the UNIX shell commands that need it the most.
 Plug 'tpope/vim-eunuch'
+" Minimalist statusline.
+Plug 'tpope/vim-flagship'
 " Incredible git support.
 Plug 'tpope/vim-fugitive'
 " For working with JSON.
@@ -126,10 +129,6 @@ Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-unimpaired'
 " Enhances netrw, which is built into Vim.
 Plug 'tpope/vim-vinegar'
-" Lean & mean status/tabline for Vim that's light as air.
-Plug 'vim-airline/vim-airline'
-" This is the official theme repository for vim-airline
-Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
@@ -169,10 +168,10 @@ set background=dark
 " Needed to esnure float background doesn't get odd highlighting
 " https://github.com/joshdick/onedark.vim#onedarkset_highlight
 " https://github.com/scalameta/coc-metals/wiki/Commonly-Asked-Questions
-augroup colorset
-  autocmd!
-  autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" } })
-augroup END
+" augroup colorset
+"   autocmd!
+"   autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" } })
+" augroup END
 
 " For onedark colorscheme.
 " Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -190,7 +189,7 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme onedark
+colorscheme xcodedark
 
 set synmaxcol=800
 set hlsearch
@@ -354,6 +353,9 @@ nnoremap <leader>r :syntax sync fromstart<cr>:redraw!<cr>
 nnoremap * *<c-o>
 " <C-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <c-l> :nohlsearch<cr><c-l>
+" [Y]ank until end of line.  Makes Y behave like D and other
+" do-until-end-of-line operations.
+nnoremap n Y y$
 
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
@@ -478,12 +480,6 @@ augroup END
 " how I have my filetype specific settings under ~/.vim/after/ftplugin/,
 " however – in my opinion – it's simply too fiddly to be worth it.
 
-" Airline {{{
-
-let g:airline_powerline_fonts = 1
-let g:airline_theme='onedark'
-
-" }}}
 " Coc {{{
 
 " Most of the following was taken from:
@@ -582,6 +578,18 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
+" Flagship {{{
+
+" Stolen from tpope.
+" Shows the buffer number as the first entry in the status line.
+
+if empty(&g:statusline)
+  setglobal statusline=[%n]\ %<%.99f\ %y%h%w%m%r%=%-14.(%l,%c%V%)\ %P
+endif
+
+autocmd User Flags call Hoist("buffer", "coc#status")
+
+" }}}
 " fzf {{{
 
 if has('nvim') || has('gui_running')
@@ -605,9 +613,11 @@ endif
 " This is more performant on ridiculously large repos which I unfortunately have
 " to work with from time to time.  So essentially `:Files` is a more performant
 " `:Gfiles` if we're in a git repo.  Otherwise it falls back to `fd`.
-nnoremap <C-t> :<C-u>Files<CR>
+nnoremap <leader>ff :<C-u>Files<CR>
 " Search in Vim buffers.
-nnoremap <C-t><C-f> :<C-u>Buffers<CR>
+nnoremap <leader>fb :<C-u>Buffers<CR>
+" Interactive Grep
+nnoremap <leader>fg :<C-u>Rg<CR>
 
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)

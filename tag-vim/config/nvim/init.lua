@@ -266,6 +266,9 @@ map("n", "<leader><leader>", "<c-^>")
 map("n", "<leader>r", ":syntax sync fromstart<cr>:redraw!<cr>")
 -- <C-l> redraws the screen and removes any search highlighting.
 map("n", "<c-l>", ":nohlsearch<cr><c-l>")
+-- [Y]ank until end of line.  Makes Y behave like D and other
+-- do-until-end-of-line operations.
+map("n", "Y", "y$")
 
 -- Keep search matches in the middle of the window.
 map("n", "n", "nzzzv")
@@ -542,16 +545,7 @@ map("n", "<leader>ws", [[<cmd>lua require'metals'.worksheet_hover()<CR>]])
 -- Show all diagnostics
 map("n", "<leader>a", [[<cmd>lua require'metals'.open_all_diagnostics()<CR>]])
 
-vim.cmd([[augroup lsp]])
-vim.cmd([[autocmd!]])
-vim.cmd([[autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
-vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach(metals_config)]])
-vim.cmd([[augroup END]])
-
--- Make the CodeLens color not the same color as the regular code.
-vim.cmd([[autocmd ColorScheme * highlight link LspCodeLens Conceal]])
-
-metals_config = require"metals".bare_config
+metals_config = require("metals").bare_config
 
 -- Example of settings
 metals_config.settings = {
@@ -582,6 +576,15 @@ metals_config.init_options.statusBarProvider = "on"
 metals_config.on_attach = function(client, bufnr)
   require("metals").setup_dap()
 end
+
+vim.cmd([[augroup lsp]])
+vim.cmd([[autocmd!]])
+vim.cmd([[autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
+vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach(metals_config)]])
+vim.cmd([[augroup END]])
+
+-- Make the CodeLens color not the same color as the regular code.
+vim.cmd([[autocmd ColorScheme * highlight link LspCodeLens Conceal]])
 
 -- }}}
 -- Polyglot {{{

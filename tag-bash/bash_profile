@@ -38,8 +38,7 @@ export LDFLAGS="-L(brew --prefix zlib)/lib -L(brew --prefix openssl)/lib"
 
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
-export EDITOR="vim"
-export BROWSER="open /Applications/Firefox.app"
+export EDITOR="nvim"
 export DEVELOPER="$HOME/Developer"
 
 export BREW_PREFIX=$(brew --prefix)
@@ -66,7 +65,7 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
 
 export PATH=$PATH:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 export PATH=$PATH:$HOME/go/bin
-export PATH=$PATH:$HOME/Library/scripts
+export PATH=$PATH:$HOME/.config/scripts
 export PATH=$PATH:/Library/TeX/texbin
 
 # }}}
@@ -137,8 +136,6 @@ alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"
 alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
 
-# So tmux can handle italics
-alias tmux="env TERM=screen-256color tmux -2"
 # }}}
 # Bash Prompt {{{
 
