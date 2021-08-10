@@ -49,3 +49,4 @@ Big thanks to these people for publishing their own dotfiles and allowing me to 
 * [https://github.com/nicknisi/dotfiles](https://github.com/nicknisi/dotfiles)
 * [https://bitbucket.org/sjl/dotfiles](https://bitbucket.org/sjl/dotfiles)
 * [https://github.com/gabebw/dotfiles](https://github.com/gabebw/dotfiles)
+* [https://github.com/ckipp01/dots](https://github.com/ckipp01/dots)
