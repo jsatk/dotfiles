@@ -6,7 +6,7 @@ gl.short_line_list = {'LuaTree', 'vista'}
 
 local colors = {
   bg = '#282c34', -- black
-  line_bg = '#353644',
+  line_bg = '#353644', -- dark grey
   fg = '#abb2bf', -- white
 
   dark_red = '#be5046',
@@ -125,7 +125,7 @@ M.setup = function()
       provider = function()
         return '  ' .. (vim.g['metals_status'] or '')
       end,
-      highlight = {colors.line_bg, colors.bg}
+      highlight = {colors.fg, colors.bg}
     }
   }
   gls.right[1] = {
