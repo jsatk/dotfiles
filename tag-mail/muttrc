@@ -15,7 +15,7 @@ bind editor ^T    complete
 # }}}
 # Color Theme {{{
 
-source ~/.mutt/themes/jsatk.muttrc
+source ~/.mutt/themes/webgefrickel.muttrc
 
 # }}}
 # Basic Options {{{

@@ -165,15 +165,6 @@ set list
 
 set background=dark
 
-" Needed to esnure float background doesn't get odd highlighting
-" https://github.com/joshdick/onedark.vim#onedarkset_highlight
-" https://github.com/scalameta/coc-metals/wiki/Commonly-Asked-Questions
-" augroup colorset
-"   autocmd!
-"   autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" } })
-" augroup END
-
-" For onedark colorscheme.
 " Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 " If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 " (see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
@@ -340,9 +331,13 @@ set timeoutlen=500
 let mapleader = ","
 let maplocalleader = "\\"
 " Do not show stupid q: window
-noremap q: :q
+nnoremap q: :q
+xnoremap q: :q
+onoremap q: :q
 " I don't know how to use ex mode and it scares me.
-noremap Q <Nop>
+nnoremap Q <Nop>
+xnoremap Q <Nop>
+onoremap Q <Nop>
 " Split line (sister to [J]oin lines)
 nnoremap S i<cr><esc><right>
 " switch to last file
@@ -587,7 +582,12 @@ if empty(&g:statusline)
   setglobal statusline=[%n]\ %<%.99f\ %y%h%w%m%r%=%-14.(%l,%c%V%)\ %P
 endif
 
-autocmd User Flags call Hoist("buffer", "coc#status")
+augroup flagship_settings
+  autocmd!
+
+  autocmd User Flags call Hoist("buffer", "coc#status")
+
+augroup END
 
 " }}}
 " fzf {{{
@@ -648,10 +648,6 @@ let g:javascript_plugin_jsdoc = 1
 " Projectionist {{{
 
 let g:projectionist_heuristics = {
-      \ "*.markdown|*.md": {
-      \   "*.md": { "dispatch": "open -a 'Marked 2.app' {file}" },
-      \   "*.markdown": { "dispatch": "open -a 'Marked 2.app' {file}" }
-      \ },
       \ "package.json": {
       \   "README.md": { "type": "doc" },
       \   "*": {
