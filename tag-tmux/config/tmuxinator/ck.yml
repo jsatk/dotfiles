@@ -56,12 +56,8 @@ windows:
       panes:
         - ewp # ewp == "Edit work .plan" which is a custom version of my Edit Plan script for work. See: tag-etc/config/fish/functions/ep.fish
   - "📝":
-      root: "~/Developer/recsys_recommendation-service"
-      panes:
-        - nvim
+      root: "~/Developer/"
   - "🔩":
-      root: "~/Developer/recsys_recommendation-service"
-      panes:
-        - sbt
+      root: "~/Developer/"
   - "🐠":
-      root: "~/Developer/recsys_recommendation-service"
+      root: "~/Developer/"

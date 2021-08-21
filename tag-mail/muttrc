@@ -23,7 +23,7 @@ source ~/.mutt/themes/webgefrickel.muttrc
 set   beep_new                            # bell on new mails
 set   delete                              # don't ask, just do
 set   header_cache_backend = tokyocabinet # Caching DB.  Tokyocabinet seems to work fine.  No idea if it's better than others.  Neomutt only.
-set   mail_check           = 0            # How often to check for new mail (time in seconds).
+set   mail_check           = 1            # How often to check for new mail (time in seconds).
 set   mbox_type            = Maildir      # mailbox type
 set   pipe_decode                         # strip headers and eval mimes when piping
 set   send_charset         = "us-ascii:utf-8:iso-8859-1"

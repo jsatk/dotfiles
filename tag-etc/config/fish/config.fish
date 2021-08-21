@@ -1,18 +1,14 @@
 # Environment Variables {{{
 
-# Tmuxinator & many other tools need these set.
 set --global --export BROWSER open /Applications/Safari.app
 set --export EDITOR nvim
 set --export DEVELOPER $HOME/Developer
-
-# Required for gpg... sometimes... gpg is fickle and frustrating.
-set --export GPG_TTY (tty)
-
-# For Bat.  See: https://github.com/sharkdp/bat
-set --export BAT_THEME "TwoDark"
+set --export GOPATH $HOME/go
+set --export GPG_TTY (tty) # Required for gpg... sometimes... gpg is fickle and frustrating.
+set --export BAT_THEME "TwoDark" # For Bat.  See: https://github.com/sharkdp/bat
 set --export JAVA_HOME (/usr/libexec/java_home -v 1.8)
-
 set --local BREW_PREFIX (brew --prefix)
+
 
 # fzf {{{
 
@@ -46,6 +42,8 @@ set PATH \
   # Puts Python 2's pip (which macOS still ships with as default) in $PATH.
   $HOME/Library/Python/2.7/bin \
   $HOME/Library/Application\ Support/Coursier/bin \
+  $HOME/.asdf/installs/rust/stable/bin \
+  $GOPATH/bin \
 
 # }}}
 # Files I need to source {{{

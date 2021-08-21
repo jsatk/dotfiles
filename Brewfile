@@ -6,6 +6,8 @@ tap "cjbassi/ytop"
 tap "coursier/formulas"
 # For gh.
 tap "github/gh"
+# For Hashicorp's official terraform lsp.
+tap "hashicorp/tap"
 # For Homebrew's own cask, etc.
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
@@ -81,6 +83,7 @@ brew "nginx"
 brew "postgresql"
 brew "ruby-build"
 brew "sbcl"
+brew "terraform-ls"
 brew "watchman"
 
 # }}}

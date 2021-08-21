@@ -483,13 +483,14 @@ require("settings.galaxyline").setup()
 map("n", "<F5>", ":GundoToggle<CR>")
 
 -- }}}
--- Lsp {{{
+-- Lsp + Lspconfig {{{
 
--- This section contains Neovim LSP settings.  I know it's not "pure" in
--- an organizational sense, but this felt correct and logical;
--- especially since Neovim's LSP is not listed in :options and, as
--- stated in my giant preamble, I've chosen to organize the settings in
--- this file to mirror the order they are in in :options.
+-- This section contains Neovim LSP settings as well as settings for the
+-- Lspconfig plugin.  I know it's not "pure" in an organizational sense,
+-- but this felt correct and logical; especially since Neovim's LSP is
+-- not listed in :options and – as stated in my giant preamble – I've
+-- chosen to organize the settings in this file to mirror the order they
+-- are in in :options.  So yeah, both are mixed in here. ¯\_(ツ)_/¯
 
 -- Default in vim for K is to open the man/help of what your cursor is
 -- on.  This keeps that muscle memory alive but instead leans on the LSP
@@ -532,6 +533,22 @@ vim.cmd([[hi! link LspReferenceText CursorColumn]])
 vim.cmd([[hi! link LspReferenceRead CursorColumn]])
 vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
 vim.cmd([[hi! link LspCodeLens CursorColumn]])
+
+-- List of LSPs to enable via nvim-lspconfig.
+-- To see full list of available lsps please see the list here:
+-- https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#gopls
+-- Also note that Scala/Metals is *not* configured via lspconfig but
+-- rather though ckipp's nvim-metals plugin.  See that plugin's README
+-- for more details on that.
+
+require'lspconfig'.bashls.setup{}
+require'lspconfig'.dockerls.setup{}
+require'lspconfig'.gopls.setup{}
+require'lspconfig'.graphql.setup{}
+require'lspconfig'.rust_analyzer.setup{}
+require'lspconfig'.terraformls.setup{}
+require'lspconfig'.tsserver.setup{}
+require'lspconfig'.vimls.setup{}
 
 -- }}}
 -- Metals {{{

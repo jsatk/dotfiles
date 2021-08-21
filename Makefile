@@ -6,10 +6,13 @@
 global_node_modules := \
 	bash-language-server \
 	diff-so-fancy \
-	neovim \
 	dockerfile-language-server-nodejs \
+	neovim \
+	graphql-language-service-cli \
 	snyk \
 	speed-test \
+	typescript-language-server \
+	vim-language-server \
 
 global_gems := \
 	neovim \
@@ -51,10 +54,12 @@ update: | install ## Update everything.
 	gem update $(global_gems)
 	yarn global upgrade
 	vim +PlugUpdate +quitall
+	# nvim +PackerSync +quitall # TODO: Get this working.
 
 .PHONY: install
 install: | brew asdf node_modules gems ## Install everything.  (Does not update anything.)
 	vim +PlugInstall +quitall
+	# nvim +PackerInstall +quitall # TODO: Get this working.
 
 .PHONY: clean
 clean: ## Remove all unnecessary files our package managers don't need.
@@ -62,6 +67,7 @@ clean: ## Remove all unnecessary files our package managers don't need.
 	brew cleanup
 	gem clean
 	vim +PlugClean +quitall
+	# nvim +PackerClean +quitall # TODO: Get this working.
 
 # }}}
 # Homebrew ----------------------------------------------------------------- {{{
