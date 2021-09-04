@@ -76,17 +76,14 @@
 	# Example usage:
 	#
 	# Print it to stdout.
-	# $ git release-notes v0.27.3 v0.27.9
+	# $ git release-notes v0.27.3..v0.27.9
 	#
 	# To send it to the Clipboard on macOS.
-	# $ git release-notes v0.27.3 v0.27.9 | pbcopy
+	# $ git release-notes v0.27.3..v0.27.9 | pbcopy
 	#
 	# Send it to vim for editing.
-	# $ git release-notes v0.27.3 v0.27.9 | vim -
-	release-notes = "!f() { \
-		git log $1..$2 --no-merges --oneline --pretty=format:'%s' | \
-		sed '/Setting version/d'; \
-	}; f"
+	# $ git release-notes v0.27.3..v0.27.9 | vim -
+	release-notes = log --no-merges --oneline --pretty=format:'%s' --invert-grep --author=ci-user-ck
 
 	# List all remotes.
 	remotes = remote -v
