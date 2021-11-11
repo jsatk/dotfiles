@@ -49,7 +49,60 @@ vim.opt_global.shell = "fish"
 -- All individual plugin settings are in
 -- ~/.config/nvim/lua/settings/$PLUGIN_NAME.
 
-require "plugins"
+-- Only required if you have packer in your `opt` pack.
+vim.cmd([[packadd packer.nvim]])
+
+require("packer").startup(function()
+  -- Packer can manage itself as an optional plugin.
+  use({ "wbthomason/packer.nvim", opt = true})
+
+  -- The plugins, sorted alphabetically.
+  use({ "ap/vim-css-color", opt = true, ft = { "css", "scss", "sass", "less" }})
+  use({ "dag/vim-fish", opt = true, ft = "fish" })
+  use({ "glepnir/galaxyline.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true }})
+  use({
+    "hrsh7th/nvim-cmp",
+    requires = {
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-vsnip" },
+      { "hrsh7th/vim-vsnip" },
+      { "onsails/lspkind-nvim" },
+    }
+  })
+  use({ "joshdick/onedark.vim" })
+  use({ "junegunn/goyo.vim", opt = true, ft = { "markdown", "tex", "mail", "text" }})
+  use({ "junegunn/gv.vim" })
+  use({ "junegunn/vim-easy-align" })
+  use({ "junegunn/vim-peekaboo" })
+  use({ "liuchengxu/vista.vim" })
+  use({ "mfussenegger/nvim-dap" })
+  use({ "neovim/nvim-lspconfig", requires = { "nvim-lua/lsp_extensions.nvim" }})
+  use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" }, { "kyazdani42/nvim-web-devicons" } }})
+  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+  use({ "scalameta/nvim-metals" })
+  use({ "sheerun/vim-polyglot" })
+  use({ "sjl/gundo.vim" })
+  use({ "tpope/vim-abolish" })
+  use({ "tpope/vim-commentary" })
+  use({ "tpope/vim-dadbod", opt = true, ft = { "sql", "psql" }})
+  use({ "tpope/vim-dispatch", opt = true, cmd = { "Dispatch", "Make", "Focus", "Start" }})
+  use({ "tpope/vim-eunuch" })
+  use({ "tpope/vim-fugitive" })
+  use({ "tpope/vim-jdaddy", opt = true, ft = { "json" }})
+  use({ "tpope/vim-projectionist" })
+  use({ "tpope/vim-repeat" })
+  use({ "tpope/vim-rhubarb" })
+  use({ "tpope/vim-scriptease", opt = true, ft = "vim" })
+  use({ "tpope/vim-sensible" })
+  use({ "tpope/vim-sleuth" })
+  use({ "tpope/vim-speeddating" })
+  use({ "tpope/vim-surround" })
+  use({ "tpope/vim-tbone" })
+  use({ "tpope/vim-unimpaired" })
+  use({ "tpope/vim-vinegar" })
+end)
 
 -- }}}
 
@@ -187,7 +240,7 @@ vim.cmd("set undofile")
 -- with the / character replaced with a %.
 vim.opt_global.undodir = vim.fn.expand("~/.config/nvim/tmp/undo//")
 -- Make the undo directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.undodir) == 0 then fn.mkdir(vim.o.undodir, "p") end
+if vim.fn.isdirectory(vim.o.undodir) == 0 then vim.fn.mkdir(vim.o.undodir, "p") end
 
 -- Set completeopt to have a better completion experience
 vim.opt_global.completeopt = "menuone,noinsert,noselect"
@@ -322,7 +375,7 @@ vim.opt_global.autowrite = true
 vim.opt_global.backupdir = vim.fn.expand("~/.config/nvim/tmp/backup//")
 
 -- Make the backup directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.backupdir) == 0 then fn.mkdir(vim.o.backupdir, "p") end
+if vim.fn.isdirectory(vim.o.backupdir) == 0 then vim.fn.mkdir(vim.o.backupdir, "p") end
 
 -- }}}
 -- 19 the swap file ------------------------------------------------ {{{
@@ -333,7 +386,7 @@ vim.opt_global.directory = vim.fn.expand("~/.config/nvim/tmp/swap//")
 vim.cmd("set noswapfile")
 
 -- Make the swap directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.directory) == 0 then fn.mkdir(vim.o.directory, "p") end
+if vim.fn.isdirectory(vim.o.directory) == 0 then vim.fn.mkdir(vim.o.directory, "p") end
 
 -- }}}
 -- 20 command line editing ----------------------------------------- {{{
@@ -383,19 +436,54 @@ vim.opt.signcolumn = "yes"
 -- }}}
 -- 99 plugin configurations ---------------------------------------- {{{
 
--- Compe {{{
+-- Cmp {{{
 
-require("settings.compe").setup()
-
--- I use ^n & ^p to navigate up-and-down menus.
--- Using <Tab> to navigate menus is for zoomers.
--- In a menu when I press <CR> autocomplete it for me.
-map("i", "<CR>",      [[compe#confirm("<CR>")]],         { expr = true })
-map("i", "<C-Space>", [[compe#complete()]],              { expr = true })
-map("i", "<CR>",      [[compe#confirm('<CR>')]],         { expr = true })
-map("i", "<C-e>",     [[compe#close('<C-e>')]],          { expr = true })
-map("i", "<C-f>",     [[compe#scroll({ 'delta': +4 })]], { expr = true })
-map("i", "<C-d>",     [[compe#scroll({ 'delta': -4 })]], { expr = true })
+local lspkind = require("lspkind")
+lspkind.init()
+local cmp = require("cmp")
+cmp.setup({
+  sources = {
+    { name = "nvim_lsp" },
+    { name = "vsnip" },
+    { name = "path" },
+    { name = "buffer", keyword_length = 5 },
+  },
+  snippet = {
+    expand = function(args)
+      -- Comes from vsnip
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  -- There are several default mappints defined in default.lua by the
+  -- plugin's author.
+  -- See: https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/default.lua#L83
+  mapping = {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
+  },
+  formatting = {
+    format = lspkind.cmp_format {
+      with_text = true,
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        path = "[path]",
+        vsnip = "[vsnip]",
+      },
+    },
+  },
+  experimental = {
+    -- I like the new menu better! Nice work hrsh7th
+    native_menu = false,
+    -- Let's play with this for a day or two
+    ghost_text = true,
+  },
+})
 
 -- }}}
 -- DAP (Debug Adapter Protocol) {{{
@@ -475,7 +563,184 @@ vim.cmd([[nmap ga <Plug>(EasyAlign)]])
 -- }}}
 -- Galaxyline {{{
 
-require("settings.galaxyline").setup()
+local gl = require('galaxyline')
+local gls = gl.section
+gl.short_line_list = {'LuaTree', 'vista'}
+
+local colors = {
+  bg = '#282c34', -- black
+  line_bg = '#353644', -- dark grey
+  fg = '#abb2bf', -- white
+
+  dark_red = '#be5046',
+  dark_yellow = '#d19a66',
+  gutter_grey = '#4b5263',
+  comment_grey = '#5c6370',
+
+  yellow = '#e5c07b', -- light yellow
+  cyan = '#56b6c2', -- cyan
+  green = '#98c379', -- green
+  orange = '#be5046',
+  purple = '#5d4d7a',
+  magenta = '#c678dd', -- magenta
+  blue = '#61afef', -- blue
+  red = '#e06c75' -- light red
+}
+
+local buffer_not_empty = function()
+  if vim.fn.empty(vim.fn.expand('%:t')) ~= 1 then
+    return true
+  end
+  return false
+end
+
+gls.left[1] = {
+  ViMode = {
+    provider = function()
+      local mode_color = {
+        n = colors.blue,
+        i = colors.green,
+        [''] = colors.magenta, -- visual block
+        v = colors.magenta,
+        [''] = colors.magenta,
+        V = colors.magenta,
+        c = colors.red,
+        no = colors.magenta,
+        s = colors.orange,
+        S = colors.orange,
+        [''] = colors.orange, -- select block
+        ic = colors.yellow,
+        R = colors.purple,
+        Rv = colors.purple,
+        cv = colors.red,
+        ce = colors.red,
+        r = colors.cyan,
+        rm = colors.cyan,
+        ['r?'] = colors.cyan,
+        ['!'] = colors.red,
+        t = colors.red
+      }
+      vim.api.nvim_command('hi GalaxyViMode guifg=' .. mode_color[vim.fn.mode()])
+      return '▊ '
+    end,
+    highlight = {colors.red, colors.line_bg}
+  }
+}
+
+gls.left[2] = {
+  FileIcon = {
+    provider = 'FileIcon',
+    condition = buffer_not_empty,
+    highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.line_bg}
+  }
+}
+
+gls.left[3] = {
+  FileName = {
+    provider = {'FileName'},
+    condition = buffer_not_empty,
+    highlight = {colors.fg, colors.line_bg}
+  }
+}
+
+gls.left[4] = {
+  GitIcon = {
+    provider = function()
+      return '  '
+    end,
+    condition = require('galaxyline.provider_vcs').check_git_workspace,
+    highlight = {colors.orange, colors.line_bg}
+  }
+}
+
+gls.left[5] = {
+  GitBranch = {
+    provider = 'GitBranch',
+    condition = require('galaxyline.provider_vcs').check_git_workspace,
+    highlight = {colors.fg, colors.line_bg}
+  }
+}
+
+gls.left[6] = {
+  LeftEnd = {
+    provider = function()
+      return ''
+    end,
+    separator = ' ',
+    separator_highlight = {colors.line_bg, colors.line_bg},
+    highlight = {colors.bg, colors.line_bg}
+  }
+}
+
+gls.left[7] = {
+  DiagnosticError = {
+    provider = 'DiagnosticError',
+    icon = ' ▬ ',
+    highlight = {colors.red, colors.bg}
+  }
+}
+
+gls.left[8] = {
+  DiagnosticWarn = {
+    provider = 'DiagnosticWarn',
+    icon = ' ▬ ',
+    highlight = {colors.yellow, colors.bg}
+  }
+}
+
+gls.left[9] = {
+  MetalsStatus = {
+    provider = function()
+      return '  ' .. (vim.g['metals_status'] or '')
+    end,
+    highlight = {colors.fg, colors.bg}
+  }
+}
+
+gls.right[1] = {
+  FileFormat = {
+    provider = 'FileFormat',
+    separator = ' ',
+    separator_highlight = {colors.bg, colors.line_bg},
+    highlight = {colors.fg, colors.line_bg}
+  }
+}
+
+gls.right[2] = {
+  LineInfo = {
+    provider = 'LineColumn',
+    separator = ' | ',
+    separator_highlight = {colors.blue, colors.line_bg},
+    highlight = {colors.fg, colors.line_bg}
+  }
+}
+
+gls.right[3] = {
+  ScrollBar = {
+    provider = 'ScrollBar',
+    separator = ' | ',
+    separator_highlight = {colors.blue, colors.line_bg},
+    highlight = {colors.blue, colors.purple}
+  }
+}
+
+gls.short_line_left[1] = {
+  BufferType = {
+    provider = 'FileTypeName',
+    separator = '',
+    separator_highlight = {colors.purple, colors.bg},
+    highlight = {colors.fg, colors.purple}
+  }
+}
+
+gls.short_line_right[1] = {
+  BufferIcon = {
+    provider = 'BufferIcon',
+    separator = '',
+    separator_highlight = {colors.purple, colors.bg},
+    highlight = {colors.fg, colors.purple}
+  }
+}
 
 -- }}}
 -- Gundo {{{
@@ -541,14 +806,14 @@ vim.cmd([[hi! link LspCodeLens CursorColumn]])
 -- rather though ckipp's nvim-metals plugin.  See that plugin's README
 -- for more details on that.
 
-require'lspconfig'.bashls.setup{}
-require'lspconfig'.dockerls.setup{}
-require'lspconfig'.gopls.setup{}
-require'lspconfig'.graphql.setup{}
-require'lspconfig'.rust_analyzer.setup{}
-require'lspconfig'.terraformls.setup{}
-require'lspconfig'.tsserver.setup{}
-require'lspconfig'.vimls.setup{}
+require("lspconfig").bashls.setup {}
+require("lspconfig").dockerls.setup {}
+require("lspconfig").gopls.setup {}
+require("lspconfig").graphql.setup {}
+require("lspconfig").rust_analyzer.setup {}
+require("lspconfig").terraformls.setup {}
+require("lspconfig").tsserver.setup {}
+require("lspconfig").vimls.setup {}
 
 -- }}}
 -- Metals {{{
@@ -562,7 +827,7 @@ map("n", "<leader>ws", [[<cmd>lua require'metals'.worksheet_hover()<CR>]])
 -- Show all diagnostics
 map("n", "<leader>a", [[<cmd>lua require'metals'.open_all_diagnostics()<CR>]])
 
-metals_config = require("metals").bare_config
+metals_config = require("metals").bare_config()
 
 -- Example of settings
 metals_config.settings = {

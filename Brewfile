@@ -77,7 +77,7 @@ brew "ammonite-repl"
 brew "asciinema"
 # Program language version manager.  Manages all languages.
 brew "asdf"
-brew "bloop"
+# brew "bloop" # Disabling until it's supported on M1 Macs.  See: https://github.com/scalacenter/bloop/issues/1467
 brew "coursier"
 brew "nginx"
 brew "postgresql"
@@ -201,7 +201,6 @@ brew "ytop"
 
 cask_args appdir: "/Applications"
 
-cask "adoptopenjdk8"
 cask "alfred"
 cask "blue-sherpa"
 cask "backblaze"
@@ -213,11 +212,9 @@ cask "dropbox"
 cask "droplr"
 cask "fantastical"
 cask "firefox"
-cask "firefox-developer-edition"
-cask "google-chrome"
+# cask "google-chrome"
 cask "google-cloud-sdk"
 cask "google-drive-file-stream"
-cask "google-hangouts"
 cask "intellij-idea-ce"
 cask "iTerm2"
 cask "keybase"
@@ -226,9 +223,10 @@ cask "monodraw"
 cask "plex"
 cask "postman"
 cask "signal"
-cask "slack-beta"
+# cask "slack"
 cask "spotify"
 cask "steam"
+cask "temurin"
 cask "twitch"
 cask "vlc"
 cask "yubico-yubikey-manager"
@@ -245,7 +243,6 @@ mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
 mas "Magnet", id: 441258766
 mas "Marked 2", id: 890031187
-mas "Monit", id: 1014850245
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Pixelmator", id: 407963104

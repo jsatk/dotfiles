@@ -74,7 +74,7 @@ clean: ## Remove all unnecessary files our package managers don't need.
 
 brew_status := $(shell brew bundle check --no-upgrade > /dev/null && echo 0 || echo 1)
 $(homebrew):
-	ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 .PHONY: brew
 brew: | $(homebrew) ## Install Homebrew & Brewfile's formulae, casks, & apps.
@@ -99,7 +99,7 @@ asdf: | $(asdf_plugins) ## Install specific verions of languages -- language ver
 # the targets end up being the same because we install a package called "neovim"
 # from both npm and gem.
 node_modules_$(prefixed_node_modules):
-	$(yarn) global add $(notdir $@)
+			$(yarn) global add $(notdir $@)
 
 .PHONY: node_modules
 node_modules: | node_modules_$(prefixed_node_modules) ## Install global yarn modules.
@@ -139,5 +139,4 @@ help: ## Print this help text.
 	{printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 # }}}
-# vim: textwidth=80:noexpandtab:shiftwidth=8
 # vim: foldmethod=marker:foldmarker={{{,}}}

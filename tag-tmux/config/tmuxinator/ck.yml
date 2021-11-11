@@ -45,16 +45,16 @@ root: ~/
 # attach: false
 
 windows:
-  - "📧":
-      panes:
-        - mail:
-          - neomutt
-          - O # Syncs mail
-  - "💬": weechat
+  # - "📧":
+  #     panes:
+  #       - mail:
+  #         - neomutt
+  #         - O # Syncs mail
+  # - "💬": weechat
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/.dotfiles"
       panes:
-        - ewp # ewp == "Edit work .plan" which is a custom version of my Edit Plan script for work. See: tag-etc/config/fish/functions/ep.fish
+        - nvim ~/.plan
   - "📝":
       root: "~/Developer/"
   - "🔩":

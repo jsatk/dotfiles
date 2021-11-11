@@ -1,3 +1,4 @@
 Make folders if they don't exist
 Update tmux plugins as part of makefile
 login to weechat
+figure out how the hell to make asdf shims end up in path the first time

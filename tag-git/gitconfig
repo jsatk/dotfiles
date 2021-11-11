@@ -83,7 +83,22 @@
 	#
 	# Send it to vim for editing.
 	# $ git release-notes v0.27.3..v0.27.9 | vim -
-	release-notes = log --no-merges --oneline --pretty=format:'%s' --invert-grep --author=ci-user-ck
+	#
+	# To customize this for your own org/workplace you'll need to edit two things.
+	#
+	#   1. Change ORG to whatever user or org you work with.
+	#   2. You can either remove the --invert-grep & --author flags on the git log
+	#      line if you don't have any commit authors you want to filter out (we
+	#      have a bunch of robo commits that I don't want in release notes); or
+	#      keep it up and update the IGNORE_AUTHOR to whatever author you want to
+	#      ignore in your own release-notes.
+	release-notes = "!f() { \
+		ORG='ck'; \
+		IGNORE_AUTHOR='ci-user-ck'; \
+		PR_URL=$(git config remote.origin.url | sed -e 's|git@|https://|' -e \"s|com:$ORG|com/$ORG|\" -e 's|.git|/pull/|'); \
+		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --author=\"$IGNORE_AUTHOR\" | \
+		sed \"s|(#|($PR_URL|g\"; \
+	}; f"
 
 	# List all remotes.
 	remotes = remote -v
@@ -166,7 +181,7 @@
 
 [commit]
 	cleanup = scissors
-	gpgsign = true
+	; gpgsign = true
 	template = ~/.gitmessage
 
 # }}}

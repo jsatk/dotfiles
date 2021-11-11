@@ -7,7 +7,7 @@ set --export GOPATH $HOME/go
 set --export GPG_TTY (tty) # Required for gpg... sometimes... gpg is fickle and frustrating.
 set --export BAT_THEME "TwoDark" # For Bat.  See: https://github.com/sharkdp/bat
 set --export JAVA_HOME (/usr/libexec/java_home -v 1.8)
-set --local BREW_PREFIX (brew --prefix)
+set --local BREW_PREFIX (/opt/homebrew/bin/brew --prefix)
 
 
 # fzf {{{
@@ -28,11 +28,24 @@ set --export FZF_ALT_C_OPTS "--preview 'tree -C {} | head -100'"
 # }}}
 
 # }}}
+# Files I need to source {{{
+
+[ -f $BREW_PREFIX/share/autojump/autojump.fish ]
+and source $BREW_PREFIX/share/autojump/autojump.fish
+
+[ -f {$HOME}/.iterm2_shell_integration.fish ]
+and source {$HOME}/.iterm2_shell_integration.fish
+
+[ -f $BREW_PREFIX/opt/asdf/asdf.fish ]
+and source /opt/homebrew/opt/asdf/libexec/asdf.fish
+
+# }}}
 # Path {{{
 
 set PATH \
   $BREW_PREFIX/bin \
   $BREW_PREFIX/sbin \
+  /usr/local/bin \
   /usr/bin \
   /bin \
   /usr/sbin \
@@ -43,19 +56,8 @@ set PATH \
   $HOME/Library/Python/2.7/bin \
   $HOME/Library/Application\ Support/Coursier/bin \
   $HOME/.asdf/installs/rust/stable/bin \
+  $HOME/.asdf/shims \
   $GOPATH/bin \
-
-# }}}
-# Files I need to source {{{
-
-[ -f $BREW_PREFIX/share/autojump/autojump.fish ]
-and source $BREW_PREFIX/share/autojump/autojump.fish
-
-[ -f {$HOME}/.iterm2_shell_integration.fish ]
-and source {$HOME}/.iterm2_shell_integration.fish
-
-[ -f $BREW_PREFIX/opt/asdf/asdf.fish ]
-and source $BREW_PREFIX/opt/asdf/asdf.fish
 
 # }}}
 # Extras {{{
