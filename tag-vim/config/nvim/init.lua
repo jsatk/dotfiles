@@ -317,11 +317,6 @@ map("n", "S", "i<cr><esc><right>")
 map("n", "<leader><leader>", "<c-^>")
 -- redraw the buffer
 map("n", "<leader>r", ":syntax sync fromstart<cr>:redraw!<cr>")
--- <C-l> redraws the screen and removes any search highlighting.
-map("n", "<c-l>", ":nohlsearch<cr><c-l>")
--- [Y]ank until end of line.  Makes Y behave like D and other
--- do-until-end-of-line operations.
-map("n", "Y", "y$")
 
 -- Keep search matches in the middle of the window.
 map("n", "n", "nzzzv")

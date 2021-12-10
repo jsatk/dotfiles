@@ -15,7 +15,7 @@ tap "homebrew/core"
 # For contacts in Mutt.
 tap "keith/formulae"
 # For Bloop.
-tap "scalacenter/bloop"
+# tap "scalacenter/bloop"
 # For rcm.
 tap "thoughtbot/formulae"
 
@@ -77,7 +77,10 @@ brew "ammonite-repl"
 brew "asciinema"
 # Program language version manager.  Manages all languages.
 brew "asdf"
-# brew "bloop" # Disabling until it's supported on M1 Macs.  See: https://github.com/scalacenter/bloop/issues/1467
+# brew "bloop" # Disabling until it's supported on M1 Macs.  For now install
+# bloop via `cs install bloop-jvm`.  The binary is then titled `bloop-jvm`, not
+# `bloop`.
+# See here for more details: https://github.com/scalacenter/bloop/issues/1467
 brew "coursier"
 brew "nginx"
 brew "postgresql"
@@ -168,8 +171,6 @@ brew "mpv"
 brew "ncdu"
 # Single-player roguelike video game.
 brew "nethack"
-# RSS Reader
-brew "newsboat"
 # Manages dotfiles.
 brew "rcm"
 # Best `grep` replacement.
@@ -230,6 +231,7 @@ cask "temurin"
 cask "twitch"
 cask "vlc"
 cask "yubico-yubikey-manager"
+cask "zoom"
 
 # }}}
 # macOS App Store ---------------------------------------------------------- {{{
