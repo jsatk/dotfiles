@@ -43,6 +43,8 @@ and source /opt/homebrew/opt/asdf/libexec/asdf.fish
 # Path {{{
 
 set PATH \
+  $HOME/.asdf/installs/rust/stable/bin \
+  $HOME/.asdf/shims \
   $BREW_PREFIX/bin \
   $BREW_PREFIX/sbin \
   /usr/local/bin \
@@ -55,8 +57,6 @@ set PATH \
   # Puts Python 2's pip (which macOS still ships with as default) in $PATH.
   $HOME/Library/Python/2.7/bin \
   $HOME/Library/Application\ Support/Coursier/bin \
-  $HOME/.asdf/installs/rust/stable/bin \
-  $HOME/.asdf/shims \
   $GOPATH/bin \
 
 # }}}

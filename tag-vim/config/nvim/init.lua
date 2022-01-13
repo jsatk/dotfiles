@@ -59,7 +59,7 @@ require("packer").startup(function()
   -- The plugins, sorted alphabetically.
   use({ "ap/vim-css-color", opt = true, ft = { "css", "scss", "sass", "less" }})
   use({ "dag/vim-fish", opt = true, ft = "fish" })
-  use({ "glepnir/galaxyline.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true }})
+  use({ "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true }})
   use({
     "hrsh7th/nvim-cmp",
     requires = {
@@ -136,21 +136,15 @@ vim.opt_global.list = true
 -- 5  syntax, highlighting and spelling ---------------------------- {{{
 
 vim.opt_global.background = "dark"
+vim.opt_global.termguicolors = true
 
--- Needed to esnure float background doesn't get odd highlighting
--- https://github.com/joshdick/onedark.vim#onedarkset_highlight
--- https://github.com/scalameta/coc-metals/wiki/Commonly-Asked-Questions
+--- Needed to esnure float background doesn't get odd highlighting
+--- https://github.com/joshdick/onedark.vim#onedarkset_highlight
+--- https://github.com/scalameta/coc-metals/wiki/Commonly-Asked-Questions
 vim.cmd([[augroup colorset]])
 vim.cmd([[autocmd!]])
 vim.cmd([[autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" } })]])
 vim.cmd([[augroup END]])
-
--- For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
--- Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
--- < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-if vim.fn.has("termguicolors") == 1 then
-  vim.opt_global.termguicolors = true
-end
 
 vim.g["onedark_terminal_italics"] = 1
 vim.cmd("colorscheme onedark")
@@ -556,191 +550,430 @@ vim.cmd([[xmap ga <Plug>(EasyAlign)]])
 vim.cmd([[nmap ga <Plug>(EasyAlign)]])
 
 -- }}}
--- Galaxyline {{{
+-- -- Galaxyline {{{
 
-local gl = require('galaxyline')
-local gls = gl.section
-gl.short_line_list = {'LuaTree', 'vista'}
+-- local gl = require('galaxyline')
+-- local gls = gl.section
+-- gl.short_line_list = {'LuaTree', 'vista'}
 
-local colors = {
-  bg = '#282c34', -- black
-  line_bg = '#353644', -- dark grey
-  fg = '#abb2bf', -- white
+-- local colors = {
+--   bg = '#282c34', -- black
+--   line_bg = '#353644', -- dark grey
+--   fg = '#abb2bf', -- white
 
-  dark_red = '#be5046',
-  dark_yellow = '#d19a66',
-  gutter_grey = '#4b5263',
-  comment_grey = '#5c6370',
+--   dark_red = '#be5046',
+--   dark_yellow = '#d19a66',
+--   gutter_grey = '#4b5263',
+--   comment_grey = '#5c6370',
 
-  yellow = '#e5c07b', -- light yellow
-  cyan = '#56b6c2', -- cyan
-  green = '#98c379', -- green
-  orange = '#be5046',
-  purple = '#5d4d7a',
-  magenta = '#c678dd', -- magenta
-  blue = '#61afef', -- blue
-  red = '#e06c75' -- light red
-}
+--   yellow = '#e5c07b', -- light yellow
+--   cyan = '#56b6c2', -- cyan
+--   green = '#98c379', -- green
+--   orange = '#be5046',
+--   purple = '#5d4d7a',
+--   magenta = '#c678dd', -- magenta
+--   blue = '#61afef', -- blue
+--   red = '#e06c75' -- light red
+-- }
 
-local buffer_not_empty = function()
-  if vim.fn.empty(vim.fn.expand('%:t')) ~= 1 then
-    return true
-  end
-  return false
-end
+-- local buffer_not_empty = function()
+--   if vim.fn.empty(vim.fn.expand('%:t')) ~= 1 then
+--     return true
+--   end
+--   return false
+-- end
 
-gls.left[1] = {
-  ViMode = {
-    provider = function()
-      local mode_color = {
-        n = colors.blue,
-        i = colors.green,
-        [''] = colors.magenta, -- visual block
-        v = colors.magenta,
-        [''] = colors.magenta,
-        V = colors.magenta,
-        c = colors.red,
-        no = colors.magenta,
-        s = colors.orange,
-        S = colors.orange,
-        [''] = colors.orange, -- select block
-        ic = colors.yellow,
-        R = colors.purple,
-        Rv = colors.purple,
-        cv = colors.red,
-        ce = colors.red,
-        r = colors.cyan,
-        rm = colors.cyan,
-        ['r?'] = colors.cyan,
-        ['!'] = colors.red,
-        t = colors.red
-      }
-      vim.api.nvim_command('hi GalaxyViMode guifg=' .. mode_color[vim.fn.mode()])
-      return '▊ '
-    end,
-    highlight = {colors.red, colors.line_bg}
-  }
-}
+-- gls.left[1] = {
+--   ViMode = {
+--     provider = function()
+--       local mode_color = {
+--         n = colors.blue,
+--         i = colors.green,
+--         [''] = colors.magenta, -- visual block
+--         v = colors.magenta,
+--         [''] = colors.magenta,
+--         V = colors.magenta,
+--         c = colors.red,
+--         no = colors.magenta,
+--         s = colors.orange,
+--         S = colors.orange,
+--         [''] = colors.orange, -- select block
+--         ic = colors.yellow,
+--         R = colors.purple,
+--         Rv = colors.purple,
+--         cv = colors.red,
+--         ce = colors.red,
+--         r = colors.cyan,
+--         rm = colors.cyan,
+--         ['r?'] = colors.cyan,
+--         ['!'] = colors.red,
+--         t = colors.red
+--       }
+--       vim.api.nvim_command('hi GalaxyViMode guifg=' .. mode_color[vim.fn.mode()])
+--       return '▊ '
+--     end,
+--     highlight = {colors.red, colors.line_bg}
+--   }
+-- }
 
-gls.left[2] = {
-  FileIcon = {
-    provider = 'FileIcon',
-    condition = buffer_not_empty,
-    highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.line_bg}
-  }
-}
+-- gls.left[2] = {
+--   FileIcon = {
+--     provider = 'FileIcon',
+--     condition = buffer_not_empty,
+--     highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.line_bg}
+--   }
+-- }
 
-gls.left[3] = {
-  FileName = {
-    provider = {'FileName'},
-    condition = buffer_not_empty,
-    highlight = {colors.fg, colors.line_bg}
-  }
-}
+-- gls.left[3] = {
+--   FileName = {
+--     provider = {'FileName'},
+--     condition = buffer_not_empty,
+--     highlight = {colors.fg, colors.line_bg}
+--   }
+-- }
 
-gls.left[4] = {
-  GitIcon = {
-    provider = function()
-      return '  '
-    end,
-    condition = require('galaxyline.provider_vcs').check_git_workspace,
-    highlight = {colors.orange, colors.line_bg}
-  }
-}
+-- gls.left[4] = {
+--   GitIcon = {
+--     provider = function()
+--       return '  '
+--     end,
+--     condition = require('galaxyline.provider_vcs').check_git_workspace,
+--     highlight = {colors.orange, colors.line_bg}
+--   }
+-- }
 
-gls.left[5] = {
-  GitBranch = {
-    provider = 'GitBranch',
-    condition = require('galaxyline.provider_vcs').check_git_workspace,
-    highlight = {colors.fg, colors.line_bg}
-  }
-}
+-- gls.left[5] = {
+--   GitBranch = {
+--     provider = 'GitBranch',
+--     condition = require('galaxyline.provider_vcs').check_git_workspace,
+--     highlight = {colors.fg, colors.line_bg}
+--   }
+-- }
 
-gls.left[6] = {
-  LeftEnd = {
-    provider = function()
-      return ''
-    end,
-    separator = ' ',
-    separator_highlight = {colors.line_bg, colors.line_bg},
-    highlight = {colors.bg, colors.line_bg}
-  }
-}
+-- gls.left[6] = {
+--   LeftEnd = {
+--     provider = function()
+--       return ''
+--     end,
+--     separator = ' ',
+--     separator_highlight = {colors.line_bg, colors.line_bg},
+--     highlight = {colors.bg, colors.line_bg}
+--   }
+-- }
 
-gls.left[7] = {
-  DiagnosticError = {
-    provider = 'DiagnosticError',
-    icon = ' ▬ ',
-    highlight = {colors.red, colors.bg}
-  }
-}
+-- gls.left[7] = {
+--   DiagnosticError = {
+--     provider = 'DiagnosticError',
+--     icon = ' ▬ ',
+--     highlight = {colors.red, colors.bg}
+--   }
+-- }
 
-gls.left[8] = {
-  DiagnosticWarn = {
-    provider = 'DiagnosticWarn',
-    icon = ' ▬ ',
-    highlight = {colors.yellow, colors.bg}
-  }
-}
+-- gls.left[8] = {
+--   DiagnosticWarn = {
+--     provider = 'DiagnosticWarn',
+--     icon = ' ▬ ',
+--     highlight = {colors.yellow, colors.bg}
+--   }
+-- }
 
-gls.left[9] = {
-  MetalsStatus = {
-    provider = function()
-      return '  ' .. (vim.g['metals_status'] or '')
-    end,
-    highlight = {colors.fg, colors.bg}
-  }
-}
+-- gls.left[9] = {
+--   MetalsStatus = {
+--     provider = function()
+--       return '  ' .. (vim.g['metals_status'] or '')
+--     end,
+--     highlight = {colors.fg, colors.bg}
+--   }
+-- }
 
-gls.right[1] = {
-  FileFormat = {
-    provider = 'FileFormat',
-    separator = ' ',
-    separator_highlight = {colors.bg, colors.line_bg},
-    highlight = {colors.fg, colors.line_bg}
-  }
-}
+-- gls.right[1] = {
+--   FileFormat = {
+--     provider = 'FileFormat',
+--     separator = ' ',
+--     separator_highlight = {colors.bg, colors.line_bg},
+--     highlight = {colors.fg, colors.line_bg}
+--   }
+-- }
 
-gls.right[2] = {
-  LineInfo = {
-    provider = 'LineColumn',
-    separator = ' | ',
-    separator_highlight = {colors.blue, colors.line_bg},
-    highlight = {colors.fg, colors.line_bg}
-  }
-}
+-- gls.right[2] = {
+--   LineInfo = {
+--     provider = 'LineColumn',
+--     separator = ' | ',
+--     separator_highlight = {colors.blue, colors.line_bg},
+--     highlight = {colors.fg, colors.line_bg}
+--   }
+-- }
 
-gls.right[3] = {
-  ScrollBar = {
-    provider = 'ScrollBar',
-    separator = ' | ',
-    separator_highlight = {colors.blue, colors.line_bg},
-    highlight = {colors.blue, colors.purple}
-  }
-}
+-- gls.right[3] = {
+--   ScrollBar = {
+--     provider = 'ScrollBar',
+--     separator = ' | ',
+--     separator_highlight = {colors.blue, colors.line_bg},
+--     highlight = {colors.blue, colors.purple}
+--   }
+-- }
 
-gls.short_line_left[1] = {
-  BufferType = {
-    provider = 'FileTypeName',
-    separator = '',
-    separator_highlight = {colors.purple, colors.bg},
-    highlight = {colors.fg, colors.purple}
-  }
-}
+-- gls.short_line_left[1] = {
+--   BufferType = {
+--     provider = 'FileTypeName',
+--     separator = '',
+--     separator_highlight = {colors.purple, colors.bg},
+--     highlight = {colors.fg, colors.purple}
+--   }
+-- }
 
-gls.short_line_right[1] = {
-  BufferIcon = {
-    provider = 'BufferIcon',
-    separator = '',
-    separator_highlight = {colors.purple, colors.bg},
-    highlight = {colors.fg, colors.purple}
-  }
-}
+-- gls.short_line_right[1] = {
+--   BufferIcon = {
+--     provider = 'BufferIcon',
+--     separator = '',
+--     separator_highlight = {colors.purple, colors.bg},
+--     highlight = {colors.fg, colors.purple}
+--   }
+-- }
 
--- }}}
+-- -- }}}
 -- Gundo {{{
 
 map("n", "<F5>", ":GundoToggle<CR>")
+
+-- }}}
+-- Lualine {{{
+
+-- require('lualine').setup({
+--   options = {
+--     theme = 'onedark'
+--   },
+--   sections = {
+--     lualine_b = {
+--       'branch',
+--       'diagnostics',
+--       'g:metals_status'
+--     }
+--   }
+-- })
+
+-- Eviline config for lualine
+-- Author: shadmansaleh
+-- Credit: glepnir
+local lualine = require('lualine')
+
+-- Color table for highlights
+-- stylua: ignore
+local colors = {
+  bg       = '#282c34',
+  fg       = '#bbc2cf',
+  yellow   = '#ECBE7B',
+  cyan     = '#008080',
+  darkblue = '#081633',
+  green    = '#98be65',
+  orange   = '#FF8800',
+  violet   = '#a9a1e1',
+  magenta  = '#c678dd',
+  blue     = '#51afef',
+  red      = '#ec5f67',
+}
+
+local conditions = {
+  buffer_not_empty = function()
+    return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
+  end,
+  hide_in_width = function()
+    return vim.fn.winwidth(0) > 80
+  end,
+  check_git_workspace = function()
+    local filepath = vim.fn.expand('%:p:h')
+    local gitdir = vim.fn.finddir('.git', filepath .. ';')
+    return gitdir and #gitdir > 0 and #gitdir < #filepath
+  end,
+}
+
+-- Config
+local config = {
+  options = {
+    -- Disable sections and component separators
+    component_separators = '',
+    section_separators = '',
+    theme = {
+      -- We are going to use lualine_c an lualine_x as left and
+      -- right section. Both are highlighted by c theme .  So we
+      -- are just setting default looks o statusline
+      normal = { c = { fg = colors.fg, bg = colors.bg } },
+      inactive = { c = { fg = colors.fg, bg = colors.bg } },
+    },
+  },
+  sections = {
+    -- these are to remove the defaults
+    lualine_a = {},
+    lualine_b = {},
+    lualine_y = {},
+    lualine_z = {},
+    -- These will be filled later
+    lualine_c = {},
+    lualine_x = {},
+  },
+  inactive_sections = {
+    -- these are to remove the defaults
+    lualine_a = {},
+    lualine_b = {},
+    lualine_y = {},
+    lualine_z = {},
+    lualine_c = {},
+    lualine_x = {},
+  },
+}
+
+-- Inserts a component in lualine_c at left section
+local function ins_left(component)
+  table.insert(config.sections.lualine_c, component)
+end
+
+-- Inserts a component in lualine_x ot right section
+local function ins_right(component)
+  table.insert(config.sections.lualine_x, component)
+end
+
+ins_left({
+  function()
+    return '▊'
+  end,
+  color = { fg = colors.blue }, -- Sets highlighting of component
+  padding = { left = 0, right = 1 }, -- We don't need space before this
+})
+
+ins_left({
+  -- mode component
+  function()
+    -- auto change color according to neovims mode
+    local mode_color = {
+      n = colors.red,
+      i = colors.green,
+      v = colors.blue,
+      [''] = colors.blue,
+      V = colors.blue,
+      c = colors.magenta,
+      no = colors.red,
+      s = colors.orange,
+      S = colors.orange,
+      [''] = colors.orange,
+      ic = colors.yellow,
+      R = colors.violet,
+      Rv = colors.violet,
+      cv = colors.red,
+      ce = colors.red,
+      r = colors.cyan,
+      rm = colors.cyan,
+      ['r?'] = colors.cyan,
+      ['!'] = colors.red,
+      t = colors.red,
+    }
+    vim.api.nvim_command('hi! LualineMode guifg=' .. mode_color[vim.fn.mode()] .. ' guibg=' .. colors.bg)
+    return ''
+  end,
+  color = 'LualineMode',
+  padding = { right = 1 },
+})
+
+ins_left({
+  -- filesize component
+  'filesize',
+  cond = conditions.buffer_not_empty,
+})
+
+ins_left({
+  'filename',
+  cond = conditions.buffer_not_empty,
+  color = { fg = colors.magenta, gui = 'bold' },
+})
+
+ins_left({ 'location' })
+
+ins_left({ 'progress', color = { fg = colors.fg, gui = 'bold' } })
+
+ins_left({
+  'diagnostics',
+  sources = { 'nvim_diagnostic' },
+  symbols = { error = ' ', warn = ' ', info = ' ' },
+  diagnostics_color = {
+    color_error = { fg = colors.red },
+    color_warn = { fg = colors.yellow },
+    color_info = { fg = colors.cyan },
+  },
+})
+
+ins_left({ 'g:metals_status' })
+
+-- Insert mid section. You can make any number of sections in neovim :)
+-- for lualine it's any number greater then 2
+ins_left({
+  function()
+    return '%='
+  end,
+})
+
+ins_left({
+  -- Lsp server name .
+  function()
+    local msg = 'No Active Lsp'
+    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    local clients = vim.lsp.get_active_clients()
+    if next(clients) == nil then
+      return msg
+    end
+    for _, client in ipairs(clients) do
+      local filetypes = client.config.filetypes
+      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+        return client.name
+      end
+    end
+    return msg
+  end,
+  icon = ' LSP:',
+  color = { fg = '#ffffff', gui = 'bold' },
+})
+
+-- Add components to right sections
+ins_right({
+  'o:encoding', -- option component same as &encoding in viml
+  fmt = string.upper, -- I'm not sure why it's upper case either ;)
+  cond = conditions.hide_in_width,
+  color = { fg = colors.green, gui = 'bold' },
+})
+
+ins_right({
+  'fileformat',
+  fmt = string.upper,
+  icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
+  color = { fg = colors.green, gui = 'bold' },
+})
+
+ins_right({
+  'branch',
+  icon = '',
+  color = { fg = colors.violet, gui = 'bold' },
+})
+
+ins_right({
+  'diff',
+  -- Is it me or the symbol for modified us really weird
+  symbols = { added = ' ', modified = '柳 ', removed = ' ' },
+  diff_color = {
+    added = { fg = colors.green },
+    modified = { fg = colors.orange },
+    removed = { fg = colors.red },
+  },
+  cond = conditions.hide_in_width,
+})
+
+ins_right({
+  function()
+    return '▊'
+  end,
+  color = { fg = colors.blue },
+  padding = { left = 1 },
+})
+
+-- Now don't forget to initialize lualine
+lualine.setup(config)
 
 -- }}}
 -- Lsp + Lspconfig {{{
@@ -774,16 +1007,16 @@ map("n", "<leader>ca", [[<cmd>lua vim.lsp.buf.code_action()<CR>]])
 map("n", "<leader>f", [[<cmd>lua vim.lsp.buf.formatting()<CR>]])
 
 -- Use `[g` and `]g` for navigate diagnostics.
-map("n", "]g", [[<cmd>lua vim.lsp.diagnostic.goto_next()<CR>]])
-map("n", "[g", [[<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>]])
+map("n", "]g", [[<cmd>lua vim.diagnostic.goto_next()<CR>]])
+map("n", "[g", [[<cmd>lua vim.diagnostic.goto_prev()<CR>]])
 
 -- Remap for rename current word
 map("n", "<leader>rn", [[<cmd>lua vim.lsp.buf.rename()<CR>]])
 
 -- Show only buffer diagnostics
-map("n", "<leader>d", [[<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>]])
+map("n", "<leader>d", [[<cmd>lua vim.diagnostic.setloclist()<CR>]])
 -- Show only that line"s diagnostics.
-map("n", "<leader>ln", [[<cmd>lua vim.lsp.diagnostic.get_line_diagnostics()<CR>]])
+map("n", "<leader>ln", [[<cmd>lua vim.diagnostic.get()<CR>]])
 -- Trigger code lens.
 -- See: https://github.com/scalameta/nvim-metals/discussions/160
 map("n", "<leader>cl", [[<cmd>lua vim.lsp.codelens.run()<CR>]])
@@ -820,7 +1053,15 @@ require("lspconfig").vimls.setup {}
 map("n", "<leader>ws", [[<cmd>lua require'metals'.worksheet_hover()<CR>]])
 
 -- Show all diagnostics
-map("n", "<leader>a", [[<cmd>lua require'metals'.open_all_diagnostics()<CR>]])
+-- Note: You can limit the diagnostics you see by passing in `severity`
+-- of `"E"` or `"W"`.
+--
+-- Example:
+-- ```lua
+-- vim.diagnostic.setqflist({severity = "E"}) // all errors
+-- vim.diagnostic.setqflist({severity = "W"}) // all warnings
+-- ```
+map("n", "<leader>a", [[<cmd>lua vim.diagnostic.setqflist()<CR>]])
 
 metals_config = require("metals").bare_config()
 
@@ -944,6 +1185,7 @@ map("n", "<leader>fg", [[<cmd>lua require('telescope.builtin').live_grep()<cr>]]
 map("n", "<leader>fb", [[<cmd>lua require('telescope.builtin').buffers()<cr>]])
 map("n", "<leader>fh", [[<cmd>lua require('telescope.builtin').help_tags()<cr>]])
 map("n", "<leader>gb", [[<cmd>lua require('telescope.builtin').git_branches()<cr>]])
+map("n", "<leader>fm", [[<cmd>lua require("telescope").extensions.metals.commands()<CR>]])
 
 -- }}}
 -- Treesitter {{{
