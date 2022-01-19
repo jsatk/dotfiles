@@ -1,28 +1,18 @@
 # Taps --------------------------------------------------------------------- {{{
 
-# For a better top, ytop.
 tap "cjbassi/ytop"
-# For Coursier.
 tap "coursier/formulas"
-# For gh.
 tap "github/gh"
-# For Hashicorp's official terraform lsp.
 tap "hashicorp/tap"
-# For Homebrew's own cask, etc.
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
-# For contacts in Mutt.
 tap "keith/formulae"
-# For Bloop.
-# tap "scalacenter/bloop"
-# For rcm.
 tap "thoughtbot/formulae"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
 
-brew "bash"
 brew "bash-completion"
 brew "fish"
 
@@ -71,8 +61,6 @@ brew "weechat"
 # }}}
 # Programming Languages, DBs, & Language Tools ----------------------------- {{{
 
-# Better Scala REPL.
-brew "ammonite-repl"
 # terminal recording.
 brew "asciinema"
 # Program language version manager.  Manages all languages.
@@ -85,7 +73,6 @@ brew "coursier"
 brew "nginx"
 brew "postgresql"
 brew "ruby-build"
-brew "sbcl"
 brew "terraform-ls"
 brew "watchman"
 
@@ -94,8 +81,6 @@ brew "watchman"
 
 brew "hopenpgp-tools"
 brew "openssl"
-# Useful for printing GPG stuff to paper for physical backup.
-brew "paperkey"
 # For working with GPG stuff.
 brew "pinentry-mac"
 # For personalizing & working with Yubikeys.
@@ -125,8 +110,6 @@ brew "autojump"
 brew "bat"
 # For when I need to turn bluetooth back on & my trackpad is bluetooth.
 brew "blueutil"
-# A better way to navigate directories.
-brew "broot"
 # Source code tag files.
 brew "ctags"
 # `ls` but written in Rust with better defaults.
@@ -142,12 +125,6 @@ brew "fontforge"
 brew "gh" # Will replace hub.
 # Make pretty graphs.
 brew "graphviz"
-# CLI Jira.
-brew "go-jira"
-# Alternative to `cat` & `bat`.
-brew "highlight"
-# Better top.
-brew "htop"
 # Older GitHub support to git on the command-line.  This essentially wraps git
 # and adds on some GitHub-specific nicities.
 brew "hub"
@@ -159,7 +136,7 @@ brew "imagemagick"
 brew "jq"
 # CLI macOS app store.
 brew "mas"
-# Slide decks in plain-text Markdown rendered in the Terminal. 😍
+# Slide decks in plain-text Markdown rendered in the Terminal.
 brew "mdp"
 # Gives me `sponge`.
 brew "moreutils"
@@ -169,8 +146,6 @@ brew "mosh"
 brew "mpv"
 # Disk usage analysis tool.  Like DaisyDisk but CLI.
 brew "ncdu"
-# Single-player roguelike video game.
-brew "nethack"
 # Manages dotfiles.
 brew "rcm"
 # Best `grep` replacement.
@@ -186,8 +161,6 @@ brew "tmux"
 brew "trash"
 # Display directories as trees.
 brew "tree"
-# CLI file navigator.
-brew "vifm"
 # Best text editor ever & it's cousin.
 brew "vim"
 brew "neovim"
@@ -203,35 +176,31 @@ brew "ytop"
 cask_args appdir: "/Applications"
 
 cask "alfred"
-cask "blue-sherpa"
 cask "backblaze"
 cask "chrysalis"
 cask "dash"
 cask "discord"
 cask "docker"
-cask "dropbox"
 cask "droplr"
 cask "fantastical"
 cask "firefox"
-# cask "google-chrome"
+# cask "google-chrome" # Managed by IT.
 cask "google-cloud-sdk"
 cask "google-drive-file-stream"
 cask "intellij-idea-ce"
 cask "iTerm2"
-cask "keybase"
+# cask "keybase"
 cask "keycastr"
-cask "monodraw"
 cask "plex"
 cask "postman"
-cask "signal"
-# cask "slack"
+# cask "slack" # Managed by IT.
 cask "spotify"
 cask "steam"
 cask "temurin"
 cask "twitch"
 cask "vlc"
 cask "yubico-yubikey-manager"
-cask "zoom"
+# cask "zoom" # Managed by IT.
 
 # }}}
 # macOS App Store ---------------------------------------------------------- {{{
@@ -246,13 +215,13 @@ mas "Keynote", id: 409183694
 mas "Magnet", id: 441258766
 mas "Marked 2", id: 890031187
 mas "Numbers", id: 409203825
+mas "OmniFocus 3", id: 1346203938
 mas "Pages", id: 409201541
 mas "Pixelmator", id: 407963104
 mas "Soulver", id: 413965349
 mas "Speedtest", id: 1153157709
-mas "Things", id: 904280696
 mas "Xcode", id: 497799835
-mas "xScope", id: 889428659
+# mas "xScope", id: 889428659
 
 # }}}
 

@@ -27,7 +27,7 @@ homebrew := $(bin)/brew
 
 # asdf
 # All `asdf_plugins` should all have a coresponding entry in ~/.tool-versions.
-asdf_plugins := nodejs ruby rust sbcl sbt scala yarn
+asdf_plugins := nodejs ruby rust sbcl sbt scala yarn golang
 asdf_root := $(HOME)/.asdf
 asdf_shims := $(asdf_root)/shims
 

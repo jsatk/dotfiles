@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
-
-python ~/Development/t/t.py --task-dir ~/.plan --list TODO "$@"

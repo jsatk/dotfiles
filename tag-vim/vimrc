@@ -180,8 +180,6 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme xcodedark
-
 set synmaxcol=800
 set hlsearch
 " In regular Vim `set termguicolors` doesn't work in some situations.
