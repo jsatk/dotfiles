@@ -2,7 +2,7 @@ Host *
  AddKeysToAgent yes
  ChallengeResponseAuthentication no
  HashKnownHosts yes
- IdentityFile ~/.ssh/id_rsa
+ IdentityFile ~/.ssh/id_ed25519
  PasswordAuthentication no
  UseKeychain yes
  VisualHostKey yes
