@@ -132,7 +132,7 @@
 	# --force-with-lease flag prevents you from force pushing over the top of a
 	# colleagues commits if they commited on top of you and you haven't pulled
 	# those commits.)
-	work = !sh -c 'git fetch && git checkout @{upstream} -tb \"$@\"' _
+	work = !sh -c 'git fetch && git checkout @{upstream} -t -b \"$@\"' _
 
 # }}}
 # apply ------------------------------------------------------------------- {{{
@@ -301,7 +301,7 @@
 # web --------------------------------------------------------------------- {{{
 
 [web]
-	browser = safari
+	browser = chrome
 
 # }}}
 # diff-so-fancy ----------------------------------------------------------- {{{

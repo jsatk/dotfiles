@@ -6,8 +6,8 @@ set --export DEVELOPER $HOME/Developer
 set --export GOPATH $HOME/go
 set --export GPG_TTY (tty) # Required for gpg... sometimes... gpg is fickle and frustrating.
 set --export BAT_THEME "TwoDark" # For Bat.  See: https://github.com/sharkdp/bat
-set --export JAVA_HOME (/usr/libexec/java_home -v 1.8)
 set --local BREW_PREFIX (/opt/homebrew/bin/brew --prefix)
+set --export JAVA_HOME (/usr/libexec/java_home -v 17)
 
 
 # fzf {{{
@@ -69,4 +69,5 @@ set PATH \
 and source $HOME/.config/fish/extras.fish
 
 # }}}
+
 # vim: foldmethod=marker:foldmarker={{{,}}}
