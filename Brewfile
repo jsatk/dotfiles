@@ -73,7 +73,7 @@ brew "coursier"
 brew "nginx"
 brew "postgresql"
 brew "ruby-build"
-brew "terraform-ls"
+brew "terraform"
 brew "watchman"
 
 # }}}
