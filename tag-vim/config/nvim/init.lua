@@ -1,34 +1,9 @@
 -- 0  preamble ----------------------------------------------------- {{{
 
 -- Jesse Atkinson | jesse@jsatk.us | @jsatk | https://jsatk.us
---
--- The following was stolen from @emilyst.  I thought this was clever and
--- educational so I wanted to do the same in my own .vimrc.
---
--- Original text written by her here:
--- https://github.com/emilyst/home/blob/master/.vimrc#L3-L9
---
---     My ".vimrc" contains configures options which are core to Vim and
---     are enumerated by the `:options` command. It groups the options
---     into the same sections given by that command and in the same order
---     for reference.
---
---     Occasionally, each section contains other mappings or variable
---     settings relevant to the options adjacent to them.
---
--- It's also worth noting that a lot of options you might expect to be
--- set aren't.  The reason for that is many of the most common and
--- sensible options are set in tpope's vim-sensible, which I use.  So if
--- you're wondering why I don't have `set wildmenu`, etc., in here it's
--- because it's set in vim-sensible.
---
--- Lastly, this is a pure Lua set up for neovim using some (as of this
--- writing) bleeding edge stuff that is definitely in beta.  I maintain
--- a separate ~/.vimrc for plain Vim 8.  If you'd like to learn more
--- about Lua and specifically how to use it with neovim I recommend
--- checking out these two links:
--- https://github.com/nanotee/nvim-lua-guide/#defining-mappings.
--- https://oroques.dev/notes/neovim-init/
+
+-- This file groups the options into the same sections given by the
+-- `:options` command and in the same order for reference.
 
 -- Setup {{{
 
@@ -57,9 +32,14 @@ require("packer").startup(function()
   use({ "wbthomason/packer.nvim", opt = true})
 
   -- The plugins, sorted alphabetically.
+  use({ "AndrewRadev/splitjoin.vim" })
   use({ "ap/vim-css-color", opt = true, ft = { "css", "scss", "sass", "less" }})
   use({ "dag/vim-fish", opt = true, ft = "fish" })
-  use({ "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true }})
+  use({ "github/copilot.vim" })
+  use({
+    "nvim-lualine/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true }
+  })
   use({
     "hrsh7th/nvim-cmp",
     requires = {
@@ -71,15 +51,22 @@ require("packer").startup(function()
       { "onsails/lspkind-nvim" },
     }
   })
-  use({ "joshdick/onedark.vim" })
-  use({ "junegunn/goyo.vim", opt = true, ft = { "markdown", "tex", "mail", "text" }})
+  use({ "navarasu/onedark.nvim" })
+  use({ "junegunn/goyo.vim", opt = true, ft = { "markdown", "tex", "mail" }})
   use({ "junegunn/gv.vim" })
   use({ "junegunn/vim-easy-align" })
   use({ "junegunn/vim-peekaboo" })
   use({ "liuchengxu/vista.vim" })
   use({ "mfussenegger/nvim-dap" })
   use({ "neovim/nvim-lspconfig", requires = { "nvim-lua/lsp_extensions.nvim" }})
-  use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" }, { "kyazdani42/nvim-web-devicons" } }})
+  use({
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      { "nvim-lua/popup.nvim" },
+      { "nvim-lua/plenary.nvim" },
+      { "kyazdani42/nvim-web-devicons" },
+    }
+  })
   use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
   use({ "scalameta/nvim-metals" })
   use({ "sheerun/vim-polyglot" })
@@ -87,7 +74,11 @@ require("packer").startup(function()
   use({ "tpope/vim-abolish" })
   use({ "tpope/vim-commentary" })
   use({ "tpope/vim-dadbod", opt = true, ft = { "sql", "psql" }})
-  use({ "tpope/vim-dispatch", opt = true, cmd = { "Dispatch", "Make", "Focus", "Start" }})
+  use({
+    "tpope/vim-dispatch",
+    opt = true,
+    cmd = { "Dispatch", "Make", "Focus", "Start" }
+  })
   use({ "tpope/vim-eunuch" })
   use({ "tpope/vim-fugitive" })
   use({ "tpope/vim-jdaddy", opt = true, ft = { "json" }})
@@ -135,19 +126,13 @@ vim.opt_global.list = true
 -- }}}
 -- 5  syntax, highlighting and spelling ---------------------------- {{{
 
+-- NOTE: My colorscheme OneDark's settings is defined in the plugins
+-- section.
+
 vim.opt_global.background = "dark"
 vim.opt_global.termguicolors = true
 
---- Needed to esnure float background doesn't get odd highlighting
---- https://github.com/joshdick/onedark.vim#onedarkset_highlight
---- https://github.com/scalameta/coc-metals/wiki/Commonly-Asked-Questions
-vim.cmd([[augroup colorset]])
-vim.cmd([[autocmd!]])
-vim.cmd([[autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" } })]])
-vim.cmd([[augroup END]])
-
 vim.g["onedark_terminal_italics"] = 1
-vim.cmd("colorscheme onedark")
 
 vim.opt_global.synmaxcol = 800
 vim.opt_global.hlsearch = true
@@ -362,6 +347,7 @@ vim.opt_global.backup = false
 vim.opt_global.writebackup = false
 vim.opt_global.autowrite = true
 vim.opt_global.backupdir = vim.fn.expand("~/.config/nvim/tmp/backup//")
+vim.opt_global.fixendofline = true
 
 -- Make the backup directory automatically if it doesn't already exist.
 if vim.fn.isdirectory(vim.o.backupdir) == 0 then vim.fn.mkdir(vim.o.backupdir, "p") end
@@ -550,207 +536,12 @@ vim.cmd([[xmap ga <Plug>(EasyAlign)]])
 vim.cmd([[nmap ga <Plug>(EasyAlign)]])
 
 -- }}}
--- -- Galaxyline {{{
-
--- local gl = require('galaxyline')
--- local gls = gl.section
--- gl.short_line_list = {'LuaTree', 'vista'}
-
--- local colors = {
---   bg = '#282c34', -- black
---   line_bg = '#353644', -- dark grey
---   fg = '#abb2bf', -- white
-
---   dark_red = '#be5046',
---   dark_yellow = '#d19a66',
---   gutter_grey = '#4b5263',
---   comment_grey = '#5c6370',
-
---   yellow = '#e5c07b', -- light yellow
---   cyan = '#56b6c2', -- cyan
---   green = '#98c379', -- green
---   orange = '#be5046',
---   purple = '#5d4d7a',
---   magenta = '#c678dd', -- magenta
---   blue = '#61afef', -- blue
---   red = '#e06c75' -- light red
--- }
-
--- local buffer_not_empty = function()
---   if vim.fn.empty(vim.fn.expand('%:t')) ~= 1 then
---     return true
---   end
---   return false
--- end
-
--- gls.left[1] = {
---   ViMode = {
---     provider = function()
---       local mode_color = {
---         n = colors.blue,
---         i = colors.green,
---         [''] = colors.magenta, -- visual block
---         v = colors.magenta,
---         [''] = colors.magenta,
---         V = colors.magenta,
---         c = colors.red,
---         no = colors.magenta,
---         s = colors.orange,
---         S = colors.orange,
---         [''] = colors.orange, -- select block
---         ic = colors.yellow,
---         R = colors.purple,
---         Rv = colors.purple,
---         cv = colors.red,
---         ce = colors.red,
---         r = colors.cyan,
---         rm = colors.cyan,
---         ['r?'] = colors.cyan,
---         ['!'] = colors.red,
---         t = colors.red
---       }
---       vim.api.nvim_command('hi GalaxyViMode guifg=' .. mode_color[vim.fn.mode()])
---       return '▊ '
---     end,
---     highlight = {colors.red, colors.line_bg}
---   }
--- }
-
--- gls.left[2] = {
---   FileIcon = {
---     provider = 'FileIcon',
---     condition = buffer_not_empty,
---     highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.line_bg}
---   }
--- }
-
--- gls.left[3] = {
---   FileName = {
---     provider = {'FileName'},
---     condition = buffer_not_empty,
---     highlight = {colors.fg, colors.line_bg}
---   }
--- }
-
--- gls.left[4] = {
---   GitIcon = {
---     provider = function()
---       return '  '
---     end,
---     condition = require('galaxyline.provider_vcs').check_git_workspace,
---     highlight = {colors.orange, colors.line_bg}
---   }
--- }
-
--- gls.left[5] = {
---   GitBranch = {
---     provider = 'GitBranch',
---     condition = require('galaxyline.provider_vcs').check_git_workspace,
---     highlight = {colors.fg, colors.line_bg}
---   }
--- }
-
--- gls.left[6] = {
---   LeftEnd = {
---     provider = function()
---       return ''
---     end,
---     separator = ' ',
---     separator_highlight = {colors.line_bg, colors.line_bg},
---     highlight = {colors.bg, colors.line_bg}
---   }
--- }
-
--- gls.left[7] = {
---   DiagnosticError = {
---     provider = 'DiagnosticError',
---     icon = ' ▬ ',
---     highlight = {colors.red, colors.bg}
---   }
--- }
-
--- gls.left[8] = {
---   DiagnosticWarn = {
---     provider = 'DiagnosticWarn',
---     icon = ' ▬ ',
---     highlight = {colors.yellow, colors.bg}
---   }
--- }
-
--- gls.left[9] = {
---   MetalsStatus = {
---     provider = function()
---       return '  ' .. (vim.g['metals_status'] or '')
---     end,
---     highlight = {colors.fg, colors.bg}
---   }
--- }
-
--- gls.right[1] = {
---   FileFormat = {
---     provider = 'FileFormat',
---     separator = ' ',
---     separator_highlight = {colors.bg, colors.line_bg},
---     highlight = {colors.fg, colors.line_bg}
---   }
--- }
-
--- gls.right[2] = {
---   LineInfo = {
---     provider = 'LineColumn',
---     separator = ' | ',
---     separator_highlight = {colors.blue, colors.line_bg},
---     highlight = {colors.fg, colors.line_bg}
---   }
--- }
-
--- gls.right[3] = {
---   ScrollBar = {
---     provider = 'ScrollBar',
---     separator = ' | ',
---     separator_highlight = {colors.blue, colors.line_bg},
---     highlight = {colors.blue, colors.purple}
---   }
--- }
-
--- gls.short_line_left[1] = {
---   BufferType = {
---     provider = 'FileTypeName',
---     separator = '',
---     separator_highlight = {colors.purple, colors.bg},
---     highlight = {colors.fg, colors.purple}
---   }
--- }
-
--- gls.short_line_right[1] = {
---   BufferIcon = {
---     provider = 'BufferIcon',
---     separator = '',
---     separator_highlight = {colors.purple, colors.bg},
---     highlight = {colors.fg, colors.purple}
---   }
--- }
-
--- -- }}}
 -- Gundo {{{
 
 map("n", "<F5>", ":GundoToggle<CR>")
 
 -- }}}
 -- Lualine {{{
-
--- require('lualine').setup({
---   options = {
---     theme = 'onedark'
---   },
---   sections = {
---     lualine_b = {
---       'branch',
---       'diagnostics',
---       'g:metals_status'
---     }
---   }
--- })
 
 -- Eviline config for lualine
 -- Author: shadmansaleh
@@ -1039,6 +830,18 @@ require("lspconfig").dockerls.setup {}
 require("lspconfig").gopls.setup {}
 require("lspconfig").graphql.setup {}
 require("lspconfig").rust_analyzer.setup {}
+require("lspconfig").sumneko_lua.setup {
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim", "use" },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+    },
+  },
+}
 require("lspconfig").terraformls.setup {}
 require("lspconfig").tsserver.setup {}
 require("lspconfig").vimls.setup {}
@@ -1063,10 +866,10 @@ map("n", "<leader>ws", [[<cmd>lua require'metals'.worksheet_hover()<CR>]])
 -- ```
 map("n", "<leader>a", [[<cmd>lua vim.diagnostic.setqflist()<CR>]])
 
-metals_config = require("metals").bare_config()
+Metals_config = require("metals").bare_config()
 
 -- Example of settings
-metals_config.settings = {
+Metals_config.settings = {
   showImplicitArguments = true,
   showInferredType = true,
   excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
@@ -1074,42 +877,36 @@ metals_config.settings = {
 }
 
 -- Example of how to ovewrite a handler
-metals_config.handlers["textDocument/publishDiagnostics"] =
+Metals_config.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = { prefix = "" }})
-
--- Example if you are including snippets
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-metals_config.capabilities = capabilities
 
 -- Exhaustive match support, etc.
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-metals_config.capabilities = capabilities
 
-metals_config.init_options.statusBarProvider = "on"
+Metals_config.capabilities = capabilities
+
+Metals_config.init_options.statusBarProvider = "on"
 
 -- For DAP.
-metals_config.on_attach = function(client, bufnr)
+Metals_config.on_attach = function(_, _)
   require("metals").setup_dap()
 end
 
 vim.cmd([[augroup lsp]])
 vim.cmd([[autocmd!]])
 vim.cmd([[autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
-vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach(metals_config)]])
+vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach(Metals_config)]])
 vim.cmd([[augroup END]])
 
 -- Make the CodeLens color not the same color as the regular code.
 vim.cmd([[autocmd ColorScheme * highlight link LspCodeLens Conceal]])
 
 -- }}}
--- Polyglot {{{
+-- OneDark {{{
 
--- For some reason the lua plugin that Polyglot includes does some
--- asinine indenting.
-vim.g["polyglot_disabled"] = { "lua" }
+require("onedark").setup { style = "cool" }
+require("onedark").load()
 
 -- }}}
 -- Projectionist {{{
@@ -1198,7 +995,27 @@ require("nvim-treesitter.configs").setup {
     use_virtual_text = true,
     lint_events = { "BufWrite", "CursorHold" }
   },
-  ensure_installed = "maintained",
+  ensure_installed = {
+    "bash",
+    "commonlisp",
+    "css",
+    "dockerfile",
+    "fish",
+    "go",
+    "html",
+    "javascript",
+    "json",
+    "lua",
+    "markdown",
+    "php",
+    "rust",
+    "scala",
+    "scss",
+    "toml",
+    "typescript",
+    "vim",
+    "yaml"
+  },
   highlight = { enable = true }
 }
 
@@ -1215,4 +1032,4 @@ map("n", "<leader>t", ":<C-u>Vista!!<CR>")
 
 -- }}}
 
--- vim: set foldmethod=marker foldlevel=0 textwidth=72:
+-- vim: set foldmethod=marker foldlevel=0 textwidth=72 colorcolumn=80:

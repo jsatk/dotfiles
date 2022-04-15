@@ -94,9 +94,8 @@
 	#      ignore in your own release-notes.
 	release-notes = "!f() { \
 		ORG='ck'; \
-		IGNORE_AUTHOR='ci-user-ck'; \
-		PR_URL=$(git config remote.origin.url | sed -e 's|git@|https://|' -e \"s|com:$ORG|com/$ORG|\" -e 's|.git|/pull/|'); \
-		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --author=\"$IGNORE_AUTHOR\" | \
+		PR_URL=\"$(git config remote.origin.url)/pull/\"; \
+		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --grep=\"FH-000\" | \
 		sed \"s|(#|($PR_URL|g\"; \
 	}; f"
 
@@ -125,7 +124,7 @@
 	# - Sets the default destination of `push` to the branch we're creating.
 	#
 	# Since we have `pull.rebase = true` this means that every `pull` will rebase
-	# this branche's commits on top of the branch we cut from.  Meaning that after
+	# this branch's commits on top of the branch we cut from.  Meaning that after
 	# we do a `git pull` in order to push we have to do a force push which is
 	# dangerous when collaborating.  In order to avoid awful situations use `git
 	# push --force-with-lease` which I have aliased to `git please`.  (The
@@ -192,7 +191,7 @@
 	autocrlf = input
 	ignorecase = false
 	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
-	pager = diff-so-fancy | less --tabs=4 -RFX
+	pager = delta
 	excludesfile = ~/.gitignore
 
 # }}}
@@ -202,10 +201,17 @@
 	helper = osxkeychain
 
 # }}}
+# delta ------------------------------------------------------------------- {{{
+
+[delta]
+	navigate = true  # use n and N to move between diff sections
+
+# }}}
 # diff -------------------------------------------------------------------- {{{
 
 [diff]
 	algorithm = patience
+ 	colorMoved = default
 
 # }}}
 # github ------------------------------------------------------------------ {{{
@@ -265,6 +271,12 @@
 	defaultBranch = main
 
 # }}}
+# interactive ------------------------------------------------------------- {{{
+
+[interactive]
+	diffFilter = delta --color-only
+
+# }}}
 # merge ------------------------------------------------------------------- {{{
 
 [merge]
@@ -304,11 +316,6 @@
 	browser = chrome
 
 # }}}
-# diff-so-fancy ----------------------------------------------------------- {{{
 
-[diff-so-fancy]
-	first-run = false
-
-# }}}
 # vim: textwidth=80:noexpandtab:shiftwidth=2
 # vim: foldmethod=marker:foldmarker={{{,}}}:syntax=gitconfig

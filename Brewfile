@@ -46,8 +46,9 @@ brew "w3m"
 # }}}
 # Version Control ---------------------------------------------------------- {{{
 
-brew "git"
 brew "gist"
+brew "git"
+brew "git-delta"
 brew "mercurial"
 # CLI repository browsing.
 brew "tig"
@@ -70,6 +71,7 @@ brew "asdf"
 # `bloop`.
 # See here for more details: https://github.com/scalacenter/bloop/issues/1467
 brew "coursier"
+brew "lua-language-server"
 brew "nginx"
 brew "postgresql"
 brew "ruby-build"

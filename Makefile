@@ -5,7 +5,6 @@
 # Gloabl Binaries
 global_node_modules := \
 	bash-language-server \
-	diff-so-fancy \
 	dockerfile-language-server-nodejs \
 	neovim \
 	graphql-language-service-cli \
