@@ -119,7 +119,7 @@ vim.opt_global.linebreak = true
 vim.opt_global.breakindent = true
 vim.opt_global.showbreak = "↪"
 vim.opt_global.lazyredraw = true
-vim.opt_global.list = true
+vim.opt.list = true
 
 -- }}}
 -- 5  syntax, highlighting and spelling ---------------------------- {{{
@@ -194,12 +194,13 @@ end
 -- }}}
 -- 11 messages and info -------------------------------------------- {{{
 
-vim.opt_global.showcmd = true
-vim.opt_global.showmode = true
+vim.o.showcmd = true
+vim.o.showmode = true
 
 -- Avoid showing message extra message when using completion
 -- Ensure autocmd works for Filetype
-vim.o.shortmess = string.gsub(vim.o.shortmess, "F", "") .. "c"
+vim.opt.shortmess:remove("F")
+vim.opt.shortmess:append("c")
 
 -- }}}
 -- 12 selecting text ----------------------------------------------- {{{
@@ -280,8 +281,8 @@ vim.o.foldexpr="nvim_treesitter#foldexpr()"
 
 vim.opt_global.timeoutlen = 500
 
-vim.g["mapleader"] = ","
-vim.g["maplocalleader"] = ","
+vim.g.mapleader = ","
+vim.g.maplocalleader = ","
 -- Do not show stupid q: window
 map("", "q:", ":q")
 -- I don't know how to use ex mode and it scares me.
@@ -300,32 +301,26 @@ map("n", "N", "Nzzzv")
 -- Trim trailing whitespace.
 map("n", "<leader><space>", [[mz:%s/\s\+$//<cr>:let @/=''<cr>`z]])
 
--- Only show when not in insert mode.
-vim.cmd([[augroup trailing]])
-vim.cmd([[autocmd!]])
-vim.cmd([[autocmd InsertEnter * :set listchars-=trail:⌴]])
-vim.cmd([[autocmd InsertLeave * :set listchars+=trail:⌴]])
-vim.cmd([[augroup END]])
-
 -- My garbage brain can't ever remember digraph codes.
 map("i", "<c-k><c-k>", [[<esc>:help digraph-table<cr>]])
 
 -- Only show cursorline in the current window and in normal mode.
-vim.cmd([[augroup cline]])
-vim.cmd([[autocmd!]])
-vim.cmd([[autocmd WinLeave,InsertEnter * set nocursorline]])
-vim.cmd([[autocmd WinEnter,InsertLeave * set cursorline]])
-vim.cmd([[augroup END]])
+local cline = vim.api.nvim_create_augroup("cline", { clear = true })
+vim.api.nvim_create_autocmd({ "WinLeave", "InsertEnter" }, {
+  group = cline,
+  callback = function()
+    vim.o.cursorline = false
+  end
+})
+vim.api.nvim_create_autocmd({ "WinEnter", "InsertLeave" }, {
+  group = cline,
+  callback = function()
+    vim.o.cursorline = true
+  end
+})
 
 -- Keep the cursor in place while joining lines
 map("n", "J", "mzJ`z")
-
--- TODO: Toggle quickfix
--- function! QuickFixIsOpen()
---   let l:result = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
---   return !empty(l:result)
--- endfunction
--- nnoremap yoq :<C-R>=QuickFixIsOpen() ? "cclose" : "copen"<CR><CR>
 
 -- Quick editing some common dotfiles.
 map("n", "<leader>ed", ":vsplit ~/.vim/custom-dictionary.utf-8.add<cr>")
@@ -394,10 +389,11 @@ vim.opt_global.ttyfast = true
 vim.opt_global.startofline = false
 
 -- Make sure Vim returns to the same line when you reopen a file.
-vim.cmd([[augroup line_return]])
-vim.cmd([[autocmd!]])
-vim.cmd([[autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute 'normal! g`"zvzz' | endif]])
-vim.cmd([[augroup END]])
+local line_return = vim.api.nvim_create_augroup("line_return", { clear = true })
+vim.api.nvim_create_autocmd("BufReadPost", {
+  group = line_return,
+  command = [[if line("'\"") > 0 && line("'\"") <= line("$") | execute 'normal! g`"zvzz' | endif]]
+})
 
 -- Always show the sign column so errors or other LSP features that use
 -- the gutter don't continually pop in and out pushing everything over
@@ -893,10 +889,10 @@ map("n", "<leader>ws", [[<cmd>lua require'metals'.worksheet_hover()<CR>]])
 -- ```
 map("n", "<leader>a", [[<cmd>lua vim.diagnostic.setqflist()<CR>]])
 
-Metals_config = require("metals").bare_config()
+local metals_config = require("metals").bare_config()
 
 -- Example of settings
-Metals_config.settings = {
+metals_config.settings = {
   showImplicitArguments = true,
   showInferredType = true,
   excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
@@ -904,30 +900,50 @@ Metals_config.settings = {
 }
 
 -- Example of how to ovewrite a handler
-Metals_config.handlers["textDocument/publishDiagnostics"] =
+metals_config.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = { prefix = "" }})
 
 -- Exhaustive match support, etc.
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-Metals_config.capabilities = capabilities
+metals_config.capabilities = capabilities
 
-Metals_config.init_options.statusBarProvider = "on"
+metals_config.init_options.statusBarProvider = "on"
 
 -- For DAP.
-Metals_config.on_attach = function(_, _)
+metals_config.on_attach = function(_, _)
   require("metals").setup_dap()
 end
 
-vim.cmd([[augroup lsp]])
-vim.cmd([[autocmd!]])
-vim.cmd([[autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
-vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach(Metals_config)]])
-vim.cmd([[augroup END]])
+local lsp = vim.api.nvim_create_augroup("lsp", { clear = true })
+vim.api.nvim_create_autocmd("Filetype", {
+  group = lsp,
+  pattern = "*.scala",
+  callback = function()
+    vim.o.cursorline = false
+  end
+})
+vim.api.nvim_create_autocmd({ "WinEnter", "InsertLeave" }, {
+  group = cline,
+  callback = function()
+    vim.o.cursorline = true
+  end
+})
+
+local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "scala", "sbt", "java" },
+  callback = function()
+    require("metals").initialize_or_attach(metals_config)
+  end,
+  group = nvim_metals_group,
+})
 
 -- Make the CodeLens color not the same color as the regular code.
-vim.cmd([[autocmd ColorScheme * highlight link LspCodeLens Conceal]])
+vim.api.nvim_create_autocmd("ColorScheme", {
+  command = "hi! link LspCodeLens CursorLine",
+})
 
 -- }}}
 -- OneDark {{{
