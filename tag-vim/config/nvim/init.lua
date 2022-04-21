@@ -20,9 +20,7 @@ vim.opt_global.shell = "fish"
 -- }}}
 -- Plugins {{{
 
--- All plugins are in ~/.config/nvim/lua/plugins.lua.
--- All individual plugin settings are in
--- ~/.config/nvim/lua/settings/$PLUGIN_NAME.
+-- All plugin settings are lower in this file under section 99.
 
 -- Only required if you have packer in your `opt` pack.
 vim.cmd([[packadd packer.nvim]])
@@ -157,10 +155,13 @@ vim.opt_global.guifont = "OperatorMonoForPowerline-Book:h18"
 --
 -- Also for some reason lua doesn't set the spellfile correctly when I
 -- do it the "lua" way so `cmd` it is.
-vim.cmd("set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add")
+vim.opt_global.spellfile = {
+  vim.fn.expand "~/.vim/custom-dictionary.utf-8.add",
+  vim.fn.expand "~/.vim-local-dictionary.utf-8.add",
+}
 map("n", "zG", "2zg")
 
-vim.cmd([[hi! Comment gui=italic]])
+vim.cmd([[hi! Comment gui=italic]]) -- No lua equivelent yet.
 
 -- Highlight VCS conflict markers
 vim.fn.matchadd("ErrorMsg", "^\\(<\\|=\\|>\\)\\{7\\}\\([^=].\\+\\)\\?$")
@@ -211,10 +212,7 @@ vim.opt_global.wrapmargin = 0
 vim.opt_global.dictionary = "/usr/share/dict/words"
 vim.opt_global.showmatch = true
 vim.opt_global.nrformats = "octal,hex,alpha" -- Increment alpha strings with Vim.
-
--- As of this writing (2021-02-13) for reasons unknown vim.o.undofile
--- isn't a thing so we can't set it
-vim.cmd("set undofile")
+vim.opt_global.undofile = true
 -- The extra slash on the end saves files under the name of their full path
 -- with the / character replaced with a %.
 vim.opt_global.undodir = vim.fn.expand("~/.config/nvim/tmp/undo//")
@@ -236,7 +234,6 @@ vim.opt_global.expandtab = true
 -- 15 folding ------------------------------------------------------ {{{
 
 vim.opt_global.foldenable = true
-vim.opt_global.foldlevelstart = 0
 
 map("n", "<Space>", "za")
 map("v", "<Space>", "za")
@@ -266,9 +263,8 @@ set foldtext=MyFoldText()
 false
 )
 
--- TODO: Convert to lua when we can.
-vim.cmd("set foldmethod=expr")
-vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
+vim.o.foldmethod="expr"
+vim.o.foldexpr="nvim_treesitter#foldexpr()"
 
 -- }}}
 -- 16 diff mode ---------------------------------------------------- {{{
@@ -416,6 +412,8 @@ vim.opt.signcolumn = "yes"
 local lspkind = require("lspkind")
 lspkind.init()
 local cmp = require("cmp")
+local types = require("cmp.types")
+
 cmp.setup({
   sources = {
     { name = "nvim_lsp" },
@@ -429,17 +427,48 @@ cmp.setup({
       vim.fn["vsnip#anonymous"](args.body)
     end,
   },
-  -- There are several default mappints defined in default.lua by the
-  -- plugin's author.
-  -- See: https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/default.lua#L83
   mapping = {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm({
+    ['<Down>'] = cmp.config.mapping({
+      i = cmp.config.mapping.select_next_item({
+        behavior = types.cmp.SelectBehavior.Select
+      }),
+      c = function(fallback)
+        cmp.close()
+        vim.schedule(cmp.suspend())
+        fallback()
+      end,
+    }),
+    ['<Up>'] = cmp.config.mapping({
+      i = cmp.config.mapping.select_prev_item({
+        behavior = types.cmp.SelectBehavior.Select
+      }),
+      c = function(fallback)
+        cmp.close()
+        vim.schedule(cmp.suspend())
+        fallback()
+      end,
+    }),
+    ['<C-d>'] = cmp.config.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.config.mapping.scroll_docs(4),
+    ['<C-space>'] = cmp.config.mapping.complete(),
+    ['<CR>'] = cmp.config.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
+    ['<C-n>'] = cmp.config.mapping(
+      cmp.config.mapping.select_next_item({
+        behavior = types.cmp.SelectBehavior.Insert
+      }),
+      { 'i', 'c' }
+    ),
+    ['<C-p>'] = cmp.config.mapping(
+      cmp.config.mapping.select_prev_item({
+        behavior = types.cmp.SelectBehavior.Insert
+      }),
+      { 'i', 'c' }
+    ),
+    ['<C-y>'] = cmp.config.mapping.confirm({ select = false }),
+    ['<C-e>'] = cmp.config.mapping.abort(),
   },
   formatting = {
     format = lspkind.cmp_format {
@@ -453,9 +482,7 @@ cmp.setup({
     },
   },
   experimental = {
-    -- I like the new menu better! Nice work hrsh7th
     native_menu = false,
-    -- Let's play with this for a day or two
     ghost_text = true,
   },
 })
@@ -951,18 +978,18 @@ vim.g.projectionist_heuristics = {
   ["build.sbt"] = {
     ["README.md"] = { type = "doc" },
     ["*"] = {
-      console = "bloop console",
-      make = "bloop compile",
-      start = "bloop run"
+      console = "bloop-jvm console",
+      make = "bloop-jvm compile",
+      start = "bloop-jvm run"
     },
     ["src/main/scala/*.scala"] = {
-      alternate = "src/test/scala/{}Spec.scala",
+      alternate = "src/test/scala/{}Test.scala",
       type = "src"
     },
-    ["src/test/scala/*Spec.scala"] = {
+    ["src/test/scala/*Test.scala"] = {
       alternate = "src/main/scala/{}.scala",
       type = "test",
-      dispatch = "bloop test --no-color -o {dot}Spec"
+      dispatch = "bloop-jvm test --no-color -o {dot}Test"
     },
     ["build.sbt"] = { type = "config" },
     ["*.sbt"] = { type = "config" },

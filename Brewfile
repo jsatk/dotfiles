@@ -198,7 +198,7 @@ cask "postman"
 # cask "slack" # Managed by IT.
 cask "spotify"
 cask "steam"
-cask "temurin"
+# cask "temurin" # Managed by IT.
 cask "twitch"
 cask "vlc"
 cask "yubico-yubikey-manager"
