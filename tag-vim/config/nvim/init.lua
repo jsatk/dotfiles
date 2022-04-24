@@ -7,14 +7,6 @@
 
 -- Setup {{{
 
-local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
-  if opts then
-    options = vim.tbl_extend("force", options, opts)
-  end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
 vim.opt_global.shell = "fish"
 
 -- }}}
@@ -135,7 +127,6 @@ vim.g["onedark_terminal_italics"] = 1
 vim.opt_global.synmaxcol = 800
 vim.opt_global.hlsearch = true
 vim.opt_global.cursorline = true
-vim.opt_global.guifont = "OperatorMonoForPowerline-Book:h18"
 
 -- Stolen from Steve Losh
 --
@@ -159,7 +150,7 @@ vim.opt_global.spellfile = {
   vim.fn.expand "~/.vim/custom-dictionary.utf-8.add",
   vim.fn.expand "~/.vim-local-dictionary.utf-8.add",
 }
-map("n", "zG", "2zg")
+vim.keymap.set("n", "zG", "2zg")
 
 vim.cmd([[hi! Comment gui=italic]]) -- No lua equivelent yet.
 
@@ -236,9 +227,9 @@ vim.opt_global.expandtab = true
 
 vim.opt_global.foldenable = true
 
-map("n", "<Space>", "za")
-map("v", "<Space>", "za")
-map("n", "z0", "zcz0")
+vim.keymap.set("n", "<Space>", "za")
+vim.keymap.set("v", "<Space>", "za")
+vim.keymap.set("n", "z0", "zcz0")
 
 -- TODO: Convert this to lua.
 vim.api.nvim_exec(
@@ -284,25 +275,25 @@ vim.opt_global.timeoutlen = 500
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 -- Do not show stupid q: window
-map("", "q:", ":q")
+vim.keymap.set("", "q:", ":q")
 -- I don't know how to use ex mode and it scares me.
-map("", "Q", "<Nop>")
+vim.keymap.set("", "Q", "<Nop>")
 -- Split line (sister to [J]oin lines)
-map("n", "S", "i<cr><esc><right>")
+vim.keymap.set("n", "S", "i<cr><esc><right>")
 -- switch to last file
-map("n", "<leader><leader>", "<c-^>")
+vim.keymap.set("n", "<leader><leader>", "<c-^>")
 -- redraw the buffer
-map("n", "<leader>r", ":syntax sync fromstart<cr>:redraw!<cr>")
+vim.keymap.set("n", "<leader>r", ":syntax sync fromstart<cr>:redraw!<cr>")
 
 -- Keep search matches in the middle of the window.
-map("n", "n", "nzzzv")
-map("n", "N", "Nzzzv")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
 
 -- Trim trailing whitespace.
-map("n", "<leader><space>", [[mz:%s/\s\+$//<cr>:let @/=''<cr>`z]])
+vim.keymap.set("n", "<leader><space>", [[mz:%s/\s\+$//<cr>:let @/=''<cr>`z]])
 
 -- My garbage brain can't ever remember digraph codes.
-map("i", "<c-k><c-k>", [[<esc>:help digraph-table<cr>]])
+vim.keymap.set("i", "<c-k><c-k>", [[<esc>:help digraph-table<cr>]])
 
 -- Only show cursorline in the current window and in normal mode.
 local cline = vim.api.nvim_create_augroup("cline", { clear = true })
@@ -320,16 +311,14 @@ vim.api.nvim_create_autocmd({ "WinEnter", "InsertLeave" }, {
 })
 
 -- Keep the cursor in place while joining lines
-map("n", "J", "mzJ`z")
+vim.keymap.set("n", "J", "mzJ`z")
 
 -- Quick editing some common dotfiles.
-map("n", "<leader>ed", ":vsplit ~/.vim/custom-dictionary.utf-8.add<cr>")
-map("n", "<leader>ef", ":vsplit ~/.config/fish/config.fish<cr>")
-map("n", "<leader>eg", ":vsplit ~/.gitconfig<cr>")
-map("n", "<leader>em", ":vsplit ~/.muttrc<cr>")
-map("n", "<leader>ep", ":vsplit ~/Developer/jsatk.us/content/dotplan.md<cr>")
-map("n", "<leader>et", ":vsplit ~/.tmux.conf<cr>")
-map("n", "<leader>ev", ":vsplit ~/.config/nvim/init.lua<cr>")
+vim.keymap.set("n", "<leader>ef", ":vsplit ~/.config/fish/config.fish<cr>")
+vim.keymap.set("n", "<leader>eg", ":vsplit ~/.gitconfig<cr>")
+vim.keymap.set("n", "<leader>em", ":vsplit ~/.muttrc<cr>")
+vim.keymap.set("n", "<leader>et", ":vsplit ~/.tmux.conf<cr>")
+vim.keymap.set("n", "<leader>ev", ":vsplit ~/.config/nvim/init.lua<cr>")
 
 -- }}}
 -- 18 reading and writing files ------------------------------------ {{{
@@ -347,9 +336,7 @@ if vim.fn.isdirectory(vim.o.backupdir) == 0 then vim.fn.mkdir(vim.o.backupdir, "
 -- 19 the swap file ------------------------------------------------ {{{
 
 vim.opt_global.directory = vim.fn.expand("~/.config/nvim/tmp/swap//")
--- As of this writing (2021-02-13) for reasons unknown vim.o.noswapfile
--- isn't a thing in Lua + Neovim so we can't set it.
-vim.cmd("set noswapfile")
+vim.o.swapfile = false
 
 -- Make the swap directory automatically if it doesn't already exist.
 if vim.fn.isdirectory(vim.o.directory) == 0 then vim.fn.mkdir(vim.o.directory, "p") end
@@ -486,25 +473,20 @@ cmp.setup({
 -- }}}
 -- DAP (Debug Adapter Protocol) {{{
 
+local dap = require("dap")
+
 -- Mnemonic to remember these:
 -- <leader>d - "d" for DAP
 -- "c" for "continue".
-map("n", "<leader>dc", [[<cmd>lua require"dap".continue()<CR>]])
+vim.keymap.set("n", "<leader>dc", dap.continue)
 -- "r" for "REPL".
-map("n", "<leader>dr", [[<cmd>lua require"dap".repl.toggle()<CR>]])
+vim.keymap.set("n", "<leader>dr", dap.repl.open)
 -- "tb" for "toggle breakpoint".
-map("n", "<leader>dtb", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]])
+vim.keymap.set("n", "<leader>dtb", dap.toggle_breakpoint)
 -- "so" for "step over".
-map("n", "<leader>dso", [[<cmd>lua require"dap".step_over()<CR>]])
+vim.keymap.set("n", "<leader>dso", dap.step_over)
 -- "si" for "step into".
-map("n", "<leader>dsi", [[<cmd>lua require"dap".step_into()<CR>]])
--- "s" for "scopes".  I realize this can be confused with `so` and `si`
--- but there's little to no harm in acidentally triggering `.scopes()`
--- so at worst if I don't press the `so` or `si` fast enough I'll just
--- see the scopes. ¯\_(ツ)_/¯
-map("n", "<leader>ds", [[<cmd>lua require"dap.ui.variables".scopes()<CR>]])
-
-local dap = require("dap")
+vim.keymap.set("n", "<leader>dsi", dap.step_into)
 
 vim.fn.sign_define('DapBreakpoint', { text="🛑", texthl="", linehl="", numhl="" })
 vim.fn.sign_define('DapStopped', { text="✋", texthl="", linehl="", numhl="" })
@@ -544,7 +526,7 @@ dap.configurations.scala = {
 -- See: https://github.com/tpope/vim-dispatch/issues/222#issuecomment-493273080
 vim.opt_global.shellpipe = "2>&1|tee"
 
-map("n", "<F9>", ":Dispatch<CR>")
+vim.keymap.set("n", "<F9>", ":Dispatch<CR>")
 
 -- }}}
 -- EasyAlign {{{
@@ -561,7 +543,7 @@ vim.cmd([[nmap ga <Plug>(EasyAlign)]])
 -- }}}
 -- Gundo {{{
 
-map("n", "<F5>", ":GundoToggle<CR>")
+vim.keymap.set("n", "<F5>", ":GundoToggle<CR>")
 
 -- }}}
 -- Lualine {{{
@@ -802,38 +784,36 @@ lualine.setup(config)
 -- Default in vim for K is to open the man/help of what your cursor is
 -- on.  This keeps that muscle memory alive but instead leans on the LSP
 -- to provide the info.
--- TODO: Rewrite this so if LSP is active it uses hover otherwise does
---       the default action.
-map("n", "K", [[<cmd>lua vim.lsp.buf.hover()<CR>]])
+vim.keymap.set("n", "K", vim.lsp.buf.hover)
 
 -- Remap keys for gotos
-map("n", "gd",  [[<cmd>lua vim.lsp.buf.definition()<CR>]], { nowait = true })
-map("n", "gy",  [[<cmd>lua vim.lsp.buf.type_definition()<CR>]], { nowait = true })
-map("n", "gi",  [[<cmd>lua vim.lsp.buf.implementation()<CR>]])
-map("n", "gr",  [[<cmd>lua vim.lsp.buf.references()<CR>]])
-map("n", "gds", [[<cmd>lua vim.lsp.buf.document_symbol()<CR>]])
-map("n", "gws", [[<cmd>lua vim.lsp.buf.workspace_symbol()<CR>]])
+vim.keymap.set("n", "gd",  vim.lsp.buf.definition, { nowait = true })
+vim.keymap.set("n", "gy",  vim.lsp.buf.type_definition, { nowait = true })
+vim.keymap.set("n", "gi",  vim.lsp.buf.implementation)
+vim.keymap.set("n", "gr",  vim.lsp.buf.references)
+vim.keymap.set("n", "gds", vim.lsp.buf.document_symbol)
+vim.keymap.set("n", "gws", vim.lsp.buf.workspace_symbol)
 
 -- Remap for do codeAction of current line.
-map("n", "<leader>ca", [[<cmd>lua vim.lsp.buf.code_action()<CR>]])
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
 
 -- Remap for auto-formatting code.
-map("n", "<leader>f", [[<cmd>lua vim.lsp.buf.formatting()<CR>]])
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.formatting)
 
 -- Use `[g` and `]g` for navigate diagnostics.
-map("n", "]g", [[<cmd>lua vim.diagnostic.goto_next()<CR>]])
-map("n", "[g", [[<cmd>lua vim.diagnostic.goto_prev()<CR>]])
+vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
+vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
 
 -- Remap for rename current word
-map("n", "<leader>rn", [[<cmd>lua vim.lsp.buf.rename()<CR>]])
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
 
 -- Show only buffer diagnostics
-map("n", "<leader>d", [[<cmd>lua vim.diagnostic.setloclist()<CR>]])
+vim.keymap.set("n", "<leader>d", vim.diagnostic.setloclist)
 -- Show only that line"s diagnostics.
-map("n", "<leader>ln", [[<cmd>lua vim.diagnostic.get()<CR>]])
+vim.keymap.set("n", "<leader>ln", vim.diagnostic.get)
 -- Trigger code lens.
 -- See: https://github.com/scalameta/nvim-metals/discussions/160
-map("n", "<leader>cl", [[<cmd>lua vim.lsp.codelens.run()<CR>]])
+vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run)
 
 -- Need for symbol highlights to work correctly
 vim.cmd([[hi! link LspReferenceText CursorColumn]])
@@ -876,7 +856,7 @@ require("lspconfig").vimls.setup {}
 -- See: https://github.com/scalameta/nvim-metals/discussions/39#discussion-82302
 
 -- Used to expand decorations in worksheets
-map("n", "<leader>ws", [[<cmd>lua require'metals'.worksheet_hover()<CR>]])
+vim.keymap.set("n", "<leader>ws", require("metals").hover_worksheet)
 
 -- Show all diagnostics
 -- Note: You can limit the diagnostics you see by passing in `severity`
@@ -887,11 +867,10 @@ map("n", "<leader>ws", [[<cmd>lua require'metals'.worksheet_hover()<CR>]])
 -- vim.diagnostic.setqflist({severity = "E"}) // all errors
 -- vim.diagnostic.setqflist({severity = "W"}) // all warnings
 -- ```
-map("n", "<leader>a", [[<cmd>lua vim.diagnostic.setqflist()<CR>]])
+vim.keymap.set("n", "<leader>a", vim.diagnostic.setqflist)
 
 local metals_config = require("metals").bare_config()
 
--- Example of settings
 metals_config.settings = {
   showImplicitArguments = true,
   showInferredType = true,
@@ -899,9 +878,11 @@ metals_config.settings = {
   superMethodLensesEnabled = true
 }
 
--- Example of how to ovewrite a handler
-metals_config.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = { prefix = "" }})
+metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = { prefix = "" }
+  }
+)
 
 -- Exhaustive match support, etc.
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -1020,12 +1001,12 @@ vim.g["github_enterprise_urls"] = { "https://code.corp.creditkarma.com" }
 -- }}}
 -- Telescope {{{
 
-map("n", "<leader>ff", [[<cmd>lua require('telescope.builtin').find_files()<cr>]])
-map("n", "<leader>fg", [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
-map("n", "<leader>fb", [[<cmd>lua require('telescope.builtin').buffers()<cr>]])
-map("n", "<leader>fh", [[<cmd>lua require('telescope.builtin').help_tags()<cr>]])
-map("n", "<leader>gb", [[<cmd>lua require('telescope.builtin').git_branches()<cr>]])
-map("n", "<leader>fm", [[<cmd>lua require("telescope").extensions.metals.commands()<CR>]])
+vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
+vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
+vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers)
+vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
+vim.keymap.set("n", "<leader>gb", require("telescope.builtin").git_branches)
+vim.keymap.set("n", "<leader>fm", require("telescope").extensions.metals.commands)
 
 -- }}}
 -- Treesitter {{{
@@ -1069,7 +1050,7 @@ vim.g["vista_icon_indent"] = { "╰─▸ ", "├─▸ " }
 vim.g["vista_default_executive"] = "nvim_lsp"
 vim.g["vista#renderer#enable_icon"] = 1
 
-map("n", "<leader>t", ":<C-u>Vista!!<CR>")
+vim.keymap.set("n", "<leader>t", ":<C-u>Vista!!<CR>")
 
 -- }}}
 
