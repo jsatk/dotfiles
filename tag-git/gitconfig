@@ -52,8 +52,8 @@
 	# See: https://github.com/cli/cli
 	hub-pr = !hub pull-request --browse
 
-	# Pretty git log
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+        # Log w/o CE auto-robo commits
+        lg = log --no-merges --invert-grep --grep="FH-000"
 
 	# Log Me
 	logme = log --color --name-only --decorate=full --author="jesse.atkinson@creditkarma.com"
@@ -71,6 +71,10 @@
 	# someone elses work by --force pushing.
 	please = push --force-with-lease
 
+        # I like to praise people as well.
+        # https://csswizardry.com/2017/05/little-things-i-like-to-do-with-git/#praise-people
+        praise = blame
+
 	# Great for generating release notes.
 	#
 	# Example usage:
@@ -86,14 +90,11 @@
 	#
 	# To customize this for your own org/workplace you'll need to edit two things.
 	#
-	#   1. Change ORG to whatever user or org you work with.
-	#   2. You can either remove the --invert-grep & --author flags on the git log
-	#      line if you don't have any commit authors you want to filter out (we
-	#      have a bunch of robo commits that I don't want in release notes); or
-	#      keep it up and update the IGNORE_AUTHOR to whatever author you want to
-	#      ignore in your own release-notes.
+        # You can either remove the --invert-grep flag on the git log line if you
+        # don't have any commit you want to filter out (we have a bunch of robo
+        # commits that I don't want in release notes); or keep it up and update it to
+        # whatever matches the commits you want to ignore in your own release-notes.
 	release-notes = "!f() { \
-		ORG='ck'; \
 		PR_URL=\"$(git config remote.origin.url)/pull/\"; \
 		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --grep=\"FH-000\" | \
 		sed \"s|(#|($PR_URL|g\"; \
