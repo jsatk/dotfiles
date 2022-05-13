@@ -1,10 +1,3 @@
-# Editor {{{
-
-# Start vim, start Goyo plugin, and jump to the area where we want to type a
-# message.
-set editor = "/usr/local/bin/nvim -c 'Goyo' -c 'normal! }' -c 'redraw'"
-
-# }}}
 # Contacts {{{
 
 # Use the macOS address book

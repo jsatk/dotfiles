@@ -296,15 +296,15 @@ vim.keymap.set("n", "<leader><space>", [[mz:%s/\s\+$//<cr>:let @/=''<cr>`z]])
 vim.keymap.set("i", "<c-k><c-k>", [[<esc>:help digraph-table<cr>]])
 
 -- Only show cursorline in the current window and in normal mode.
-local cline = vim.api.nvim_create_augroup("cline", { clear = true })
+local cline_group = vim.api.nvim_create_augroup("cline", { clear = true })
 vim.api.nvim_create_autocmd({ "WinLeave", "InsertEnter" }, {
-  group = cline,
+  group = cline_group,
   callback = function()
     vim.o.cursorline = false
   end
 })
 vim.api.nvim_create_autocmd({ "WinEnter", "InsertLeave" }, {
-  group = cline,
+  group = cline_group,
   callback = function()
     vim.o.cursorline = true
   end
@@ -376,9 +376,9 @@ vim.opt_global.ttyfast = true
 vim.opt_global.startofline = false
 
 -- Make sure Vim returns to the same line when you reopen a file.
-local line_return = vim.api.nvim_create_augroup("line_return", { clear = true })
+local line_return_group = vim.api.nvim_create_augroup("line_return", { clear = true })
 vim.api.nvim_create_autocmd("BufReadPost", {
-  group = line_return,
+  group = line_return_group,
   command = [[if line("'\"") > 0 && line("'\"") <= line("$") | execute 'normal! g`"zvzz' | endif]]
 })
 
@@ -787,11 +787,13 @@ lualine.setup(config)
 vim.keymap.set("n", "K", vim.lsp.buf.hover)
 
 -- Remap keys for gotos
+-- Note: Intentionally not mapping `vim.lsp.buf.document_symbol` to
+-- anything because I use the Vista plugin which is a nicer way to view
+-- the document tree.
 vim.keymap.set("n", "gd",  vim.lsp.buf.definition, { nowait = true })
 vim.keymap.set("n", "gy",  vim.lsp.buf.type_definition, { nowait = true })
 vim.keymap.set("n", "gi",  vim.lsp.buf.implementation)
 vim.keymap.set("n", "gr",  vim.lsp.buf.references)
-vim.keymap.set("n", "gds", vim.lsp.buf.document_symbol)
 vim.keymap.set("n", "gws", vim.lsp.buf.workspace_symbol)
 
 -- Remap for do codeAction of current line.
@@ -872,10 +874,10 @@ vim.keymap.set("n", "<leader>a", vim.diagnostic.setqflist)
 local metals_config = require("metals").bare_config()
 
 metals_config.settings = {
+  excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
   showImplicitArguments = true,
   showInferredType = true,
-  excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
-  superMethodLensesEnabled = true
+  superMethodLensesEnabled = true,
 }
 
 metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -887,30 +889,13 @@ metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 -- Exhaustive match support, etc.
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 metals_config.capabilities = capabilities
-
 metals_config.init_options.statusBarProvider = "on"
 
 -- For DAP.
 metals_config.on_attach = function(_, _)
   require("metals").setup_dap()
 end
-
-local lsp = vim.api.nvim_create_augroup("lsp", { clear = true })
-vim.api.nvim_create_autocmd("Filetype", {
-  group = lsp,
-  pattern = "*.scala",
-  callback = function()
-    vim.o.cursorline = false
-  end
-})
-vim.api.nvim_create_autocmd({ "WinEnter", "InsertLeave" }, {
-  group = cline,
-  callback = function()
-    vim.o.cursorline = true
-  end
-})
 
 local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {

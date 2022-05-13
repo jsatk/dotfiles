@@ -17,7 +17,7 @@ set record    = "+Sent"
 set move      = no
 set trash     = "+Archive" # Archive, don't delete
 set mbox      = "+Archive"
-set sendmail  = "/usr/local/bin/msmtp -a jsatk" # Send email from this account using this config for msmtp
+set sendmail  = "/opt/homebrew/bin/msmtp -a jsatk" # Send email from this account using this config for msmtp
 
 # }}}
 # Mailboxes to show in the sidebar {{{
