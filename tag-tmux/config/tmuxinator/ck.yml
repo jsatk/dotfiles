@@ -45,11 +45,11 @@ root: ~/
 # attach: false
 
 windows:
-  - "📧":
-      panes:
-        - mail:
-          - neomutt
-          - O # Syncs mail
+  # - "📧":
+  #     panes:
+  #       - mail:
+  #         - neomutt
+  #         - O # Syncs mail
   # - "💬": weechat
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/.dotfiles"

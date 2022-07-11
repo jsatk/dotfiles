@@ -471,6 +471,14 @@ cmp.setup({
 })
 
 -- }}}
+-- Copilot {{{
+
+-- This is needed to do becuase Copilot needs a newer version but some
+-- of the repos I work in use old versions of node that don't work
+-- with Copilot.
+vim.g.copilot_node_command = "~/.asdf/installs/nodejs/16.11.0/bin/node"
+
+-- }}}
 -- DAP (Debug Adapter Protocol) {{{
 
 local dap = require("dap")
@@ -875,6 +883,7 @@ local metals_config = require("metals").bare_config()
 
 metals_config.settings = {
   excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+  serverVersion = "latest.snapshot",
   showImplicitArguments = true,
   showInferredType = true,
   superMethodLensesEnabled = true,

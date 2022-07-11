@@ -72,6 +72,7 @@ brew "asdf"
 # See here for more details: https://github.com/scalacenter/bloop/issues/1467
 brew "coursier"
 brew "lua-language-server"
+brew "mysql"
 brew "nginx"
 brew "postgresql"
 brew "ruby-build"
@@ -191,11 +192,12 @@ cask "google-cloud-sdk"
 cask "google-drive-file-stream"
 cask "intellij-idea-ce"
 cask "iTerm2"
-# cask "keybase"
+# cask "keybase" # IT won't let me install this for some reason.
 cask "keycastr"
 cask "plex"
 cask "postman"
 # cask "slack" # Managed by IT.
+cask "sequel-pro"
 cask "spotify"
 cask "steam"
 # cask "temurin" # Managed by IT.
@@ -222,7 +224,7 @@ mas "Pages", id: 409201541
 mas "Pixelmator", id: 407963104
 mas "Soulver", id: 413965349
 mas "Speedtest", id: 1153157709
-mas "Xcode", id: 497799835
+# mas "Xcode", id: 497799835
 # mas "xScope", id: 889428659
 
 # }}}

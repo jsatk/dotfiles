@@ -10,6 +10,7 @@ global_node_modules := \
 	graphql-language-service-cli \
 	snyk \
 	speed-test \
+	typescript \
 	typescript-language-server \
 	vim-language-server \
 

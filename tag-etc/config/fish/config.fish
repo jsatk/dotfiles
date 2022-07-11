@@ -9,7 +9,6 @@ set --export BAT_THEME "TwoDark" # For Bat.  See: https://github.com/sharkdp/bat
 set --local BREW_PREFIX (/opt/homebrew/bin/brew --prefix)
 set --export JAVA_HOME (/usr/libexec/java_home -v 17)
 
-
 # fzf {{{
 
 # Use git to search files when in a git repo, otherwise use fd.
@@ -54,8 +53,6 @@ set PATH \
   /sbin \
   $HOME/.config/scripts \
   /Library/TeX/texbin \
-  # Puts Python 2's pip (which macOS still ships with as default) in $PATH.
-  $HOME/Library/Python/2.7/bin \
   $HOME/Library/Application\ Support/Coursier/bin \
   $GOPATH/bin \
 
