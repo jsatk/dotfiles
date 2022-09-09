@@ -6,3 +6,5 @@ import $ivy.{
 }
 
 import cats._, cats.data._, cats.implicits._, com.twitter.util.Future
+import scala.language.postfixOps
+import scala.language.higherKinds
