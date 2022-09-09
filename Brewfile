@@ -9,6 +9,7 @@ tap "homebrew/cask-fonts"
 tap "homebrew/core"
 tap "keith/formulae"
 tap "thoughtbot/formulae"
+tap "caarlos0/tap"
 
 # }}}
 # Shells ------------------------------------------------------------------- {{{
@@ -62,6 +63,7 @@ brew "weechat"
 # }}}
 # Programming Languages, DBs, & Language Tools ----------------------------- {{{
 
+brew "ammonite-repl"
 # terminal recording.
 brew "asciinema"
 # Program language version manager.  Manages all languages.
@@ -155,6 +157,8 @@ brew "rcm"
 brew "ripgrep"
 # Fancy ASCII print out of computer settings.
 brew "neofetch"
+# A sleep timer with progress.
+brew "timer"
 # Simple & better `man`.
 brew "tldr"
 # The terminal multiplexer.

@@ -1,16 +1,9 @@
--- 0  preamble ----------------------------------------------------- {{{
-
--- Jesse Atkinson | jesse@jsatk.us | @jsatk | https://jsatk.us
+-- 0  preamble ---------------------------------------------------- {{{1
 
 -- This file groups the options into the same sections given by the
 -- `:options` command and in the same order for reference.
 
--- Setup {{{
-
 vim.opt_global.shell = "fish"
-
--- }}}
--- Plugins {{{
 
 -- All plugin settings are lower in this file under section 99.
 
@@ -28,10 +21,6 @@ require("packer").startup(function()
   use({ "dag/vim-fish", opt = true, ft = "fish" })
   use({ "github/copilot.vim" })
   use({
-    "nvim-lualine/lualine.nvim",
-    requires = { "kyazdani42/nvim-web-devicons", opt = true }
-  })
-  use({
     "hrsh7th/nvim-cmp",
     requires = {
       { "hrsh7th/cmp-buffer" },
@@ -45,10 +34,13 @@ require("packer").startup(function()
   use({ "junegunn/goyo.vim", opt = true, ft = { "markdown", "tex", "mail" }})
   use({ "junegunn/gv.vim" })
   use({ "junegunn/vim-easy-align" })
-  use({ "junegunn/vim-peekaboo" })
   use({ "liuchengxu/vista.vim" })
   use({ "mfussenegger/nvim-dap" })
   use({ "neovim/nvim-lspconfig", requires = { "nvim-lua/lsp_extensions.nvim" }})
+  use({
+    "nvim-lualine/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true }
+  })
   use({
     "nvim-telescope/telescope.nvim",
     requires = {
@@ -85,26 +77,20 @@ require("packer").startup(function()
   use({ "tpope/vim-vinegar" })
 end)
 
--- }}}
-
--- }}}
--- 1  important ---------------------------------------------------- {{{
+-- 1  important --------------------------------------------------- {{{1
 
 -- A |sentence| has to be followed by two spaces after the '.', '!' or '?'.
 -- See: https://stevelosh.com/blog/2012/10/why-i-two-space/#s6-power
 vim.o.cpo = vim.o.cpo .. "J"
 
--- }}}
--- 2  moving around, searching and patterns ------------------------ {{{
+-- 2  moving around, searching and patterns ----------------------- {{{1
 
 vim.opt_global.ignorecase = true -- Ignore the case, unless...
 vim.opt_global.smartcase = true  -- ...there's caps in it.
 
--- }}}
--- 3  tags --------------------------------------------------------- {{{
+-- 3  tags -------------------------------------------------------- {{{1
 
--- }}}
--- 4  displaying text ---------------------------------------------- {{{
+-- 4  displaying text --------------------------------------------- {{{1
 
 vim.opt_global.scrolloff = 3
 vim.opt_global.linebreak = true
@@ -113,8 +99,7 @@ vim.opt_global.showbreak = "↪"
 vim.opt_global.lazyredraw = true
 vim.opt.list = true
 
--- }}}
--- 5  syntax, highlighting and spelling ---------------------------- {{{
+-- 5  syntax, highlighting and spelling --------------------------- {{{1
 
 -- NOTE: My colorscheme's setting are defined in the plugins section.
 
@@ -153,33 +138,27 @@ vim.cmd([[hi! Comment gui=italic]]) -- No lua equivelent yet.
 -- Highlight VCS conflict markers
 vim.fn.matchadd("ErrorMsg", "^\\(<\\|=\\|>\\)\\{7\\}\\([^=].\\+\\)\\?$")
 
--- }}}
--- 6  multiple windows --------------------------------------------- {{{
+-- 6  multiple windows -------------------------------------------- {{{1
 
 vim.opt_global.hidden = true
 vim.opt_global.splitbelow = true
 vim.opt_global.splitright = true
 
--- }}}
--- 7  multiple tab pages ------------------------------------------- {{{
+-- 7  multiple tab pages ------------------------------------------ {{{1
 
--- }}}
--- 8  terminal ----------------------------------------------------- {{{
+-- 8  terminal ---------------------------------------------------- {{{1
 
 vim.opt_global.title = true
 
--- }}}
--- 9  using the mouse ---------------------------------------------- {{{
+-- 9  using the mouse --------------------------------------------- {{{1
 
 if vim.fn.has("mouse") == 1 then
   vim.opt_global.mouse = "a"
 end
 
--- }}}
--- 10 printing ----------------------------------------------------- {{{
+-- 10 printing ---------------------------------------------------- {{{1
 
--- }}}
--- 11 messages and info -------------------------------------------- {{{
+-- 11 messages and info ------------------------------------------- {{{1
 
 vim.o.showcmd = true
 vim.o.showmode = true
@@ -189,11 +168,9 @@ vim.o.showmode = true
 vim.opt.shortmess:remove("F")
 vim.opt.shortmess:append("c")
 
--- }}}
--- 12 selecting text ----------------------------------------------- {{{
+-- 12 selecting text ---------------------------------------------- {{{1
 
--- }}}
--- 13 editing text ------------------------------------------------- {{{
+-- 13 editing text ------------------------------------------------ {{{1
 
 vim.opt_global.textwidth = 0
 vim.opt_global.wrapmargin = 0
@@ -210,16 +187,14 @@ if vim.fn.isdirectory(vim.o.undodir) == 0 then vim.fn.mkdir(vim.o.undodir, "p") 
 -- Set completeopt to have a better completion experience
 vim.opt_global.completeopt = "menuone,noinsert,noselect"
 
--- }}}
--- 14 tabs and indenting ------------------------------------------- {{{
+-- 14 tabs and indenting ------------------------------------------ {{{1
 
 vim.opt_global.shiftwidth = 2
 vim.opt_global.softtabstop = 2
 vim.opt_global.shiftround = true
 vim.opt_global.expandtab = true
 
--- }}}
--- 15 folding ------------------------------------------------------ {{{
+-- 15 folding ----------------------------------------------------- {{{1
 
 vim.opt_global.foldenable = true
 
@@ -254,17 +229,15 @@ false
 vim.o.foldmethod="expr"
 vim.o.foldexpr="nvim_treesitter#foldexpr()"
 
--- }}}
--- 16 diff mode ---------------------------------------------------- {{{
+-- 16 diff mode --------------------------------------------------- {{{1
 
--- }}}
--- 17 mapping ------------------------------------------------------ {{{
+-- 17 mapping ----------------------------------------------------- {{{1
 
 -- This section contains the few options that are under `17 mapping` in
--- `:options` as well as all of my custom remappings that don't sensibily
--- fit in another section.  For example, the folding remappings I have
--- live  under `15 folding` but my `S` mapping for splitting lines lives
--- here.
+-- `:options` as well as all of my custom remappings that don't
+-- sensibily fit in another section.  For example, the folding
+-- remappings I have live  under `15 folding` but my `S` mapping for
+-- splitting lines lives here.
 
 vim.opt_global.timeoutlen = 500
 
@@ -316,8 +289,7 @@ vim.keymap.set("n", "<leader>em", ":vsplit ~/.muttrc<cr>")
 vim.keymap.set("n", "<leader>et", ":vsplit ~/.tmux.conf<cr>")
 vim.keymap.set("n", "<leader>ev", ":vsplit ~/.config/nvim/init.lua<cr>")
 
--- }}}
--- 18 reading and writing files ------------------------------------ {{{
+-- 18 reading and writing files ----------------------------------- {{{1
 
 vim.opt_global.backup = false
 vim.opt_global.writebackup = false
@@ -326,33 +298,33 @@ vim.opt_global.backupdir = vim.fn.expand("~/.config/nvim/tmp/backup//")
 vim.opt_global.fixendofline = true
 
 -- Make the backup directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.backupdir) == 0 then vim.fn.mkdir(vim.o.backupdir, "p") end
+if vim.fn.isdirectory(vim.o.backupdir) == 0
+then
+  vim.fn.mkdir(vim.o.backupdir, "p")
+end
 
--- }}}
--- 19 the swap file ------------------------------------------------ {{{
+-- 19 the swap file ----------------------------------------------- {{{1
 
 vim.opt_global.directory = vim.fn.expand("~/.config/nvim/tmp/swap//")
 vim.o.swapfile = false
 
 -- Make the swap directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.directory) == 0 then vim.fn.mkdir(vim.o.directory, "p") end
+if vim.fn.isdirectory(vim.o.directory) == 0
+then
+  vim.fn.mkdir(vim.o.directory, "p")
+end
 
--- }}}
--- 20 command line editing ----------------------------------------- {{{
+-- 20 command line editing ---------------------------------------- {{{1
 
 vim.opt_global.wildmode = "list:longest"
 
--- }}}
--- 21 executing external commands ---------------------------------- {{{
+-- 21 executing external commands --------------------------------- {{{1
 
--- }}}
--- 22 running make and jumping to errors --------------------------- {{{
+-- 22 running make and jumping to errors -------------------------- {{{1
 
--- }}}
--- 23 language specific -------------------------------------------- {{{
+-- 23 language specific ------------------------------------------- {{{1
 
--- }}}
--- 24 multi-byte characters ---------------------------------------- {{{
+-- 24 multi-byte characters --------------------------------------- {{{1
 
 -- > When on all Unicode emoji characters are considered to be full
 -- > width.
@@ -361,8 +333,7 @@ vim.opt_global.wildmode = "list:longest"
 -- turned off.
 vim.opt_global.emo = false
 
--- }}}
--- 25 various ------------------------------------------------------ {{{
+-- 25 various ----------------------------------------------------- {{{1
 
 vim.opt_global.gdefault = true
 
@@ -383,17 +354,18 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 -- by one column.
 vim.opt.signcolumn = "yes"
 
--- }}}
--- 99 plugin configurations ---------------------------------------- {{{
+-- Enable folding in Markdown.
+vim.g.markdown_folding = 1
 
--- Catppuccin {{{
+-- 99 plugin configurations --------------------------------------- {{{1
+
+-- Catppuccin {{{2
 
 vim.g.catppuccin_flavour = "frappe" -- latte, frappe, macchiato, mocha
 require("catppuccin").setup()
-vim.cmd [[colorscheme catppuccin]]
+vim.cmd([[colorscheme catppuccin]])
 
--- }}}
--- Cmp {{{
+-- Cmp {{{2
 
 local lspkind = require("lspkind")
 lspkind.init()
@@ -473,16 +445,14 @@ cmp.setup({
   },
 })
 
--- }}}
--- Copilot {{{
+-- Copilot {{{2
 
 -- This is needed to do becuase Copilot needs a newer version but some
 -- of the repos I work in use old versions of node that don't work
 -- with Copilot.
 vim.g.copilot_node_command = "~/.asdf/installs/nodejs/16.11.0/bin/node"
 
--- }}}
--- DAP (Debug Adapter Protocol) {{{
+-- DAP (Debug Adapter Protocol) {{{2
 
 local dap = require("dap")
 
@@ -530,8 +500,7 @@ dap.configurations.scala = {
   },
 }
 
--- }}}
--- Dispatch {{{
+-- Dispatch {{{2
 
 -- Why am I doing this?  See link below.
 -- See: https://github.com/tpope/vim-dispatch/issues/222#issuecomment-493273080
@@ -539,8 +508,7 @@ vim.opt_global.shellpipe = "2>&1|tee"
 
 vim.keymap.set("n", "<F9>", ":Dispatch<CR>")
 
--- }}}
--- EasyAlign {{{
+-- EasyAlign {{{2
 
 -- Start interactive EasyAlign in visual mode (e.g. vipga).
 -- Note: Using |:*noremap| will not work with <Plug> mappings.
@@ -551,17 +519,14 @@ vim.cmd([[xmap ga <Plug>(EasyAlign)]])
 -- Note: Using |:*noremap| will not work with <Plug> mappings.
 vim.cmd([[nmap ga <Plug>(EasyAlign)]])
 
--- }}}
--- Gundo {{{
+-- Gundo {{{2
 
 vim.keymap.set("n", "<F5>", ":GundoToggle<CR>")
 
--- }}}
--- Lualine {{{
+-- Lualine {{{2
 
 local lualine = require("lualine")
 
--- catppuccino is not working!
 lualine.setup({
   options = {
     theme = "catppuccin"
@@ -571,8 +536,7 @@ lualine.setup({
   }
 })
 
--- }}}
--- Lsp + Lspconfig {{{
+-- Lsp + Lspconfig {{{2
 
 -- This section contains Neovim LSP settings as well as settings for the
 -- Lspconfig plugin.  I know it's not "pure" in an organizational sense,
@@ -651,8 +615,7 @@ require("lspconfig").terraformls.setup {}
 require("lspconfig").tsserver.setup {}
 require("lspconfig").vimls.setup {}
 
--- }}}
--- Metals {{{
+-- Metals {{{2
 
 -- Mostly stolen from Chris Kipp.
 -- See: https://github.com/scalameta/nvim-metals/discussions/39#discussion-82302
@@ -712,8 +675,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   command = "hi! link LspCodeLens CursorLine",
 })
 
--- }}}
--- Projectionist {{{
+-- Projectionist {{{2
 
 vim.g.projectionist_heuristics = {
   ["*.markdown|*.md"] = {
@@ -773,13 +735,11 @@ vim.g.projectionist_heuristics = {
   }
 }
 
--- }}}
--- Rhubarb {{{
+-- Rhubarb {{{2
 
 vim.g["github_enterprise_urls"] = { "https://code.corp.creditkarma.com" }
 
--- }}}
--- Telescope {{{
+-- Telescope {{{2
 
 vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
 vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
@@ -788,8 +748,7 @@ vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
 vim.keymap.set("n", "<leader>gb", require("telescope.builtin").git_branches)
 vim.keymap.set("n", "<leader>fm", require("telescope").extensions.metals.commands)
 
--- }}}
--- Treesitter {{{
+-- Treesitter {{{2
 
 require("nvim-treesitter.configs").setup {
   -- Needed for Treesitter playground
@@ -823,8 +782,7 @@ require("nvim-treesitter.configs").setup {
   highlight = { enable = true }
 }
 
--- }}}
--- Vista {{{
+-- Vista {{{2
 
 vim.g["vista_icon_indent"] = { "╰─▸ ", "├─▸ " }
 vim.g["vista_default_executive"] = "nvim_lsp"
@@ -832,8 +790,4 @@ vim.g["vista#renderer#enable_icon"] = 1
 
 vim.keymap.set("n", "<leader>t", ":<C-u>Vista!!<CR>")
 
--- }}}
-
--- }}}
-
--- vim: set foldmethod=marker foldlevel=0 textwidth=72 colorcolumn=80:
+-- vim: set foldmethod=marker foldlevel=0 textwidth=72:
