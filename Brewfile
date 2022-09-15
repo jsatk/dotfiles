@@ -213,7 +213,6 @@ cask "yubico-yubikey-manager"
 # }}}
 # macOS App Store ---------------------------------------------------------- {{{
 
-mas "1Password 7", id: 1333542190
 mas "Cardhop", id: 1290358394
 mas "DaisyDisk", id: 411643860
 mas "Deliveries", id: 924726344
