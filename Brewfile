@@ -1,4 +1,4 @@
-# Taps --------------------------------------------------------------------- {{{
+# Taps -------------------------------------------------------------------- {{{1
 
 tap "cjbassi/ytop"
 tap "coursier/formulas"
@@ -11,14 +11,12 @@ tap "keith/formulae"
 tap "thoughtbot/formulae"
 tap "caarlos0/tap"
 
-# }}}
-# Shells ------------------------------------------------------------------- {{{
+# Shells ------------------------------------------------------------------ {{{1
 
 brew "bash-completion"
 brew "fish"
 
-# }}}
-# Email -------------------------------------------------------------------- {{{
+# Email ------------------------------------------------------------------- {{{1
 
 # Lets me look up contacts in macOS Contacts app.
 brew "contacts-cli"
@@ -44,8 +42,7 @@ brew "urlview"
 # with plain text email clients.
 brew "w3m"
 
-# }}}
-# Version Control ---------------------------------------------------------- {{{
+# Version Control --------------------------------------------------------- {{{1
 
 brew "gist"
 brew "git"
@@ -54,14 +51,12 @@ brew "mercurial"
 # CLI repository browsing.
 brew "tig"
 
-# }}}
-# Chat --------------------------------------------------------------------- {{{
+# Chat -------------------------------------------------------------------- {{{1
 
 # IRC
 brew "weechat"
 
-# }}}
-# Programming Languages, DBs, & Language Tools ----------------------------- {{{
+# Programming Languages, DBs, & Language Tools ---------------------------- {{{1
 
 brew "ammonite-repl"
 # terminal recording.
@@ -81,8 +76,7 @@ brew "ruby-build"
 brew "terraform"
 brew "watchman"
 
-# }}}
-# Security ----------------------------------------------------------------- {{{
+# Security ---------------------------------------------------------------- {{{1
 
 brew "hopenpgp-tools"
 brew "openssl"
@@ -93,8 +87,7 @@ brew "ykman"
 brew "ykpers"
 brew "yubikey-personalization"
 
-# }}}
-# Utilities, Games, etc. --------------------------------------------------- {{{
+# Utilities, Games, etc. -------------------------------------------------- {{{1
 
 # General unix tools that it's good to have
 brew "autoconf"
@@ -177,8 +170,7 @@ brew "yq"
 # Go now.
 brew "ytop"
 
-# }}}
-# Casks -------------------------------------------------------------------- {{{
+# Casks ------------------------------------------------------------------- {{{1
 
 cask_args appdir: "/Applications"
 
@@ -190,6 +182,7 @@ cask "discord"
 cask "docker"
 cask "droplr"
 cask "fantastical"
+cask "figma"
 cask "firefox"
 # cask "google-chrome" # Managed by IT.
 cask "google-cloud-sdk"
@@ -210,8 +203,7 @@ cask "vlc"
 cask "yubico-yubikey-manager"
 # cask "zoom" # Managed by IT.
 
-# }}}
-# macOS App Store ---------------------------------------------------------- {{{
+# macOS App Store --------------------------------------------------------- {{{1
 
 mas "Cardhop", id: 1290358394
 mas "DaisyDisk", id: 411643860
@@ -230,7 +222,4 @@ mas "Speedtest", id: 1153157709
 # mas "Xcode", id: 497799835
 # mas "xScope", id: 889428659
 
-# }}}
-
-# vim: filetype=ruby:textwidth=80:foldmethod=marker
-# vim: foldmarker={{{,}}}:foldlevelstart=0
+# vim: filetype=ruby:textwidth=80:foldmethod=marker foldlevel=0

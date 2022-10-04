@@ -1,17 +1,15 @@
-# Contacts {{{
+# Contacts {{{1
 
 # Use the macOS address book
 set query_command = "contacts '%s'"
 bind editor <Tab> complete-query
 bind editor ^T    complete
 
-# }}}
-# Color Theme {{{
+# Color Theme {{{1
 
 source ~/.mutt/themes/webgefrickel.muttrc
 
-# }}}
-# Basic Options {{{
+# Basic Options {{{1
 
 set   beep_new                            # bell on new mails
 set   delete                              # don't ask, just do
@@ -31,8 +29,7 @@ unset confirmappend                       # don't ask, just do!
 unset mark_old                            # read/new is good enough for me
 unset record
 
-# }}}
-# PGP {{{
+# PGP {{{1
 
 set pgp_use_gpg_agent        = yes
 set pgp_sign_as              = DC5AC6E4
@@ -48,8 +45,7 @@ set crypt_verify_sig         = yes
 # https://gitlab.com/muttmua/mutt/wikis/MuttGuide/UseGPG
 source ~/.mutt/gpg.rc
 
-# }}}
-# Compose View Options {{{
+# Compose View Options {{{1
 
 set askcc                               # ask for CC:
 set attribution    = "On %d, %n wrote:" # format of quoting header
@@ -65,8 +61,7 @@ set reply_to                            # reply to Reply to: field
 set reverse_name                        # reply as whomever it was to
 unset mime_forward                      # forward attachments as part of body
 
-# }}}
-# Headers {{{
+# Headers {{{1
 
 # These options hide some of the extra email headers we don’t care about when viewing and composing email.
 ignore *                                # ignore all headers
@@ -74,8 +69,7 @@ unignore from: to: cc: date: subject:   # show only these
 unhdr_order *
 hdr_order from: to: cc: date: subject:  # and in this order
 
-# }}}
-# Accounts {{{
+# Accounts {{{1
 
 # Folder hooks
 folder-hook . 'exec collapse-all' # By default, collapse all threads
@@ -83,8 +77,7 @@ folder-hook . 'exec collapse-all' # By default, collapse all threads
 # Default account
 source ~/.mutt/account.jsatk.muttrc
 
-# }}}
-# Key Bindings & Macros {{{
+# Key Bindings & Macros {{{1
 
 macro index <f1> '<sync-mailbox><enter-command>source ~/.mutt/account.jsatk.muttrc<enter><change-folder>!<enter>'
 
@@ -137,8 +130,7 @@ macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py
 # Default directory for saving attachments so I don't go insane.
 macro attach s <save-entry><bol>~/Downloads/<eol>
 
-# }}}
-# Index View Options {{{
+# Index View Options {{{1
 
 set date_format  = "%m/%d"
 set index_format = "[%Z]  %D  %-20.20F  %s"
@@ -148,8 +140,7 @@ set sort_aux     = reverse-last-date-received  # like gmail
 set sort_re                                    # thread based on regex
 set uncollapse_jump                            # don't collapse on an unread message
 
-# }}}
-# Pager View Options {{{
+# Pager View Options {{{1
 
 set menu_scroll            # scroll in menus
 set pager_context     = 3  # number of context lines to show
@@ -161,8 +152,7 @@ unset markers              # no ugly plus signs
 
 alternative_order text/plain text/enriched text/html
 
-# }}}
-# URLs {{{
+# URLs {{{1
 
 # Alternative, `urlview` is installed via Homebrew.
 # macro pager b "|urlview<enter>" "call urlview to open links"
@@ -170,14 +160,12 @@ alternative_order text/plain text/enriched text/html
 # Install via pip: `sudo pip3 install -I urlscan`
 macro pager b "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
-# }}}
-# HTML Emails {{{
+# HTML Emails {{{1
 
 alternative_order text/plain text/enriched text/html  # save html for last
 auto_view text/html # view html automatically
 
-# }}}
-# Sidebar Patch {{{
+# Sidebar Patch {{{1
 
 set sidebar_visible = yes
 set sidebar_width   = 24
@@ -185,5 +173,4 @@ set sidebar_width   = 24
 set status_chars  = " *%A"
 set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
 
-# }}}
-# vim: set filetype=muttrc foldmethod=marker foldmarker={{{,}}} foldlevel=0:
+# vim: set filetype=muttrc foldmethod=marker foldlevel=0:
