@@ -58,7 +58,6 @@ brew "weechat"
 
 # Programming Languages, DBs, & Language Tools ---------------------------- {{{1
 
-brew "ammonite-repl"
 # terminal recording.
 brew "asciinema"
 # Program language version manager.  Manages all languages.
@@ -174,14 +173,9 @@ brew "ytop"
 
 cask_args appdir: "/Applications"
 
-cask "alfred"
-cask "backblaze"
-cask "chrysalis"
-cask "dash"
 cask "discord"
 cask "docker"
 cask "droplr"
-cask "fantastical"
 cask "figma"
 cask "firefox"
 # cask "google-chrome" # Managed by IT.
@@ -191,23 +185,19 @@ cask "intellij-idea-ce"
 cask "iTerm2"
 # cask "keybase" # IT won't let me install this for some reason.
 cask "keycastr"
-cask "plex"
 cask "postman"
 # cask "slack" # Managed by IT.
 cask "sequel-pro"
-cask "spotify"
 cask "steam"
 # cask "temurin" # Managed by IT.
-cask "twitch"
 cask "vlc"
 cask "yubico-yubikey-manager"
-# cask "zoom" # Managed by IT.
+cask "zoom"
 
 # macOS App Store --------------------------------------------------------- {{{1
 
-mas "Cardhop", id: 1290358394
 mas "DaisyDisk", id: 411643860
-mas "Deliveries", id: 924726344
+mas "Deliveries", id: 290986013
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694

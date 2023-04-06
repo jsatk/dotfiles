@@ -6,5 +6,7 @@ Host *
  PasswordAuthentication no
  UseKeychain yes
  VisualHostKey yes
+ HostkeyAlgorithms +ssh-rsa
+ PubkeyAcceptedAlgorithms +ssh-rsa
 
 # vim: set syntax=sshconfig:

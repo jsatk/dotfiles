@@ -45,13 +45,6 @@
 	# this all in one line.
 	headsha = !git log -1 --pretty=format:'%H'
 
-	# Create a pull-request using hub, which – as of this writing – is
-	# deprecated in favor of github's new CLI tool.
-	#
-	# See: https://mislav.net/2020/01/github-cli/
-	# See: https://github.com/cli/cli
-	hub-pr = !hub pull-request --browse
-
 	# Log w/o CE auto-robo commits
 	lg = log --no-merges --invert-grep --grep="FH-000"
 
@@ -70,6 +63,9 @@
 	# team-member or coworker, etc.). It ensures you do not overwrite
 	# someone elses work by --force pushing.
 	please = push --force-with-lease
+
+	# Create a new pull request on GitHub.
+	pr = "!gh pr create --web"
 
 	# I like to praise people as well.
 	# https://csswizardry.com/2017/05/little-things-i-like-to-do-with-git/#praise-people
@@ -96,7 +92,7 @@
 	# whatever matches the commits you want to ignore in your own release-notes.
 	release-notes = "!f() { \
 		PR_URL=\"$(git config remote.origin.url)/pull/\"; \
-		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --grep=\"FH-000\" | \
+		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --grep=\"Setting version to\" | \
 		sed \"s|(#|($PR_URL|g\"; \
 	}; f"
 
@@ -242,10 +238,6 @@
 	email = jesse.atkinson@creditkarma.com
 	name = Jesse Atkinson
 	signingkey = "DC5AC6E4"
-
-[hub]
-	protocol = ssh
-	host = code.corp.creditkarma.com
 
 # }}}
 # gpg --------------------------------------------------------------------- {{{

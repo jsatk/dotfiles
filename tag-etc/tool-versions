@@ -3,6 +3,5 @@ nodejs 16.11.0
 python 3.9.13
 ruby 2.7.4
 rust stable
-sbcl 2.1.9
-sbt 1.7.1
+sbt 1.8.2
 yarn 1.22.19

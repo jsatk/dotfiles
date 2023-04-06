@@ -10,7 +10,7 @@ vim.opt_global.shell = "fish"
 -- Only required if you have packer in your `opt` pack.
 vim.cmd([[packadd packer.nvim]])
 
-require("packer").startup(function()
+require("packer").startup(function(use)
   -- Packer can manage itself as an optional plugin.
   use({ "wbthomason/packer.nvim", opt = true})
 
@@ -20,26 +20,15 @@ require("packer").startup(function()
   use { "catppuccin/nvim", as = "catppuccin" }
   use({ "dag/vim-fish", opt = true, ft = "fish" })
   use({ "github/copilot.vim" })
-  use({
-    "hrsh7th/nvim-cmp",
-    requires = {
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-path" },
-      { "hrsh7th/cmp-vsnip" },
-      { "hrsh7th/vim-vsnip" },
-      { "onsails/lspkind-nvim" },
-    }
-  })
   use({ "junegunn/goyo.vim", opt = true, ft = { "markdown", "tex", "mail" }})
   use({ "junegunn/gv.vim" })
   use({ "junegunn/vim-easy-align" })
   use({ "liuchengxu/vista.vim" })
+  use({ "mbbill/undotree" })
   use({ "mfussenegger/nvim-dap" })
-  use({ "neovim/nvim-lspconfig", requires = { "nvim-lua/lsp_extensions.nvim" }})
   use({
     "nvim-lualine/lualine.nvim",
-    requires = { "kyazdani42/nvim-web-devicons", opt = true }
+    requires = { "nvim-tree/nvim-web-devicons", opt = true }
   })
   use({
     "nvim-telescope/telescope.nvim",
@@ -49,10 +38,13 @@ require("packer").startup(function()
       { "kyazdani42/nvim-web-devicons" },
     }
   })
-  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+  use({
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    requires = { "nvim-treesitter/playground" }
+  })
   use({ "scalameta/nvim-metals" })
   use({ "sheerun/vim-polyglot" })
-  use({ "sjl/gundo.vim" })
   use({ "tpope/vim-abolish" })
   use({ "tpope/vim-commentary" })
   use({ "tpope/vim-dadbod", opt = true, ft = { "sql", "psql" }})
@@ -60,6 +52,28 @@ require("packer").startup(function()
     "tpope/vim-dispatch",
     opt = true,
     cmd = { "Dispatch", "Make", "Focus", "Start" }
+  })
+  use({
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v1.x',
+    requires = {
+      -- LSP Support
+      {'neovim/nvim-lspconfig'},             -- Required
+      {'williamboman/mason.nvim'},           -- Optional
+      {'williamboman/mason-lspconfig.nvim'}, -- Optional
+
+      -- Autocompletion
+      {'hrsh7th/nvim-cmp'},         -- Required
+      {'hrsh7th/cmp-nvim-lsp'},     -- Required
+      {'hrsh7th/cmp-buffer'},       -- Optional
+      {'hrsh7th/cmp-path'},         -- Optional
+      {'saadparwaiz1/cmp_luasnip'}, -- Optional
+      {'hrsh7th/cmp-nvim-lua'},     -- Optional
+
+      -- Snippets
+      {'L3MON4D3/LuaSnip'},             -- Required
+      {'rafamadriz/friendly-snippets'}, -- Optional
+    }
   })
   use({ "tpope/vim-eunuch" })
   use({ "tpope/vim-fugitive" })
@@ -127,6 +141,8 @@ vim.opt_global.cursorline = true
 --
 -- Also for some reason lua doesn't set the spellfile correctly when I
 -- do it the "lua" way so `cmd` it is.
+
+-- TODO: This isn't working!  Fix!
 vim.opt_global.spellfile = {
   vim.fn.expand "~/.vim/custom-dictionary.utf-8.add",
   vim.fn.expand "~/.vim-local-dictionary.utf-8.add",
@@ -226,12 +242,14 @@ set foldtext=MyFoldText()
 false
 )
 
-vim.o.foldmethod="expr"
-vim.o.foldexpr="nvim_treesitter#foldexpr()"
+vim.opt.foldmethod="expr"
+vim.opt.foldexpr="nvim_treesitter#foldexpr()"
 
 -- 16 diff mode --------------------------------------------------- {{{1
 
 -- 17 mapping ----------------------------------------------------- {{{1
+
+
 
 -- This section contains the few options that are under `17 mapping` in
 -- `:options` as well as all of my custom remappings that don't
@@ -361,89 +379,15 @@ vim.g.markdown_folding = 1
 
 -- Catppuccin {{{2
 
-vim.g.catppuccin_flavour = "frappe" -- latte, frappe, macchiato, mocha
-require("catppuccin").setup()
-vim.cmd([[colorscheme catppuccin]])
+local catppuccin = require("catppuccin")
 
--- Cmp {{{2
-
-local lspkind = require("lspkind")
-lspkind.init()
-local cmp = require("cmp")
-local types = require("cmp.types")
-
-cmp.setup({
-  sources = {
-    { name = "nvim_lsp" },
-    { name = "vsnip" },
-    { name = "path" },
-    { name = "buffer", keyword_length = 5 },
-  },
-  snippet = {
-    expand = function(args)
-      -- Comes from vsnip
-      vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  mapping = {
-    ['<Down>'] = cmp.config.mapping({
-      i = cmp.config.mapping.select_next_item({
-        behavior = types.cmp.SelectBehavior.Select
-      }),
-      c = function(fallback)
-        cmp.close()
-        vim.schedule(cmp.suspend())
-        fallback()
-      end,
-    }),
-    ['<Up>'] = cmp.config.mapping({
-      i = cmp.config.mapping.select_prev_item({
-        behavior = types.cmp.SelectBehavior.Select
-      }),
-      c = function(fallback)
-        cmp.close()
-        vim.schedule(cmp.suspend())
-        fallback()
-      end,
-    }),
-    ['<C-d>'] = cmp.config.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.config.mapping.scroll_docs(4),
-    ['<C-space>'] = cmp.config.mapping.complete(),
-    ['<CR>'] = cmp.config.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    }),
-    ['<C-n>'] = cmp.config.mapping(
-      cmp.config.mapping.select_next_item({
-        behavior = types.cmp.SelectBehavior.Insert
-      }),
-      { 'i', 'c' }
-    ),
-    ['<C-p>'] = cmp.config.mapping(
-      cmp.config.mapping.select_prev_item({
-        behavior = types.cmp.SelectBehavior.Insert
-      }),
-      { 'i', 'c' }
-    ),
-    ['<C-y>'] = cmp.config.mapping.confirm({ select = false }),
-    ['<C-e>'] = cmp.config.mapping.abort(),
-  },
-  formatting = {
-    format = lspkind.cmp_format {
-      with_text = true,
-      menu = {
-        buffer = "[buf]",
-        nvim_lsp = "[LSP]",
-        path = "[path]",
-        vsnip = "[vsnip]",
-      },
-    },
-  },
-  experimental = {
-    native_menu = false,
-    ghost_text = true,
-  },
+catppuccin.setup({
+  flavour = "frappe",
+  transparent_background = true,
+  term_colors = true,
 })
+
+vim.cmd.colorscheme "catppuccin"
 
 -- Copilot {{{2
 
@@ -502,10 +446,6 @@ dap.configurations.scala = {
 
 -- Dispatch {{{2
 
--- Why am I doing this?  See link below.
--- See: https://github.com/tpope/vim-dispatch/issues/222#issuecomment-493273080
-vim.opt_global.shellpipe = "2>&1|tee"
-
 vim.keymap.set("n", "<F9>", ":Dispatch<CR>")
 
 -- EasyAlign {{{2
@@ -519,9 +459,20 @@ vim.cmd([[xmap ga <Plug>(EasyAlign)]])
 -- Note: Using |:*noremap| will not work with <Plug> mappings.
 vim.cmd([[nmap ga <Plug>(EasyAlign)]])
 
--- Gundo {{{2
+-- LSP Zero {{{2
 
-vim.keymap.set("n", "<F5>", ":GundoToggle<CR>")
+local lsp = require('lsp-zero').preset({
+  name = 'minimal',
+  set_lsp_keymaps = true,
+  manage_nvim_cmp = true,
+  suggest_lsp_servers = true,
+})
+
+lsp.configure('metals', { force_setup = true })
+
+-- (Optional) Configure lua language server for neovim
+lsp.nvim_workspace()
+lsp.setup()
 
 -- Lualine {{{2
 
@@ -535,85 +486,6 @@ lualine.setup({
     lualine_x = {'g:metals_status', 'encoding', 'fileformat', 'filetype'},
   }
 })
-
--- Lsp + Lspconfig {{{2
-
--- This section contains Neovim LSP settings as well as settings for the
--- Lspconfig plugin.  I know it's not "pure" in an organizational sense,
--- but this felt correct and logical; especially since Neovim's LSP is
--- not listed in :options and – as stated in my giant preamble – I've
--- chosen to organize the settings in this file to mirror the order they
--- are in in :options.  So yeah, both are mixed in here. ¯\_(ツ)_/¯
-
--- Default in vim for K is to open the man/help of what your cursor is
--- on.  This keeps that muscle memory alive but instead leans on the LSP
--- to provide the info.
-vim.keymap.set("n", "K", vim.lsp.buf.hover)
-
--- Remap keys for gotos
--- Note: Intentionally not mapping `vim.lsp.buf.document_symbol` to
--- anything because I use the Vista plugin which is a nicer way to view
--- the document tree.
-vim.keymap.set("n", "gd",  vim.lsp.buf.definition, { nowait = true })
-vim.keymap.set("n", "gy",  vim.lsp.buf.type_definition, { nowait = true })
-vim.keymap.set("n", "gi",  vim.lsp.buf.implementation)
-vim.keymap.set("n", "gr",  vim.lsp.buf.references)
-vim.keymap.set("n", "gws", vim.lsp.buf.workspace_symbol)
-
--- Remap for do codeAction of current line.
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
-
--- Remap for auto-formatting code.
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.formatting)
-
--- Use `[g` and `]g` for navigate diagnostics.
-vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
-vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
-
--- Remap for rename current word
-vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
-
--- Show only buffer diagnostics
-vim.keymap.set("n", "<leader>d", vim.diagnostic.setloclist)
--- Show only that line"s diagnostics.
-vim.keymap.set("n", "<leader>ln", vim.diagnostic.get)
--- Trigger code lens.
--- See: https://github.com/scalameta/nvim-metals/discussions/160
-vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run)
-
--- Need for symbol highlights to work correctly
-vim.cmd([[hi! link LspReferenceText CursorColumn]])
-vim.cmd([[hi! link LspReferenceRead CursorColumn]])
-vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
-vim.cmd([[hi! link LspCodeLens CursorColumn]])
-
--- List of LSPs to enable via nvim-lspconfig.
--- To see full list of available lsps please see the list here:
--- https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#gopls
--- Also note that Scala/Metals is *not* configured via lspconfig but
--- rather though ckipp's nvim-metals plugin.  See that plugin's README
--- for more details on that.
-
-require("lspconfig").bashls.setup {}
-require("lspconfig").dockerls.setup {}
-require("lspconfig").gopls.setup {}
-require("lspconfig").graphql.setup {}
-require("lspconfig").rust_analyzer.setup {}
-require("lspconfig").sumneko_lua.setup {
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { "vim", "use" },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-    },
-  },
-}
-require("lspconfig").terraformls.setup {}
-require("lspconfig").tsserver.setup {}
-require("lspconfig").vimls.setup {}
 
 -- Metals {{{2
 
@@ -638,10 +510,10 @@ local metals_config = require("metals").bare_config()
 
 metals_config.settings = {
   excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
-  serverVersion = "latest.snapshot",
   showImplicitArguments = true,
   showInferredType = true,
   superMethodLensesEnabled = true,
+  useGlobalExecutable = true, -- So we can use LSP Zero.  This means we have to keep Metals up-to-date ourselves.
 }
 
 metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -741,11 +613,13 @@ vim.g["github_enterprise_urls"] = { "https://code.corp.creditkarma.com" }
 
 -- Telescope {{{2
 
-vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
-vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
-vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers)
-vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
-vim.keymap.set("n", "<leader>gb", require("telescope.builtin").git_branches)
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", builtin.find_files)
+vim.keymap.set("n", "<leader>fg", builtin.live_grep)
+vim.keymap.set("n", "<leader>fb", builtin.buffers)
+vim.keymap.set("n", "<leader>fh", builtin.help_tags)
+vim.keymap.set("n", "<leader>gb", builtin.git_branches)
+vim.keymap.set("n", "<leader>gf", builtin.git_files)
 vim.keymap.set("n", "<leader>fm", require("telescope").extensions.metals.commands)
 
 -- Treesitter {{{2
@@ -781,6 +655,10 @@ require("nvim-treesitter.configs").setup {
   },
   highlight = { enable = true }
 }
+
+-- UndoTree {{{2
+
+vim.keymap.set("n", "<F5>", ":UndotreeToggle<CR>")
 
 -- Vista {{{2
 
