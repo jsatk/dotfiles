@@ -7,7 +7,7 @@ set --export GOPATH $HOME/go
 set --export GPG_TTY (tty) # Required for gpg... sometimes... gpg is fickle and frustrating.
 set --export BAT_THEME "TwoDark" # For Bat.  See: https://github.com/sharkdp/bat
 set --local BREW_PREFIX (/opt/homebrew/bin/brew --prefix)
-set --export JAVA_HOME (/usr/libexec/java_home -v 1.8.0_362)
+set --export JAVA_HOME (/usr/libexec/java_home -v 1.8.0_352)
 
 # }}}
 # Files I need to source {{{
