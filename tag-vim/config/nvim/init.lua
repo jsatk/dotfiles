@@ -7,89 +7,84 @@ vim.opt_global.shell = "fish"
 
 -- All plugin settings are lower in this file under section 99.
 
--- Only required if you have packer in your `opt` pack.
-vim.cmd([[packadd packer.nvim]])
-
-require("packer").startup(function(use)
-  -- Packer can manage itself as an optional plugin.
-  use({ "wbthomason/packer.nvim", opt = true})
-
-  -- The plugins, sorted alphabetically.
-  use({ "AndrewRadev/splitjoin.vim" })
-  use({ "ap/vim-css-color", opt = true, ft = { "css", "scss", "sass", "less" }})
-  use { "catppuccin/nvim", as = "catppuccin" }
-  use({ "dag/vim-fish", opt = true, ft = "fish" })
-  use({ "github/copilot.vim" })
-  use({ "junegunn/goyo.vim", opt = true, ft = { "markdown", "tex", "mail" }})
-  use({ "junegunn/gv.vim" })
-  use({ "junegunn/vim-easy-align" })
-  use({ "liuchengxu/vista.vim" })
-  use({ "mbbill/undotree" })
-  use({ "mfussenegger/nvim-dap" })
-  use({
-    "nvim-lualine/lualine.nvim",
-    requires = { "nvim-tree/nvim-web-devicons", opt = true }
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
   })
-  use({
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+  { "catppuccin/nvim", name = "catppuccin", lazy = false },
+  { "github/copilot.vim", lazy = false },
+  { "junegunn/vim-easy-align" },
+  { "liuchengxu/vista.vim" },
+  { "mbbill/undotree" },
+  { "mfussenegger/nvim-dap" },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" }
+  },
+  {
     "nvim-telescope/telescope.nvim",
-    requires = {
+    dependencies = {
       { "nvim-lua/popup.nvim" },
       { "nvim-lua/plenary.nvim" },
-      { "kyazdani42/nvim-web-devicons" },
+      { "nvim-tree/nvim-web-devicons" },
     }
-  })
-  use({
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
-    requires = { "nvim-treesitter/playground" }
-  })
-  use({ "scalameta/nvim-metals" })
-  use({ "sheerun/vim-polyglot" })
-  use({ "tpope/vim-abolish" })
-  use({ "tpope/vim-commentary" })
-  use({ "tpope/vim-dadbod", opt = true, ft = { "sql", "psql" }})
-  use({
+    build = ":TSUpdate",
+    dependencies = { "nvim-treesitter/playground" }
+  },
+  { "scalameta/nvim-metals", ft = { "sbt", "scala" } },
+  { "tpope/vim-abolish" },
+  { "tpope/vim-commentary" },
+  { "tpope/vim-dadbod", lazy = true, ft = { "sql", "psql" } },
+  {
     "tpope/vim-dispatch",
-    opt = true,
-    cmd = { "Dispatch", "Make", "Focus", "Start" }
-  })
-  use({
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v1.x',
-    requires = {
-      -- LSP Support
-      {'neovim/nvim-lspconfig'},             -- Required
-      {'williamboman/mason.nvim'},           -- Optional
-      {'williamboman/mason-lspconfig.nvim'}, -- Optional
-
-      -- Autocompletion
-      {'hrsh7th/nvim-cmp'},         -- Required
-      {'hrsh7th/cmp-nvim-lsp'},     -- Required
-      {'hrsh7th/cmp-buffer'},       -- Optional
-      {'hrsh7th/cmp-path'},         -- Optional
-      {'saadparwaiz1/cmp_luasnip'}, -- Optional
-      {'hrsh7th/cmp-nvim-lua'},     -- Optional
-
-      -- Snippets
-      {'L3MON4D3/LuaSnip'},             -- Required
-      {'rafamadriz/friendly-snippets'}, -- Optional
-    }
-  })
-  use({ "tpope/vim-eunuch" })
-  use({ "tpope/vim-fugitive" })
-  use({ "tpope/vim-jdaddy", opt = true, ft = { "json" }})
-  use({ "tpope/vim-projectionist" })
-  use({ "tpope/vim-repeat" })
-  use({ "tpope/vim-rhubarb" })
-  use({ "tpope/vim-scriptease", opt = true, ft = "vim" })
-  use({ "tpope/vim-sensible" })
-  use({ "tpope/vim-sleuth" })
-  use({ "tpope/vim-speeddating" })
-  use({ "tpope/vim-surround" })
-  use({ "tpope/vim-tbone" })
-  use({ "tpope/vim-unimpaired" })
-  use({ "tpope/vim-vinegar" })
-end)
+    lazy = true,
+    cmd = { "Dispatch", "Make", "Focus", "Start" },
+  },
+  {
+    "VonHeikemen/lsp-zero.nvim",
+    branch = "v2.x",
+    dependencies = {
+      { "neovim/nvim-lspconfig" },
+      {
+        "williamboman/mason.nvim",
+        build = function()
+          pcall(vim.cmd, 'MasonUpdate')
+        end,
+      },
+      { "williamboman/mason-lspconfig.nvim" },
+      { "hrsh7th/nvim-cmp" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "L3MON4D3/LuaSnip" },
+    },
+  },
+  { "tpope/vim-eunuch" },
+  { "tpope/vim-fugitive" },
+  { "tpope/vim-jdaddy", lazy = true, ft = { "json" } },
+  { "tpope/vim-projectionist" },
+  { "tpope/vim-repeat" },
+  { "tpope/vim-rhubarb" },
+  { "tpope/vim-scriptease", lazy = true, ft = { "vim" } },
+  { "tpope/vim-sensible" },
+  { "tpope/vim-sleuth" },
+  { "tpope/vim-speeddating" },
+  { "tpope/vim-surround" },
+  { "tpope/vim-tbone" },
+  { "tpope/vim-unimpaired" },
+  { "tpope/vim-vinegar" },
+})
 
 -- 1  important --------------------------------------------------- {{{1
 
@@ -375,6 +370,9 @@ vim.opt.signcolumn = "yes"
 -- Enable folding in Markdown.
 vim.g.markdown_folding = 1
 
+-- I don't care about Perl.
+vim.g.loaded_perl_provider = 0
+
 -- 99 plugin configurations --------------------------------------- {{{1
 
 -- Catppuccin {{{2
@@ -389,12 +387,6 @@ catppuccin.setup({
 
 vim.cmd.colorscheme "catppuccin"
 
--- Copilot {{{2
-
--- This is needed to do becuase Copilot needs a newer version but some
--- of the repos I work in use old versions of node that don't work
--- with Copilot.
-vim.g.copilot_node_command = "~/.asdf/installs/nodejs/16.11.0/bin/node"
 
 -- DAP (Debug Adapter Protocol) {{{2
 
@@ -473,6 +465,14 @@ lsp.configure('metals', { force_setup = true })
 -- (Optional) Configure lua language server for neovim
 lsp.nvim_workspace()
 lsp.setup()
+
+local cmp = require('cmp')
+
+cmp.setup({
+  mapping = {
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  }
+})
 
 -- Lualine {{{2
 
