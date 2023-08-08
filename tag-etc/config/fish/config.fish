@@ -10,18 +10,6 @@ set --local BREW_PREFIX (/opt/homebrew/bin/brew --prefix)
 set --export JAVA_HOME (/usr/libexec/java_home -v 1.8.0_352)
 
 # }}}
-# Files I need to source {{{
-
-[ -f $BREW_PREFIX/share/autojump/autojump.fish ]
-and source $BREW_PREFIX/share/autojump/autojump.fish
-
-[ -f {$HOME}/.iterm2_shell_integration.fish ]
-and source {$HOME}/.iterm2_shell_integration.fish
-
-[ -f $BREW_PREFIX/opt/asdf/asdf.fish ]
-and source /opt/homebrew/opt/asdf/libexec/asdf.fish
-
-# }}}
 # Path {{{
 
 set PATH \
@@ -39,6 +27,22 @@ set PATH \
   /Library/TeX/texbin \
   $HOME/Library/Application\ Support/Coursier/bin \
   $GOPATH/bin \
+
+# }}}
+# Files I need to source {{{
+
+[ -f $BREW_PREFIX/share/autojump/autojump.fish ]
+and source $BREW_PREFIX/share/autojump/autojump.fish
+
+[ -f $HOME/.iterm2_shell_integration.fish ]
+and source {$HOME}/.iterm2_shell_integration.fish
+
+[ -f $BREW_PREFIX/opt/asdf/asdf.fish ]
+and source /opt/homebrew/opt/asdf/libexec/asdf.fish
+
+# The next line updates PATH for the Google Cloud SDK.
+[ -f $HOME/google-cloud-sdk/path.fish.inc ]
+and source {$HOME}/google-cloud-sdk/path.fish.inc
 
 # }}}
 # Extras {{{

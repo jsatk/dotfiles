@@ -44,7 +44,11 @@ require("lazy").setup({
     build = ":TSUpdate",
     dependencies = { "nvim-treesitter/playground" }
   },
-  { "scalameta/nvim-metals", ft = { "sbt", "scala" } },
+  {
+    "scalameta/nvim-metals",
+    ft = { "sbt", "scala" },
+    dependencies = { "nvim-lua/plenary.nvim" }
+  },
   { "tpope/vim-abolish" },
   { "tpope/vim-commentary" },
   { "tpope/vim-dadbod", lazy = true, ft = { "sql", "psql" } },
@@ -453,6 +457,7 @@ vim.cmd([[nmap ga <Plug>(EasyAlign)]])
 
 -- LSP Zero {{{2
 
+-- TODO: Figure out how to unfuck Copilot.
 local lsp = require('lsp-zero').preset({
   name = 'minimal',
   set_lsp_keymaps = true,
@@ -460,7 +465,11 @@ local lsp = require('lsp-zero').preset({
   suggest_lsp_servers = true,
 })
 
-lsp.configure('metals', { force_setup = true })
+lsp.on_attach(function(_, bufnr)
+  lsp.default_keymaps({ buffer = bufnr })
+end)
+
+lsp.skip_server_setup({'metals'})
 
 -- (Optional) Configure lua language server for neovim
 lsp.nvim_workspace()
@@ -469,9 +478,9 @@ lsp.setup()
 local cmp = require('cmp')
 
 cmp.setup({
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
-  }
+  })
 })
 
 -- Lualine {{{2
@@ -480,10 +489,10 @@ local lualine = require("lualine")
 
 lualine.setup({
   options = {
-    theme = "catppuccin"
+    theme = "catppuccin",
   },
   sections = {
-    lualine_x = {'g:metals_status', 'encoding', 'fileformat', 'filetype'},
+    lualine_x = { 'g:metals_status', 'encoding', 'fileformat', 'filetype' },
   }
 })
 
@@ -513,7 +522,6 @@ metals_config.settings = {
   showImplicitArguments = true,
   showInferredType = true,
   superMethodLensesEnabled = true,
-  useGlobalExecutable = true, -- So we can use LSP Zero.  This means we have to keep Metals up-to-date ourselves.
 }
 
 metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -522,10 +530,11 @@ metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
--- Exhaustive match support, etc.
+-- local metals_lsp = lsp.build_options('metals', {})
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 metals_config.capabilities = capabilities
+-- metals_config.capabilities = metals_lsp.capabilities
 metals_config.init_options.statusBarProvider = "on"
 
 -- For DAP.

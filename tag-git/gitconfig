@@ -51,6 +51,11 @@
 	# Log Me
 	logme = log --color --name-only --decorate=full --author="jesse.atkinson@creditkarma.com"
 
+	# Log the team's commit messages; exclude the release robot's commits
+	# which simply duplicate the commit messages before.  Makes reading the
+	# work history easier.
+	logus = log --perl-regexp --author='^((?!ci-service-release-ck).*)$'
+
 	# Get Incoming Changes
 	incoming = log ..@{u}
 
@@ -310,5 +315,5 @@
 
 # }}}
 
-# vim: textwidth=80:noexpandtab:shiftwidth=2
+# vim: textwidth=80:noexpandtab:shiftwidth=8:tabstop=8
 # vim: foldmethod=marker:foldmarker={{{,}}}:syntax=gitconfig
