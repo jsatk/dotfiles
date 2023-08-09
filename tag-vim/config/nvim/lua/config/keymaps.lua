@@ -1,0 +1,6 @@
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
+-- vim.keymap.set("n", "<Space>", "za")
+-- vim.keymap.set("v", "<Space>", "za")
+-- vim.keymap.set("n", "z0", "zcz0")
