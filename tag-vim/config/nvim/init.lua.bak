@@ -29,7 +29,7 @@ require("lazy").setup({
   { "mfussenegger/nvim-dap" },
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" }
+    dependencies = { "nvim-tree/nvim-web-devicons" },
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -37,17 +37,17 @@ require("lazy").setup({
       { "nvim-lua/popup.nvim" },
       { "nvim-lua/plenary.nvim" },
       { "nvim-tree/nvim-web-devicons" },
-    }
+    },
   },
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    dependencies = { "nvim-treesitter/playground" }
+    dependencies = { "nvim-treesitter/playground" },
   },
   {
     "scalameta/nvim-metals",
     ft = { "sbt", "scala" },
-    dependencies = { "nvim-lua/plenary.nvim" }
+    dependencies = { "nvim-lua/plenary.nvim" },
   },
   { "tpope/vim-abolish" },
   { "tpope/vim-commentary" },
@@ -65,7 +65,7 @@ require("lazy").setup({
       {
         "williamboman/mason.nvim",
         build = function()
-          pcall(vim.cmd, 'MasonUpdate')
+          pcall(vim.cmd, "MasonUpdate")
         end,
       },
       { "williamboman/mason-lspconfig.nvim" },
@@ -99,7 +99,7 @@ vim.o.cpo = vim.o.cpo .. "J"
 -- 2  moving around, searching and patterns ----------------------- {{{1
 
 vim.opt_global.ignorecase = true -- Ignore the case, unless...
-vim.opt_global.smartcase = true  -- ...there's caps in it.
+vim.opt_global.smartcase = true -- ...there's caps in it.
 
 -- 3  tags -------------------------------------------------------- {{{1
 
@@ -143,8 +143,8 @@ vim.opt_global.cursorline = true
 
 -- TODO: This isn't working!  Fix!
 vim.opt_global.spellfile = {
-  vim.fn.expand "~/.vim/custom-dictionary.utf-8.add",
-  vim.fn.expand "~/.vim-local-dictionary.utf-8.add",
+  vim.fn.expand("~/.vim/custom-dictionary.utf-8.add"),
+  vim.fn.expand("~/.vim-local-dictionary.utf-8.add"),
 }
 vim.keymap.set("n", "zG", "2zg")
 
@@ -197,7 +197,9 @@ vim.opt_global.undofile = true
 -- with the / character replaced with a %.
 vim.opt_global.undodir = vim.fn.expand("~/.config/nvim/tmp/undo//")
 -- Make the undo directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.undodir) == 0 then vim.fn.mkdir(vim.o.undodir, "p") end
+if vim.fn.isdirectory(vim.o.undodir) == 0 then
+  vim.fn.mkdir(vim.o.undodir, "p")
+end
 
 -- Set completeopt to have a better completion experience
 vim.opt_global.completeopt = "menuone,noinsert,noselect"
@@ -219,7 +221,7 @@ vim.keymap.set("n", "z0", "zcz0")
 
 -- TODO: Convert this to lua.
 vim.api.nvim_exec(
-[[
+  [[
 " This function defines what folded text looks like.
 function! MyFoldText() " {{{
   let line = getline(v:foldstart)
@@ -238,17 +240,15 @@ function! MyFoldText() " {{{
 endfunction " }}}
 set foldtext=MyFoldText()
 ]],
-false
+  false
 )
 
-vim.opt.foldmethod="expr"
-vim.opt.foldexpr="nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- 16 diff mode --------------------------------------------------- {{{1
 
 -- 17 mapping ----------------------------------------------------- {{{1
-
-
 
 -- This section contains the few options that are under `17 mapping` in
 -- `:options` as well as all of my custom remappings that don't
@@ -287,13 +287,13 @@ vim.api.nvim_create_autocmd({ "WinLeave", "InsertEnter" }, {
   group = cline_group,
   callback = function()
     vim.o.cursorline = false
-  end
+  end,
 })
 vim.api.nvim_create_autocmd({ "WinEnter", "InsertLeave" }, {
   group = cline_group,
   callback = function()
     vim.o.cursorline = true
-  end
+  end,
 })
 
 -- Keep the cursor in place while joining lines
@@ -315,8 +315,7 @@ vim.opt_global.backupdir = vim.fn.expand("~/.config/nvim/tmp/backup//")
 vim.opt_global.fixendofline = true
 
 -- Make the backup directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.backupdir) == 0
-then
+if vim.fn.isdirectory(vim.o.backupdir) == 0 then
   vim.fn.mkdir(vim.o.backupdir, "p")
 end
 
@@ -326,8 +325,7 @@ vim.opt_global.directory = vim.fn.expand("~/.config/nvim/tmp/swap//")
 vim.o.swapfile = false
 
 -- Make the swap directory automatically if it doesn't already exist.
-if vim.fn.isdirectory(vim.o.directory) == 0
-then
+if vim.fn.isdirectory(vim.o.directory) == 0 then
   vim.fn.mkdir(vim.o.directory, "p")
 end
 
@@ -363,7 +361,7 @@ vim.opt_global.startofline = false
 local line_return_group = vim.api.nvim_create_augroup("line_return", { clear = true })
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = line_return_group,
-  command = [[if line("'\"") > 0 && line("'\"") <= line("$") | execute 'normal! g`"zvzz' | endif]]
+  command = [[if line("'\"") > 0 && line("'\"") <= line("$") | execute 'normal! g`"zvzz' | endif]],
 })
 
 -- Always show the sign column so errors or other LSP features that use
@@ -389,8 +387,7 @@ catppuccin.setup({
   term_colors = true,
 })
 
-vim.cmd.colorscheme "catppuccin"
-
+vim.cmd.colorscheme("catppuccin")
 
 -- DAP (Debug Adapter Protocol) {{{2
 
@@ -409,9 +406,9 @@ vim.keymap.set("n", "<leader>dso", dap.step_over)
 -- "si" for "step into".
 vim.keymap.set("n", "<leader>dsi", dap.step_into)
 
-vim.fn.sign_define('DapBreakpoint', { text="🛑", texthl="", linehl="", numhl="" })
-vim.fn.sign_define('DapStopped', { text="✋", texthl="", linehl="", numhl="" })
-vim.fn.sign_define('DapLogPoint', { text="📝", texthl="", linehl="", numhl="" })
+vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "✋", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapLogPoint", { text = "📝", texthl = "", linehl = "", numhl = "" })
 
 dap.configurations.scala = {
   {
@@ -419,24 +416,24 @@ dap.configurations.scala = {
     request = "launch",
     name = "Run",
     metals = {
-      runType = "run"
-    }
+      runType = "run",
+    },
   },
   {
     type = "scala",
     request = "launch",
     name = "Test File",
     metals = {
-      runType = "testFile"
-    }
+      runType = "testFile",
+    },
   },
   {
     type = "scala",
     request = "launch",
     name = "Test Target",
     metals = {
-      runType = "testTarget"
-    }
+      runType = "testTarget",
+    },
   },
 }
 
@@ -458,8 +455,8 @@ vim.cmd([[nmap ga <Plug>(EasyAlign)]])
 -- LSP Zero {{{2
 
 -- TODO: Figure out how to unfuck Copilot.
-local lsp = require('lsp-zero').preset({
-  name = 'minimal',
+local lsp = require("lsp-zero").preset({
+  name = "minimal",
   set_lsp_keymaps = true,
   manage_nvim_cmp = true,
   suggest_lsp_servers = true,
@@ -469,18 +466,18 @@ lsp.on_attach(function(_, bufnr)
   lsp.default_keymaps({ buffer = bufnr })
 end)
 
-lsp.skip_server_setup({'metals'})
+lsp.skip_server_setup({ "metals" })
 
 -- (Optional) Configure lua language server for neovim
 lsp.nvim_workspace()
 lsp.setup()
 
-local cmp = require('cmp')
+local cmp = require("cmp")
 
 cmp.setup({
   mapping = cmp.mapping.preset.insert({
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-  })
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+  }),
 })
 
 -- Lualine {{{2
@@ -492,8 +489,8 @@ lualine.setup({
     theme = "catppuccin",
   },
   sections = {
-    lualine_x = { 'g:metals_status', 'encoding', 'fileformat', 'filetype' },
-  }
+    lualine_x = { "g:metals_status", "encoding", "fileformat", "filetype" },
+  },
 })
 
 -- Metals {{{2
@@ -524,11 +521,9 @@ metals_config.settings = {
   superMethodLensesEnabled = true,
 }
 
-metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = { prefix = "" }
-  }
-)
+metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  virtual_text = { prefix = "" },
+})
 
 -- local metals_lsp = lsp.build_options('metals', {})
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -561,59 +556,59 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 vim.g.projectionist_heuristics = {
   ["*.markdown|*.md"] = {
     ["*.md"] = { dispatch = "open -a 'Marked 2.app' {file}" },
-    ["*.markdown"] = { dispatch = "open -a 'Marked 2.app' {file}" }
+    ["*.markdown"] = { dispatch = "open -a 'Marked 2.app' {file}" },
   },
   ["package.json"] = {
     ["README.md"] = { type = "doc" },
     ["*"] = {
       console = "node",
       make = "npm",
-      start = "npm start"
+      start = "npm start",
     },
     ["lib/*.js"] = {
       type = "src",
-      alternate = "test/{}.js"
+      alternate = "test/{}.js",
     },
     ["test/*.js"] = {
       type = "test",
       alternate = "lib/{}.js",
-      dispatch = "yarn test {}"
+      dispatch = "yarn test {}",
     },
-    ["package.json"] = { type = "package" }
+    ["package.json"] = { type = "package" },
   },
   ["Cargo.toml"] = {
     ["README.md"] = { type = "doc" },
     ["src/*.rs"] = {
       type = "src",
-      alternate = "tests/{}.rs"
+      alternate = "tests/{}.rs",
     },
     ["tests/*.rs"] = {
       type = "test",
       alternate = "src/{}.rs",
-      dispatch = "cargo test {}"
+      dispatch = "cargo test {}",
     },
     ["benchmarks/*.rs"] = { type = "bench" },
-    ["Cargo.toml"] = { type = "config" }
+    ["Cargo.toml"] = { type = "config" },
   },
   ["build.sbt"] = {
     ["README.md"] = { type = "doc" },
     ["*"] = {
       console = "bloop-jvm console",
       make = "bloop-jvm compile",
-      start = "bloop-jvm run"
+      start = "bloop-jvm run",
     },
     ["src/main/scala/*.scala"] = {
       alternate = "src/test/scala/{}Test.scala",
-      type = "src"
+      type = "src",
     },
     ["src/test/scala/*Test.scala"] = {
       alternate = "src/main/scala/{}.scala",
       type = "test",
-      dispatch = "bloop-jvm test --no-color -o {dot}Test"
+      dispatch = "bloop-jvm test --no-color -o {dot}Test",
     },
     ["build.sbt"] = { type = "config" },
     ["*.sbt"] = { type = "config" },
-  }
+  },
 }
 
 -- Rhubarb {{{2
@@ -633,13 +628,13 @@ vim.keymap.set("n", "<leader>fm", require("telescope").extensions.metals.command
 
 -- Treesitter {{{2
 
-require("nvim-treesitter.configs").setup {
+require("nvim-treesitter.configs").setup({
   -- Needed for Treesitter playground
   playground = { enabled = true },
   query_linter = {
     enable = true,
     use_virtual_text = true,
-    lint_events = { "BufWrite", "CursorHold" }
+    lint_events = { "BufWrite", "CursorHold" },
   },
   ensure_installed = {
     "bash",
@@ -660,10 +655,10 @@ require("nvim-treesitter.configs").setup {
     "toml",
     "typescript",
     "vim",
-    "yaml"
+    "yaml",
   },
-  highlight = { enable = true }
-}
+  highlight = { enable = true },
+})
 
 -- UndoTree {{{2
 
