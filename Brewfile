@@ -10,6 +10,7 @@ tap "homebrew/core"
 tap "keith/formulae"
 tap "thoughtbot/formulae"
 tap "caarlos0/tap"
+tap "jesseduffield/lazygit"
 
 # Shells ------------------------------------------------------------------ {{{1
 
@@ -47,6 +48,7 @@ brew "w3m"
 brew "gist"
 brew "git"
 brew "git-delta"
+brew "lazygit"
 brew "mercurial"
 # CLI repository browsing.
 brew "tig"
@@ -189,8 +191,8 @@ cask "postman"
 # cask "slack" # Managed by IT.
 cask "sequel-pro"
 cask "steam"
-# cask "temurin" # Managed by IT.
 cask "vlc"
+cask "wezterm"
 cask "yubico-yubikey-manager"
 cask "zoom"
 
