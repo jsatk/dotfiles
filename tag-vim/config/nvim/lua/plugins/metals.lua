@@ -3,38 +3,21 @@ return {
     "scalameta/nvim-metals",
     ft = { "sbt", "scala" },
     dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+      { "<leader>ws", function() require("metals").hover_worksheet() end }
+    },
     config = function()
       local metals_config = require("metals").bare_config()
 
       metals_config.settings = {
         showImplicitArguments = true,
+        showInferredType = true,
+        superMethodLensesEnabled = true,
         excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
       }
 
       metals_config.init_options.statusBarProvider = "on"
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-      local dap = require("dap")
-
-      dap.configurations.scala = {
-        {
-          type = "scala",
-          request = "launch",
-          name = "RunOrTest",
-          metals = {
-            runType = "runOrTestFile",
-            --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
-          },
-        },
-        {
-          type = "scala",
-          request = "launch",
-          name = "Test Target",
-          metals = {
-            runType = "testTarget",
-          },
-        },
-      }
 
       metals_config.on_attach = function(_, _)
         require("metals").setup_dap()
