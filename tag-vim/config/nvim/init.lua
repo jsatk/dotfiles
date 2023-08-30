@@ -312,4 +312,46 @@ vim.g.markdown_folding = 1
 -- I don't care about Perl.
 vim.g.loaded_perl_provider = 0
 
+-- Default in vim for K is to open the man/help of what your cursor is
+-- on.  This keeps that muscle memory alive but instead leans on the LSP
+-- to provide the info.
+vim.keymap.set("n", "K", vim.lsp.buf.hover)
+
+-- Remap keys for gotos
+-- Note: Intentionally not mapping `vim.lsp.buf.document_symbol` to
+-- anything because I use the Vista plugin which is a nicer way to view
+-- the document tree.
+vim.keymap.set("n", "gd",  vim.lsp.buf.definition, { nowait = true })
+vim.keymap.set("n", "gy",  vim.lsp.buf.type_definition, { nowait = true })
+vim.keymap.set("n", "gi",  vim.lsp.buf.implementation)
+vim.keymap.set("n", "gr",  vim.lsp.buf.references)
+vim.keymap.set("n", "gws", vim.lsp.buf.workspace_symbol)
+
+-- Remap for do codeAction of current line.
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
+
+-- Remap for auto-formatting code.
+-- vim.keymap.set("n", "<leader>f", vim.lsp.buf.formatting)
+
+-- Use `[g` and `]g` for navigate diagnostics.
+vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
+vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
+
+-- Remap for rename current word
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+
+-- Show only buffer diagnostics
+vim.keymap.set("n", "<leader>d", vim.diagnostic.setloclist)
+-- Show only that line"s diagnostics.
+vim.keymap.set("n", "<leader>ln", vim.diagnostic.get)
+-- Trigger code lens.
+-- See: https://github.com/scalameta/nvim-metals/discussions/160
+vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run)
+
+-- Need for symbol highlights to work correctly
+vim.cmd([[hi! link LspReferenceText CursorColumn]])
+vim.cmd([[hi! link LspReferenceRead CursorColumn]])
+vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
+vim.cmd([[hi! link LspCodeLens CursorColumn]])
+
 -- vim: set foldmethod=marker foldlevel=0 textwidth=72:
