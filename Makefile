@@ -7,12 +7,9 @@ global_node_modules := \
 	bash-language-server \
 	dockerfile-language-server-nodejs \
 	neovim \
-	graphql-language-service-cli \
-	snyk \
 	speed-test \
 	typescript \
-	typescript-language-server \
-	vim-language-server \
+	typescript-language-server
 
 global_gems := \
 	neovim \
@@ -20,6 +17,10 @@ global_gems := \
 
 # Paths to folders & binaries
 # Brew
+# Default path is /opt/homebrew for Apple Silicon, /usr/local for macOS Intel
+# and /home/linuxbrew/.linuxbrew for Linux).  Update `homebrew_root` according
+# to the system you're on.
+# TODO: Make figuring out this path automatic.
 homebrew_root := /usr/local
 cellar := $(homebrew_root)/Cellar
 bin := $(homebrew_root)/bin
@@ -27,12 +28,12 @@ homebrew := $(bin)/brew
 
 # asdf
 # All `asdf_plugins` should all have a coresponding entry in ~/.tool-versions.
-asdf_plugins := nodejs ruby rust sbcl sbt scala yarn golang
+asdf_plugins := nodejs ruby rust sbcl sbt scala golang python
 asdf_root := $(HOME)/.asdf
 asdf_shims := $(asdf_root)/shims
 
 # Node
-yarn := $(asdf_shims)/yarn
+npm := $(asdf_shims)/npm
 node_modules_root := $(asdf_shims)
 prefixed_node_modules := $(addprefix $(node_modules_root)/,$(global_node_modules))
 
@@ -52,7 +53,7 @@ update: | install ## Update everything.
 	rcup -v
 	brew bundle --global
 	gem update $(global_gems)
-	yarn global upgrade
+	npm update -g
 	vim +PlugUpdate +quitall
 	# nvim +PackerSync +quitall # TODO: Get this working.
 
@@ -99,10 +100,10 @@ asdf: | $(asdf_plugins) ## Install specific verions of languages -- language ver
 # the targets end up being the same because we install a package called "neovim"
 # from both npm and gem.
 node_modules_$(prefixed_node_modules):
-			$(yarn) global add $(notdir $@)
+			$(npm) install -g $(notdir $@)
 
 .PHONY: node_modules
-node_modules: | node_modules_$(prefixed_node_modules) ## Install global yarn modules.
+node_modules: | node_modules_$(prefixed_node_modules) ## Install global node modules.
 
 # }}}
 # Ruby --------------------------------------------------------------------- {{{
