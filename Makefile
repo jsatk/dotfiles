@@ -17,11 +17,7 @@ global_gems := \
 
 # Paths to folders & binaries
 # Brew
-# Default path is /opt/homebrew for Apple Silicon, /usr/local for macOS Intel
-# and /home/linuxbrew/.linuxbrew for Linux).  Update `homebrew_root` according
-# to the system you're on.
-# TODO: Make figuring out this path automatic.
-homebrew_root := /usr/local
+homebrew_root := brew --prefix
 cellar := $(homebrew_root)/Cellar
 bin := $(homebrew_root)/bin
 homebrew := $(bin)/brew
@@ -77,8 +73,8 @@ brew_status := $(shell brew bundle check --no-upgrade > /dev/null && echo 0 || e
 $(homebrew):
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-.PHONY: brew
-brew: | $(homebrew) ## Install Homebrew & Brewfile's formulae, casks, & apps.
+.PHONY: breww
+breww: | $(homebrew) ## Install Homebrew & Brewfile's formulae, casks, & apps.
 ifeq ($(brew_status), 1)
 	brew bundle --no-upgrade
 endif
