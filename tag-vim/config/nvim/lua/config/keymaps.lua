@@ -20,3 +20,6 @@ vim.g.markdown_folding = 1
 
 -- Metals commands in Telescope.
 vim.keymap.set("n", "<leader>fm", require("telescope").extensions.metals.commands)
+
+-- <C-l> redraws the screen and removes any search highlighting.
+-- vim.keymap.set("n", "<c-l>", [[nohlsearch<cr><c-l>]])

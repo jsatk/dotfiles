@@ -13,7 +13,7 @@ global_node_modules := \
 
 global_gems := \
 	neovim \
-        tmuxinator
+	tmuxinator
 
 # Paths to folders & binaries
 # Brew
