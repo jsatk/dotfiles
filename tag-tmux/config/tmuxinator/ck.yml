@@ -52,9 +52,9 @@ windows:
   #         - O # Syncs mail
   # - "💬": weechat
   - "🛠 ": # Intentional extra space because... unicode.
-      root: "~/.dotfiles"
+      root: "~/Developer/.plan"
       panes:
-        - nvim ~/.plan
+        - nvim README.md
   - "📝":
       root: "~/Developer/"
   - "🔩":

@@ -6,7 +6,7 @@ set --export DEVELOPER $HOME/Developer
 set --export GOPATH $HOME/go
 set --export GPG_TTY (tty) # Required for gpg... sometimes... gpg is fickle and frustrating.
 set --export BAT_THEME TwoDark # For Bat.  See: https://github.com/sharkdp/bat
-set --local BREW_PREFIX (brew --prefix)
+set --local BREW_PREFIX /opt/homebrew
 set --export JAVA_HOME (/usr/libexec/java_home -v 1.8.0_352)
 
 # }}}
@@ -16,6 +16,7 @@ set PATH \
     $HOME/.asdf/shims \
     $BREW_PREFIX/bin \
     $BREW_PREFIX/sbin \
+    /usr/local/bin \
     /usr/bin \
     /bin \
     /usr/sbin \

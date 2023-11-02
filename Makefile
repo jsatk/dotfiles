@@ -12,8 +12,7 @@ global_node_modules := \
 	typescript-language-server
 
 global_gems := \
-	neovim \
-	tmuxinator
+	neovim
 
 # Paths to folders & binaries
 # Brew
