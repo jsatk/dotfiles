@@ -6,7 +6,7 @@
 	# List all aliases.
 	# Stolen from here:
 	# https://twitter.com/TrevorBramble/status/774292970681937920
-	aliases = config --get-regexp '^alias\\.'
+        aliases = config --get-regexp '^alias\\.'
 
 	# Append staged changes to head commit.
 	# Great for when you forget to add something.
@@ -43,7 +43,7 @@
 	#
 	# And yes – if you're clever – you can pipe to `xargs` to cherry-pick
 	# this all in one line.
-	headsha = log -1 --pretty=format:'%H'
+        headsha = log -1 --pretty=format:'%H'
 
 	# Log w/o CE auto-robo commits
 	lg = log --no-merges --invert-grep --grep="FH-000"
@@ -240,7 +240,7 @@
 	insteadOf = "git://github.com/jsatk/"
 
 [user]
-	email = jesse@jsatk.us
+	email = jesse.atkinson@creditkarma.com
 	name = Jesse Atkinson
 	signingkey = "DC5AC6E4"
 
