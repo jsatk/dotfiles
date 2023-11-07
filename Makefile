@@ -72,7 +72,7 @@ brew_status := $(shell brew bundle check --no-upgrade > /dev/null && echo 0 || e
 $(homebrew):
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-.PHONY: breww
+.PHONY: brew
 breww: | $(homebrew) ## Install Homebrew & Brewfile's formulae, casks, & apps.
 ifeq ($(brew_status), 1)
 	brew bundle --no-upgrade
