@@ -4,12 +4,11 @@ tap "cjbassi/ytop"
 tap "coursier/formulas"
 tap "github/gh"
 tap "hashicorp/tap"
-tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
-tap "homebrew/core"
 tap "keith/formulae"
 tap "thoughtbot/formulae"
 tap "caarlos0/tap"
+tap "jesseduffield/lazygit"
 
 # Shells ------------------------------------------------------------------ {{{1
 
@@ -47,8 +46,8 @@ brew "w3m"
 brew "gist"
 brew "git"
 brew "git-delta"
+brew "lazygit"
 brew "mercurial"
-# CLI repository browsing.
 brew "tig"
 
 # Chat -------------------------------------------------------------------- {{{1
@@ -67,13 +66,11 @@ brew "asdf"
 # `bloop`.
 # See here for more details: https://github.com/scalacenter/bloop/issues/1467
 brew "coursier"
+brew "ghcup"
 brew "lua-language-server"
 brew "mysql"
 brew "nginx"
-brew "postgresql"
 brew "ruby-build"
-brew "terraform"
-brew "watchman"
 
 # Security ---------------------------------------------------------------- {{{1
 
@@ -119,12 +116,9 @@ brew "fzf"
 brew "fontforge"
 # GitHub CLI tool.  As of this writing (20200218) is in beta and thus I still
 # need hub (see below).
-brew "gh" # Will replace hub.
+brew "gh"
 # Make pretty graphs.
 brew "graphviz"
-# Older GitHub support to git on the command-line.  This essentially wraps git
-# and adds on some GitHub-specific nicities.
-brew "hub"
 # My blog CMS of choice.
 brew "hugo"
 # Utility for doing stuff – mostly compression – to images.
@@ -155,6 +149,7 @@ brew "timer"
 brew "tldr"
 # The terminal multiplexer.
 brew "tmux"
+brew "tmuxinator"
 # Alternative to `rm` that moves things to the trash rather than destroys them
 # forever.
 brew "trash"
@@ -173,24 +168,15 @@ brew "ytop"
 
 cask_args appdir: "/Applications"
 
+cask "alfred"
+cask "corretto"
 cask "discord"
 cask "docker"
 cask "droplr"
 cask "figma"
-cask "firefox"
-# cask "google-chrome" # Managed by IT.
-cask "google-cloud-sdk"
-cask "google-drive-file-stream"
-cask "intellij-idea-ce"
-cask "iTerm2"
-# cask "keybase" # IT won't let me install this for some reason.
-cask "keycastr"
-cask "postman"
-# cask "slack" # Managed by IT.
-cask "sequel-pro"
 cask "steam"
-# cask "temurin" # Managed by IT.
 cask "vlc"
+cask "wezterm"
 cask "yubico-yubikey-manager"
 cask "zoom"
 
@@ -204,12 +190,7 @@ mas "Keynote", id: 409183694
 mas "Magnet", id: 441258766
 mas "Marked 2", id: 890031187
 mas "Numbers", id: 409203825
-mas "OmniFocus 3", id: 1346203938
 mas "Pages", id: 409201541
-mas "Pixelmator", id: 407963104
-mas "Soulver", id: 413965349
-mas "Speedtest", id: 1153157709
-# mas "Xcode", id: 497799835
-# mas "xScope", id: 889428659
+mas "Xcode", id: 497799835
 
 # vim: filetype=ruby:textwidth=80:foldmethod=marker foldlevel=0

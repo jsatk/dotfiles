@@ -1,7 +1,6 @@
-golang 1.17
-nodejs 16.11.0
-python 3.9.13
-ruby 2.7.4
+golang 1.21.1
+nodejs 18.17.1
+python 3.11.5
+ruby 3.2.2
 rust stable
-sbt 1.9.0
-yarn 1.22.19
+sbt 1.9.6
