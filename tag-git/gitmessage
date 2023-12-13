@@ -1,4 +1,4 @@
-FTS-####: Summarize changes in around 50 chars
+Summarize changes in around 50 chars
 
 More detailed explanatory text, if necessary. Wrap it to about 72
 characters or so. In some contexts, the first line is treated as the
@@ -19,5 +19,3 @@ Further paragraphs come after blank lines.
  - Typically a hyphen or asterisk is used for the bullet, preceded
    by a single space, with blank lines in between, but conventions
    vary here
-
-Resolves: https://jira.creditkarma.com/browse/FTS-####

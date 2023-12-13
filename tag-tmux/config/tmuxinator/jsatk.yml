@@ -1,4 +1,4 @@
-# /Users/jesse.atkinson/.config/tmuxinator/ck.yml
+# /Users/jsatk/.config/tmuxinator/jsatk.yml
 
 name: 💵
 root: ~/
@@ -52,9 +52,7 @@ windows:
   #         - O # Syncs mail
   # - "💬": weechat
   - "🛠 ": # Intentional extra space because... unicode.
-      root: "~/Developer/.plan"
-      panes:
-        - nvim README.md
+      root: "~/.dotfiles/"
   - "📝":
       root: "~/Developer/"
   - "🔩":

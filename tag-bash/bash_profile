@@ -6,7 +6,7 @@ test -f ~/.bashrc && source ~/.bashrc
 # }}}
 # Environment Variables {{{
 
-export BREW_PREFIX=$(/opt/homebrew/bin/brew --prefix)
+export BREW_PREFIX=$(/usr/local/bin/brew --prefix)
 
 # }}}
 # Path {{{

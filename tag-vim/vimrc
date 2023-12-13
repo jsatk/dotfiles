@@ -701,11 +701,6 @@ let g:projectionist_heuristics = {
       \ }}
 
 " }}}
-" Rhubarb {{{
-
-let g:github_enterprise_urls = ["https://code.corp.creditkarma.com"]
-
-" }}}
 
 " }}}
 

@@ -6,7 +6,7 @@ set --export DEVELOPER $HOME/Developer
 set --export GOPATH $HOME/go
 set --export GPG_TTY (tty) # Required for gpg... sometimes... gpg is fickle and frustrating.
 set --export BAT_THEME TwoDark # For Bat.  See: https://github.com/sharkdp/bat
-set --local BREW_PREFIX /opt/homebrew
+set --local BREW_PREFIX /usr/local
 set --export JAVA_HOME (/usr/libexec/java_home -v 1.8.0_352)
 
 # }}}
@@ -35,10 +35,6 @@ and source {$HOME}/.iterm2_shell_integration.fish
 
 [ -f $BREW_PREFIX/opt/asdf/asdf.fish ]
 and source $BREW_PREFIX/opt/asdf/libexec/asdf.fish
-
-# The next line updates PATH for the Google Cloud SDK.
-[ -f $HOME/google-cloud-sdk/path.fish.inc ]
-and source {$HOME}/google-cloud-sdk/path.fish.inc
 
 # }}}
 # Extras {{{

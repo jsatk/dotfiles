@@ -165,11 +165,14 @@ brew "ytop"
 cask_args appdir: "/Applications"
 
 cask "alfred"
+cask "backblaze"
+cask "battle-net"
 cask "corretto"
 cask "discord"
 cask "docker"
 cask "droplr"
 cask "figma"
+cask "plex"
 cask "steam"
 cask "vlc"
 cask "wezterm"
@@ -182,11 +185,14 @@ mas "DaisyDisk", id: 411643860
 mas "Deliveries", id: 290986013
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
+mas "Ivory", id: 6444602274
 mas "Keynote", id: 409183694
 mas "Magnet", id: 441258766
 mas "Marked 2", id: 890031187
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
+mas "Reeder", id: 1529448980
+mas "Things", id: 904280696
 mas "Xcode", id: 497799835
 
 # vim: filetype=ruby:textwidth=80:foldmethod=marker foldlevel=0

@@ -45,16 +45,8 @@
 	# this all in one line.
         headsha = log -1 --pretty=format:'%H'
 
-	# Log w/o CE auto-robo commits
-	lg = log --no-merges --invert-grep --grep="FH-000"
-
 	# Log Me
-	logme = log --color --name-only --decorate=full --author="jesse.atkinson@creditkarma.com"
-
-	# Log the team's commit messages; exclude the release robot's commits
-	# which simply duplicate the commit messages before.  Makes reading the
-	# work history easier.
-	logus = log --perl-regexp --author='^((?!ci-service-release-ck).*)$'
+	logme = log --color --name-only --decorate=full --author="jesse@jsatk.us"
 
 	# Get Incoming Changes
 	incoming = log ..@{u}
@@ -97,7 +89,7 @@
 	# whatever matches the commits you want to ignore in your own release-notes.
 	release-notes = "!f() { \
 		PR_URL=\"$(git config remote.origin.url)/pull/\"; \
-		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --grep=\"Setting version to\" | \
+		git log $1 --no-merges --oneline --pretty=format:'%s' | \
 		sed \"s|(#|($PR_URL|g\"; \
 	}; f"
 
@@ -240,7 +232,7 @@
 	insteadOf = "git://github.com/jsatk/"
 
 [user]
-	email = jesse.atkinson@creditkarma.com
+	email = jesse@jsatk.us
 	name = Jesse Atkinson
 	signingkey = "DC5AC6E4"
 
@@ -311,7 +303,7 @@
 # web --------------------------------------------------------------------- {{{
 
 [web]
-	browser = chrome
+	browser = safari
 
 # }}}
 
