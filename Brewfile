@@ -61,10 +61,6 @@ brew "weechat"
 brew "asciinema"
 # Program language version manager.  Manages all languages.
 brew "asdf"
-# brew "bloop" # Disabling until it's supported on M1 Macs.  For now install
-# bloop via `cs install bloop-jvm`.  The binary is then titled `bloop-jvm`, not
-# `bloop`.
-# See here for more details: https://github.com/scalacenter/bloop/issues/1467
 brew "coursier"
 brew "ghcup"
 brew "lua-language-server"
