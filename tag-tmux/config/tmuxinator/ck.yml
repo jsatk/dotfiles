@@ -54,7 +54,7 @@ windows:
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/Developer/.plan"
       panes:
-        - nvim README.md
+        - ep
   - "📝":
       root: "~/Developer/"
   - "🔩":

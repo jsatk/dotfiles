@@ -9,6 +9,7 @@ tap "keith/formulae"
 tap "thoughtbot/formulae"
 tap "caarlos0/tap"
 tap "jesseduffield/lazygit"
+tap "Virtuslab/scala-cli"
 
 # Shells ------------------------------------------------------------------ {{{1
 
@@ -71,6 +72,7 @@ brew "lua-language-server"
 brew "mysql"
 brew "nginx"
 brew "ruby-build"
+brew "scala-cli"
 
 # Security ---------------------------------------------------------------- {{{1
 
@@ -174,6 +176,7 @@ cask "discord"
 cask "docker"
 cask "droplr"
 cask "figma"
+cask "intellij-idea-ce"
 cask "steam"
 cask "vlc"
 cask "wezterm"
@@ -185,12 +188,12 @@ cask "zoom"
 mas "DaisyDisk", id: 411643860
 mas "Deliveries", id: 290986013
 mas "GarageBand", id: 682658836
-mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
 mas "Magnet", id: 441258766
 mas "Marked 2", id: 890031187
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
+mas "Things", id: 904280696
 mas "Xcode", id: 497799835
 
 # vim: filetype=ruby:textwidth=80:foldmethod=marker foldlevel=0
