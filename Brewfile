@@ -151,7 +151,6 @@ brew "timer"
 brew "tldr"
 # The terminal multiplexer.
 brew "tmux"
-brew "tmuxinator"
 # Alternative to `rm` that moves things to the trash rather than destroys them
 # forever.
 brew "trash"

@@ -97,7 +97,8 @@
 	# whatever matches the commits you want to ignore in your own release-notes.
 	release-notes = "!f() { \
 		ORIGIN=\"$(git config remote.origin.url)\"; \
-		PR_URL=\"${ORIGIN::-4}/pull/\"; \
+                SUFFIX=\".git\"; \
+		PR_URL=\"${ORIGIN%\"$SUFFIX\"}/pull/\"; \
 		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --grep=\"Release: v\" | \
 		sed \"s|(#|($PR_URL|g\"; \
 	}; f"
