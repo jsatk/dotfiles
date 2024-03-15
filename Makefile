@@ -12,8 +12,8 @@ global_node_modules := \
 	typescript-language-server
 
 global_gems := \
-        neovim \
-        tmuxinator # Note: We have to install `tmuxinator` as a gem because the brew version doesn't play nicely with asdf.
+	neovim \
+	tmuxinator # Note: We have to install `tmuxinator` as a gem because the brew version doesn't play nicely with asdf.
 
 # Paths to folders & binaries
 # Brew

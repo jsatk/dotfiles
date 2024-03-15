@@ -1,9 +1,9 @@
 # Defined in /var/folders/ld/jpkqdkzn5f71slwtlmwzmf100000gp/T//fish.VmalcT/ep.fish @ line 2
 function ep --description 'Edit .plan'
     # Path to repo.
-    set --local repo "$HOME/Developer/.plan/"
+    set --local repo "$HOME/Developer/jesse.atkinson/"
     # Path to dotplan relative to internal to the repo.
-    set --local dotplan "README.md"
+    set --local dotplan ".plan"
 
     # Fetch latest before getting started.
     git -C $repo pull
