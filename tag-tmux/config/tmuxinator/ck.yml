@@ -52,7 +52,7 @@ windows:
   #         - O # Syncs mail
   # - "💬": weechat
   - "🛠 ": # Intentional extra space because... unicode.
-      root: "~/Developer/.plan"
+      root: "~/.dotfiles/"
       panes:
         - ep
   - "📝":
