@@ -113,7 +113,7 @@ brew "bottom"
 # Source code tag files.
 brew "ctags"
 # `ls` but written in Rust with better defaults.
-brew "exa"
+brew "eza"
 # Better `find`.
 brew "fd"
 # Fuzzy-finder.
