@@ -24,7 +24,7 @@
 	dammit = reset --soft HEAD^
 
 	# Delete all branches that have already been merged into the current
-	# branch.
+	# branch. UPDATE TO HAVE MAIN UPDATE TO HAVE MAIN
 	deletemerged = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 
 	# Destroy all local changes and reset to HEAD.
@@ -118,9 +118,6 @@
 
 	# List all tags.
 	tags = tag -l
-
-	# Undo a `git push`
-	undopush = push --force origin HEAD^:master
 
 	# - Cuts a new branch.
 	# - Sets the default destination of `pull` to whatever branch we're cutting from
