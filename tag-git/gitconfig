@@ -6,7 +6,7 @@
 	# List all aliases.
 	# Stolen from here:
 	# https://twitter.com/TrevorBramble/status/774292970681937920
-        aliases = config --get-regexp '^alias\\.'
+	aliases = config --get-regexp '^alias\\.'
 
 	# Append staged changes to head commit.
 	# Great for when you forget to add something.
@@ -43,7 +43,7 @@
 	#
 	# And yes – if you're clever – you can pipe to `xargs` to cherry-pick
 	# this all in one line.
-        headsha = log -1 --pretty=format:'%H'
+	headsha = log -1 --pretty=format:'%H'
 
 	# Log w/o CE auto-robo commits
 	lg = log --no-merges --invert-grep --grep="FH-000"
@@ -95,13 +95,13 @@
 	# don't have any commit you want to filter out (we have a bunch of robo
 	# commits that I don't want in release notes); or keep it up and update it to
 	# whatever matches the commits you want to ignore in your own release-notes.
- 	release-notes = "!f() { \
- 		ORIGIN=\"$(git config remote.origin.url)\"; \
+	release-notes = "!f() { \
+		ORIGIN=\"$(git config remote.origin.url)\"; \
 		SUFFIX=\".git\"; \
- 		PR_URL=\"${ORIGIN%\"$SUFFIX\"}/pull/\"; \
- 		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --grep=\"Release: v\" --grep=\"Setting version \" | \
- 		sed \"s|(#|($PR_URL|g\"; \
- 	}; f"
+		PR_URL=\"${ORIGIN%\"$SUFFIX\"}/pull/\"; \
+		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --grep=\"Release: v\" --grep=\"Setting version \" | \
+		sed \"s|(#|($PR_URL|g\"; \
+	}; f"
 
 	# List all remotes.
 	remotes = remote -v
@@ -212,7 +212,7 @@
 
 [diff]
 	algorithm = patience
- 	colorMoved = default
+	colorMoved = default
 
 # }}}
 # github ------------------------------------------------------------------ {{{

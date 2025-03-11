@@ -8,6 +8,7 @@ global_node_modules := \
 	dockerfile-language-server-nodejs \
 	neovim \
 	speed-test \
+	ts-node \
 	typescript \
 	typescript-language-server
 

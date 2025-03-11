@@ -1,6 +1,5 @@
 # Taps -------------------------------------------------------------------- {{{1
 
-tap "cjbassi/ytop"
 tap "coursier/formulas"
 tap "github/gh"
 tap "hashicorp/tap"
