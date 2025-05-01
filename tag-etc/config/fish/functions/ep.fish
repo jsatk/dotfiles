@@ -52,7 +52,7 @@ function ep --description 'Edit .plan'
         #	 The text following "O" is literally typed in with
         #	 the variables being expended.
         #	 i.e. * [September 2020](september-2020)
-        set cmd1 "normal! gg}}}}}}O  * [$month $year](#$lmonth-$year)"
+        set cmd1 "normal! gg}}}}}}O    * [$month $year](#$lmonth-$year)"
     end
 
     # If we've already updated our .plan today then don't add datetime stamps
