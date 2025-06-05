@@ -6,7 +6,7 @@
 	# List all aliases.
 	# Stolen from here:
 	# https://twitter.com/TrevorBramble/status/774292970681937920
-        aliases = config --get-regexp '^alias\\.'
+	aliases = config --get-regexp '^alias\\.'
 
 	# Append staged changes to head commit.
 	# Great for when you forget to add something.
@@ -88,8 +88,10 @@
 	# commits that I don't want in release notes); or keep it up and update it to
 	# whatever matches the commits you want to ignore in your own release-notes.
 	release-notes = "!f() { \
-		PR_URL=\"$(git config remote.origin.url)/pull/\"; \
-		git log $1 --no-merges --oneline --pretty=format:'%s' | \
+		ORIGIN=\"$(git config remote.origin.url)\"; \
+		SUFFIX=\".git\"; \
+		PR_URL=\"${ORIGIN%\"$SUFFIX\"}/pull/\"; \
+		git log $1 --no-merges --oneline --pretty=format:'%s' --invert-grep --grep=\"Release: v\" --grep=\"Setting version \" | \
 		sed \"s|(#|($PR_URL|g\"; \
 	}; f"
 
@@ -108,9 +110,6 @@
 
 	# List all tags.
 	tags = tag -l
-
-	# Undo a `git push`
-	undopush = push --force origin HEAD^:master
 
 	# - Cuts a new branch.
 	# - Sets the default destination of `pull` to whatever branch we're cutting from
@@ -205,7 +204,7 @@
 
 [diff]
 	algorithm = patience
- 	colorMoved = default
+	colorMoved = default
 
 # }}}
 # github ------------------------------------------------------------------ {{{

@@ -1,6 +1,5 @@
 # Taps -------------------------------------------------------------------- {{{1
 
-tap "cjbassi/ytop"
 tap "coursier/formulas"
 tap "github/gh"
 tap "hashicorp/tap"
@@ -64,6 +63,7 @@ brew "asdf"
 brew "coursier"
 brew "ghcup"
 brew "lua-language-server"
+brew "luarocks"
 brew "mysql"
 brew "nginx"
 brew "ruby-build"
@@ -100,10 +100,13 @@ brew "autojump"
 brew "bat"
 # For when I need to turn bluetooth back on & my trackpad is bluetooth.
 brew "blueutil"
+# Better top – written in Rust, because we have to rewrite everything in Rust or
+# Go now.
+brew "bottom"
 # Source code tag files.
 brew "ctags"
 # `ls` but written in Rust with better defaults.
-brew "exa"
+brew "lsd"
 # Better `find`.
 brew "fd"
 # Fuzzy-finder.
@@ -145,7 +148,6 @@ brew "timer"
 brew "tldr"
 # The terminal multiplexer.
 brew "tmux"
-brew "tmuxinator"
 # Alternative to `rm` that moves things to the trash rather than destroys them
 # forever.
 brew "trash"
@@ -156,9 +158,6 @@ brew "vim"
 brew "neovim"
 # For easy parsing and rendering of Yaml.
 brew "yq"
-# Better top – written in Rust, because we have to rewrite everything in Rust or
-# Go now.
-brew "ytop"
 
 # Casks ------------------------------------------------------------------- {{{1
 
