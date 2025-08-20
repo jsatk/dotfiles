@@ -1,6 +1,6 @@
 # Environment Variables {{{
 
-set --global --export BROWSER open /Applications/Safari.app
+set --global --export BROWSER /Applications/Safari.app
 set --export EDITOR nvim
 set --export DEVELOPER $HOME/Developer
 set --export GOPATH $HOME/go
