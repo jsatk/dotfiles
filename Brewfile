@@ -1,13 +1,13 @@
 # Taps -------------------------------------------------------------------- {{{1
 
+tap "browsh-org/homebrew-browsh"
+tap "caarlos0/tap"
 tap "coursier/formulas"
 tap "github/gh"
 tap "hashicorp/tap"
-tap "homebrew/cask-fonts"
+tap "jesseduffield/lazygit"
 tap "keith/formulae"
 tap "thoughtbot/formulae"
-tap "caarlos0/tap"
-tap "jesseduffield/lazygit"
 
 # Shells ------------------------------------------------------------------ {{{1
 
@@ -103,6 +103,8 @@ brew "blueutil"
 # Better top – written in Rust, because we have to rewrite everything in Rust or
 # Go now.
 brew "bottom"
+# Text-based browser that's not Lynx.
+brew "browsh"
 # Source code tag files.
 brew "ctags"
 # `ls` but written in Rust with better defaults.
@@ -166,7 +168,9 @@ cask_args appdir: "/Applications"
 cask "alfred"
 cask "backblaze"
 cask "battle-net"
+cask "google-chrome"
 cask "corretto"
+cask "firefox"
 cask "discord"
 cask "docker"
 cask "droplr"
