@@ -1,4 +1,5 @@
 # Environment Variables {{{1
+
 set --export EDITOR nvim
 
 # Files I need to source {{{1
