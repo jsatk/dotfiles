@@ -16,6 +16,7 @@ brew "weechat"
 
 # Programming Languages, DBs, & Language Tools ---------------------------- {{{1
 
+brew "luarocks"
 brew "node"
 
 # Security ---------------------------------------------------------------- {{{1
@@ -30,7 +31,9 @@ brew "bat"
 brew "fd"
 brew "fzf"
 brew "gh"
+brew "ghostscript" # Required by imagemagick.
 brew "hugo"
+brew "imagemagick"
 brew "jq"
 brew "lsd"
 brew "mas"
@@ -39,8 +42,10 @@ brew "neofetch"
 brew "neovim"
 brew "ripgrep"
 brew "stow"
+brew "tectonic"
 brew "tldr"
 brew "tmux"
+brew "tmuxinator"
 brew "tree"
 brew "wget"
 
@@ -48,7 +53,6 @@ brew "wget"
 
 cask "alfred"
 cask "backblaze"
-cask "battle-net"
 cask "discord"
 cask "docker-desktop"
 cask "droplr"
@@ -67,7 +71,6 @@ mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Ivory", id: 6444602274
 mas "Keynote", id: 409183694
-mas "Magnet", id: 441258766
 mas "Marked 2", id: 890031187
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
