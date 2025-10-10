@@ -13,12 +13,12 @@ global_node_modules := \
 
 .PHONY: all
 all: | update clean ## Run everything.  Default target.
-        @echo "✅ All done!"
+	@echo "✅ All done!"
 
 .PHONY: update
 update: | install ## Update everything.
-        brew bundle --global --quiet
-        npm update --silent --global
+	brew bundle --global --quiet
+	npm update --silent --global
 
 .PHONY: install
 install: | breww node_modules ## Install everything.  (Does not update anything.)
@@ -34,20 +34,20 @@ brew_status := $(shell brew bundle check --global --no-upgrade > /dev/null && ec
 
 .PHONY: breww # Using `breww` rather than `brew` to avoid namespace collisions with `brew` command.
 breww: ## Check if Homebrew is installed and run `brew bundle` if it is.
-        @echo "Checking if Homebrew is installed..."
+	@echo "Checking if Homebrew is installed..."
 
 ifeq ($(brew_status), 0)
-        @echo "✅ Homebrew is installed.  Proceeding with with 'brew bundle'."
-        brew bundle --global --quiet --no-upgrade
+	@echo "✅ Homebrew is installed.  Proceeding with with 'brew bundle'."
+	brew bundle --global --quiet --no-upgrade
 else
-        $(error ❌ Homebrew is not installed.  Please install following the instructions at https://brew.sh/ and re-run this Makefile.)
+	$(error ❌ Homebrew is not installed.  Please install following the instructions at https://brew.sh/ and re-run this Makefile.)
 endif
 
 # Node -------------------------------------------------------------------- {{{1
 
 .PHONY: node_modules
 node_modules:
-        npm install --silent --global $(global_node_modules) ## Install global node modules.
+	npm install --silent --global $(global_node_modules) ## Install global node modules.
 
 # Help -------------------------------------------------------------------- {{{1
 
