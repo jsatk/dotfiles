@@ -23,3 +23,8 @@ vim.opt_global.spellfile = {
   vim.fn.expand("~/.vim/custom-dictionary.utf-8.add"),
   vim.fn.expand("~/.vim-local-dictionary.utf-8.add"),
 }
+
+-- set to `true` to follow the main branch
+-- you need to have a working rust toolchain to build the plugin
+-- in this case.
+vim.g.lazyvim_blink_main = false

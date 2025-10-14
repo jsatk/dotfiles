@@ -4,6 +4,7 @@
 
 # Gloabl Binaries
 global_node_modules := \
+	@mermaid-js/mermaid-cli \
 	neovim \
 	ts-node \
 	typescript \
