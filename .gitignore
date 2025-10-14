@@ -1,3 +1,24 @@
 DS_Store
 .DS_Store
 Brewfile.lock.json
+
+# Security stuff that I don't want to actually check in.
+security/.gnupg/private-keys-v1.d/
+security/.gnupg/pubring.kbx
+security/.gnupg/pubring.kbx~
+security/.gnupg/trustdb.gpg
+
+# Weechat stuff that I don't want to actually check in.
+weechat/.weechat/autosort.conf
+weechat/.weechat/colorize_nicks.conf
+weechat/.weechat/irc.conf
+weechat/.weechat/logs/
+weechat/.weechat/lua.conf
+weechat/.weechat/perl.conf
+weechat/.weechat/python/
+weechat/.weechat/ruby.conf
+weechat/.weechat/script/
+weechat/.weechat/sec.conf
+weechat/.weechat/spell.conf
+weechat/.weechat/typing.conf
+weechat/.weechat/weechat.log
