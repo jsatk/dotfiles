@@ -10,6 +10,19 @@ global_node_modules := \
 	typescript \
 	typescript-language-server
 
+# Stow packages
+stow_packages := \
+	bat \
+	curl \
+	fish \
+	git \
+	homebrew \
+	security \
+	tmux \
+	vim \
+	weechat \
+	wezterm
+
 # Core Targets ------------------------------------------------------------ {{{1
 
 .PHONY: all
@@ -22,7 +35,7 @@ update: | install ## Update everything.
 	npm update --silent --global
 
 .PHONY: install
-install: | breww node_modules ## Install everything.  (Does not update anything.)
+install: | stow breww node_modules ## Install everything.  (Does not update anything.)
 
 .PHONY: clean
 clean: ## Remove all unnecessary files our package managers don't need.
@@ -47,8 +60,14 @@ endif
 # Node -------------------------------------------------------------------- {{{1
 
 .PHONY: node_modules
-node_modules:
+node_modules: ## Install global node modules.
 	npm install --silent --global $(global_node_modules) ## Install global node modules.
+
+# Stow -------------------------------------------------------------------- {{{1
+
+.PHONY: stow
+stow: ## Set up dotfiles using GNU Stow.
+	stow $(stow_packages)
 
 # Help -------------------------------------------------------------------- {{{1
 
