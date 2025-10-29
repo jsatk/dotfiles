@@ -75,6 +75,7 @@ mas "Marked 2", id: 890031187
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Reeder", id: 1529448980
+mas "VPN Unlimited", id: 694633015
 mas "Xcode", id: 497799835
 
 # vim: filetype=ruby textwidth=80 foldmethod=marker foldlevel=0

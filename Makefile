@@ -27,32 +27,39 @@ stow_packages := \
 
 .PHONY: all
 all: | update clean ## Run everything.  Default target.
-	@echo "✅ All done!"
+	@echo "✅ All done!\n"
 
 .PHONY: update
 update: | install ## Update everything.
+	@echo "💭 Upgrading brew formulas and global node modules...\n"
 	brew bundle --global --quiet
 	npm update --silent --global
+	@echo "✅ Successfully upgraded brew formulas and node modules!\n"
 
 .PHONY: install
-install: | stow breww node_modules ## Install everything.  (Does not update anything.)
+install: | stow brew node_modules ## Install everything.  (Does not update anything.)
 
 .PHONY: clean
 clean: ## Remove all unnecessary files our package managers don't need.
+	@echo "💭 Cleaning up after homebrew...\n"
 	brew bundle --global cleanup --force
 	brew cleanup
+	@echo "✅ Successfully cleaned up homebrew!\n"
 
 # Homebrew ---------------------------------------------------------------- {{{1
 
-brew_status := $(shell brew bundle check --global --no-upgrade > /dev/null && echo 0 || echo 1)
+# Why `brew commands`?  It's an innocuous command that will fail if brew isn't
+# installed.  We can't simply run `brew` as that returns a status code of 1.
+brew_status := $(shell brew commands > /dev/null && echo 0 || echo 1)
 
-.PHONY: breww # Using `breww` rather than `brew` to avoid namespace collisions with `brew` command.
-breww: ## Check if Homebrew is installed and run `brew bundle` if it is.
-	@echo "Checking if Homebrew is installed..."
+.PHONY: brew
+brew: ## Check if Homebrew is installed and run `brew bundle` if it is.
+	@echo "💭 Checking if Homebrew is installed...\n"
 
 ifeq ($(brew_status), 0)
-	@echo "✅ Homebrew is installed.  Proceeding with with 'brew bundle'."
+	@echo "✅ Homebrew is installed.  Proceeding with with 'brew bundle'...\n"
 	brew bundle --global --quiet --no-upgrade
+	@echo "✅ Homebrew formulas & casks in '.Brewfile' successfully installed.\n"
 else
 	$(error ❌ Homebrew is not installed.  Please install following the instructions at https://brew.sh/ and re-run this Makefile.)
 endif
@@ -61,13 +68,17 @@ endif
 
 .PHONY: node_modules
 node_modules: ## Install global node modules.
+	@echo "💭 Installing global node modules...\n"
 	npm install --silent --global $(global_node_modules) ## Install global node modules.
+	@echo "✅ Global node modules successfully installed.\n"
 
 # Stow -------------------------------------------------------------------- {{{1
 
 .PHONY: stow
 stow: ## Set up dotfiles using GNU Stow.
+	@echo "💭 Symlinking dotfiles using 'stow'...\n"
 	stow $(stow_packages)
+	@echo "✅ Symlinking successful.\n"
 
 # Help -------------------------------------------------------------------- {{{1
 
