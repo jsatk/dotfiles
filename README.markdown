@@ -24,11 +24,12 @@ Questions?  Comments?  Open an issue.
 
 ## Installation
 
+In theory you should only need to run this once on a fresh macOS install.  It is possible I may have missed an exact step here, but if so you should get a sensible error message telling you want you need to install or fix.  In a perfect world you would be able to copy & paste the following commands into a terminal on a fresh macOS install and be done in a short while.
+
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" # Install Homebrew
 git clone git@github.com:jsatk/dotfiles.git ~/.dotfiles # Clone this repo
 cd ~/.dotfiles
-stow bat curl fish git homebrew security tmux vim weechat wezterm # Symlink all the dots we want
 make # Install all the things
 ```
 
@@ -36,9 +37,9 @@ Running `make` will set up all your dotfiles and install a ton of useful stuff l
 
 * Installs all the formulas, casks, and apps (from the macOS App Store) I want.
   * To see what's installed via homebrew view `homebrew/.Brewfile`.
-* Installs some global npm packages and gems.
-  * To see what gems & npm packages are installed checkout the `Makefile`.
-* Create symlinks for all the dotfiles via [rcm](http://thoughtbot.github.io/rcm/rcm.7.html).
+* Installs some global npm packages.
+  * To see what npm packages are installed checkout the `Makefile`.
+* Create symlinks for all the dotfiles via [stow](https://directory.fsf.org/wiki/Stow).
 * Update everything!  This was design so that it can be ran repeatedly and be non-harmful.  It only installs stuff as needed.
 
 If you plan on using this yourself you'll need to make sure to change all the stuff that's specific to me (like my email address & name) in the dotfiles.  Search for "Jesse" or "jsatk" and replace any mention of that with your own name, etc.
