@@ -53,6 +53,7 @@ brew "wget"
 
 cask "alfred"
 cask "backblaze"
+cask "chatgpt"
 cask "discord"
 cask "docker-desktop"
 cask "droplr"
