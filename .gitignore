@@ -2,6 +2,8 @@ DS_Store
 .DS_Store
 Brewfile.lock.json
 
+.claude
+
 # Security stuff that I don't want to actually check in.
 security/.gnupg/private-keys-v1.d/
 security/.gnupg/pubring.kbx

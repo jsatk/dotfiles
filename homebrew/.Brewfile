@@ -54,12 +54,14 @@ brew "wget"
 cask "alfred"
 cask "backblaze"
 cask "chatgpt"
+cask "claude"
 cask "discord"
 cask "docker-desktop"
 cask "droplr"
 cask "mattermost"
 cask "plex"
 cask "steam"
+cask "signal"
 cask "vlc"
 cask "wezterm"
 cask "zoom"
@@ -68,6 +70,7 @@ cask "zoom"
 
 mas "DaisyDisk", id: 411643860
 mas "Deliveries", id: 290986013
+mas "Drafts", id: 1435957248
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Ivory", id: 6444602274
