@@ -69,6 +69,7 @@ cask "zoom"
 # macOS App Store --------------------------------------------------------- {{{1
 
 mas "DaisyDisk", id: 411643860
+mas "Day One", id: 1055511498
 mas "Deliveries", id: 290986013
 mas "Drafts", id: 1435957248
 mas "GarageBand", id: 682658836
