@@ -2,7 +2,7 @@
 
 # Configuration Variables ------------------------------------------------- {{{1
 
-# Gloabl Binaries
+# Global Binaries
 global_node_modules := \
 	@mermaid-js/mermaid-cli \
 	neovim \

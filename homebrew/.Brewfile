@@ -1,20 +1,24 @@
+# Taps -------------------------------------------------------------------- {{{1
+
+# No taps at the moment, but if I need to add any, I'll add them here.
+
 # Shells ------------------------------------------------------------------ {{{1
 
 brew "bash-completion"
 brew "fish"
 
-# Version Control --------------------------------------------------------- {{{1
+# Git --------------------------------------------------------------------- {{{1
 
 brew "gist"
 brew "git"
 brew "git-delta"
 brew "lazygit"
 
-# Chat -------------------------------------------------------------------- {{{1
+# IRC --------------------------------------------------------------------- {{{1
 
 brew "weechat"
 
-# Programming Languages, DBs, & Language Tools ---------------------------- {{{1
+# Programming Languages & Language Tools ---------------------------------- {{{1
 
 brew "luarocks"
 brew "node"
@@ -24,7 +28,7 @@ brew "node"
 brew "gpg"
 brew "pinentry-mac"
 
-# Utilities, Games, etc. -------------------------------------------------- {{{1
+# Utilities --------------------------------------------------------------- {{{1
 
 brew "autojump"
 brew "bat"
@@ -35,12 +39,15 @@ brew "ghostscript" # Required by imagemagick.
 brew "hugo"
 brew "imagemagick"
 brew "jq"
+brew "lazydocker"
 brew "lsd"
 brew "mas"
 brew "mdp"
 brew "neofetch"
 brew "neovim"
+brew "rclone"
 brew "ripgrep"
+brew "rsync" # The macOS version is actually openrsync (Apple's reimplementation), not real rsync. It's quite limited and has known compatibility issues with newer rsync servers.
 brew "stow"
 brew "tectonic"
 brew "tldr"
@@ -58,10 +65,12 @@ cask "claude"
 cask "discord"
 cask "docker-desktop"
 cask "droplr"
+cask "google-chrome"
 cask "mattermost"
 cask "plex"
 cask "steam"
 cask "signal"
+cask "utm"
 cask "vlc"
 cask "wezterm"
 cask "zoom"
@@ -81,6 +90,7 @@ mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Reeder", id: 1529448980
 mas "VPN Unlimited", id: 694633015
+mas "Wireguard", id: 1451685025
 mas "Xcode", id: 497799835
 
 # vim: filetype=ruby textwidth=80 foldmethod=marker foldlevel=0

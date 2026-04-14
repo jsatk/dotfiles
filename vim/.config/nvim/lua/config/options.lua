@@ -3,6 +3,9 @@
 -- Add any additional options here
 vim.g.mapleader = ","
 
+-- Enable folding in Markdown.
+vim.g.markdown_folding = 1
+
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 

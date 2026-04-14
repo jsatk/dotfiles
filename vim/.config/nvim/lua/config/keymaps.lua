@@ -14,6 +14,3 @@ vim.keymap.set("i", "<c-k><c-k>", [[<esc>:help digraph-table<cr>]])
 
 -- Keep the cursor in place while joining lines
 vim.keymap.set("n", "J", "mzJ`z")
-
--- Enable folding in Markdown.
-vim.g.markdown_folding = 1

@@ -2,7 +2,21 @@
   "permissions": {
     "allow": [
       "Bash(git -C /Users/jsatk/.dotfiles diff)",
-      "Bash(git -C /Users/jsatk/.dotfiles diff --cached)"
+      "Bash(git -C /Users/jsatk/.dotfiles diff --cached)",
+      "Bash(git:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "Read(//Users/jsatk/.tmux/plugins/**)",
+      "Read(//Users/jsatk/.tmux/plugins/catppuccin/tmux/**)",
+      "Read(//Users/jsatk/.config/**)",
+      "Read(//Users/jsatk/.config/tmux/**)",
+      "Bash(tmux show-environment:*)",
+      "Bash(tmux display-message:*)",
+      "Bash(tmux list-sessions:*)",
+      "Bash(tmux list-windows:*)",
+      "Bash(tmux -V)"
     ]
   }
 }
