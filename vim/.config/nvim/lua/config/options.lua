@@ -6,9 +6,6 @@ vim.g.mapleader = ","
 -- Enable folding in Markdown.
 vim.g.markdown_folding = 1
 
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-
 -- There are three dictionaries I use for spellchecking:
 --
 --   /usr/share/dict/words
@@ -26,8 +23,3 @@ vim.opt_global.spellfile = {
   vim.fn.expand("~/.vim/custom-dictionary.utf-8.add"),
   vim.fn.expand("~/.vim-local-dictionary.utf-8.add"),
 }
-
--- set to `true` to follow the main branch
--- you need to have a working rust toolchain to build the plugin
--- in this case.
-vim.g.lazyvim_blink_main = false

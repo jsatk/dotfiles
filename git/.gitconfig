@@ -25,7 +25,7 @@
 
 	# Delete all branches that have already been merged into the current
 	# branch.
-	deletemerged = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+	deletemerged = "!git branch --merged | grep  -v '\\*\\|main\\|develop' | xargs -n 1 git branch -d"
 
 	# Destroy all local changes and reset to HEAD.
 	fuckit = reset --hard HEAD
@@ -239,13 +239,13 @@
 # grep -------------------------------------------------------------------- {{{
 
 [grep]
-	patternType = "fixed"
+	patternType = "extended"
 
 # }}}
 # help -------------------------------------------------------------------- {{{
 
 [help]
-	autocorrect = 1
+	autocorrect = prompt
 
 # }}}
 # init -------------------------------------------------------------------- {{{

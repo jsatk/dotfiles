@@ -16,7 +16,12 @@
       "Bash(tmux display-message:*)",
       "Bash(tmux list-sessions:*)",
       "Bash(tmux list-windows:*)",
-      "Bash(tmux -V)"
+      "Bash(tmux -V)",
+      "Bash(cat /Users/jsatk/.dotfiles/fish/.config/fish/functions/*.fish)",
+      "WebFetch(domain:lazyvim.github.io)",
+      "WebFetch(domain:www.lazyvim.org)",
+      "Read(//private/tmp/lazyvim/**)",
+      "Bash(grep -r \"lazyvim_blink_main\" . --include=\"*.lua\" --include=\"*.md\" --include=\"*.txt\")"
     ]
   }
 }

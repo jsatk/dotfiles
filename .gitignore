@@ -2,6 +2,12 @@ DS_Store
 .DS_Store
 Brewfile.lock.json
 
+# Claude Code session artifacts.
+.claude/settings.local.json
+
+# Vim stuff that I don't want to actually check in.
+vim/.vim/*
+
 # Security stuff that I don't want to actually check in.
 security/.gnupg/private-keys-v1.d/
 security/.gnupg/pubring.kbx

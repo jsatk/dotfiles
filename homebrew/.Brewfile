@@ -4,12 +4,10 @@
 
 # Shells ------------------------------------------------------------------ {{{1
 
-brew "bash-completion"
 brew "fish"
 
 # Git --------------------------------------------------------------------- {{{1
 
-brew "gist"
 brew "git"
 brew "git-delta"
 brew "lazygit"
@@ -21,7 +19,12 @@ brew "weechat"
 # Programming Languages & Language Tools ---------------------------------- {{{1
 
 brew "luarocks"
-brew "node"
+brew "mise"
+# Ideally I'd manage `sbcl` with mise, but it's not supported by mise yet so
+# here we are.
+brew "sbcl"
+brew "tree-sitter"
+brew "tree-sitter-cli"
 
 # Security ---------------------------------------------------------------- {{{1
 
@@ -30,8 +33,9 @@ brew "pinentry-mac"
 
 # Utilities --------------------------------------------------------------- {{{1
 
-brew "autojump"
+brew "zoxide"
 brew "bat"
+brew "fastfetch"
 brew "fd"
 brew "fzf"
 brew "gh"
@@ -43,18 +47,15 @@ brew "lazydocker"
 brew "lsd"
 brew "mas"
 brew "mdp"
-brew "neofetch"
 brew "neovim"
 brew "rclone"
 brew "ripgrep"
-brew "rsync" # The macOS version is actually openrsync (Apple's reimplementation), not real rsync. It's quite limited and has known compatibility issues with newer rsync servers.
+brew "rsync"
 brew "stow"
+brew "tealdeer"
 brew "tectonic"
-brew "tldr"
 brew "tmux"
-brew "tmuxinator"
 brew "tree"
-brew "wget"
 
 # Casks ------------------------------------------------------------------- {{{1
 
@@ -70,7 +71,6 @@ cask "mattermost"
 cask "plex"
 cask "steam"
 cask "signal"
-cask "utm"
 cask "vlc"
 cask "wezterm"
 cask "zoom"

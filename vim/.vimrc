@@ -1,20 +1,14 @@
-" 0 preamble ------------------------------------------------------- {{{
+" 0 preamble ------------------------------------------------------ {{{1
 "
 " Jesse Atkinson | jesse@jsatk.us | @jsatk | https://jsatk.us
-
-" The following was stolen from @emilyst.  I thought this was clever and
-" educational so I wanted to do the same in my own .vimrc.
 "
-" Original text written by her here:
-" https://github.com/emilyst/home/blob/master/.vimrc#L3-L9
+" My ".vimrc" contains configures options which are core to Vim and
+" are enumerated by the `:options` command. It groups the options
+" into the same sections given by that command and in the same order
+" for reference.
 "
-"     My ".vimrc" contains configures options which are core to Vim and
-"     are enumerated by the `:options` command. It groups the options
-"     into the same sections given by that command and in the same order
-"     for reference.
-"
-"     Occasionally, each section contains other mappings or variable
-"     settings relevant to the options adjacent to them.
+" Occasionally, each section contains other mappings or variable
+" settings relevant to the options adjacent to them.
 "
 " It's also worth noting that a lot of options you might expect to be
 " set aren't.  The reason for that is many of the most common and
@@ -22,174 +16,46 @@
 " you're wondering why I don't have `set wildmenu`, etc., in here it's
 " because it's set in vim-sensible.
 "
-" Lastly, if you want to more information about a setting here put your
-" cursor on the setting and press `K`.  This will open the help for that
-" item in a split.  This works for many languages in Vim.
-
-" The following check is done in vim-sensible, however as of this
-" writing that check doesn't apply to Vim 8.  Until vim-dispatch works
-" nicely with Fish shell or until vim-sensible's Fish shell check
-" applies to Vim 8 and above I need to manually force my shell here.
-" Also setting it to simply `sh` instead of `/bin/bash` because
-" vim-dispatch apparently has trouble inferring the PID of the task when
-" `shell` is set to `/bin/bash`.  Computers are hard.
+" All plugins are using vim's built-in package manager.  Plugins are
+" cloned to ~/.vim/pack/.  This .vimrc assumes the following plugins are
+" installed:
 "
-" See: https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim#L66-L68
-if &shell =~# 'fish$'
-  set shell=sh
-endif
+" * https://github.com/catppuccin/vim
+" * https://github.com/tpope/vim-sensible
 
-" Vim Plugins {{{
-
-" I use vim-plug to manage plugins.  It's quite nice.
-" See: https://github.com/junegunn/vim-plug
-
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-call plug#begin()
-
-" A very fast, multi-syntax context-sensitive color name highlighter.
-Plug 'ap/vim-css-color'
-" Provides support for editing fish scripts.
-Plug 'dag/vim-fish'
-" For running tests on different granularities.
-Plug 'janko/vim-test'
-" Lovely colorscheme.
-Plug 'joshdick/onedark.vim'
-" fzf is a general-purpose command-line fuzzy finder.
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Adds some features to fzf that are specific to vim.
-Plug 'junegunn/fzf.vim'
-" Distraction-free writing in Vim.
-Plug 'junegunn/goyo.vim'
-" A git commit browser.
-Plug 'junegunn/gv.vim'
-" A simple, easy-to-use Vim alignment plugin.
-Plug 'junegunn/vim-easy-align'
-" Extends " and @ in normal mode and <CTRL-R> in insert mode so
-" you can see the contents of the registers.
-Plug 'junegunn/vim-peekaboo'
-" Make your Vim/Neovim as smart as VSCode.
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug '/Users/jesse.atkinson/Developer/coc-metals', {'do': 'yarn install --frozen-lockfile'}
-" Highlight words to avoid in tech writing.
-Plug 'nicholaides/words-to-avoid.vim'
-" Cute font-icons.
-Plug 'ryanoasis/vim-devicons'
-" Support for editorconfig.
-Plug 'sgur/vim-editorconfig'
-" A collection of language packs for Vim.
-Plug 'sheerun/vim-polyglot'
-" Gundo.vim is Vim plugin to visualize your Vim undo tree.
-Plug 'sjl/gundo.vim'
-" Manage branches and tags with fzf.
-Plug 'stsewd/fzf-checkout.vim'
-" Word & spelling correction support.  It's very hard to explain, just
-" see the README of this plugin.
-Plug 'tpope/vim-abolish'
-" Comment/uncomment stuff with ease.
-Plug 'tpope/vim-commentary'
-" Interact with DBs.
-Plug 'tpope/vim-dadbod'
-" Just see http://vimeo.com/tpope/vim-dispatch-teaser.
-Plug 'tpope/vim-dispatch'
-" Vim sugar for the UNIX shell commands that need it the most.
-Plug 'tpope/vim-eunuch'
-" Minimalist statusline.
-Plug 'tpope/vim-flagship'
-" Incredible git support.
-Plug 'tpope/vim-fugitive'
-" For working with JSON.
-Plug 'tpope/vim-jdaddy'
-" Projectionist provides granular project configuration using 'projections'.
-Plug 'tpope/vim-projectionist'
-" Adds repeat support for plugins.
-Plug 'tpope/vim-repeat'
-" 'hub' support.
-Plug 'tpope/vim-rhubarb'
-" Makes working with vimscript easier.
-Plug 'tpope/vim-scriptease'
-" A universal set of defaults that (hopefully) everyone can agree on.
-Plug 'tpope/vim-sensible'
-" Automatically adjusts 'shiftwidth' and 'expandtab' heuristically based
-" on the current file.
-Plug 'tpope/vim-sleuth'
-" Makes incrementers and decrementers behave with stuff like dates.
-Plug 'tpope/vim-speeddating'
-" Easily change, delete, etc., pairs (parens, brackets, quotes, etc.).
-Plug 'tpope/vim-surround'
-" Basic tmux support for Vim.
-Plug 'tpope/vim-tbone'
-" Kind of the other half of vim-sensible, nice sane mappings that should
-" come with Vim by default, but don't.
-Plug 'tpope/vim-unimpaired'
-" Enhances netrw, which is built into Vim.
-Plug 'tpope/vim-vinegar'
-
-call plug#end()
-
-" }}}
-
-" }}}
-" 1 important ------------------------------------------------------ {{{
+" 1 important ----------------------------------------------------- {{{1
 
 " A |sentence| has to be followed by two spaces after the '.', '!' or '?'.
 " See: https://stevelosh.com/blog/2012/10/why-i-two-space/#s6-power
 set cpo+=J
 
-" }}}
-" 2 moving around, searching and patterns -------------------------- {{{
+" 2 moving around, searching and patterns ------------------------- {{{1
 
 set ignorecase " Ignore the case, unless...
 set smartcase  " ...there's caps in it.
 
-" }}}
-" 3 tags ----------------------------------------------------------- {{{
+" 3 tags ---------------------------------------------------------- {{{1
 
-" }}}
-" 4 displaying text ------------------------------------------------ {{{
+" 4 displaying text ----------------------------------------------- {{{1
 
 set scrolloff=3
 set linebreak
 set breakindent
 set showbreak=↪
 set lazyredraw
-set list
+set nolist
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 
-" }}}
-" 5 syntax, highlighting and spelling ------------------------------ {{{
+" 5 syntax, highlighting and spelling ----------------------------- {{{1
+
+syntax on
+colorscheme catppuccin_mocha " See: https://github.com/catppuccin/vim
 
 set background=dark
-
-" Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-" If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-" (see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-
-" For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-" Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-if (has("termguicolors"))
-  set termguicolors
-endif
-
 set synmaxcol=800
 set hlsearch
-" In regular Vim `set termguicolors` doesn't work in some situations.
-" See: https://github.com/vim/vim/issues/3608#issuecomment-438487463
-if !has('nvim') || !has('gui_running')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
+set termguicolors
 set cursorline
-set guifont=OperatorMonoForPowerline-Book:h18
 
 " Stolen from Steve Losh
 "
@@ -203,7 +69,7 @@ set guifont=OperatorMonoForPowerline-Book:h18
 "
 "   ~/.vim-local-dictionary.utf-8.add
 "   More custom words.  This is *not* version controlled, so I can stick
-"   work stuff in here without leaking internal names and shit.
+"   work stuff in here without leaking internal names.
 "
 " I also remap zG to add to the local dict (vanilla zG is useless anyway).
 set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add
@@ -215,48 +81,37 @@ highlight Comment cterm=italic
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-" }}}
-" 6 multiple windows ----------------------------------------------- {{{
+" 6 multiple windows ---------------------------------------------- {{{1
 
 set hidden
 set splitbelow
 set splitright
 
-" }}}
-" 7 multiple tab pages --------------------------------------------- {{{
+" 7 multiple tab pages -------------------------------------------- {{{1
 
-" }}}
-" 8 terminal ------------------------------------------------------- {{{
+" 8 terminal ------------------------------------------------------ {{{1
 
 set title
+set ttyfast
 
-" }}}
-" 9 using the mouse ------------------------------------------------ {{{
+" 9 using the mouse ----------------------------------------------- {{{1
 
 if has('mouse')
   set mouse=a
 endif
 
-" }}}
-" 10 printing ------------------------------------------------------ {{{
+" 10 printing ----------------------------------------------------- {{{1
 
-" }}}
-" 11 messages and info --------------------------------------------- {{{
+" 11 messages and info -------------------------------------------- {{{1
 
 set showcmd
 set showmode
-
-" Avoid showing message extra message when using completion
 set shortmess+=c
-
-" Ensure autocmd works for Filetype
 set shortmess-=F
 
-" }}}
-" 12 selecting text ------------------------------------------------ {{{
+" 12 selecting text ----------------------------------------------- {{{1
 
-" }}}
-" 13 editing text -------------------------------------------------- {{{
+" 13 editing text ------------------------------------------------- {{{1
 
 set undofile " Maintain undo history between sessions.
 " The extra slash on the end saves files under the name of their full path
@@ -276,47 +131,46 @@ endif
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
 
-" }}}
-" 14 tabs and indenting -------------------------------------------- {{{
+" 14 tabs and indenting ------------------------------------------- {{{1
 
 set shiftwidth=2
 set softtabstop=2
 set shiftround
 set expandtab
 
-" }}}
-" 15 folding ------------------------------------------------------- {{{
+" 15 folding ------------------------------------------------------ {{{1
 
 set foldenable
 set foldlevelstart=0
 
 nnoremap <Space> za
 vnoremap <Space> za
+
+" Make zO recursively open whatever fold we're in, even if it's
+" partially open.
 nnoremap zO zczO
 
-" This function defines what folded text looks like.
+" Stolen from Steve Losh.
 function! MyFoldText() " {{{
-  let line = getline(v:foldstart)
+    let line = getline(v:foldstart)
 
-  let nucolwidth = &fdc + &number * &numberwidth
-  let windowwidth = winwidth(0) - nucolwidth - 3
-  let foldedlinecount = v:foldend - v:foldstart
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
 
-  " expand tabs into spaces
-  let onetab = strpart(' ', 0, &tabstop)
-  let line = substitute(line, '\t', onetab, 'g')
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
 
-  let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-  let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-  return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
 endfunction " }}}
 set foldtext=MyFoldText()
 
-" }}}
-" 16 diff mode ----------------------------------------------------- {{{
+" 16 diff mode ---------------------------------------------------- {{{1
 
-" }}}
-" 17 mapping ------------------------------------------------------- {{{
+" 17 mapping ------------------------------------------------------ {{{1
 
 " This section contains the few options that are under `17 mapping` in
 " `:options` as well as all of my custom remappings that don't sensibily
@@ -328,14 +182,6 @@ set timeoutlen=500
 
 let mapleader = ","
 let maplocalleader = "\\"
-" Do not show stupid q: window
-nnoremap q: :q
-xnoremap q: :q
-onoremap q: :q
-" I don't know how to use ex mode and it scares me.
-nnoremap Q <Nop>
-xnoremap Q <Nop>
-onoremap Q <Nop>
 " Split line (sister to [J]oin lines)
 nnoremap S i<cr><esc><right>
 " switch to last file
@@ -357,46 +203,13 @@ nnoremap N Nzzzv
 " Clean trailing whitespace.
 nnoremap <leader><space> mz:%s/\s\+$//<cr>:let @/=''<cr>`z
 
-" Only show when not in insert mode.
-augroup trailing
-  autocmd!
-
-  autocmd InsertEnter * :set listchars-=trail:⌴
-  autocmd InsertLeave * :set listchars+=trail:⌴
-augroup END
-
 " My garbage brain can't ever remember digraph codes.
 inoremap <c-k><c-k> <esc>:help digraph-table<cr>
-
-" Only show cursorline in the current window and in normal mode.
-augroup cline
-  autocmd!
-
-  autocmd WinLeave,InsertEnter * set nocursorline
-  autocmd WinEnter,InsertLeave * set cursorline
-augroup END
 
 " Keep the cursor in place while joining lines
 nnoremap J mzJ`z
 
-" Toggle quickfix
-function! QuickFixIsOpen()
-  let l:result = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
-  return !empty(l:result)
-endfunction
-nnoremap yoq :<C-R>=QuickFixIsOpen() ? "cclose" : "copen"<CR><CR>
-
-" Quick editing some common dotfiles.
-nnoremap <leader>ed :vsplit ~/.vim/custom-dictionary.utf-8.add<cr>
-nnoremap <leader>ef :vsplit ~/.config/fish/config.fish<cr>
-nnoremap <leader>eg :vsplit ~/.gitconfig<cr>
-nnoremap <leader>em :vsplit ~/.muttrc<cr>
-nnoremap <leader>ep :vsplit ~/Developer/jsatk.us/content/dotplan.md<cr>
-nnoremap <leader>et :vsplit ~/.tmux.conf<cr>
-nnoremap <leader>ev :vsplit ~/.vimrc<cr>
-
-" }}}
-" 18 reading and writing files ------------------------------------- {{{
+" 18 reading and writing files ------------------------------------ {{{1
 
 set autowrite
 set backupdir=~/.vim/tmp/backup// " backups
@@ -406,8 +219,7 @@ if !isdirectory(expand(&backupdir))
   call mkdir(expand(&backupdir), "p")
 endif
 
-" }}}
-" 19 the swap file ------------------------------------------------- {{{
+" 19 the swap file ------------------------------------------------ {{{1
 
 set directory=~/.vim/tmp/swap//
 set nobackup
@@ -419,22 +231,17 @@ if !isdirectory(expand(&directory))
   call mkdir(expand(&directory), "p")
 endif
 
-" }}}
-" 20 command line editing ------------------------------------------ {{{
+" 20 command line editing ----------------------------------------- {{{1
 
 set wildmode=list:longest
 
-" }}}
-" 21 executing external commands ----------------------------------- {{{
+" 21 executing external commands ---------------------------------- {{{1
 
-" }}}
-" 22 running make and jumping to errors ---------------------------- {{{
+" 22 running make and jumping to errors --------------------------- {{{1
 
-" }}}
-" 23 language specific --------------------------------------------- {{{
+" 23 language specific -------------------------------------------- {{{1
 
-" }}}
-" 24 multi-byte characters ----------------------------------------- {{{
+" 24 multi-byte characters ---------------------------------------- {{{1
 
 " > When on all Unicode emoji characters are considered to be full
 " > width.
@@ -443,17 +250,14 @@ set wildmode=list:longest
 " turned off.
 set noemo
 
-" }}}
-" 25 various ------------------------------------------------------- {{{
+" 25 various ------------------------------------------------------ {{{1
 
 set gdefault
 
 " The following settings aren't under `:options` at all, so it made the
 " most sense to throw them in the `25 various` junk-drawer.
-set ttyfast
 set mousehide
 set nostartofline
-set t_Co=256
 
 " Make sure Vim returns to the same line when you reopen a file.
 augroup line_return
@@ -464,245 +268,6 @@ augroup line_return
     \     execute 'normal! g`"zvzz' |
     \ endif
 augroup END
-
-" }}}
-" 99 plugin configurations ----------------------------------------- {{{
-"
-" This section contains all plugin-specific settings.  There are ways to
-" put these into plugin-specific files under the ~/.vim dir similarly to
-" how I have my filetype specific settings under ~/.vim/after/ftplugin/,
-" however – in my opinion – it's simply too fiddly to be worth it.
-
-" Coc {{{
-
-" Most of the following was taken from:
-" https://github.com/scalameta/coc-metals/blob/master/coc-mappings.vim
-
-" Use `[g` and `]g` for navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Remap for do codeAction of current line
-nmap <leader>ac <Plug>(coc-codeaction)
-
-" Used to expand decorations in worksheets
-nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
-
-" Use K for show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Show all diagnostics
-nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
-" Find symbol of current document
-nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
-
-" Coc Extensions {{{
-
-" coc-metals {{{
-
-" Toggle panel with Tree Views
-nnoremap <silent> <leader>t :<C-u>CocCommand metals.tvp<CR>
-" Toggle Tree View 'metalsBuild'
-nnoremap <silent> <leader>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
-" Toggle Tree View 'metalsCompile'
-nnoremap <silent> <leader>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
-" Reveal current current class (trait or object) in Tree View 'metalsBuild'
-nnoremap <silent> <leader>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
-
-" }}}
-
-" }}}
-" :Fold [buffer] | fold buffer using coc.nvim {{{
-function! s:coc_fold_kinds(...) abort
-  return ['imports', 'comment', 'region']
-endfunction
-
-command! -nargs=? -complete=customlist,s:coc_fold_kinds
-\   Fold :call CocAction('fold', <f-args>)
-" }}}
-
-" }}}
-" Dispatch {{{
-
-" Why am I doing this?  See link below.
-" See: https://github.com/tpope/vim-dispatch/issues/222#issuecomment-493273080
-set shellpipe=2>&1\|tee
-
-nnoremap <F9> :Dispatch<CR>
-
-" }}}
-" EasyAlign {{{
-
-" Start interactive EasyAlign in visual mode (e.g. vipga).
-" Note: Using |:*noremap| will not work with <Plug> mappings.
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-" Intentionally not using `nnoremap`.
-" Note: Using |:*noremap| will not work with <Plug> mappings.
-nmap ga <Plug>(EasyAlign)
-
-" }}}
-" Flagship {{{
-
-" Stolen from tpope.
-" Shows the buffer number as the first entry in the status line.
-
-if empty(&g:statusline)
-  setglobal statusline=[%n]\ %<%.99f\ %y%h%w%m%r%=%-14.(%l,%c%V%)\ %P
-endif
-
-augroup flagship_settings
-  autocmd!
-
-  autocmd User Flags call Hoist("buffer", "coc#status")
-
-augroup END
-
-" }}}
-" fzf {{{
-
-if has('nvim') || has('gui_running')
-  let $FZF_DEFAULT_OPTS .= ' --inline-info'
-endif
-
-" Search in files.
-"
-" A note about why I'm using `Files` rather than `GFiles.
-"
-" From the help file for FZF:
-"
-"     `:Files [PATH]`    | Files (runs  `$FZF_DEFAULT_COMMAND`  if defined)
-"     `:GFiles [OPTS]`   | Git files ( `git ls-files` )
-"
-" I have `$FZF_DEFAULT_COMMAND` set to the following in my Fish shell config:
-"
-"     # Use git to search files when in a git repo, otherwise use fd.
-"     set --export FZF_DEFAULT_COMMAND 'git ls-tree -r --name-only HEAD | fd --type file --hidden --follow --exclude .git'
-"
-" This is more performant on ridiculously large repos which I unfortunately have
-" to work with from time to time.  So essentially `:Files` is a more performant
-" `:Gfiles` if we're in a git repo.  Otherwise it falls back to `fd`.
-nnoremap <leader>ff :<C-u>Files<CR>
-" Search in Vim buffers.
-nnoremap <leader>fb :<C-u>Buffers<CR>
-" Interactive Grep
-nnoremap <leader>fg :<C-u>Rg<CR>
-
-" Mapping selecting mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-" Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
-" Puts FZF inside of a nice pop-up window rather than a split.
-" https://github.com/junegunn/fzf/blob/master/README-VIM.md#starting-fzf-in-a-popup-window
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-
-" }}}
-" Gundo {{{
-
-nnoremap <F5> :GundoToggle<CR>
-
-" }}}
-" Javascript {{{
-
-let g:javascript_plugin_jsdoc = 1
-
-" }}}
-" Projectionist {{{
-
-let g:projectionist_heuristics = {
-      \ "package.json": {
-      \   "README.md": { "type": "doc" },
-      \   "*": {
-      \     "console": "node",
-      \     "make": "npm",
-      \     "start": "npm start"
-      \   },
-      \   "lib/*.js": {
-      \     "type": "src",
-      \     "alternate": "test/{}.js"
-      \   },
-      \   "test/*.js": {
-      \     "type": "test",
-      \     "alternate": "lib/{}.js",
-      \     "dispatch": "yarn test {}"
-      \   },
-      \   "package.json": { "type": "package" }
-      \ },
-      \ "Cargo.toml": {
-      \   "README.md": { "type": "doc" },
-      \   "src/*.rs": {
-      \     "type": "src",
-      \     "alternate": "tests/{}.rs"
-      \   },
-      \   "tests/*.rs": {
-      \     "type": "test",
-      \     "alternate": "src/{}.rs",
-      \     "dispatch": "cargo test {}"
-      \   },
-      \   "benchmarks/*.rs": {
-      \     "type": "bench"
-      \   },
-      \   "Cargo.toml": { "type": "config" }
-      \ },
-      \ "build.sbt": {
-      \   "README.md": { "type": "doc" },
-      \   "*": {
-      \     "console": "bloop console",
-      \     "make": "bloop compile",
-      \     "start": "bloop run"
-      \   },
-      \   "src/main/scala/*.scala": {
-      \     "alternate": "src/test/scala/{}Spec.scala",
-      \     "type": "src"
-      \   },
-      \   "src/test/scala/*Spec.scala": {
-      \     "alternate": "src/main/scala/{}.scala",
-      \     "type": "test",
-      \     "dispatch": "bloop test --no-color -o {dot}Spec"
-      \   },
-      \   "build.sbt": { "type": "config" },
-      \   "*.sbt": { "type": "config" },
-      \ }}
-
-" }}}
-
-" }}}
 
 set secure " Disables unsafe commands in project-specific .vimrc files.
 set exrc " Allows for project-specific vimrc files.

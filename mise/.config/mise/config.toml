@@ -1,0 +1,5 @@
+[tools]
+node = "latest"
+python = "latest"
+ruby = "latest"
+rust = "latest"

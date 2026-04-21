@@ -4,7 +4,7 @@ set --export EDITOR nvim
 
 # Files I need to source {{{1
 
-[ -f /opt/homebrew/share/autojump/autojump.fish ]; and source /opt/homebrew/share/autojump/autojump.fish
+zoxide init fish | source
 
 # Default fish settings for interactive sessions {{{1
 if status is-interactive

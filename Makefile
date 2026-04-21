@@ -6,27 +6,35 @@
 global_node_modules := \
 	@mermaid-js/mermaid-cli \
 	neovim \
-	ts-node \
 	typescript \
 	typescript-language-server
 
 # Stow packages
+# NOTE: I'm intentionally not including `mail` as I no longer actively use mutt
+# for my email, but I don't want to delete the configuration just in case I want
+# to use it again in the future.
 stow_packages := \
 	bat \
 	curl \
 	fish \
 	git \
 	homebrew \
+	lisp \
+	mise \
 	security \
 	tmux \
 	vim \
 	weechat \
 	wezterm
 
+global_gems := \
+	neovim \
+	tmuxinator
+
 # Core Targets ------------------------------------------------------------ {{{1
 
 .PHONY: all
-all: | update clean ## Run everything.  Default target.
+all: | update gems clean ## Run everything.  Default target.
 	@echo "✅ All done!\n"
 
 .PHONY: update
@@ -69,8 +77,16 @@ endif
 .PHONY: node_modules
 node_modules: ## Install global node modules.
 	@echo "💭 Installing global node modules...\n"
-	npm install --silent --global $(global_node_modules) ## Install global node modules.
+	npm install --silent --global $(global_node_modules)
 	@echo "✅ Global node modules successfully installed.\n"
+
+# Ruby -------------------------------------------------------------------- {{{1
+
+.PHONY: gems
+gems: ## Install global gems.
+	@echo "💭 Installing global gems...\n"
+	gem install --quiet $(global_gems)
+	@echo "✅ Global gems successfully installed.\n"
 
 # Stow -------------------------------------------------------------------- {{{1
 
