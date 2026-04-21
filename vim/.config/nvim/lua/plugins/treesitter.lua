@@ -5,6 +5,7 @@ return {
     -- See: https://www.lazyvim.org/plugins/treesitter
     ensure_installed = {
       "css",
+      "embedded_template",
       "latex",
       "ruby",
       "scss",

@@ -29,6 +29,8 @@ stow_packages := \
 
 global_gems := \
 	neovim \
+	rubocop \
+	ruby-lsp \
 	tmuxinator
 
 # Core Targets ------------------------------------------------------------ {{{1

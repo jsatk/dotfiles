@@ -20,6 +20,7 @@ brew "weechat"
 
 brew "luarocks"
 brew "mise"
+brew "postgresql"
 # Ideally I'd manage `sbcl` with mise, but it's not supported by mise yet so
 # here we are.
 brew "sbcl"
