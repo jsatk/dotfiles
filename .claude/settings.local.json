@@ -21,7 +21,9 @@
       "WebFetch(domain:lazyvim.github.io)",
       "WebFetch(domain:www.lazyvim.org)",
       "Read(//private/tmp/lazyvim/**)",
-      "Bash(grep -r \"lazyvim_blink_main\" . --include=\"*.lua\" --include=\"*.md\" --include=\"*.txt\")"
+      "Bash(grep -r \"lazyvim_blink_main\" . --include=\"*.lua\" --include=\"*.md\" --include=\"*.txt\")",
+      "WebSearch",
+      "WebFetch(domain:conjure.fun)"
     ]
   }
 }
