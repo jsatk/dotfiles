@@ -25,10 +25,8 @@ scares you that's okay.  But you shouldn't be scared.  Fish Shell is amazing.
 
 I use [Stow](https://www.gnu.org/software/stow/) to manage my dotfiles.
 
-As of this writing (10/10/2025) I've found using version managers for various
-languages to be more trouble than it's worth.  So I don't use `rbenv`, `nvm`,
-`asdf`, or anything like that.  I just install the latest version of everything
-via Homebrew and call it a day.
+I use [mise](https://mise.jdx.dev/) to manage language versions (`node`, `python`, `ruby`, `rust`).
+It replaces `rbenv`, `nvm`, `asdf`, and similar tools with a single unified version manager.
 
 Questions?  Comments?  Open an issue.
 
@@ -40,10 +38,17 @@ sensible error message telling you want you need to install or fix.  In a
 perfect world you would be able to copy & paste the following commands into a
 terminal on a fresh macOS install and be done in a short while.
 
-```sh /bin/bash -c "$(curl -fsSL
-https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" # Install
-Homebrew git clone git@github.com:jsatk/dotfiles.git ~/.dotfiles # Clone this
-repo cd ~/.dotfiles make # Install all the things ```
+```sh
+# Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Clone this repo
+git clone git@github.com:jsatk/dotfiles.git ~/.dotfiles
+
+# Install all the things
+cd ~/.dotfiles
+make
+```
 
 Running `make` will set up all your dotfiles and install a ton of useful stuff
 like...
@@ -52,10 +57,12 @@ like...
   * To see what's installed via homebrew view `homebrew/.Brewfile`.
 * Installs some global npm packages.
   * To see what npm packages are installed checkout the `Makefile`.
-* Create symlinks for all the dotfiles via
-[stow](https://directory.fsf.org/wiki/Stow).
-* Update everything!  This was design so that it can be ran repeatedly and be
-non-harmful.  It only installs stuff as needed.
+* Installs some global gems.
+  * To see what gems are installed checkout the `Makefile`.
+* Creates symlinks for all the dotfiles via
+  [stow](https://directory.fsf.org/wiki/Stow).
+* Updates everything!  This was designed so that it can be run repeatedly and be
+  non-harmful.  It only installs stuff as needed.
 
 If you plan on using this yourself you'll need to make sure to change all the
 stuff that's specific to me (like my email address & name) in the dotfiles.
