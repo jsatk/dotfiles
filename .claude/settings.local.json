@@ -23,7 +23,16 @@
       "Read(//private/tmp/lazyvim/**)",
       "Bash(grep -r \"lazyvim_blink_main\" . --include=\"*.lua\" --include=\"*.md\" --include=\"*.txt\")",
       "WebSearch",
-      "WebFetch(domain:conjure.fun)"
+      "WebFetch(domain:conjure.fun)",
+      "WebFetch(domain:lazy.folke.io)",
+      "Bash(gh search *)",
+      "Bash(gh api *)",
+      "Bash(brew list *)",
+      "Bash(gh repo *)",
+      "WebFetch(domain:lazyvim.org)",
+      "Bash(tmuxinator --version)",
+      "Bash(tmuxinator version *)",
+      "Bash(make stow *)"
     ]
   }
 }

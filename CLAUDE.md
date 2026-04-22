@@ -67,7 +67,10 @@ Based on [LazyVim](https://www.lazyvim.org). Key files:
 
 **Active LazyVim extras** (declared in `lazy.lua`):
 - `lazyvim.plugins.extras.lang.ruby` — ruby-lsp, rubocop integration
-- `lazyvim.plugins.extras.lang.clojure` — Conjure, paredit (used for Common Lisp/SBCL)
+
+**Common Lisp plugins** (declared in `lua/plugins/lisp.lua`):
+- `vlime/vlime` — REPL, debugger with restarts, inspector, XREF (via Swank)
+- `julienvincent/nvim-paredit` — structural s-expression editing
 
 **Theme:** Catppuccin Mocha throughout (Neovim, tmux, WezTerm, bat).
 

@@ -23,3 +23,12 @@ vim.opt_global.spellfile = {
   vim.fn.expand("~/.vim/custom-dictionary.utf-8.add"),
   vim.fn.expand("~/.vim-local-dictionary.utf-8.add"),
 }
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "fish",
+  callback = function()
+    vim.bo.expandtab = false
+    vim.bo.tabstop = 4
+    vim.bo.shiftwidth = 4
+  end,
+})

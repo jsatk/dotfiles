@@ -55,6 +55,12 @@ clean: ## Remove all unnecessary files our package managers don't need.
 	brew bundle --global cleanup --force
 	brew cleanup
 	@echo "✅ Successfully cleaned up homebrew!\n"
+	@echo "💭 Cleaning up old gem versions...\n"
+	gem cleanup
+	@echo "✅ Successfully cleaned up gems!\n"
+	@echo "💭 Cleaning up old mise runtime versions...\n"
+	mise prune --yes
+	@echo "✅ Successfully cleaned up mise runtimes!\n"
 
 # Homebrew ---------------------------------------------------------------- {{{1
 

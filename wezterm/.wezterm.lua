@@ -9,6 +9,11 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
+-- Send the escape sequence Claude Code expects for Shift+Enter (multi-line input)
+config.keys = {
+	{ key = "Enter", mods = "SHIFT", action = wezterm.action.SendString("\x1b[13;2u") },
+}
+
 config.color_scheme = "Catppuccin Mocha"
 config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
