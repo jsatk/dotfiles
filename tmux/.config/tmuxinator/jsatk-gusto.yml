@@ -1,6 +1,6 @@
 # /Users/jsatk/.config/tmuxinator/jsatk.yml
 
-name: jsatk-zone
+name: jsatk-gusto
 root: ~/
 
 # Optional tmux socket
@@ -47,7 +47,6 @@ root: ~/
 windows:
   - "🛠 ": # Intentional extra space because... unicode.
       root: "~/.dotfiles/"
-  - "💬": weechat
   - "📝":
       root: "~/Developer/"
   - "🔩":

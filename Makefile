@@ -19,12 +19,10 @@ stow_packages := \
 	fish \
 	git \
 	homebrew \
-	lisp \
 	mise \
 	security \
 	tmux \
 	vim \
-	weechat \
 	wezterm
 
 global_gems := \
