@@ -46,7 +46,7 @@ root: ~/
 
 windows:
   - "🛠 ": # Intentional extra space because... unicode.
-      root: "~/.dotfiles/"
+      root: "~/dotfiles/"
   - "📝":
       root: "~/workspace/"
   - "🔩":

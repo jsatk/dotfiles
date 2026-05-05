@@ -14,6 +14,7 @@ brew 'lazygit'
 
 # Programming Languages & Language Tools ---------------------------------- {{{1
 
+brew 'awscli' # No longer needed for Claude, but still needed for some stuff.
 brew 'libyaml' # Needed for ruby & yaml for some reason.
 brew 'luarocks'
 brew 'mise'
