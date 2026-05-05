@@ -1,0 +1,4 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export MISE_FISH_AUTO_ACTIVATE:1
+SETUVAR __fish_initialized:4300

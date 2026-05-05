@@ -4,7 +4,6 @@
 
 # Global Binaries
 global_node_modules := \
-	@mermaid-js/mermaid-cli \
 	neovim \
 	typescript \
 	typescript-language-server

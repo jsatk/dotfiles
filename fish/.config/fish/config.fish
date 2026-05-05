@@ -4,6 +4,9 @@ set --export EDITOR nvim
 
 # Files I need to source {{{1
 
+# For Gusto.
+source ~/.gusto/init.fish
+
 # See: https://github.com/ajeetdsouza/zoxide
 zoxide init fish | source
 

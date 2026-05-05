@@ -217,13 +217,14 @@
 	insteadOf = "git://github.com/jsatk/"
 
 [user]
-	email = jesse@jsatk.us
+	email = jesse.atkinson@gusto.com
 	name = Jesse Atkinson
-	signingkey = "DC5AC6E4"
+	signingkey = /Users/jesse.atkinson/.ssh/id_ed25519.pub
 
 # gpg -------------------------------------------------------------------- {{{1
 
 [gpg]
+	format = ssh
 	program = gpg
 
 # grep ------------------------------------------------------------------- {{{1
