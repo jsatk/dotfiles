@@ -32,7 +32,18 @@
       "WebFetch(domain:lazyvim.org)",
       "Bash(tmuxinator --version)",
       "Bash(tmuxinator version *)",
-      "Bash(make stow *)"
+      "Bash(make stow *)",
+      "Bash(nvim *)",
+      "Read(//opt/homebrew/**)",
+      "Read(//Users/jesse.atkinson/**)",
+      "Bash(cp README.markdown /tmp/test_readme.md)",
+      "Read(//tmp/**)",
+      "Bash(cp README.markdown /tmp/test3.md)",
+      "Bash(sed -n '85,93p' /tmp/test3.md)",
+      "Bash(cp /Users/jesse.atkinson/dotfiles/README.markdown /tmp/test4.md)",
+      "Bash(sed -n '85,93p' /tmp/test4.md)",
+      "Bash(cp /Users/jesse.atkinson/dotfiles/README.markdown /tmp/test5.md)",
+      "Bash(sed -n '85,93p' /tmp/test5.md)"
     ]
   }
 }

@@ -14,7 +14,7 @@ brew 'lazygit'
 
 # Programming Languages & Language Tools ---------------------------------- {{{1
 
-brew 'awscli' # No longer needed for Claude, but still needed for some stuff.
+brew 'awscli' # No longer needed for Claude, but still needed for AWS.
 brew 'libyaml' # Needed for ruby & yaml for some reason.
 brew 'luarocks'
 brew 'mise'
@@ -69,4 +69,4 @@ cask 'wezterm'
 # mas 'Reeder', id: 1_529_448_980
 # mas 'Xcode', id: 497_799_835
 
-# vim: filetype=ruby textwidth=80 foldmethod=marker foldlevel=0
+# vim: set filetype=ruby textwidth=80 foldmethod=marker foldlevel=0:
