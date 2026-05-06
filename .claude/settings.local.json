@@ -43,7 +43,9 @@
       "Bash(cp /Users/jesse.atkinson/dotfiles/README.markdown /tmp/test4.md)",
       "Bash(sed -n '85,93p' /tmp/test4.md)",
       "Bash(cp /Users/jesse.atkinson/dotfiles/README.markdown /tmp/test5.md)",
-      "Bash(sed -n '85,93p' /tmp/test5.md)"
+      "Bash(sed -n '85,93p' /tmp/test5.md)",
+      "mcp__gleangusto__read_document",
+      "Bash(awk '{print $NF}')"
     ]
   }
 }

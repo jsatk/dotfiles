@@ -53,6 +53,7 @@ brew 'zoxide'
 
 cask 'chatgpt'
 cask 'claude'
+cask 'claude-code'
 cask 'docker-desktop'
 cask 'google-chrome'
 cask 'vlc'
