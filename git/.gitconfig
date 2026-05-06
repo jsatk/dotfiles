@@ -45,8 +45,9 @@
 	# this all in one line.
         headsha = log -1 --pretty=format:'%H'
 
-	# Log Me
-	logme = log --color --name-only --decorate=full --author="jesse@jsatk.us"
+	# Log Me — filters by the locally-configured user.email so this works
+	# regardless of who's running it.
+	logme = "!git log --color --name-only --decorate=full --author=\"$(git config user.email)\""
 
 	# Get Incoming Changes
 	incoming = log ..@{u}
@@ -105,8 +106,9 @@
 	staged = diff --cached
 
 	# Prints a one-liner of all commits I made last week.
-	# Nice for Monday morning stand-up/sprint planning.
-	summary = log --abbrev-commit --pretty=oneline --author='Jesse Atkinson' --since=last.mon --reverse
+	# Nice for Monday morning stand-up/sprint planning.  Filters by the
+	# locally-configured user.name so this works for anyone.
+	summary = "!git log --abbrev-commit --pretty=oneline --author=\"$(git config user.name)\" --since=last.mon --reverse"
 
 	# List all tags.
 	tags = tag -l

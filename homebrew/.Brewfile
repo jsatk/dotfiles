@@ -59,15 +59,4 @@ cask 'google-chrome'
 cask 'vlc'
 cask 'wezterm'
 
-# macOS App Store --------------------------------------------------------- {{{1
-
-# mas 'DaisyDisk', id: 411_643_860
-# mas 'Day One', id: 1_055_511_498
-# mas 'Deliveries', id: 290_986_013
-# mas 'Drafts', id: 1_435_957_248
-# mas 'Ivory', id: 6_444_602_274
-# mas 'Marked 2', id: 890_031_187
-# mas 'Reeder', id: 1_529_448_980
-# mas 'Xcode', id: 497_799_835
-
 # vim: set filetype=ruby textwidth=80 foldmethod=marker foldlevel=0:

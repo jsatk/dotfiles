@@ -13,13 +13,10 @@ fish/       → Fish shell config, functions, completions
 fonts/      → fonts (not stowed, manual install)
 git/        → .gitconfig, .gitmessage, .gitignore, .gitattributes
 homebrew/   → .Brewfile
-lisp/       → .sbclrc (Common Lisp / SBCL)
-mail/       → mutt, mbsync, msmtp, notmuch (intentionally not stowed)
 mise/       → .config/mise/config.toml
 security/   → .gnupg/, .ssh/config
 tmux/       → .tmux.conf, tmuxinator configs
 vim/        → .vimrc, .config/nvim/ (Neovim via LazyVim)
-weechat/    → weechat configs
 wezterm/    → .wezterm.lua
 ```
 
@@ -35,9 +32,7 @@ make clean    # brew cleanup
 make help     # List all targets
 ```
 
-Stow packages (defined in Makefile): `bat curl fish git homebrew lisp mise security tmux vim weechat wezterm`
-
-`mail` is intentionally excluded from stow — the config exists for reference but mutt is not actively used.
+Stow packages (defined in Makefile): `bat curl fish git homebrew mise security tmux vim wezterm`
 
 ## Key Tools
 
@@ -54,7 +49,7 @@ Stow packages (defined in Makefile): `bat curl fish git homebrew lisp mise secur
 
 ## Language Management
 
-Mise manages all language versions globally (`node`, `python`, `ruby`, `rust` — all `latest`). SBCL is installed via Homebrew (not supported by mise). Per-project versions are set via `.mise.toml` or `.ruby-version` etc. in each project root.
+Mise manages global Node (`latest`) — see `mise/.config/mise/config.toml`. Per-project versions are set via `.mise.toml` or `.ruby-version` etc. in each project root. For Common Lisp, the Neovim setup invokes Roswell (`ros`) directly; install via Homebrew if needed.
 
 ## Neovim Setup
 
