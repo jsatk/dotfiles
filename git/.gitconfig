@@ -285,3 +285,6 @@
 
 # vim: textwidth=80:noexpandtab:shiftwidth=8:tabstop=8
 # vim: foldmethod=marker:syntax=gitconfig
+[maintenance]
+	repo = /Users/jesse.atkinson/workspace/zenpayroll
+	repo = /Users/jesse.atkinson/workspace/web
