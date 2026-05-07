@@ -1,6 +1,6 @@
 # Taps -------------------------------------------------------------------- {{{1
 
-# No taps at the moment, but if I need to add any, I'll add them here.
+tap 'gusto/gusto'
 
 # Shells ------------------------------------------------------------------ {{{1
 
