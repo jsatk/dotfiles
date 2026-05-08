@@ -53,8 +53,9 @@ brew 'zoxide'
 
 cask 'chatgpt'
 cask 'claude'
-cask 'claude-code'
+cask 'claude-code@latest' # Gusto's `scope doctor` mandates this variant and actively uninstalls plain `claude-code`.
 cask 'google-chrome'
+cask 'notion'
 cask 'vlc'
 cask 'wezterm'
 

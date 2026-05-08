@@ -45,7 +45,18 @@
       "Bash(cp /Users/jesse.atkinson/dotfiles/README.markdown /tmp/test5.md)",
       "Bash(sed -n '85,93p' /tmp/test5.md)",
       "mcp__gleangusto__read_document",
-      "Bash(awk '{print $NF}')"
+      "Bash(awk '{print $NF}')",
+      "Bash(fish -c 'type claude')",
+      "Bash(brew info *)",
+      "Bash(scope doctor *)",
+      "Bash(bundle exec *)",
+      "Bash(rubocop --version)",
+      "Bash(./bin/rubocop --version)",
+      "Bash(xargs -0 ls -t)",
+      "Bash(xargs -I{} cat {})",
+      "Bash(rg -n 'Style/StringLiterals|EnforcedStyle' /Users/jesse.atkinson/workspace/zenpayroll/.rubocop.yml /Users/jesse.atkinson/workspace/zenpayroll/.rubocop_*.yml)",
+      "Bash(awk 'NR>=600 && NR<=730 && /^[A-Za-z]/ {print NR\": \"$0}' /Users/jesse.atkinson/workspace/zenpayroll/.rubocop.yml)",
+      "Bash(awk -F: '$1 < 728 {print $0}')"
     ]
   }
 }
