@@ -1,148 +1,67 @@
-# Defined in /var/folders/ld/jpkqdkzn5f71slwtlmwzmf100000gp/T//fish.VmalcT/ep.fish @ line 2
-function ep --description 'Edit .plan'
-    #    # Path to repo.
-    #    set --local repo "$HOME/Developer/.plan/"
-    #    # Path to dotplan relative to internal to the repo.
-    #    set --local dotplan "README.md"
-    #
-    #    # Fetch latest before getting started.
-    #    git -C $repo pull
-    #
-    #    # MM-DD-YYYY date format.
-    #    set --local date_format "%m-%d-%Y"
-    #    # MM-DD-YYYY format of the current date.
-    #    # i.e. September 07, 2020 would be 09-07-2020.
-    #    set --local mmddyyyy (date "+$date_format")
-    #    # MM-DD-YYYY format of the last .plan update date.
-    #    # i.e. September 07, 2020 would be 09-07-2020.
-    #    set --local last_updated_date (
-    # 	git -C $repo log -1 --pretty="format:%cd" --date=format:$date_format $dotplan
-    # )
-    #
-    #    # MM format of Month.
-    #    # i.e. September would be 09.
-    #    set --local current_month (date "+%m")
-    #    # MM format of Month.
-    #    # i.e. September would be 09.
-    #    set --local last_updated_month (string split - $last_updated_date)[1]
-    #
-    #    # If we've already updated our .plan this month then don't add the month
-    #    # to the TOC and don't create a header for today.
-    #    if test "$current_month" = "$last_updated_month"
-    #        echo "📣 We've already updated this month."
-    #        set cmd1 ""
-    #    else
-    #        echo "📣 First update of the month."
-    #        set --local month (date "+%B")
-    #        set --local year (date "+%Y")
-    #        set --local lmonth (string lower "$month")
-    #        set --local lyear (string lower "$year")
-    #
-    #        # Detailing what this does for those that may be less comfortable with
-    #        # vim syntax.
-    #        #
-    #        #	 `normal!` means everything that comes after this (following a
-    #        #	 space) is to be entered as if this series of keys were pressed in
-    #        #	 normal mode.
-    #        #
-    #        #	 gg		- Go to top of file.
-    #        #	 }}}}}	- Jump down for blocks/paragraphs.
-    #        #	 O		- Create a new line above where we are and enter insert mode.
-    #        #
-    #        #	 The text following "O" is literally typed in with
-    #        #	 the variables being expended.
-    #        #	 i.e. * [September 2020](september-2020)
-    #        set cmd1 "normal! gg}}}}}}O* [$month $year](#$lmonth-$year)"
-    #    end
-    #
-    #    # If we've already updated our .plan today then don't add datetime stamps
-    #    # to the TOC and don't create a header for today.
-    #    if test "$mmddyyyy" = "$last_updated_date"
-    #        echo "📣 We've already updated this today."
-    #        set cmd2 ""
-    #        set cmd3 ""
-    #
-    #        # Detailing what this does for those that may be less comfortable with
-    #        # vim syntax.
-    #        #
-    #        #	 `exe` executes the string that results from the evaluation
-    #        #	  of {expr1} as an Ex command.
-    #        #
-    #        #	 `normal!` means everything that comes after this (following a
-    #        #	 space) is to be entered as if this series of keys were pressed in
-    #        #	 normal mode.
-    #        #
-    #        #	 G		- Go to bottom of file.
-    #        #	 o	  	- Insert new line below and enter insert mode.
-    #        #	 \<esc>	- Exit insert mode (i.e. literally press Esc key).
-    #        #	 o		- Insert new line below and enter insert mode.
-    #        #	 \<esc>	- Exit insert mode (i.e. literally press Esc key).
-    #        set cmd4 'exe "normal! G{{O\<esc>o\<esc>"'
-    #    else
-    #        echo "📣 First update of the day."
-    #
-    #        # Detailing what this does for those that may be less comfortable with
-    #        # vim syntax.
-    #        #
-    #        #	 `normal!` means everything that comes after this (following a
-    #        #	 space) is to be entered as if this series of keys were pressed in
-    #        #	 normal mode.
-    #        #
-    #        #	 gg		- Go to top of file.
-    #        #	 }}}}}	- Jump down for blocks/paragraphs.
-    #        #	 O		- Create a new line above where we are and enter insert mode.
-    #        #
-    #        #	 The text following "O" is literally typed in with
-    #        #	 the variables being expended.
-    #        #	 i.e. * [09-07-2020](09-07-2020)
-    #        set cmd2 "normal! gg}}}}}}O	* [$mmddyyyy](#$mmddyyyy)"
-    #
-    #        # Detailing what this does for those that may be less comfortable with
-    #        # vim syntax.
-    #        #
-    #        #	 `exe` executes the string that results from the evaluation
-    #        #	  of {expr1} as an Ex command.
-    #        #
-    #        #	 `normal!` means everything that comes after this (following a
-    #        #	 space) is to be entered as if this series of keys were pressed in
-    #        #	 normal mode.
-    #        #
-    #        #	 G		- Go to bottom of file.
-    #        #	 o	  	- Insert new line below and enter insert mode.
-    #        #	 \<esc>	- Exit insert mode (i.e. literally press Esc key).
-    #        #	 o		- Insert new line below and enter insert mode.
-    #        #	 \<esc>	- Exit insert mode (i.e. literally press Esc key).
-    #        set cmd3 'exe "normal! G{{O\<esc>o\<esc>"'
-    #
-    #        # Detailing what this does for those that may be less comfortable with
-    #        # vim syntax.
-    #        #
-    #        #	 `normal!` means everything that comes after this (following a
-    #        #	 space) is to be entered as if this series of keys were pressed in
-    #        #	 normal mode.
-    #        #
-    #        #	 i - Enter insert mode.
-    #        #
-    #        #	 The text following "i" is literally typed in with
-    #        #	 the variables being expended.
-    #        #	 i.e. ### 09-07-2020
-    #        set cmd4 "normal! i### $mmddyyyy"
-    #    end
-    #
-    #    # Open nvim and run the commands before dropping us into editing our .plan.
-    #    nvim \
-    #        -c "$cmd1" \
-    #        -c "$cmd2" \
-    #        -c "$cmd3" \
-    #        -c "$cmd4" \
-    #        "$repo/$dotplan"
-    #
-    #    # Commit & push the latest update to our .plan.
-    #    git -C $repo commit -am "Update .plan"
-    #    git -C $repo push
-    #
-    #    echo "📣 Updated successfully!"
+function ep --description 'Edit .plan — pulls, inserts today\'s heading if missing, opens nvim, then commits + pushes on close'
+    set --local repo "$HOME/workspace/jesse-atkinson"
+    set --local plan "$repo/.plan"
 
-    # For now lets just keep it simple.  Will set up thoroughly later.
-    nvim ~/.plan
+    if not test -d "$repo/.git"
+        echo "ep: $repo is not a git repo" >&2
+        return 1
+    end
+    if not test -f "$plan"
+        echo "ep: $plan not found" >&2
+        return 1
+    end
+
+    # Pull strict: abort before opening nvim if pull fails.
+    if not git -C "$repo" pull
+        echo "ep: git pull failed; not opening nvim" >&2
+        return 1
+    end
+
+    # Two-pass awk: first pass detects which year/month/today headings already
+    # exist; second pass rewrites the file inserting only the missing ones,
+    # immediately before the trailing vim modeline. If today already exists,
+    # the file is rewritten unchanged.
+    set --local tmp (mktemp)
+    awk \
+        -v year=(date "+%Y") \
+        -v month=(date "+%B") \
+        -v today=(date "+%Y-%m-%d") \
+        '
+        NR == FNR {
+            if ($0 == "## " year) has_year = 1
+            else if ($0 == "### " month) has_month = 1
+            else if ($0 == "#### " today) has_today = 1
+            next
+        }
+        FNR == 1 {
+            if (has_today)      block = ""
+            else if (has_month) block = "#### " today "\n"
+            else if (has_year)  block = "### " month "\n\n#### " today "\n"
+            else                block = "## " year "\n\n### " month "\n\n#### " today "\n"
+        }
+        /^<!-- vim:/ && block != "" && !inserted {
+            print block
+            inserted = 1
+        }
+        { print }
+        END {
+            if (block != "" && !inserted) {
+                print ""
+                print block
+            }
+        }
+        ' "$plan" "$plan" >"$tmp"
+    and mv "$tmp" "$plan"
+
+    nvim '+$' "$plan"
+
+    # If the edit (or the heading insertion alone) produced changes, commit
+    # and best-effort push. Push failures don't fail the function — the local
+    # commit lands and you can push next time online.
+    if not git -C "$repo" diff --quiet -- "$plan"
+        git -C "$repo" commit -am "Update .plan"
+        if not git -C "$repo" push
+            echo "ep: git push failed (committed locally; push next time)" >&2
+        end
+    end
 end
