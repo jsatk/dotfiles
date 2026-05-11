@@ -56,7 +56,9 @@
       "Bash(xargs -I{} cat {})",
       "Bash(rg -n 'Style/StringLiterals|EnforcedStyle' /Users/jesse.atkinson/workspace/zenpayroll/.rubocop.yml /Users/jesse.atkinson/workspace/zenpayroll/.rubocop_*.yml)",
       "Bash(awk 'NR>=600 && NR<=730 && /^[A-Za-z]/ {print NR\": \"$0}' /Users/jesse.atkinson/workspace/zenpayroll/.rubocop.yml)",
-      "Bash(awk -F: '$1 < 728 {print $0}')"
+      "Bash(awk -F: '$1 < 728 {print $0}')",
+      "Bash(awk 'NR<=30' /Users/jesse.atkinson/workspace/jesse-atkinson/.plan)",
+      "Bash(awk *)"
     ]
   }
 }
