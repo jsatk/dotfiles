@@ -1,6 +1,7 @@
 # Environment Variables {{{1
 
 set --export EDITOR nvim
+set --export AWS_PROFILE hr-experiences-eng-gusto-main
 
 # Files I need to source {{{1
 

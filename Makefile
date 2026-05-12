@@ -14,6 +14,7 @@ global_node_modules := \
 # to use it again in the future.
 stow_packages := \
 	bat \
+	bin \
 	curl \
 	fish \
 	git \

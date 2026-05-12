@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+owner="${1:-Compliance Advisory}"
+
+if repo="$(git rev-parse --show-toplevel 2>/dev/null)" && [ -d "$repo/packs" ]; then
+  repo_root="$repo"
+else
+  repo_root="$HOME/workspace/zenpayroll"
+fi
+
+if [ ! -d "$repo_root/packs" ]; then
+  echo "compliance-packs: no packs/ directory at $repo_root" >&2
+  exit 1
+fi
+
+escaped="$(printf '%s' "$owner" | sed -E 's/[][\/.^$*+?(){}|\\]/\\&/g')"
+pattern="^owner:[[:space:]]*[\"']?${escaped}[\"']?[[:space:]]*\$"
+
+cd "$repo_root"
+{ find packs -name package.yml -exec grep -lE "$pattern" {} + 2>/dev/null || true; } \
+  | while IFS= read -r f; do dirname "$f"; done \
+  | sort -u
