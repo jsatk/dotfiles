@@ -1,0 +1,13 @@
+{
+  "exclusionRules": [
+    {
+      "passKeys": "",
+      "pattern": "https?://mail.google.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://gustohq.atlassian.net/*"
+    }
+  ],
+  "settingsVersion": "2.4.2"
+}
