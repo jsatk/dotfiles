@@ -1,5 +1,6 @@
 # Taps -------------------------------------------------------------------- {{{1
 
+tap 'atlassian/homebrew-acli'
 tap 'gusto/gusto'
 
 # Shells ------------------------------------------------------------------ {{{1
@@ -29,6 +30,7 @@ brew 'pinentry-mac'
 
 # Utilities --------------------------------------------------------------- {{{1
 
+brew 'atlassian/homebrew-acli/acli'
 brew 'bat'
 brew 'fastfetch'
 brew 'fd'
