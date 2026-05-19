@@ -19,7 +19,14 @@ vim.g.markdown_folding = 1
 --   work stuff in here without leaking internal names and shit.
 --
 -- Stolen from Steve Losh
-vim.opt_global.spellfile = {
+-- Use `vim.opt` (= `:set`), not `vim.opt_global` (= `:setglobal`).
+-- `spellfile` is local-to-buffer; `:setglobal` only sets the default
+-- for *future* buffers, and when a file is passed on the nvim command
+-- line (e.g. via the `ep` fish function: `nvim '+$' ~/.plan`) the
+-- buffer is created before `init.lua` runs and never picks up the
+-- global default. `:set` sets both the global default AND the current
+-- buffer's local value, so the cmdline-loaded buffer gets it directly.
+vim.opt.spellfile = {
   vim.fn.expand("~/.vim/custom-dictionary.utf-8.add"),
   vim.fn.expand("~/.vim-local-dictionary.utf-8.add"),
 }
