@@ -4,6 +4,7 @@ set --export EDITOR nvim
 
 # Files I need to source {{{1
 
+# See: https://github.com/ajeetdsouza/zoxide
 zoxide init fish | source
 
 # Default fish settings for interactive sessions {{{1

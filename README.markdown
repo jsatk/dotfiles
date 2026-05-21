@@ -69,6 +69,26 @@ stuff that's specific to me (like my email address & name) in the dotfiles.
 Search for "Jesse" or "jsatk" and replace any mention of that with your own
 name, etc.
 
+## Manual setup steps
+
+A few things `make` doesn't handle yet.  One-time per machine.
+
+### Compile the `tmux-256color-undercurl` terminfo entry
+
+```sh
+tic -x ~/.dotfiles/tmux/tmux-256color-undercurl.terminfo
+```
+
+macOS's ncurses ships `tmux-256color` (and `xterm-256color`) without the
+`Smulx` (extended underline styles) and `Setulc` (colored underlines)
+extended capabilities.  Without them, Neovim running inside tmux never
+emits the undercurl escape sequence at all — so `SpellBad` squiggles
+and LSP diagnostic underlines render as nothing.  The `tic -x` command
+compiles a small derived terminfo entry into `~/.terminfo/` (no sudo
+needed).  `tmux/.tmux.conf` then points `default-terminal` at it, and
+`terminal-features ',xterm*:RGB:usstyle'` tells tmux to forward the
+undercurl escapes out to the outer terminal.
+
 ## References
 
 Here's a list of links to instructions I often find myself needing to reference
