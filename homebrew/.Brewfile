@@ -19,6 +19,7 @@ brew 'awscli' # No longer needed for Claude, but still needed for AWS.
 brew 'libyaml' # Needed for ruby & yaml for some reason.
 brew 'luarocks'
 brew 'mise'
+brew 'openjdk'
 brew 'postgresql'
 brew 'tree-sitter'
 brew 'tree-sitter-cli'
