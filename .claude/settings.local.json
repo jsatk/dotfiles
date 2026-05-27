@@ -58,7 +58,12 @@
       "Bash(awk 'NR>=600 && NR<=730 && /^[A-Za-z]/ {print NR\": \"$0}' /Users/jesse.atkinson/workspace/zenpayroll/.rubocop.yml)",
       "Bash(awk -F: '$1 < 728 {print $0}')",
       "Bash(awk 'NR<=30' /Users/jesse.atkinson/workspace/jesse-atkinson/.plan)",
-      "Bash(awk *)"
+      "Bash(awk *)",
+      "mcp__claude_ai_Gdocs_Gusto__search",
+      "mcp__jiraconfluencegusto__searchJiraIssuesUsingJql",
+      "mcp__slackgustoofficialmcp__slack_search_public_and_private",
+      "mcp__jiraconfluencegusto__getJiraIssue",
+      "Bash(claude plugin *)"
     ]
   }
 }
