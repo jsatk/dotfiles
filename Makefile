@@ -22,6 +22,7 @@ stow_packages := \
 	mise \
 	security \
 	tmux \
+	tuicr \
 	vim \
 	weechat \
 	wezterm
