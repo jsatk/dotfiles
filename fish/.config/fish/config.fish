@@ -2,6 +2,7 @@
 
 set --export EDITOR nvim
 set --export AWS_PROFILE hr-experiences-eng-gusto-main
+set --export BRAINTRUST_API_KEY (security find-generic-password -a $USER -s BRAINTRUST_API_KEY -w 2>/dev/null)
 
 # Files I need to source {{{1
 
