@@ -63,7 +63,10 @@
       "mcp__jiraconfluencegusto__searchJiraIssuesUsingJql",
       "mcp__slackgustoofficialmcp__slack_search_public_and_private",
       "mcp__jiraconfluencegusto__getJiraIssue",
-      "Bash(claude plugin *)"
+      "Bash(claude plugin *)",
+      "mcp__jiraconfluencegusto__atlassianUserInfo",
+      "mcp__jiraconfluencegusto__getAccessibleAtlassianResources",
+      "Bash(col -b)"
     ]
   }
 }

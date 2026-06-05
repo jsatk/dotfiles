@@ -138,7 +138,44 @@ return {
   -- :A jumps between a Ruby file and its spec (and :AV / :AS / :AT for
   -- split variants). Lazy-loaded on Ruby/eruby buffers so it doesn't run
   -- its Rails-detection on every startup.
-  { "tpope/vim-rails", ft = { "ruby", "eruby" } },
+  --
+  -- Caveat in zenpayroll: vim-rails' source→spec works for Packwerk packs
+  -- because it just synthesizes a sibling `_spec.rb` name. spec→source
+  -- fails because its resolver walks Rails-standard paths from the Rails
+  -- root and the pack prefix (packs/<domain>/) gets lost. <leader>a below
+  -- handles both directions with a pure path swap.
+  {
+    "tpope/vim-rails",
+    ft = { "ruby", "eruby" },
+    keys = {
+      {
+        "<leader>A",
+        function()
+          local path = vim.fn.expand("%:p")
+          local alt
+          if path:match("_spec%.rb$") then
+            alt = path:gsub("/spec/", "/app/"):gsub("_spec%.rb$", ".rb")
+          elseif path:match("%.rb$") then
+            alt = path:gsub("/app/", "/spec/"):gsub("%.rb$", "_spec.rb")
+          else
+            vim.notify("Not a Ruby file", vim.log.levels.WARN)
+            return
+          end
+          if vim.fn.filereadable(alt) == 1 then
+            vim.cmd.edit(alt)
+          else
+            vim.ui.select({ "Yes", "No" }, {
+              prompt = "Create " .. vim.fn.fnamemodify(alt, ":.") .. "?",
+            }, function(choice)
+              if choice == "Yes" then vim.cmd.edit(alt) end
+            end)
+          end
+        end,
+        desc = "Toggle spec/source (Packwerk-aware)",
+        ft = { "ruby", "eruby" },
+      },
+    },
+  },
 
   {
     "stevearc/conform.nvim",

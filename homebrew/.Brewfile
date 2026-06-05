@@ -2,6 +2,7 @@
 
 tap 'atlassian/homebrew-acli'
 tap 'gusto/gusto'
+tap 'agavra/tap'
 
 # Shells ------------------------------------------------------------------ {{{1
 
@@ -12,6 +13,7 @@ brew 'fish'
 brew 'git'
 brew 'git-delta'
 brew 'lazygit'
+brew 'agavra/tap/tuicr'
 
 # Programming Languages & Language Tools ---------------------------------- {{{1
 
@@ -58,6 +60,11 @@ cask 'chatgpt'
 cask 'claude'
 cask 'claude-code@latest' # Gusto's `scope doctor` mandates this variant and actively uninstalls plain `claude-code`.
 cask 'google-chrome'
+# Needed for ZP reop.  If you don't include it here it get uninstalled every
+# time I manually run `brew bundle --global` but then re-installed every time I
+# run `bin/setup` in ZP repo.  Also worth noting, it's currently marked as
+# "deprecated" in Homebrew.  So not sure why I need it but I do, for now at least.
+cask 'gusto/gusto/gusto-wkhtmltopdf'
 cask 'notion'
 cask 'vlc'
 cask 'wezterm'
