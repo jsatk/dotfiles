@@ -66,7 +66,15 @@
       "Bash(claude plugin *)",
       "mcp__jiraconfluencegusto__atlassianUserInfo",
       "mcp__jiraconfluencegusto__getAccessibleAtlassianResources",
-      "Bash(col -b)"
+      "Bash(col -b)",
+      "mcp__claude_ai_Gdrive_Gusto__search",
+      "mcp__claude_ai_Jira_Confluence__searchJiraIssuesUsingJql",
+      "mcp__claude_ai_Slack_Gusto_Offical__slack_search_public_and_private",
+      "mcp__claude_ai_Gdrive_Gusto__get_metadata",
+      "mcp__claude_ai_Jira_Confluence__getJiraIssue",
+      "mcp__claude_ai_Gdrive_Gusto__fetch_file",
+      "Bash(python3 *)",
+      "mcp__claude_ai_Slack_Gusto_Offical__slack_read_thread"
     ]
   }
 }
