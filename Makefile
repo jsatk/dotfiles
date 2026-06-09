@@ -5,13 +5,11 @@
 # Global Binaries
 global_node_modules := \
 	neovim \
+	@earendil-works/pi-coding-agent \
 	typescript \
 	typescript-language-server
 
 # Stow packages
-# NOTE: I'm intentionally not including `mail` as I no longer actively use mutt
-# for my email, but I don't want to delete the configuration just in case I want
-# to use it again in the future.
 stow_packages := \
 	bat \
 	bin \
@@ -22,6 +20,7 @@ stow_packages := \
 	mise \
 	security \
 	tmux \
+	tuicr \
 	vim \
 	wezterm
 
