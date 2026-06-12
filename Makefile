@@ -47,9 +47,8 @@ update: | install ## Update everything.
 install: | stow brew node_modules ## Install everything.  (Does not update anything.)
 
 .PHONY: clean
-clean: ## Remove all unnecessary files our package managers don't need.
+clean: ## Remove stale versions/caches our package managers don't need.
 	@echo "💭 Cleaning up after homebrew...\n"
-	brew bundle --global cleanup --force
 	brew cleanup
 	@echo "✅ Successfully cleaned up homebrew!\n"
 	@echo "💭 Cleaning up old gem versions...\n"
@@ -58,6 +57,16 @@ clean: ## Remove all unnecessary files our package managers don't need.
 	@echo "💭 Cleaning up old mise runtime versions...\n"
 	mise prune --yes
 	@echo "✅ Successfully cleaned up mise runtimes!\n"
+
+# WARNING: `brew bundle cleanup --force` uninstalls every formula/cask NOT in
+# `.Brewfile`.  On a Gusto machine that nukes ~130 scope-managed packages (docker,
+# mysql, go, kafka libs, etc.), which `bin/setup` then reinstalls — an
+# uninstall/reinstall war.  So this is intentionally NOT part of `clean`/`make`.
+# Only run it on a personal machine where `.Brewfile` is the full source of truth.
+.PHONY: prune
+prune: ## DANGER: uninstall every brew package not in .Brewfile.  Don't run on a Gusto machine (scope will reinstall it).
+	@echo "⚠️  This uninstalls everything not in .Brewfile.  On a Gusto machine scope will reinstall it.\n"
+	brew bundle --global cleanup --force
 
 # Homebrew ---------------------------------------------------------------- {{{1
 
