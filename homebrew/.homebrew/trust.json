@@ -1,0 +1,6 @@
+{
+  "trustedformulae": [
+    "agavra/tap/tuicr",
+    "atlassian/acli/acli"
+  ]
+}

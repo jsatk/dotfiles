@@ -74,7 +74,18 @@
       "mcp__claude_ai_Jira_Confluence__getJiraIssue",
       "mcp__claude_ai_Gdrive_Gusto__fetch_file",
       "Bash(python3 *)",
-      "mcp__claude_ai_Slack_Gusto_Offical__slack_read_thread"
+      "mcp__claude_ai_Slack_Gusto_Offical__slack_read_thread",
+      "mcp__claude_ai_Jira_Confluence__getAccessibleAtlassianResources",
+      "mcp__claude_ai_Jira_Confluence__atlassianUserInfo",
+      "mcp__claude_ai_Gcal_Gusto__list_events",
+      "Bash(pbcopy)",
+      "Bash(pbpaste)",
+      "Bash(brew --version)",
+      "Bash(brew trust *)",
+      "Bash(brew bundle *)",
+      "Bash(brew environment *)",
+      "Bash(env)",
+      "Bash(brew config *)"
     ]
   }
 }
