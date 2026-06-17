@@ -1,6 +1,7 @@
 {
   "trustedformulae": [
     "agavra/tap/tuicr",
-    "atlassian/acli/acli"
+    "atlassian/acli/acli",
+    "cloudsmith-io/cloudsmith-cli/cloudsmith-cli"
   ]
 }
