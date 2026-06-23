@@ -226,3 +226,5 @@ nvim
 spellfile
 configs
 enum
+Firecrawl
+e2e

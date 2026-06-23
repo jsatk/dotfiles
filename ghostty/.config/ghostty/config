@@ -1,0 +1,9 @@
+# Reference: https://ghostty.org/docs/config
+#
+# Catppuccin themes ship with Ghostty — no color files to vendor.
+# Theme names are title case with spaces (e.g. "Catppuccin Frappe").
+# Run `ghostty +list-themes` to browse the full list.
+
+theme = Catppuccin Mocha
+font-family = "DankMono Nerd Font"
+font-size = 16

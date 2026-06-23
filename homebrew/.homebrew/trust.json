@@ -2,6 +2,14 @@
   "trustedformulae": [
     "agavra/tap/tuicr",
     "atlassian/acli/acli",
-    "cloudsmith-io/cloudsmith-cli/cloudsmith-cli"
+    "cloudsmith-io/cloudsmith-cli/cloudsmith-cli",
+    "f1bonacc1/tap/process-compose",
+    "gusto/gusto/mailhog",
+    "gusto/gusto/pdftk",
+    "gusto/gusto/wait-for-it",
+    "pact-foundation/tap/pact"
+  ],
+  "trustedcasks": [
+    "gusto/gusto/gusto-wkhtmltopdf"
   ]
 }

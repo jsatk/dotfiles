@@ -13,6 +13,7 @@ browser/    → browser extension config (Vimium options)
 curl/       → .curlrc
 fish/       → Fish shell config, functions, completions
 fonts/      → fonts (not stowed, manual install)
+ghostty/    → Ghostty terminal config (.config/ghostty/config)
 git/        → .gitconfig, .gitmessage
 homebrew/   → .Brewfile
 mise/       → .config/mise/config.toml
@@ -37,7 +38,7 @@ make clean        # brew cleanup + gem cleanup + mise prune
 make help         # List all targets
 ```
 
-Stow packages (defined in Makefile): `bat bin curl fish git homebrew mise security tmux tuicr vim wezterm`
+Stow packages (defined in Makefile): `bat bin curl fish ghostty git homebrew mise security tmux tuicr vim wezterm`
 
 ## Key Tools
 

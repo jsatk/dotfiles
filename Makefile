@@ -15,6 +15,7 @@ stow_packages := \
 	bin \
 	curl \
 	fish \
+	ghostty \
 	git \
 	homebrew \
 	mise \
