@@ -13,9 +13,24 @@ return {
         -- include zenpayroll's rubocop plugins (rubocop-capybara, rubocop-gusto,
         -- etc.), so it crashes with "cannot load such file -- rubocop-capybara".
         -- Meanwhile ruby-lsp already activates its built-in RuboCop addon against
-        -- the project's bundled rubocop (1.84.2), which is the correct one.
-        -- Disable the standalone LSP; ruby-lsp's addon does the job.
-        rubocop = { enabled = false },
+        -- the project's bundled rubocop (1.87.0 as of writing; it tracks the
+        -- Gemfile, so the exact version drifts), which is the correct one.
+        -- Disable the standalone LSP; ruby-lsp's addon does the job. mason =
+        -- false also stops LazyVim reinstalling the unused Mason rubocop package.
+        rubocop = { enabled = false, mason = false },
+
+        -- LazyVim's ruby extra installs ruby-lsp via Mason. Mason's RubyGems
+        -- binstub bakes an absolute, version-pinned mise interpreter into its
+        -- shebang (e.g. .../mise/installs/ruby/4.0.3/bin/ruby); when mise
+        -- upgrades or prunes that Ruby, the shebang dangles and ruby-lsp exits
+        -- 1 with "bad interpreter". Use the mise shim instead — it re-resolves
+        -- the project's Ruby on every launch, so it never goes stale. Same
+        -- philosophy as `sorbet` using bin/srb below. The shim's ruby-lsp still
+        -- activates its bundled RuboCop addon against the project's Gemfile.
+        ruby_lsp = {
+          mason = false,
+          cmd = { vim.fn.expand("~/.local/share/mise/shims/ruby-lsp") },
+        },
 
         -- Sorbet's default root_markers are { "Gemfile", ".git" }, which makes
         -- it attach to any git repo containing a Ruby file (e.g. ~/dotfiles via
@@ -38,6 +53,9 @@ return {
           -- `bundle exec srb`, so it sees every project gem. Same shape as
           -- ruby-lsp's bundled RuboCop addon. Relative path resolves against
           -- root_dir below, so it works in every git worktree of zenpayroll.
+          -- We run the project's bin/srb (above), never Mason's sorbet
+          -- package, so keep Mason from installing/managing it.
+          mason = false,
           cmd = { "bin/srb", "tc", "--lsp", "--disable-watchman" },
           root_dir = function(bufnr, on_dir)
             local fname = vim.api.nvim_buf_get_name(bufnr)

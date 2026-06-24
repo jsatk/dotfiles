@@ -98,7 +98,9 @@
       "mcp__claude_ai_Jira_Confluence__getVisibleJiraProjects",
       "mcp__claude_ai_Github-Gusto__search_pull_requests",
       "mcp__claude_ai_Github-Gusto__pull_request_read",
-      "Skill(gusto-essentials:review-pr)"
+      "Skill(gusto-essentials:review-pr)",
+      "Bash(/Applications/Ghostty.app/Contents/MacOS/ghostty +list-keybinds --default)",
+      "Workflow(deep-research)"
     ]
   }
 }

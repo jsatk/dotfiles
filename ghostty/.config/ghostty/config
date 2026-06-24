@@ -7,3 +7,6 @@
 theme = Catppuccin Mocha
 font-family = "DankMono Nerd Font"
 font-size = 16
+
+# Stop Cmd+Enter from toggling fullscreen (Ctrl+Cmd+F still does).
+keybind = cmd+enter=unbind
