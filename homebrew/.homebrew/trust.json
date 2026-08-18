@@ -2,7 +2,6 @@
   "trustedformulae": [
     "agavra/tap/tuicr",
     "atlassian/acli/acli",
-    "cloudsmith-io/cloudsmith-cli/cloudsmith-cli",
     "f1bonacc1/tap/process-compose",
     "gusto/gusto/mailhog",
     "gusto/gusto/pdftk",
