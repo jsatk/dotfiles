@@ -51,6 +51,7 @@ brew 'rsync'
 brew 'stow'
 brew 'tealdeer'
 brew 'tmux'
+brew 'tmuxinator'
 brew 'tree'
 brew 'zoxide'
 

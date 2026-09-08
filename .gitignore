@@ -5,6 +5,10 @@ Brewfile.lock.json
 # Claude Code session artifacts.
 .claude/settings.local.json
 
+# Fish's universal-variable store. Managed by fish itself; the docs say not to
+# edit it directly, and we now keep all config in config.fish / conf.d instead.
+fish/.config/fish/fish_variables
+
 # Vim stuff that I don't want to actually check in.
 vim/.vim/*
 

@@ -10,6 +10,11 @@ set --export BRAINTRUST_API_KEY (security find-generic-password -a $USER -s BRAI
 # in settings.json's env block: `scope doctor` clean-settings deletes it there.
 set --export ANTHROPIC_MODEL 'opus[1m]'
 
+# -g, not fish_add_path's default -U: keeps this out of fish_variables, which we
+# no longer track. Matches fish 4.3+ moving user-facing config out of universal
+# scope.
+fish_add_path -g /opt/homebrew/opt/openjdk/bin ~/bin
+
 # Files I need to source {{{1
 
 # For Gusto.

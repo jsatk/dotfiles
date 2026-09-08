@@ -98,6 +98,10 @@ When adding new LazyVim extras, add them to `lazy.lua` between the `lazyvim.plug
 - **Fish functions** live in `fish/.config/fish/functions/` — one function per file, named `<function>.fish`.
 - **Fish completions** in `fish/.config/fish/completions/` — only add completions for tools actually installed in the Brewfile.
 - **Global gems** are managed in the Makefile `global_gems` list, not the Brewfile.
-- **`tmuxinator`** is managed as a global gem, not via Homebrew.
+- **`tmuxinator`** is installed via Homebrew, not as a global gem. It was a global gem
+  until 2026-08-23, but gems live inside a specific mise ruby install — when
+  `/etc/mise/config.toml`'s `ruby = "latest"` moved from 4.0.5 to 4.0.6, the gem stayed
+  behind and only a stale mise shim remained, so `tmuxinator` failed with "No version is
+  set for shim". The Homebrew formula vendors its own ruby and is immune to mise ruby churn.
 - The `.vimrc` exists for occasional vanilla Vim use — Neovim is the primary editor.
 - **Do not commit `.claude/settings.local.json`** — it is gitignored as it gets auto-modified by Claude Code sessions.

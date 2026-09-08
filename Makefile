@@ -28,8 +28,7 @@ stow_packages := \
 global_gems := \
 	neovim \
 	rubocop \
-	ruby-lsp \
-	tmuxinator
+	ruby-lsp
 
 # Core Targets ------------------------------------------------------------ {{{1
 
@@ -100,7 +99,7 @@ node_modules: ## Install global node modules.
 .PHONY: gems
 gems: ## Install global gems.
 	@echo "💭 Installing global gems...\n"
-	gem install --quiet $(global_gems)
+	gem install --quiet --no-document $(global_gems)
 	@echo "✅ Global gems successfully installed.\n"
 
 # Stow -------------------------------------------------------------------- {{{1
