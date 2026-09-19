@@ -16,6 +16,7 @@ stow_packages := \
 	bat \
 	curl \
 	fish \
+        ghostty \
 	git \
 	homebrew \
 	lisp \
@@ -50,7 +51,7 @@ update: | install ## Update everything.
 install: | stow brew node_modules ## Install everything.  (Does not update anything.)
 
 .PHONY: clean
-clean: ## Remove all unnecessary files our package managers don't need.
+clean: ## Remove stale versions/caches our package managers don't need.
 	@echo "💭 Cleaning up after homebrew...\n"
 	brew bundle --global cleanup --force
 	brew cleanup

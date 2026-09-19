@@ -6,9 +6,6 @@ vim.g.mapleader = ","
 -- Enable folding in Markdown.
 vim.g.markdown_folding = 1
 
--- Collapse all folds when opening a file.
-vim.opt.foldlevelstart = 0
-
 -- There are three dictionaries I use for spellchecking:
 --
 --   /usr/share/dict/words
